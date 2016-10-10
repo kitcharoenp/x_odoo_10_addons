@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+			inherit hr_timesheet_sheet.hr_timesheet_sheet_form
+        -->
+        <record id="x_hr_timesheet_sheet_form_inherit" model="ir.ui.view">
+            <field name="name">x_hr_timesheet_sheet.form.inherit</field>
+            <field name="model">hr_timesheet_sheet.sheet</field>
+            <field name="inherit_id"
+                ref="hr_timesheet_sheet.hr_timesheet_sheet_form"/>
+            <field name="arch" type="xml">
+                <!-- show action_timesheet_draft in state 'x_validate or confirm' -->
+                <button name="action_timesheet_draft" position="after">
+                    <button name="action_timesheet_draft"
+                        states="x_validate"
+                        string="Refuse"
+                        type="object"
+                        groups="hr_timesheet.group_hr_timesheet_user"/>
+                </button>
+
+                <!--show  action_timesheet_confirm in 'x_validate' state-->
+                <button name="action_timesheet_confirm" position="replace">
+                    <button name="action_timesheet_confirm"
+                        states="x_validate"
+                        string="Submit to Approval"
+                        type="object"
+                        groups="hr_timesheet.group_hr_timesheet_user"/>
+                </button>
+
+				<button name="action_timesheet_confirm" position="before">
+                    <button name="action_timesheet_x_validate"
+                        states="draft"
+                        string="Submit to Validation"
+                        type="object"
+                        class="oe_highlight"/>
+                </button>
+
+        <!-- replace the old state field with a new state field including x_validate -->
+                <field name="state" position="replace">
+                    <field name="state"
+                        widget="statusbar"
+                        statusbar_visible="new,x_validate,confirm,done"/>
+                </field>
+                <!-- set employee_id as readonly -->
+                <field name="employee_id" position="replace">
+					<field 	name="employee_id"
+                        on_change = "onchange_employee_id(employee_id)"
+						class = "oe_inline"
+						placeholder = "Employee's Name"
+						readonly = "1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="x_hr_timesheet_sheet_form_inherit_hr_officer" model="ir.ui.view">
+            <field name="name">x_hr_timesheet_sheet.form.inherit.hr_officer</field>
+            <field name="model">hr_timesheet_sheet.sheet</field>
+            <field name="inherit_id"
+                ref="x_hr_timesheet_sheet_form_inherit"/>
+            <field name="groups_id" eval="[(4,ref('hr_timesheet.group_hr_timesheet_user'))]"/>
+            <field name="arch" type="xml">
+				<!-- set employee_id as readonly if state != 'draft'-->
+                <field name="employee_id" position="replace">
+							<field 	name="employee_id"
+                                on_change = "onchange_employee_id(employee_id)"
+								class = "oe_inline"
+							    placeholder = "Employee's Name"
+							    attrs="{'readonly':[('state','!=','draft')]}"
+                                />
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

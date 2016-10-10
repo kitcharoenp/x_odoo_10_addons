@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_view_hr_timesheet_activities_filter" model="ir.ui.view">
+        <field name="name">Timesheet Activities Filter</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id"
+            ref="hr_timesheet_sheet.hr_timesheet_line_search"/>
+        <field name="arch" type="xml">
+
+            <field name="date" position="before">
+                <!-- add My Activities filter -->
+                <filter name="my_activities"
+                    string="My Activities"
+                    domain="[('user_id','=',uid)]"
+                    help="My Activities"/>
+            </field>
+
+        </field><!-- /arch -->
+    </record>
+
+<!-- inherit 'act_hr_timesheet_line action' window to edit default search -->
+    <record id="x_act_hr_timesheet_line" model="ir.actions.act_window">
+            <field name="name">Activities</field>
+            <field name="res_model">account.analytic.line</field>
+            <field name="inherit_id"
+                ref="hr_timesheet.act_hr_timesheet_line"/>
+            <field name="arch" type="xml">
+                <field name="context" position="replace">
+<!-- append the defaut search with 'search_default_my_activities' -->
+                    <field name="context">{"search_default_today":1,
+                        "search_default_my_activities":1}</field>
+                </field>
+            </field>
+    </record>
+
+</odoo>

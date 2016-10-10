@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_view_hr_timesheet_sheet_filter" model="ir.ui.view">
+        <field name="name">x_hr_timesheet_sheet.filter.inherit</field>
+        <field name="model">hr_timesheet_sheet.sheet</field>
+        <field name="inherit_id"
+            ref="hr_timesheet_sheet.view_hr_timesheet_sheet_filter"/>
+        <field name="arch" type="xml">
+
+            <filter name="to_approve" position="replace">
+                <filter name="to_approve"
+                    string="To Approve"
+                    domain="[('state','in',('x_validate', 'confirm'))]"
+                    help="Confirmed Timesheets"/>
+            </filter>
+
+        </field><!-- /arch -->
+    </record>
+</odoo>

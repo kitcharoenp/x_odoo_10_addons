@@ -17,7 +17,12 @@
                 <field name="x_start_date" />
                 <field name="x_end_date" />
             </xpath>
-            
+
+            <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='date']"
+                position="replace">
+                <field name="date" required="0" invisible="1"/>
+            </xpath>
+
         </field><!-- /arch -->
     </record>
 </odoo>

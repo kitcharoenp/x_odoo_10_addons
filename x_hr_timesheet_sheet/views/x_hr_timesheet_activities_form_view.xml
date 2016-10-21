@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_hr_timesheet_activities_form" model="ir.ui.view">
+        <field name="name">Inherit TimeSheet Activities Form</field>
+        <field name="model">hr_timesheet_sheet.sheet</field>
+        <field name="inherit_id"
+            ref="hr_timesheet_sheet.hr_timesheet_sheet_form"/>
+        <field name="arch" type="xml">
+            <!-- add x_vehicle_id before unit_amount -->
+            <field name="unit_amount" position="before">
+            	<field name="x_vehicle_id"
+                    options="{'no_open': True, 'no_create': True}"/>
+            </field>
+
+            <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='date']"
+                position="before">
+                <field name="x_start_date" />
+                <field name="x_end_date" />
+            </xpath>
+            
+        </field><!-- /arch -->
+    </record>
+</odoo>

@@ -39,3 +39,9 @@ class HrTimesheetSheet(models.Model):
                     user_ids=[sheet.employee_id.parent_id.user_id.id])
         self.write({'state': 'x_validate'})
         return True
+
+    def _check_state(self):
+        for line in self:
+            if line.sheet_id and line.sheet_id.state not in ('draft', 'new'):
+                raise UserError(_('You cannot modify an entry in a confirmed timesheet.'))
+        return True

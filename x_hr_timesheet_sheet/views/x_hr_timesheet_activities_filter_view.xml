@@ -18,18 +18,24 @@
         </field><!-- /arch -->
     </record>
 
-<!-- inherit 'act_hr_timesheet_line action' window to edit default search -->
-    <record id="x_act_hr_timesheet_line" model="ir.actions.act_window">
+    <!-- overide 'act_hr_timesheet_line' for add default search
+        'search_default_my_activities'
+    -->
+    <record id="hr_timesheet.act_hr_timesheet_line" model="ir.actions.act_window">
             <field name="name">Activities</field>
             <field name="res_model">account.analytic.line</field>
-            <field name="inherit_id"
-                ref="hr_timesheet.act_hr_timesheet_line"/>
-            <field name="arch" type="xml">
-                <field name="context" position="replace">
-<!-- append the defaut search with 'search_default_my_activities' -->
-                    <field name="context">{"search_default_today":1,
-                        "search_default_my_activities":1}</field>
-                </field>
+            <field name="domain">[('project_id', '!=', False)]</field>
+            <field name="context">{"search_default_today":1,
+                "search_default_my_activities":1}</field>
+            <field name="search_view_id" ref="hr_timesheet.hr_timesheet_line_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to record activities.
+              </p><p>
+                You can register and track your workings hours by project every
+                day. Every time spent on a project will become a cost and can be re-invoiced to
+                customers if required.
+              </p>
             </field>
     </record>
 

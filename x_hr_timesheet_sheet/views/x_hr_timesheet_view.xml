@@ -50,6 +50,13 @@
 						placeholder = "Employee's Name"
 						readonly = "1"/>
                 </field>
+
+                <!-- add x_vehicle_id before unit_amount -->
+                <field name="unit_amount" position="before">
+					<field name="x_vehicle_id"
+                        options="{'no_open': True, 'no_create': True}"/>  
+                </field>
+
             </field>
         </record>
 

@@ -10,12 +10,14 @@
     'description': """
 Extended Timesheet with following :
 -------------
+    * Set the employee_id field to readonly
     * Double Validate define in a department
-    * Set readonly the employee_id except HR officer
-    * Don't edit not own activities
-    * Added the startime, stoptime, vehicle in a activities
+    * Set default search activities to own
+    *
+    * only edit own activities
+    * Added a vehicle to the activities form
         """,
-    'depends': ['hr_timesheet_sheet'],
+    'depends': ['hr_timesheet_sheet', 'fleet'],
     'summary': 'Timesheets',
     'data': [
         'views/x_hr_timesheet_view.xml',

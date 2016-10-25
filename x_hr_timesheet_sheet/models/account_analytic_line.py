@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class AccountAnalyticLine(models.Model):
@@ -14,5 +15,25 @@ class AccountAnalyticLine(models.Model):
     x_vehicle_id = fields.Many2one(
         'fleet.vehicle',
         string='Vehicle')
-    x_start_date = fields.Datetime('Start')
-    x_end_date = fields.Datetime('End')
+# fix me change default date format
+    x_start_date = fields.Datetime(
+        string='Start',
+        default=fields.Datetime.from_string(
+            fields.Datetime.now()).strftime('%Y-%m-%d 01:00:00'))
+    x_end_date = fields.Datetime(
+        string='End',
+        default=fields.Datetime.from_string(
+            fields.Datetime.now()).strftime('%Y-%m-%d 10:00:00'))
+    date = fields.Date(
+        compute='_compute_date_from_x_start_date',
+        string='Date',
+        index=True)
+
+# auto change 'date' onchange of 'x_start_date'
+    @api.onchange('x_start_date')
+    def _compute_date_from_x_start_date(self):
+        for ts_line in self:
+            if ts_line.x_start_date:
+                ts_line.date = datetime.strptime(
+                    ts_line.x_start_date,
+                    DEFAULT_SERVER_DATETIME_FORMAT).date()

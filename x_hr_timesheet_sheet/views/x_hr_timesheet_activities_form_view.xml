@@ -14,8 +14,8 @@
 
             <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='date']"
                 position="before">
-                <field name="x_start_date" />
-                <field name="x_end_date" />
+                <field name="x_start_date" required="1"/>
+                <field name="x_end_date" required="1"/>
             </xpath>
 
             <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='date']"

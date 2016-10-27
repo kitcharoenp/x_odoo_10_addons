@@ -29,8 +29,8 @@
             model="hr_timesheet_sheet.sheet"
             string="Weekly Timesheet"
             report_type="qweb-pdf"
-            name="hr_timesheet.report_timesheet"
-            file="report_timesheet"
+            name="x_hr_timesheet_sheet.x_hr_timesheet_sheet_weekly_report_template"
+            file="x_hr_timesheet_sheet_weekly_report_template"
         />
     </data>
 </odoo>

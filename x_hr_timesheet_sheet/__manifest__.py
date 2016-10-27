@@ -13,7 +13,6 @@ Extended Timesheet with following :
     * Set the employee_id field to readonly
     * Double Validate define in a department
     * Set default search activities to own
-    *
     * only edit own activities
     * Added a vehicle to the activities form
         """,
@@ -25,8 +24,10 @@ Extended Timesheet with following :
         # hr_timesheet my activities filter
         'views/x_hr_timesheet_activities_filter_view.xml',
         'views/x_hr_timesheet_activities_form_view.xml',
-        # report
-        'reports/x_hr_timesheet_sheet_report.xml'],
+        # reports
+        'reports/x_hr_timesheet_sheet_report.xml',
+        # report templates
+        'reports/templates/x_hr_timesheet_sheet_weekly_report_template.xml'],
     'demo': [],
     'installable': True,
     'auto_install': False,

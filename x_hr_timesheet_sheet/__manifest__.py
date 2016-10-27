@@ -24,8 +24,9 @@ Extended Timesheet with following :
         'views/x_hr_timesheet_filter_view.xml',
         # hr_timesheet my activities filter
         'views/x_hr_timesheet_activities_filter_view.xml',
-        'views/x_hr_timesheet_activities_form_view.xml'
-    ],
+        'views/x_hr_timesheet_activities_form_view.xml',
+        # report
+        'reports/x_hr_timesheet_sheet_report.xml'],
     'demo': [],
     'installable': True,
     'auto_install': False,

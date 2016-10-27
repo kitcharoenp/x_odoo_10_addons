@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+	
+<!-- Main template -->
+<template id="x_report_weekly_timesheet">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+			<!-- t-call="module_directory_name.xml_template_id" -->
+            <t t-call="x_hr_timesheet.x_report_weekly_timesheet_document" t-lang="o.user_id.lang"/>
+        </t>
+    </t>
+</template>	
+	
+<template id="x_report_weekly_timesheet_document">
+
+	<!-- Calling #itel_layout# will add the  header and footer on your report. -->
+    <t t-call="x_hr_timesheet.x_layout">
+        <t t-set="o" t-value="o.with_context({'lang':o.user_id.lang})" />
+        
+        <!-- The PDF body will be the content inside the <div class="page"> -->
+        <div class="page" style="font-size: 9pt;font-family:Helvetica,Verdana,Arial,sans,Lucida Grande,Calibri; ">
+			
+            <div class="row">
+				
+                <div class="col-xs-6" t-if="o.employee_id">
+					<h2><span t-field="o.employee_id"/> <br/> <span t-field="o.period_ids[0].sheet_id"/></h2>
+					<p>
+Timesheet Period : <span t-field="o.date_from"/>-<span t-field="o.date_to"/></p>
+					
+                </div>
+                
+                 <div class="col-xs-6" style="font-size: 10pt;">
+					 <br/>			 
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-1"><strong>Department</strong></div>
+						<div class="col-xs-7"><span t-field="o.department_id"/></div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-1"><strong>Phone</strong></div>
+						<div class="col-xs-7"><span t-field="o.employee_id.mobile_phone"/></div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-1"><strong>Email</strong></div>
+						<div class="col-xs-7"><span t-field="o.employee_id.work_email"/></div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-1"><strong>Manager</strong></div>
+						<div class="col-xs-7"><span t-field="o.employee_id.parent_id"/></div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-1"><strong>Company</strong></div>
+						<div class="col-xs-7"><span t-field="o.company_id"/></div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-1"><strong>Tag</strong></div>
+						<div class="col-xs-7"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></div>
+					</div>
+                </div><!-- /.col-xs-6 -->
+
+            </div><!-- /.row -->
+            
+            <!-- Summary -->
+            <h3>Summary</h3>	
+            <table class="table table-condensed">
+			<thead style="background-color: #eee">	
+				<tr>
+					<th colspan = "2">
+                     </th>
+                    <t t-foreach="o.period_ids" t-as="t">
+                        <th>
+							<span t-field="t.name" t-field-options='{"format": "dd MMM"}'/>
+                        </th>
+                    </t>
+                    <th>Total</th>
+                </tr>
+			</thead>             
+            
+			<tbody>
+					
+			<!-- Analytic account row-->
+							
+			
+				<t t-foreach="o.account_ids" t-as="analytic_account">
+				<tr>	
+				<td colspan = "2">
+					<span t-field="analytic_account.name" />
+				</td>
+				<t t-foreach="o.period_ids" t-as="timesheet_sheet_day">	
+					<t t-set="account_day_total" t-value="0"/>
+					<t t-foreach="o.timesheet_ids" t-as="activity_day">
+							<t t-if="activity_day.account_id == analytic_account.name ">
+								<t t-if="activity_day.date == timesheet_sheet_day.name">
+									<t t-set="account_day_total" t-value="account_day_total + activity_day.unit_amount"/>
+								</t>	
+							</t>	
+										
+					</t>				
+						<td>
+								<t t-esc="'%02d:%02d' % (int(str(account_day_total).split('.')[0]), int(float(str('%.2f' % account_day_total).split('.')[1])/100*60))" />
+						</td>								
+				</t>	<!-- /. period_ids -->
+				<th>
+					<t t-esc="'%02d:%02d' % (int(str(analytic_account.total).split('.')[0]), int(float(str('%.2f' % analytic_account.total).split('.')[1])/100*60))" />
+				</th>		
+			</tr>
+			</t><!-- /. analytic account row -->
+			
+				<!-- Last Row - day total of timesheet -->				
+				<tr>
+					<td colspan = "2"></td>
+					<t t-set="weekly_total" t-value="0"/>					
+					<t t-foreach="o.period_ids" t-as="t">
+					<th >
+						<t t-esc="'%02d:%02d' % (int(str(t.total_timesheet).split('.')[0]), int(float(str('%.2f' % t.total_timesheet).split('.')[1])/100*60))" />
+					</th> 
+						<t t-set="weekly_total" t-value="weekly_total + t.total_timesheet"/>
+                    </t>
+                
+					<th class="oe_timesheet_total">
+						<t t-esc="'%02d:%02d' % (int(str(weekly_total).split('.')[0]), int(float(str('%.2f' % weekly_total).split('.')[1])/100*60))" />
+					</th>
+					
+				</tr>
+                </tbody>  
+             </table>
+            
+            <!-- Activity Detail -->
+            <h3>Activity</h3>
+            <table class="table table-condensed">
+                <thead style="background-color: #eee">
+                    <tr>
+                        <th class="col-xs-2">Date</th>
+                        <th class="col-xs-5">Description</th>
+                        <th class="col-xs-3">Analytic Account</th>
+                        <th class="col-xs-2 text-right">Begin</th>
+                        <th class="col-xs-2 text-right">End</th>
+                        <th class="col-xs-2 text-right">Hours</th>
+                    </tr>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="o.timesheet_ids" t-as="l">
+                        <td>
+							<span t-field="l.date"/>
+						</td>
+						<td>
+                            <span t-field="l.name"/>
+                        </td>
+                        <td class="text-left">
+                            <span t-field="l.account_id"/>
+                        </td>
+                        <td class="text-right">
+                            <t t-esc="'%02d:%02d' % (int(str(l.time_start).split('.')[0]), int(float(str('%.2f' % l.time_start).split('.')[1])/100*60))" /> 
+                        </td>
+                        <td class="text-right">
+                            <t t-esc="'%02d:%02d' % (int(str(l.time_stop).split('.')[0]), int(float(str('%.2f' % l.time_stop).split('.')[1])/100*60))" /> 
+                        </td>
+                        <td class="text-right">
+                            <t t-esc="'%02d:%02d' % (int(str(l.unit_amount).split('.')[0]), int(float(str('%.2f' % l.unit_amount).split('.')[1])/100*60))" /> 
+                        </td>
+                    </tr>
+                </tbody>
+             </table>
+             
+             <!-- Summary -->   
+        </div> <!-- /.page -->
+    </t> <!-- /.report.external_layout -->
+</template>
+
+<template id="x_layout">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="x_hr_timesheet.x_layout_header" />
+    <t t-raw="0" />
+    <t t-call="x_hr_timesheet.x_layout_footer" />
+</template>
+
+<template id="x_layout_header">
+    <div class="header">
+        <div class="row">			
+            <div class="col-xs-3">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 90px;"/>
+            </div>
+            
+			<div class="col-xs-9">
+				<div class="col-xs-12 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
+				<div class="col-xs-12 text-right" ><h2>Weekly Timesheet</h2></div>
+			</div>					
+		</div><!--./row -->
+        
+		<div class="row zero_min_height">
+			<div class="col-xs-12">
+				<div style="border-bottom: 1px solid black;"></div>
+			</div><!-- /.col-xs-12 -->  	    
+		</div><!-- /.row zero_min_height -->
+        
+    </div><!--./header -->
+</template>
+
+<template id="x_layout_footer">
+    <div class="footer">
+	
+	<div class="row zero_min_height">
+			<div class="col-xs-12">
+				<div style="border-bottom: 1px solid black;"></div>
+			</div><!-- /.col-xs-12 -->
+			<br/>  	    
+	</div><!-- /.row zero_min_height -->		
+		<!-- Signature -->
+	<div class="row">
+		<div class="col-xs-4 text-center" >
+			<ul style="list-style-type: none;">
+				<li></li>
+				<li><br/></li>
+				<li>________________</li>
+				<li><span t-field="o.employee_id"/></li>
+				<li><span t-field="o.employee_id.job_id"/></li>
+				<li>
+				<t t-if="o.employee_id.mobile_phone">
+					<span t-field="o.employee_id.mobile_phone"/>
+				</t>
+				</li>
+			</ul>
+		</div>
+		<div class="col-xs-4 text-center" >
+			<ul style="list-style-type: none;">
+				<li></li>
+				<li><br/></li>
+				<li>________________</li>
+				<li><span t-field="o.employee_id.parent_id"/></li>
+				<li><span t-field="o.employee_id.parent_id.job_id"/></li>
+				<li>
+					<t t-if="o.employee_id.parent_id.mobile_phone">
+					<span t-field="o.employee_id.parent_id.mobile_phone"/>
+				</t>
+				</li>
+			</ul>
+		</div>
+		<div class="col-xs-4 text-center" >
+			<ul style="list-style-type: none;">
+				<li></li>
+				<li><br/></li>
+				<li>________________</li>
+				<li><br/></li>
+				<li>Human Resource</li>
+			</ul>
+		</div>
+	</div><!-- /.row --> 	
+		<!-- Company information -->
+        <div class="text-center" style=" color: orange; font-weight: bold; font-size:9px;">		
+            <ul style="list-style-type: none;" >
+				<li>
+					INTERLINK TELECOM PUBLIC COMPANY LIMITED
+					<br/>48 INTERLINK Building, Soi Rung-Reung
+					Ratchadaphisek Rd, Samsennok, Huay Khwang, Bangkok 10310, Thailand
+					<br/>TEL:02-693-1122  FAX : 02-693-1398
+					<br/>Interlink Fiber Optical Network (NOC) Hotlink : 02-181-1188 Fax : 02-181-1155
+				</li>	
+            </ul>
+        </div> <!-- /.text-center -->
+         
+    </div><!-- /.footer -->      
+</template>
+
+
+</data>
+</openerp>

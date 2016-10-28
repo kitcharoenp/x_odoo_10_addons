@@ -21,13 +21,18 @@ Extended Timesheet with following :
     'data': [
         'views/x_hr_timesheet_view.xml',
         'views/x_hr_timesheet_filter_view.xml',
-        # hr_timesheet my activities filter
+        # Activities
         'views/x_hr_timesheet_activities_filter_view.xml',
         'views/x_hr_timesheet_activities_form_view.xml',
+<<<<<<< HEAD
         # reports
         'reports/x_hr_timesheet_sheet_report.xml',
         # report templates
         'reports/templates/x_hr_timesheet_sheet_weekly_report_template.xml'],
+=======
+        'views/x_hr_timesheet_activities_list_view.xml'
+    ],
+>>>>>>> master
     'demo': [],
     'installable': True,
     'auto_install': False,

@@ -22,9 +22,10 @@ Extended Timesheet with following :
     'data': [
         'views/x_hr_timesheet_view.xml',
         'views/x_hr_timesheet_filter_view.xml',
-        # hr_timesheet my activities filter
+        # Activities
         'views/x_hr_timesheet_activities_filter_view.xml',
-        'views/x_hr_timesheet_activities_form_view.xml'
+        'views/x_hr_timesheet_activities_form_view.xml',
+        'views/x_hr_timesheet_activities_list_view.xml'
     ],
     'demo': [],
     'installable': True,

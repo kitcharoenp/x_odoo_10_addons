@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="x_report_timesheet_inherit"
+            inherit_id="hr_timesheet.report_timesheet">
+
+            <xpath expr="//thead" position="replace">
+                <thead>
+                    <tr>
+                        <th>Start</th>
+                        <th>Responsible</th>
+                        <th>Description</th>
+                        <th t-if="show_task"><t t-if="show_project">Project - </t>Task</th>
+                        <th class="text-right">Time</th>
+                    </tr>
+               </thead>
+            </xpath>
+
+        </template>
+    </data>
+</odoo>

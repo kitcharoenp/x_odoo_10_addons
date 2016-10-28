@@ -24,15 +24,17 @@ Extended Timesheet with following :
         # Activities
         'views/x_hr_timesheet_activities_filter_view.xml',
         'views/x_hr_timesheet_activities_form_view.xml',
-<<<<<<< HEAD
+        'views/x_hr_timesheet_activities_list_view.xml',
         # reports
         'reports/x_hr_timesheet_sheet_report.xml',
         # report templates
-        'reports/templates/x_hr_timesheet_sheet_weekly_report_template.xml'],
-=======
-        'views/x_hr_timesheet_activities_list_view.xml'
+        #
+        # new - Weekly Timesheet pdf templates
+        'reports/templates/x_hr_timesheet_sheet_weekly_report_template.xml',
+        # inherit - Timesheet Entries pdf templates
+        'reports/templates/x_report_timesheet_templates.xml',
     ],
->>>>>>> master
+
     'demo': [],
     'installable': True,
     'auto_install': False,

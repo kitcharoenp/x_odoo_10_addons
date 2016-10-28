@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
 <data>
 
 <!-- Main template -->
@@ -20,8 +20,8 @@
 
         <!-- The PDF body will be the content inside the <div class="page"> -->
         <div class="page"
-            style="font-size: 9pt;
-                font-family:Helvetica,Verdana,Arial,sans,Calibri;">
+                style="font-size: 9pt;
+                    font-family:Helvetica,Verdana,Arial,sans,Calibri;">
 
             <div class="row">
 <!-- Employee name and timesheet period -->
@@ -63,10 +63,25 @@
                        <div class="col-xs-7"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></div>
                    </div>
                </div><!-- /.col-xs-6 -->
+
             </div><!-- /.row -->
 
 <!-- Summary -->
             <h3>Summary</h3>
+            <table class="table table-condensed">
+			    <thead style="background-color: #eee">
+				    <tr>
+					 <th colspan = "2">
+                      </th>
+                     <t t-foreach="o.timesheet_ids" t-as="t">
+                        <th>
+							<span t-field="t.name" t-field-options='{"format": "dd MMM"}'/>
+                        </th>
+                    </t>
+                    <th>Total</th>
+                    </tr>
+			    </thead>
+            </table>
 
 <!-- Activity Detail -->
             <h3>Activity</h3>
@@ -181,4 +196,4 @@
 
 
 </data>
-</openerp>
+</odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 <!--
     QWeb Reports
     id : the generated record's external id
@@ -29,8 +28,7 @@
             model="hr_timesheet_sheet.sheet"
             string="Weekly Timesheet"
             report_type="qweb-pdf"
-            name="x_hr_timesheet_sheet.x_hr_timesheet_sheet_weekly_report_template"
-            file="x_hr_timesheet_sheet_weekly_report_template"
+            name="x_hr_timesheet_sheet.x_timesheet_weekly_report_template"
+            file="x_hr_timesheet_sheet.x_timesheet_weekly_report_template"
         />
-    </data>
 </odoo>

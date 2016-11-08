@@ -3,7 +3,7 @@
 <data>
 
 <!-- Main template -->
-<template id="x_hr_timesheet_sheet_weekly_report_template">
+<template id="x_timesheet_weekly_report_template">
     <t t-call="report.html_container">
         <t t-foreach="docs" t-as="o">
 			<!-- t-call="module_directory_name.xml_template_id" -->
@@ -20,7 +20,8 @@
 
         <!-- The PDF body will be the content inside the <div class="page"> -->
         <div class="page"
-                style="font-size: 9pt;
+                style="
+                    font-size: 9pt;
                     font-family:Helvetica,Verdana,Arial,sans,Calibri;">
 
             <div class="row">
@@ -60,31 +61,103 @@
                    </div>
                    <div class="row">
                        <div class="col-xs-4 col-xs-offset-1"><strong>Tag</strong></div>
-                       <div class="col-xs-7"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></div>
+                       <div class="col-xs-7"><span t-esc="context_timestamp(datetime.now()).strftime('%Y-%m-%d %H:%M')"/></div>
                    </div>
                </div><!-- /.col-xs-6 -->
 
             </div><!-- /.row -->
 
 <!-- Summary -->
-            <h3>Summary</h3>
+        <h3>Summary</h3>
+
+        <div class="row">
+            <t t-set="st_date" t-value="datetime.strptime(o.date_from, '%Y-%m-%d')" />
+            <t t-set="en_date" t-value="datetime.strptime(o.date_to, '%Y-%m-%d')" />
+            <t t-set="delta" t-value="(en_date - st_date).days +1" />
+
             <table class="table table-condensed">
-			    <thead style="background-color: #eee">
-				    <tr>
-					 <th colspan = "2">
-                      </th>
-                     <t t-foreach="o.timesheet_ids" t-as="t">
-                        <th>
-							<span t-field="t.name" t-field-options='{"format": "dd MMM"}'/>
-                        </th>
-                    </t>
-                    <th>Total</th>
+                <thead style="background-color: #eee">
+                    <tr>
+                        <th colspan = "2"></th>
+                        <t t-foreach="range(delta)" t-as="day_">
+                            <th>
+                                <span t-esc="(st_date + timedelta(days=day_)).strftime('%a %d %b')"/>
+                            </th>
+                        </t>
+
+                        <th>Total</th>
                     </tr>
-			    </thead>
+                </thead>
+
+                <tbody>
+                <t t-foreach="o.account_ids" t-as="analytic_account">
+                    <tr>
+                        <td colspan = "2">
+                            <span t-field="analytic_account.name" />
+                        </td>
+
+                    <t t-foreach="range(delta)" t-as="day_delta">
+                        <t t-set="timesheet_sheet_day" t-value="(st_date + timedelta(days=day_delta)).date().strftime('%Y-%m-%d')"/>
+        				<t t-set="account_day_total" t-value="0"/>
+        				<t t-foreach="o.timesheet_ids" t-as="activity_day">
+        					<t t-if="activity_day.account_id == analytic_account.name ">
+        						<t t-if="activity_day.date == timesheet_sheet_day">
+        							<t t-set="account_day_total" t-value="account_day_total + activity_day.unit_amount"/>
+        						</t>
+        					</t>
+        				</t>
+        				<td>
+        					<t t-esc="'%02d:%02d' % (int(str(account_day_total).split('.')[0]), int(float(str('%.2f' % account_day_total).split('.')[1])/100*60))" />
+        				</td>
+        			</t>	<!-- /. range(delta) -->
+        				<th>
+        					<t t-esc="'%02d:%02d' % (int(str(analytic_account.total).split('.')[0]), int(float(str('%.2f' % analytic_account.total).split('.')[1])/100*60))" />
+        				</th>
+                    </tr>
+                </t>
+                </tbody>
             </table>
 
+        </div><!-- /.row -->
+
 <!-- Activity Detail -->
+        <div class="row">
             <h3>Activity</h3>
+            <table class="table table-condensed">
+                <thead style="background-color: #eee">
+                    <tr>
+                        <th class="col-xs-2">Start</th>
+                        <th class="col-xs-5">End</th>
+                        <th class="col-xs-3">Description</th>
+                        <th class="col-xs-2 text-right">Project</th>
+                        <th class="col-xs-2 text-right">Vehicle</th>
+                        <th class="col-xs-2 text-right">Hours</th>
+                    </tr>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="o.timesheet_ids" t-as="l">
+                        <td>
+							<span t-field="l.x_start_date"/>
+						</td>
+						<td>
+                            <span t-field="l.x_end_date"/>
+                        </td>
+                        <td class="text-left">
+                            <span t-field="l.name"/>
+                        </td>
+                        <td class="text-left">
+                            <span t-field="l.account_id"/>
+                        </td>
+                        <td class="text-left">
+                            <span t-field="l.x_vehicle_id"/>
+                        </td>
+                        <td class="text-left">
+                            <span t-field="l.unit_amount"/>
+                        </td>
+                    </tr>
+                </tbody>
+             </table>
+        </div>
 
         </div> <!-- /.page -->
     </t> <!-- /t-call...x_layout"  -->

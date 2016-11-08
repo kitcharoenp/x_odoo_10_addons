@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 {
     'name': 'Extended Timesheets',
     'version': '1.0',
@@ -13,10 +12,10 @@ Extended Timesheet with following :
     * Set the employee_id field to readonly
     * Double Validate define in a department
     * Set default search activities to own
-    * only edit own activities
+    * Only edit own activities
     * Added a vehicle to the activities form
         """,
-    'depends': ['hr_timesheet_sheet', 'fleet'],
+    'depends': ['hr_timesheet_sheet', 'fleet', 'report'],
     'summary': 'Timesheets',
     'data': [
         'views/x_hr_timesheet_view.xml',
@@ -25,7 +24,7 @@ Extended Timesheet with following :
         'views/x_hr_timesheet_activities_filter_view.xml',
         'views/x_hr_timesheet_activities_form_view.xml',
         'views/x_hr_timesheet_activities_list_view.xml',
-        # reports
+        # Reports
         'reports/x_hr_timesheet_sheet_report.xml',
         # report templates
         #

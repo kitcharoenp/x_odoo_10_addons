@@ -50,7 +50,18 @@
 						placeholder = "Employee's Name"
 						readonly = "1"/>
                 </field>
-            </field>
+
+                <!-- set employee_id as readonly -->
+                <xpath expr="//notebook/page[@string='Summary']" position="replace">
+                    <page string="Summary">
+                        <widget
+                            type="weekly_timesheet"
+                            attrs="{'readonly': [['state', 'not in', []]]}">
+                        </widget>
+                    </page>
+                </xpath>
+
+            </field><!-- ./arch -->
         </record>
 
         <record id="x_hr_timesheet_sheet_form_inherit_hr_officer" model="ir.ui.view">

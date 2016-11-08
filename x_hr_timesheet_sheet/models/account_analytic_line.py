@@ -48,6 +48,12 @@ class AccountAnalyticLine(models.Model):
                 if ts_line.x_end_date < ts_line.x_start_date:
                     raise ValidationError(_(
                         '"Start" time cannot be earlier than "End" time.'))
-                if ts_line.x_end_date.date() != ts_line.x_start_date.date():
+
+                d1 = datetime.strptime(
+                    ts_line.x_start_date, DEFAULT_SERVER_DATETIME_FORMAT).date()
+                d2 = datetime.strptime(
+                    ts_line.x_end_date, DEFAULT_SERVER_DATETIME_FORMAT).date()
+
+                if d1 != d2:
                     raise ValidationError(_(
                         '"Start" time must be the same date "End" time.'))

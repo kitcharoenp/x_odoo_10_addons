@@ -68,9 +68,9 @@
             </div><!-- /.row -->
 
 <!-- Summary -->
-        <h3>Summary</h3>
-
         <div class="row">
+            
+            <h3>Summary</h3>
             <t t-set="st_date" t-value="datetime.strptime(o.date_from, '%Y-%m-%d')" />
             <t t-set="en_date" t-value="datetime.strptime(o.date_to, '%Y-%m-%d')" />
             <t t-set="delta" t-value="(en_date - st_date).days +1" />
@@ -126,12 +126,12 @@
             <table class="table table-condensed">
                 <thead style="background-color: #eee">
                     <tr>
-                        <th class="col-xs-2">Start</th>
-                        <th class="col-xs-5">End</th>
-                        <th class="col-xs-3">Description</th>
-                        <th class="col-xs-2 text-right">Project</th>
-                        <th class="col-xs-2 text-right">Vehicle</th>
-                        <th class="col-xs-2 text-right">Hours</th>
+                        <th class="col-xs-1">Start</th>
+                        <th class="col-xs-1">End</th>
+                        <th class="col-xs-4">Description</th>
+                        <th class="col-xs-3">Project</th>
+                        <th class="col-xs-2">Vehicle</th>
+                        <th class="col-xs-1">Hours</th>
                     </tr>
                 </thead>
                 <tbody class="invoice_tbody">

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class HrTimesheetSheet(models.Model):
@@ -40,11 +41,19 @@ class HrTimesheetSheet(models.Model):
     manager_id1 = fields.Many2one(
                     'hr.employee',
                     string='First Approval',
+                    readonly=True,
+                    states={
+                        'new': [('readonly', False)],
+                        'draft': [('readonly', False)]},
                     default=_default_manager1_get,
                     copy=False)
     manager_id2 = fields.Many2one(
                     'hr.employee',
                     string='Second Approval',
+                    readonly=True,
+                    states={
+                        'new': [('readonly', False)],
+                        'draft': [('readonly', False)]},
                     default=_default_manager2_get,
                     copy=False)
 
@@ -65,5 +74,10 @@ class HrTimesheetSheet(models.Model):
     def _check_state(self):
         for line in self:
             if line.sheet_id and line.sheet_id.state not in ('draft', 'new'):
-                raise UserError(_('You cannot modify an entry in a confirmed timesheet.'))
+                raise UserError(_(
+                    'You cannot modify an entry in a confirmed timesheet.'))
         return True
+
+    @api.onchange('manager_id1')
+    def _onchange_manager_id1(self):
+            self.manager_id2 = self.manager_id1.parent_id

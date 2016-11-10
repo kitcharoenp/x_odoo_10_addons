@@ -61,6 +61,17 @@
                     </page>
                 </xpath>
 
+                <xpath expr="//notebook/page[@string='Details']" position="after">
+                    <page string="Validation">
+                        <group>
+                            <group string="Validation">
+                                <field name="manager_id1"/>
+                                <field name="manager_id2"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
             </field><!-- ./arch -->
         </record>
 

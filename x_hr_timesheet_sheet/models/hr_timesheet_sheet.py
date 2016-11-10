@@ -6,6 +6,18 @@ from odoo import api, fields, models
 class HrTimesheetSheet(models.Model):
     _inherit = 'hr_timesheet_sheet.sheet'
 
+    # get a default first Manager from current user Manager
+    def _default_manager1_get(self):
+        employee = self.env['hr.employee'].search(
+                [('user_id', '=', self.env.uid)], limit=1)
+        return employee.parent_id
+
+    # get a Second Manager from Manager of present User
+    def _default_manager2_get(self):
+        employee = self.env['hr.employee'].search(
+                [('user_id', '=', self.env.uid)], limit=1)
+        return employee.parent_id.parent_id
+
     state = fields.Selection([
                 ('new', 'New'),
                 ('draft', 'Open'),
@@ -25,6 +37,16 @@ class HrTimesheetSheet(models.Model):
                     by user. \
             \n* The \'Done\' status is used when users timesheet is accepted \
                     by his/her senior.')
+    manager_id1 = fields.Many2one(
+                    'hr.employee',
+                    string='First Approval',
+                    default=_default_manager1_get,
+                    copy=False)
+    manager_id2 = fields.Many2one(
+                    'hr.employee',
+                    string='Second Approval',
+                    default=_default_manager2_get,
+                    copy=False)
 
     @api.multi
     def action_timesheet_confirm(self):

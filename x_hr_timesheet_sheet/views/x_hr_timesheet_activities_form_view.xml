@@ -63,4 +63,47 @@
 
             </field><!-- /arch -->
     </record>
+
+    <record id="x_hr_timesheet_line_form" model="ir.ui.view">
+        <field name="name">Detailed Activities Form</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id"
+            ref="hr_timesheet_sheet.hr_timesheet_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet"
+                position="replace">
+
+                <form string="Analytic Entry">
+                    <sheet string="Analytic Entry">
+                        <group>
+                            <group>
+                                <field name="date" required="0" invisible="1"/>
+                                <field name="x_start_date" required="1"/>
+                                <field name="x_end_date" required="1"/>
+                                <field name="project_id"
+                                    required="1"
+                                    options="{'no_open': True, 'no_create': True}" />
+                                <field name="x_vehicle_id"
+                                    options="{'no_open': True, 'no_create': True}"/>
+                                <field name="name" invisible="1"/>
+                                <field name="unit_amount"
+                                        widget="float_time"
+                                        string="Hours"/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="is_overtime"/>
+                            </group>
+
+                            <group>
+                                <field name="x_notes"
+                                    required="1"
+                                    placeholder="Write here all other information relative to this activity" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+
+            </xpath>
+
+        </field>
+    </record>
 </odoo>

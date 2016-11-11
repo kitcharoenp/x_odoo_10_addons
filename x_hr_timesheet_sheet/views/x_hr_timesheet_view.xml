@@ -65,11 +65,16 @@
                     <page string="Validation">
                         <group>
                             <group string="Validation">
-                                <field name="manager_id1"/>
-                                <field name="manager_id2"/>
                             </group>
                         </group>
                     </page>
+                </xpath>
+
+                <xpath expr="//sheet/group/group" position="after">
+                    <group>
+                        <field name="manager_id1"/>
+                        <field name="manager_id2"/>
+                    </group>
                 </xpath>
 
             </field><!-- ./arch -->

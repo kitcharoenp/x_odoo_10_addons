@@ -33,6 +33,8 @@ Extended Timesheet with following :
         'reports/templates/x_hr_timesheet_sheet_weekly_report_template.xml',
         # inherit - Timesheet Entries pdf templates
         'reports/templates/x_report_timesheet_templates.xml',
+        # Security
+        'security/ir.model.access.csv',
     ],
 
     'demo': [],

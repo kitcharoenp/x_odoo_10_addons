@@ -13,7 +13,8 @@ Extended Timesheet with following :
     * Double Validate define in a department
     * Set default search activities to own
     * Only edit own activities
-    * Added a vehicle to the activities form
+    * Added the start, end, vehicle, note and overtime field in the activities
+    * Changed the timesheets line inline edit to popup
         """,
     'depends': ['hr_timesheet_sheet', 'fleet', 'report'],
     'summary': 'Timesheets',

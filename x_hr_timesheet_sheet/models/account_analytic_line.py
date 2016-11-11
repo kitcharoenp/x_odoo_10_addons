@@ -28,6 +28,10 @@ class AccountAnalyticLine(models.Model):
         compute='_compute_date_from_x_start_date',
         string='Date',
         index=True)
+    x_notes = fields.Text(
+        string='Note',)
+    is_overtime = fields.Boolean(
+        string='Overtime')
 
     @api.onchange('x_start_date')
     def _compute_date_from_x_start_date(self):
@@ -50,10 +54,18 @@ class AccountAnalyticLine(models.Model):
                         '"Start" time cannot be earlier than "End" time.'))
 
                 d1 = datetime.strptime(
-                    ts_line.x_start_date, DEFAULT_SERVER_DATETIME_FORMAT).date()
+                    ts_line.x_start_date,
+                    DEFAULT_SERVER_DATETIME_FORMAT).date()
                 d2 = datetime.strptime(
-                    ts_line.x_end_date, DEFAULT_SERVER_DATETIME_FORMAT).date()
+                    ts_line.x_end_date,
+                    DEFAULT_SERVER_DATETIME_FORMAT).date()
 
                 if d1 != d2:
                     raise ValidationError(_(
                         '"Start" time must be the same date "End" time.'))
+
+    @api.onchange('x_notes')
+    def _onchange_x_notes(self):
+        for ts_line in self:
+            if ts_line.x_notes:
+                ts_line.name = ts_line.x_notes

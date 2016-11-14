@@ -4,7 +4,7 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
-from datetime import datetime
+from datetime import datetime, time
 from dateutil.relativedelta import relativedelta
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -69,3 +69,22 @@ class AccountAnalyticLine(models.Model):
         for ts_line in self:
             if ts_line.x_notes:
                 ts_line.name = ts_line.x_notes
+
+    @api.onchange('x_start_date', 'x_end_date')
+    def _compute_duration(self):
+        """ auto calculate 'hours' onchange of 'x_start_date """
+        diff_float = 0
+        for ts_line in self:
+            if ts_line.x_start_date:
+                st_datetime = fields.Datetime.from_string(
+                    self.x_start_date)
+                en_datetime = fields.Datetime.from_string(
+                    self.x_end_date)
+                diff = en_datetime - st_datetime
+                if(time(1, 00) <= st_datetime.time() <= time(5, 00)):
+                    if(time(6, 00) <= en_datetime.time() <= time(10, 00)):
+                        # del 1 hour for breaking lunch
+                        diff_float = round(diff.total_seconds() / 3600.0, 2)-1
+                else:
+                    diff_float = round(diff.total_seconds() / 3600.0, 2)
+                ts_line.unit_amount = diff_float

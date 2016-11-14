@@ -68,8 +68,8 @@
             </div><!-- /.row -->
 
 <!-- Summary -->
-        <div class="row">
-            
+        <div class="row" t-if="o.account_ids">
+
             <h3>Summary</h3>
             <t t-set="st_date" t-value="datetime.strptime(o.date_from, '%Y-%m-%d')" />
             <t t-set="en_date" t-value="datetime.strptime(o.date_to, '%Y-%m-%d')" />
@@ -129,18 +129,23 @@
                         <th class="col-xs-1">Start</th>
                         <th class="col-xs-1">End</th>
                         <th class="col-xs-4">Description</th>
-                        <th class="col-xs-3">Project</th>
+                        <th class="col-xs-2">Project</th>
                         <th class="col-xs-2">Vehicle</th>
                         <th class="col-xs-1">Hours</th>
+                        <th class="col-xs-1">Overtime</th>
                     </tr>
                 </thead>
                 <tbody class="invoice_tbody">
                     <tr t-foreach="o.timesheet_ids" t-as="l">
                         <td>
-							<span t-field="l.x_start_date"/>
+                            <t t-if="l.x_start_date">
+                                <span t-field="l.x_start_date"/>
+                            </t>
 						</td>
 						<td>
-                            <span t-field="l.x_end_date"/>
+                            <t t-if="l.x_end_date">
+                                <span t-field="l.x_end_date"/>
+                            </t>
                         </td>
                         <td class="text-left">
                             <span t-field="l.name"/>
@@ -149,10 +154,17 @@
                             <span t-field="l.account_id"/>
                         </td>
                         <td class="text-left">
-                            <span t-field="l.x_vehicle_id"/>
+                            <t t-if="l.x_vehicle_id">
+                                <span t-field="l.x_vehicle_id"/>
+                            </t>
                         </td>
                         <td class="text-left">
                             <span t-field="l.unit_amount"/>
+                        </td>
+                        <td class="text-left">
+                            <t t-if="l.is_overtime">
+                                <span t-field="l.is_overtime"/>
+                            </t>
                         </td>
                     </tr>
                 </tbody>
@@ -213,7 +225,7 @@
 	</div><!-- /.row zero_min_height -->
 		<!-- Signature -->
 	<div class="row">
-		<div class="col-xs-4 text-center" >
+		<div class="col-xs-3 text-center" >
 			<ul style="list-style-type: none;">
 				<li></li>
 				<li><br/></li>
@@ -227,7 +239,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="col-xs-4 text-center" >
+		<div class="col-xs-3 text-center" >
 			<ul style="list-style-type: none;">
 				<li></li>
 				<li><br/></li>
@@ -241,7 +253,21 @@
 				</li>
 			</ul>
 		</div>
-		<div class="col-xs-4 text-center" >
+        <div class="col-xs-3 text-center" >
+			<ul style="list-style-type: none;">
+				<li></li>
+				<li><br/></li>
+				<li>________________</li>
+				<li t-if="o.manager_id2"><span t-field="o.manager_id2"/></li>
+				<li t-if="o.manager_id2"><span t-field="o.manager_id2.job_id"/></li>
+				<li>
+					<t t-if="o.manager_id2.mobile_phone">
+					<span t-field="o.manager_id2.mobile_phone"/>
+				</t>
+				</li>
+			</ul>
+		</div>
+		<div class="col-xs-3 text-center" >
 			<ul style="list-style-type: none;">
 				<li></li>
 				<li><br/></li>

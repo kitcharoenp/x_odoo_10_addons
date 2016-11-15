@@ -59,10 +59,15 @@ class HrTimesheetSheet(models.Model):
 
     @api.multi
     def action_timesheet_confirm(self):
+        if self.filtered(lambda sheet: sheet.state != 'x_validate'):
+            raise UserError(_("Cannot approve a non-validated timesheet."))
         return super(HrTimesheetSheet, self).action_timesheet_confirm()
 
     @api.multi
     def action_timesheet_x_validate(self):
+        if not self.env.user.has_group('hr_timesheet.group_hr_timesheet_user'):
+            raise UserError(_(
+                'Only an HR Officer or Manager can approve timesheets.'))
         for sheet in self:
             if (sheet.employee_id and sheet.employee_id.parent_id and
                     sheet.employee_id.parent_id.user_id):

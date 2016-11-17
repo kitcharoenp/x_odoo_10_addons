@@ -244,11 +244,11 @@
 				<li></li>
 				<li><br/></li>
 				<li>________________</li>
-				<li><span t-field="o.employee_id.parent_id"/></li>
-				<li><span t-field="o.employee_id.parent_id.job_id"/></li>
+                <li t-if="o.manager_id1"><span t-field="o.manager_id1"/></li>
+				<li t-if="o.manager_id1"><span t-field="o.manager_id1.job_id"/></li>
 				<li>
-					<t t-if="o.employee_id.parent_id.mobile_phone">
-					<span t-field="o.employee_id.parent_id.mobile_phone"/>
+					<t t-if="o.manager_id1.mobile_phone">
+					<span t-field="o.manager_id1.mobile_phone"/>
 				</t>
 				</li>
 			</ul>

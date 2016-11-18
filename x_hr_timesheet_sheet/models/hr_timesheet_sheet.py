@@ -112,7 +112,7 @@ class HrTimesheetSheet(models.Model):
         """
         user = self.env.user
         group_timesheet_manager = self.env.ref(
-                    'hr_timesheet.group_hr_timesheet_user')
+                    'x_hr_timesheet_sheet.x_group_hr_timesheet_manager')
         for timesheet in self:
             timesheet.can_approve = False
             if (timesheet.manager_id1 and timesheet.state == 'x_validate' and
@@ -120,4 +120,6 @@ class HrTimesheetSheet(models.Model):
                 timesheet.can_approve = True
             if (timesheet.manager_id2 and timesheet.state == 'confirm' and
                     timesheet.manager_id2.user_id == user):
+                timesheet.can_approve = True
+            if group_timesheet_manager in user.groups_id:
                 timesheet.can_approve = True

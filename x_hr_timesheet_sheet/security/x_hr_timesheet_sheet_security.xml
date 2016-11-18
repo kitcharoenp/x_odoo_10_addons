@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_group_hr_timesheet_manager" model="res.groups">
+        <field name="name">Timesheet Manager</field>
+        <field name="category_id" ref="base.module_category_hr_timesheet"/>
+        <field name="implied_ids" eval="[(4, ref('hr_timesheet.group_hr_timesheet_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+</odoo>

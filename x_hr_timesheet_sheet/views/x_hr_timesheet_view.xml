@@ -24,9 +24,20 @@
                     <button name="action_timesheet_confirm"
                         string="Submit to Approval"
                         type="object"
+                        class="oe_highlight"
                         groups="hr_timesheet.group_hr_timesheet_user"
                         attrs="{'invisible': ['|', ('can_approve', '=', False),
                             ('state', 'not in', ['x_validate'])]}"/>
+                </button>
+
+                <button name="action_timesheet_done" position="replace">
+                    <button name="action_timesheet_done"
+                        string="Approve"
+                        type="object"
+                        class="oe_highlight"
+                        groups="hr_timesheet.group_hr_timesheet_user"
+                        attrs="{'invisible': ['|', ('can_approve', '=', False),
+                            ('state', 'not in', ['confirm'])]}"/>
                 </button>
 
 				<button name="action_timesheet_confirm" position="before">

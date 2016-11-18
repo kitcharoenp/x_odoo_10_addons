@@ -69,7 +69,7 @@ class HrTimesheetSheet(models.Model):
         for sheet in self:
             if not sheet.can_approve:
                 raise UserError(_(
-                    'Only an HR Manager or First Approval \
+                    'Only an Timesheet Manager or First Approval \
                     can validate timesheet.'))
         return super(HrTimesheetSheet, self).action_timesheet_confirm()
 
@@ -80,9 +80,18 @@ class HrTimesheetSheet(models.Model):
         for sheet in self:
             if not sheet.can_approve:
                 raise UserError(_(
-                    'Only an HR Manager or Second Approval can approve \
+                    'Only an Timesheet Manager or Second Approval can approve \
                     timesheet.'))
         return super(HrTimesheetSheet, self).action_timesheet_done()
+
+    @api.multi
+    def action_timesheet_draft(self):
+        for sheet in self:
+            if not sheet.can_approve:
+                raise UserError(_(
+                    'Only an Timesheet Manager or Manager can refuse timesheets \
+                    or reset them to draft.'))
+        return super(HrTimesheetSheet, self).action_timesheet_draft()
 
     @api.multi
     def action_timesheet_x_validate(self):
@@ -107,8 +116,8 @@ class HrTimesheetSheet(models.Model):
 
     @api.multi
     def _compute_can_approve(self):
-        """ User can approve a timesheet if it is its own first approve
-            or if he is an Hr Manager.
+        """ User can approve a timesheet if it is its own first approval
+            or if he is an Timesheet Manager.
         """
         user = self.env.user
         group_timesheet_manager = self.env.ref(

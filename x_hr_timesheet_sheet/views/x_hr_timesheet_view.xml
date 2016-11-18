@@ -22,10 +22,11 @@
                 <!--show  action_timesheet_confirm in 'x_validate' state-->
                 <button name="action_timesheet_confirm" position="replace">
                     <button name="action_timesheet_confirm"
-                        states="x_validate"
                         string="Submit to Approval"
                         type="object"
-                        groups="hr_timesheet.group_hr_timesheet_user"/>
+                        groups="hr_timesheet.group_hr_timesheet_user"
+                        attrs="{'invisible': ['|', ('can_approve', '=', False),
+                            ('state', 'not in', ['x_validate'])]}"/>
                 </button>
 
 				<button name="action_timesheet_confirm" position="before">
@@ -48,6 +49,10 @@
 						class = "oe_inline"
 						placeholder = "Employee's Name"
 						readonly = "1"/>
+                </field>
+                <!-- append can_approve after user_id -->
+                <field name="user_id" position="after">
+					<field name="can_approve" invisible="1"/>
                 </field>
 
                 <!-- set employee_id as readonly -->

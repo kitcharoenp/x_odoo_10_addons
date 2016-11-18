@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.translate import _
 
 
 class HrTimesheetSheet(models.Model):
@@ -41,6 +42,7 @@ class HrTimesheetSheet(models.Model):
     manager_id1 = fields.Many2one(
                     'hr.employee',
                     string='First Approval',
+                    required=True,
                     readonly=True,
                     states={
                         'new': [('readonly', False)],
@@ -56,18 +58,34 @@ class HrTimesheetSheet(models.Model):
                         'draft': [('readonly', False)]},
                     default=_default_manager2_get,
                     copy=False)
+    can_approve = fields.Boolean(
+                    string='Can approve',
+                    compute='_compute_can_approve')
 
     @api.multi
     def action_timesheet_confirm(self):
         if self.filtered(lambda sheet: sheet.state != 'x_validate'):
-            raise UserError(_("Cannot approve a non-validated timesheet."))
+            raise UserError(_("Cannot approve a non-submitted timesheet."))
+        for sheet in self:
+            if not sheet.can_approve:
+                raise UserError(_(
+                    'Only an HR Manager or First Approval \
+                    can validate timesheet.'))
         return super(HrTimesheetSheet, self).action_timesheet_confirm()
 
     @api.multi
+    def action_timesheet_done(self):
+        if self.filtered(lambda sheet: sheet.state != 'confirm'):
+            raise UserError(_("Cannot approve a non-validated timesheet."))
+        for sheet in self:
+            if not sheet.can_approve:
+                raise UserError(_(
+                    'Only an HR Manager or Second Approval can approve \
+                    timesheet.'))
+        return super(HrTimesheetSheet, self).action_timesheet_done()
+
+    @api.multi
     def action_timesheet_x_validate(self):
-        if not self.env.user.has_group('hr_timesheet.group_hr_timesheet_user'):
-            raise UserError(_(
-                'Only an HR Officer or Manager can approve timesheets.'))
         for sheet in self:
             if (sheet.employee_id and sheet.employee_id.parent_id and
                     sheet.employee_id.parent_id.user_id):
@@ -86,3 +104,20 @@ class HrTimesheetSheet(models.Model):
     @api.onchange('manager_id1')
     def _onchange_manager_id1(self):
             self.manager_id2 = self.manager_id1.parent_id
+
+    @api.multi
+    def _compute_can_approve(self):
+        """ User can approve a timesheet if it is its own first approve
+            or if he is an Hr Manager.
+        """
+        user = self.env.user
+        group_timesheet_manager = self.env.ref(
+                    'hr_timesheet.group_hr_timesheet_user')
+        for timesheet in self:
+            timesheet.can_approve = False
+            if (timesheet.manager_id1 and timesheet.state == 'x_validate' and
+                    timesheet.manager_id1.user_id == user):
+                timesheet.can_approve = True
+            if (timesheet.manager_id2 and timesheet.state == 'confirm' and
+                    timesheet.manager_id2.user_id == user):
+                timesheet.can_approve = True

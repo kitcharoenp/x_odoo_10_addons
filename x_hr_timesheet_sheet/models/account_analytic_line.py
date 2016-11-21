@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 from datetime import datetime, time
 from dateutil.relativedelta import relativedelta
@@ -102,4 +102,29 @@ class AccountAnalyticLine(models.Model):
 
     @api.multi
     def write(self, values):
+        self._check_owner()
         return super(AccountAnalyticLine, self).write(values)
+
+    def _check_owner(self):
+        for line in self:
+            user = self.env.user
+            group_timesheet_manager = self.env.ref(
+                        'x_hr_timesheet_sheet.x_group_hr_timesheet_manager')
+            if (line.user_id != user and
+                    group_timesheet_manager not in user.groups_id):
+                raise UserError(_('You cannot modify entry that do not \
+                    belong to you.'))
+        return True
+
+    # overide _check_state() method.
+    def _check_state(self):
+        for line in self:
+            user = self.env.user
+            group_timesheet_manager = self.env.ref(
+                        'x_hr_timesheet_sheet.x_group_hr_timesheet_manager')
+            if group_timesheet_manager not in user.groups_id:
+                if (line.sheet_id and
+                        line.sheet_id.state not in ('draft', 'new')):
+                    raise UserError(_('You cannot modify an entry in a \
+                        confirmed timesheet.'))
+        return True

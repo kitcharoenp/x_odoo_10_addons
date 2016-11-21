@@ -64,6 +64,17 @@ class AccountAnalyticLine(models.Model):
                     raise ValidationError(_(
                         '"Start" time must be the same date "End" time.'))
 
+                domain = [
+                    ('x_start_date', '<', ts_line.x_end_date),
+                    ('x_end_date', '>', ts_line.x_start_date),
+                    ('user_id', '=', ts_line.user_id.id),
+                    ('id', '!=', ts_line.id),
+                ]
+                n_timesheet_lines = self.search_count(domain)
+                if n_timesheet_lines:
+                    raise ValidationError(_('You can not have 2 timesheet line that \
+                        overlaps on same day!'))
+
     @api.onchange('x_notes')
     def _onchange_x_notes(self):
         for ts_line in self:
@@ -88,3 +99,7 @@ class AccountAnalyticLine(models.Model):
                 else:
                     diff_float = round(diff.total_seconds() / 3600.0, 2)
                 ts_line.unit_amount = diff_float
+
+    @api.multi
+    def write(self, values):
+        return super(AccountAnalyticLine, self).write(values)

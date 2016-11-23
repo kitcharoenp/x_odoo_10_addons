@@ -3,7 +3,6 @@
     'name': 'Extended Timesheets',
     'version': '1.0',
     'license': 'AGPL-3',
-    'author': "Kitcharoen Poolperm",
     'category': 'Human Resources',
     'sequence': 135,
     'description': """

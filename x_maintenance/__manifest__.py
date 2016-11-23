@@ -3,6 +3,7 @@
 {
     'name': 'Extend - Maintenance',
     'version': '1.0',
+    'license': 'AGPL-3',
     'sequence': 125,
     'description': """
         Extend Maintenance.""",

@@ -5,11 +5,13 @@
     'version': '1.0',
     'license': 'AGPL-3',
     'sequence': 125,
+    'category': 'Human Resources',
     'description': """
         Extend Maintenance.""",
-    'depends': ['maintenance'],
+    'depends': ['hr_maintenance', 'fleet'],
     'summary': 'Equipments',
     'data': [
+        'views/x_equipment_form_views.xml'
     ],
     'demo': [],
     'installable': True,

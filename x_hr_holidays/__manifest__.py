@@ -12,6 +12,7 @@
     'summary': 'HR Holidays',
     'data': [
         'views/x_hr_holidays_menu_views.xml',
+        'views/x_hr_holidays_tree_views.xml',
     ],
     'demo': [],
     'installable': True,

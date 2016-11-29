@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <!--
+           This menu item's purpose is to overwrite another one defined in
+           the hr_holidays in order to set some attribute.
+    -->
+
+    <!-- Holidays: Allocation Request Menu-->
+    <menuitem
+        id="hr_holidays.menu_open_allocation_holidays"
+        parent="hr_holidays.menu_hr_holidays_my_leaves"
+        groups="hr_holidays.group_hr_holidays_manager"
+        action="hr_holidays.open_allocation_holidays"
+        sequence="40"/>
+
+    <!-- Make the xmlid of menus required -->
+    <record id="hr_holidays.menu_open_allocation_holidays" model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- equiment : kanban views -->
+  <!-- equiment kanban : views -->
+      <record id="x_hr_equipment_view_kanban" model="ir.ui.view">
+          <field name="name">X  Equipment Kanban</field>
+          <field name="model">maintenance.equipment</field>
+          <field name="inherit_id" ref="maintenance.hr_equipment_view_kanban"/>
+          <field name="arch" type="xml">
+            <xpath expr="//ul[@class='oe_kanban_tooltip']" position="replace">
+              <ul class="oe_kanban_tooltip">
+                  <li><b>Serial Number:</b> <field name="serial_no"/></li>
+                  <li><b>Model Number:</b> <field name="model"/></li>
+                  <li><b>PO:</b> <field name="partner_ref"/></li>
+                  <li><b>Vehicle:</b> <field name="x_vehicle_id"/></li>
+              </ul>
+            </xpath>
+
+            <xpath expr="//div[@class='oe_kanban_content']/div[@class='mt4']" position="replace">
+                  <div class="mt4">
+                      <div t-if="record.serial_no.raw_value"><field name="serial_no"/></div>
+                      <div t-if="record.owner_user_id.raw_value"><field name="owner_user_id"/></div>
+                      <div t-if="record.partner_ref.raw_value"><field name="partner_ref"/></div>
+                      <div t-if="record.x_vehicle_id.raw_value"><field name="x_vehicle_id"/></div>
+                  </div>
+            </xpath>
+
+          </field>
+      </record>
+</odoo>

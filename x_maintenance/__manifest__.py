@@ -10,7 +10,8 @@
     'depends': ['hr_maintenance', 'fleet'],
     'summary': 'Equipments',
     'data': [
-        'views/x_equipment_form_views.xml'
+        'views/x_equipment_form_views.xml',
+        'views/x_equipment_kanban_views.xml',
     ],
     'demo': [],
     'installable': True,

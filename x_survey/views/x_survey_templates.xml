@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <!-- Override a survey template id is 'page' -->
+    <template id="x_page" inherit_id="survey.page" name="Survey">
+
+        <xpath expr="//div[@class='page-header']/h1" position="replace">
+            <h3 t-field='page.title' />
+        </xpath>
+
+        <xpath
+            expr="//form[@class='js_surveyform']/t[1]/div[@class='js_question-wrapper']/h2"
+            position="replace">
+                <h4>
+                    <span t-field='question.question' />
+                    <span t-if="question.constr_mandatory"
+                        class="text-danger">*</span>
+                </h4>
+        </xpath>
+
+    </template>
+
+
+    <!-- Override a survey template-->
+    <template id="x_survey" inherit_id="survey.survey" name="Survey">
+        <xpath expr="//div[@class='container']" position="replace">
+            <div class="container">
+                <div class="row">
+                    <t t-call="survey.back" />
+                    <div class="col-md-8 col-md-offset-2 col-xs-12">
+                        <t t-call="survey.page" />
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</data>
+</odoo>

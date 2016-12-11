@@ -13,8 +13,23 @@
         action="hr_holidays.open_allocation_holidays"
         sequence="40"/>
 
-    <!-- Make the xmlid of menus required -->
+        <!-- Holidays: Allocation Request Approve Menu-->
+        <!-- Show allocation request approve only user in Holiday Manager group-->
+    <menuitem
+        id="hr_holidays.menu_open_department_leave_allocation_approve"
+        groups="hr_holidays.group_hr_holidays_manager"
+        name="Leaves Allocation"
+        parent="hr_holidays.menu_hr_holidays_approvals"
+        action="hr_holidays.open_department_holidays_allocation_approve"
+        sequence="2"/>
+
+    <!-- Reload the xmlid of menus required -->
     <record id="hr_holidays.menu_open_allocation_holidays" model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
+    <!-- Reload the xmlid of menus required -->
+    <record id="hr_holidays.menu_open_department_leave_allocation_approve" model="ir.ui.menu">
         <field name="load_xmlid" eval="True"/>
     </record>
 

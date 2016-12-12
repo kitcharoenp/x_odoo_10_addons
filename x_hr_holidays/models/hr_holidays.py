@@ -41,3 +41,19 @@ class Holidays(models.Model):
         super(Holidays, self)._onchange_employee()
         self.manager_id = self.employee_id.parent_id
         self.manager_id2 = self.employee_id.parent_id.parent_id
+
+    @api.multi
+    def action_draft(self):
+        for holiday in self:
+            if not holiday.can_reset:
+                raise UserError(_('Only an HR Manager or the concerned employee can reset to draft.'))
+            if holiday.state not in ['confirm', 'refuse']:
+                raise UserError(_('Leave request state must be "Refused" or "To Approve" in order to reset to Draft.'))
+            holiday.write({
+                'state': 'draft'
+            })
+            linked_requests = holiday.mapped('linked_request_ids')
+            for linked_request in linked_requests:
+                linked_request.action_draft()
+            linked_requests.unlink()
+        return True

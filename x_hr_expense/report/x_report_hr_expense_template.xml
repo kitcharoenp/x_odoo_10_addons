@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="report_tax_hr_expense">
+      <t t-call="report.html_container">
+          <t t-foreach="docs" t-as="o">
+              <t t-call="report.external_layout">
+                <div class="page"
+                style="
+                    font-size: 7pt;
+                    font-family:Helvetica,Verdana,Arial,sans,Calibri;">
+                    <h5><center>หนังสือรับรองการหักภาษี ณ ที่จ่าย</center></h5>
+                    <p><center>ตามมาตรา 50 ทวิ แห่งประมวลรัษฎากร</center></p>
+
+
+
+                          <div class="row col-xs-12"  style="border-style: solid; border-width: 0.5mm; border-color: #000000; background-color: null; position: absolute;   height: 20.0mm; width: 200.0mm;">
+                            <div class="col-xs-6 col-sm-4">
+                              <span>ผู้มีหน้าที่เสียภาษี ณ ที่จ่าย :</span>
+                            </div>
+                              <div class="col-xs-6 col-sm-4">
+                                    <span>เลขประจำตัวผู้เสียภาษีอากร 13(หลัก)  </span>
+
+                              </div>
+                              <div class="col-xs-6  col-sm-4 ">
+                                  <span>ชื่อ:
+                                      <span t-field="o.company_id.name"/>
+                                    </span>
+                              </div>
+                              <div class="col-xs-12">
+                                  <p>ที่อยู่:
+                                      <span t-field="o.company_id.street"/>
+                                      <span t-field="o.company_id.city"/>
+                                      <span t-field="o.company_id.state_id"/>
+                                      <span t-field="o.company_id.zip"/>
+                                      <span t-field="o.company_id.country_id"/>
+                                    </p>
+
+                              </div>
+
+
+                            </div> <!-- <div class="row"> -->
+
+
+
+
+
+
+
+<div class="row col-xs-12 " style="border-style: solid; border-width: 0.5mm; border-color: #000000; background-color: null; position: absolute;   top: 33.0mm; ">
+                                      <div class="col-xs-6 col-sm-4">
+                                        <span>ผู้ถูกหักภาษี ณ ที่จ่าย :  </span>
+                                      </div>
+                                        <div class="col-xs-6 col-sm-4">
+                                              <span>เลขประจำตัวผู้เสียภาษีอากร 13(หลัก)  </span>
+
+                                        </div>
+                                        <div class="col-xs-6  col-sm-4 ">
+                                              <span>ชื่อ:
+                                                <span t-field="o.employee_id.name"/>
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12">
+                                              <span>ที่อยู่:
+                                                <span t-field="o.company_id.street"/>
+                                            </span>
+
+                    </div>                          </div>
+                    <div class="row col-xs-12 " style="border-style: solid; border-width: 0.5mm; border-color: #000000; background-color: null; position: absolute;   top: 55.0mm; ">
+                      <table >
+
+                                    <tr>
+                                        <td >
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                      </tr>
+
+                                </table>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-xs-4"  style="border-style: solid; border-width: 0.5mm; border-color: #000000; background-color: null; position: absolute;   top: 210.0mm; ">
+                        <span >คำเตือน    ผู้มึหน้าที่ออกหนังสือรับรองการหักภาษี ณ ที่จ่าย</span>
+                        <span class="col-xs-11" >ผ้าผื่นไม่ปฏิบัติตามมาตรา 50 ทวิ แห่งประมวล</span>
+                          <span class="col-xs-11">รัษฎากรต้องรับโทษทางอาญาตามมาตรา 25</span>
+                            <span class="col-xs-11">แห่งประมวลรัษฎากร</span>
+                      </div>
+
+                        <div class="col-xs-8" style="border-style: solid; border-width: 0.5mm; border-color: #000000; background-color: null; position: absolute;  left: 67.0mm; top: 210.0mm; ">
+                            <span class="col-xs-12 text-center">ขอรับรองว่าข้อความและตัวเลขดังกล่าวข้างต้นถูกต้องตรงกับความจริงทุกประการ</span>
+                              <span class="col-xs-12 text-center">ลงชื่อ _______________________________ ผู้จ่ายเงิน</span>
+                                <span class="col-xs-12 text-center">-----------</span>
+                                <span class="col-xs-12 text-center" >(วัน เดือน ปี ที่ออกหนังสือรับรอง)</span>
+
+
+                        </div>
+
+
+                      </div> <!-- <div class="row"> -->
+
+
+
+
+                  </div> <!-- class="page" -->
+
+
+
+
+
+
+
+              </t>
+          </t>
+        </t>
+
+  </template>
+
+
+
+
+    <report
+        id="action_report_hr_expense_sheet_print"
+        string="tax Report"
+        model="hr.expense"
+        report_type="qweb-pdf"
+        name="x_hr_expense.report_tax_hr_expense"
+        file="x_hr_expense.report_tax_hr_expense"
+    />
+
+</odoo>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="x_wht_document_income_section_template">
+
+        <table class="table withholding_tax">
+            <thead style="background-color: #eee">
+                <tr>
+                    <th class="col-xs-6">ประเภทเงินได้ที่จ่าย</th>
+                    <th class="col-xs-2">วัน เดือน ปี<br/>ที่จ่ายเงิน</th>
+                    <th class="col-xs-2">วัน เดือน ปี<br/>ที่จ่าย</th>
+                    <th class="col-xs-2">วัน เดือน ปี<br/>หัก ณ ที่จ่าย</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr>
+                    <td class='noborder_td'>1. เงินเดือน ค่าจ้าง เบี้ยเลี้ยง โบนัส ฯลฯ ตามมาตรา 40 (1)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td'>2. ค่าธรรมเนียม ค่านายหน้า ฯลฯ ตามมาตรา 40 (2)</td>
+                    <td>ค่าธรรมเนียม</td>
+                    <td>ค่าธรรมเนียม</td>
+                    <td>ค่าธรรมเนียม</td>
+                </tr>
+                <tr>
+                    <td class='noborder_td'>3. ค่าแห่งลิขสิทธิ์ ฯลฯ ตามมาตรา 40 (3)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td'>4. (ก) ค่าดอกเบี้ย ฯลฯ ตามมาตรา 40(4) (ก)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent1'>(ข) เงินปันผล เงินส่วนแบ่งกำไร ฯลฯ ตามมาตรา 40 (4) (ข) </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent2'>            (1) กรณีผู้ได้รับเงินปันผลได้รับเครดิตภาษี โดยจ่ายจาก</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'>กำไรสุทธิของกิจการที่ต้องเสียภาษีเงินได้นิติบุคคลในอัตราดังนี้</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'>(1.1) อัตราร้อยละ 30 ของกำไรสุทธิ</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'>(1.2) อัตราร้อยละ 25 ของกำไรสุทธิ</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'>(1.3) อัตราร้อยละ 20 ของกำไรสุทธิ</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'>(1.4) อัตราอื่น ๆ ระบุ _____________ ของกำไรสุทธิ</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent2'>(2) กรณีผู้ได้รับเงินปันผลไม่ได้รับเครดิตภาษี เนื่องจากจ่ายจาก</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'>(2.1) กำไรสุทธิของกิจการที่ได้รับยกเว้น</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'>(2.2) เงินปันผลหรือเงินส่วนแบ่งของกำไรที่ได้รับยกเว้นไม่ต้อง</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent4'>นำมารวมคำนวณเป็นรายได้เพื่อเสียภาษีเงินได้นิติบุคคล</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'>(2.3) กำไรสุทธิส่วนที่ได้หักผลขาดทุนสุทธิยกมาไม่เกิน 5 ปี</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent4'>ก่อนรอบระยะบัญชีปีปัจจุบัน</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'>(2.4) กำไรที่รับรู้ทางบัญชีโดยวิธีส่วนได้เสีย (equity method)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent3'> (2.5) อื่น ๆ (ระบุ)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td'>5. การจ่ายเงินได้ที่ต้องหักภาษี ณ ที่จ่าย ตามคำสั่งกรมสรรพากรที่ออกตาม</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent1'>    มาตรา 3 เตรส (ระบุ)_________________________________________</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent1'>    (เช่น รางวัล ส่วนลดหรือประโยชน์ใด ๆ เนื่องจากการส่งเสริมการขาย รางวัล</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent1'>    ในการประกวด การแข่งขัน การชิงโชค ค่าแสดงของนักแสดงสาธารณะ ค่าจ้าง</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td text_indent1'>     ทำของ ค่าโฆษณา ค่าเช่า ค่าขนส่ง ค่าบริการ ค่าเบี้ยประกันวินาศภัย ฯลฯ)</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td'>6. อื่น ๆระบุ   เช่น </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td' colspan="2">รวมเงินที่จ่ายและภาษีที่หักนำส่ง</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='noborder_td' colspan="4">รวมเงินภาษีที่หักนำส่ง (ตัวอักษร)</td>
+                </tr>
+            </tbody>
+        </table>
+
+            <table class="table border-black">
+                <tr>
+                    <td class="col-xs-1">ผู้จ่ายเงิน</td>
+                    <td class="col-xs-2">&#9744;(1) ออกภาษีให้ครั้งเดียว</td>
+                    <td class="col-xs-2">&#9744;(2) ออกภาษีให้ตลอดไป</td>
+                    <td class="col-xs-2">&#9745;(3) หักภาษี ณ ที่จ่าย</td>
+                    <td class="col-xs-2">&#9744;(4) อื่น ๆ …………………</td>
+                </tr>
+            </table>
+
+            <table class="table">
+                <tr>
+                    <td class="col-xs-1">
+                        คำเตือน
+                    </td>
+                    <td class="col-xs-4">
+                        <ul style="list-style-type: none;">
+            				<li>ผู้มีหน้าที่ออกหนังสือรับรองการหักภาษี ณ ที่จ่าย</li>
+            				<li>ฝ่าฝืนไม่ปฏิบัติตามมาตรา 50 ทวิ แห่งประมวล</li>
+            				<li>รัษฎากรต้องรับโทษทางอาญาตามมาตรา 25</li>
+            				<li>แห่งประมวลรัษฎากร</li>
+            			</ul>
+                    </td>
+                    <td class="col-xs-7 text-center">
+                        <ul style="list-style-type: none;">
+            				<li>ขอรับรองว่าข้อความและตัวเลขดังกล่าวข้างต้นถูกต้องตรงกับความจริงทุกประการ</li>
+            				<li><br/></li>
+            				<li>ลงชื่อ________________ผู้จ่ายเงิน</li>
+            				<li>16 ธ.ค. 16</li>
+                            <li>(  วัน   เดือน   ปี  ที่ออกหนังสือรับรอง)</li>
+            			</ul>
+                    </td>
+                </tr>
+            </table>
+
+    </template>
+</odoo>

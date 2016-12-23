@@ -1,0 +1,80 @@
+
+/* --- Generic Restyling and Resets --- */
+
+p {
+    font-family:AngsanaUPC,Helvetica,Verdana,Arial,sans,Calibri;
+    font-size: 7pt;
+}
+
+table {
+    font-family:Helvetica,Verdana,Arial,sans,Calibri;
+    font-size: 7pt;
+    border: 1px solid black !important;
+    margin-bottom: 5px !important;
+}
+
+td {
+    padding: 3px !important;
+}
+
+/* Table Styling */
+
+.header-document {
+    font-size: 9pt;
+    font-weight: bold;
+}
+
+.company-info {
+    font-size: 8pt;
+    font-weight: bold;
+}
+
+.tax-id {
+    font-weight: bold;
+}
+
+.tax-type {
+    font-weight: bold;
+}
+
+.sub-text {
+    font-size: 6pt;
+    font-style: italic;
+    padding-left: 0.25cm;
+}
+
+.sub-text-tax {
+    font-size: 6pt;
+    font-style: italic;
+}
+
+.withholding_tax table {
+    border: 1px solid black !important;
+}
+
+.withholding_tax th {
+    border: 1px solid black !important;
+    text-align: center;
+}
+
+.withholding_tax td {
+    border: 1px solid black;
+    padding: 3px !important;
+}
+.noborder_td {
+    border-bottom: none !important;
+    border-top: none !important;
+    padding: 3px !important;
+}
+.text_indent1 {
+    text-indent: 10px;
+}
+.text_indent2 {
+    text-indent: 20px;
+}
+.text_indent3 {
+    text-indent: 30px;
+}
+.text_indent4 {
+    text-indent: 50px;
+}

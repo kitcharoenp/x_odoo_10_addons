@@ -18,7 +18,7 @@
     </record>
 
     <report id="x_withholding_tax_document_pdf_report"
-            model="hr.expense"
+            model="withholding.tax.document"
             string="Withholding Tax Document"
             report_type="qweb-pdf"
             name="x_account_withholding_tax_document.x_withholding_tax_document_template"

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="x_withholding_tax_document_menu_view"
+        action="x_withholding_tax_document_act_window"
+        groups="base.group_user"
+        name="Documents"
+        sequence="58"
+    />
+</odoo>

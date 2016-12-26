@@ -14,10 +14,36 @@
                     </h1>
                     <group>
                         <group>
-                            <field name="product_id" domain="[('type', 'in', ['product', 'consu'])]"/>
+                            <field name="product_id"/>
+                            <field
+                                name="unit_amount"
+                                required="1"
+                                widget="monetary"
+                                options="{'currency_field': 'currency_id'}"/>
+                            <label for="quantity"/>
+                            <div>
+                                <field name="quantity" class="oe_inline"/>
+                                <field name="product_uom_id"
+                                    widget="selection"
+                                    class="oe_inline"
+                                    groups="product.group_uom"/>
+                            </div>
+                            <field name="tax_ids"
+                                domain="[('type_tax_use', '=', 'purchase')]"
+                                widget="many2many_tags"
+                                groups="base.group_no_one"/>
                         </group>
                         <group>
+                            <field name="origin"/>
+                            <field name="partner_id"/>
+                            <field name="date"/>
                             <field name="employee_id"/>
+                        </group>
+                        <group>
+                            <field name="total_amount"
+                                widget='monetary'
+                                options="{'currency_field': 'currency_id'}"
+                            />
                         </group>
                     </group>
                 </sheet>

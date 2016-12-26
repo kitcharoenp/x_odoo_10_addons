@@ -8,8 +8,10 @@
         <field name="arch" type="xml">
             <tree string="Withholding Tax Document" >
                 <field name="name" />
+                <field name="partner_id" />
                 <field name="product_id" />
                 <field name="employee_id" />
+                <field name="date" />
             </tree>
         </field>
     </record>

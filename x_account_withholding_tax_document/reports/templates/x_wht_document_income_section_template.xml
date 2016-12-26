@@ -7,8 +7,8 @@
                 <tr>
                     <th class="col-xs-6">ประเภทเงินได้ที่จ่าย</th>
                     <th class="col-xs-2">วัน เดือน ปี<br/>ที่จ่ายเงิน</th>
-                    <th class="col-xs-2">วัน เดือน ปี<br/>ที่จ่าย</th>
-                    <th class="col-xs-2">วัน เดือน ปี<br/>หัก ณ ที่จ่าย</th>
+                    <th class="col-xs-2">จำนวนเงิน<br/>ที่จ่าย</th>
+                    <th class="col-xs-2">ภาษี<br/>หัก ณ ที่จ่าย</th>
                 </tr>
             </thead>
             <tbody >
@@ -20,9 +20,9 @@
                 </tr>
                 <tr>
                     <td class='noborder_td'>2. ค่าธรรมเนียม ค่านายหน้า ฯลฯ ตามมาตรา 40 (2)</td>
-                    <td>ค่าธรรมเนียม</td>
-                    <td>ค่าธรรมเนียม</td>
-                    <td>ค่าธรรมเนียม</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td class='noborder_td'>3. ค่าแห่งลิขสิทธิ์ ฯลฯ ตามมาตรา 40 (3)</td>
@@ -43,7 +43,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td class='noborder_td text_indent2'>            (1) กรณีผู้ได้รับเงินปันผลได้รับเครดิตภาษี โดยจ่ายจาก</td>
+                    <td class='noborder_td text_indent2'>(1) กรณีผู้ได้รับเงินปันผลได้รับเครดิตภาษี โดยจ่ายจาก</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -157,15 +157,42 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td class='noborder_td'>6. อื่น ๆระบุ   เช่น </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class='noborder_td'>6. อื่น ๆระบุ   เช่น
+                        <t t-if="o.product_id">
+                            <span t-field="o.product_id"/>
+                        </t>
+                        <t t-else="">
+                            _____________________________
+                        </t>
+                    </td>
+                    <td class="text-center">
+                        <t t-if="o.date">
+                            <span t-field="o.date"/>
+                        </t>
+                    </td>
+                    <td class="text-right">
+                        <t t-if="o.total_amount">
+                            <span t-field="o.total_amount"/>
+                        </t>
+                    </td>
+                    <td class="text-right">
+                        <t t-if="o.total_amount">
+                            <span t-esc="o.total_amount-o.untaxed_amount"/>
+                        </t>
+                    </td>
                 </tr>
                 <tr>
                     <td class='noborder_td' colspan="2">รวมเงินที่จ่ายและภาษีที่หักนำส่ง</td>
-                    <td></td>
-                    <td></td>
+                    <td class="text-right">
+                        <t t-if="o.total_amount">
+                            <span t-field="o.total_amount"/>
+                        </t>
+                    </td>
+                    <td class="text-right">
+                        <t t-if="o.total_amount">
+                            <span t-esc="o.total_amount-o.untaxed_amount"/>
+                        </t>
+                    </td>
                 </tr>
                 <tr>
                     <td class='noborder_td' colspan="4">รวมเงินภาษีที่หักนำส่ง (ตัวอักษร)</td>
@@ -201,7 +228,15 @@
             				<li>ขอรับรองว่าข้อความและตัวเลขดังกล่าวข้างต้นถูกต้องตรงกับความจริงทุกประการ</li>
             				<li><br/></li>
             				<li>ลงชื่อ________________ผู้จ่ายเงิน</li>
-            				<li>16 ธ.ค. 16</li>
+                            <li t-if="o.employee_id"><span t-field="o.employee_id"/></li>
+            				<li >
+                                <t t-if="o.date">
+                                    <span t-field="o.date"/>
+                                </t>
+                                <t t-else="">
+                                    ___ / ___ / ___
+                                </t>
+                            </li>
                             <li>(  วัน   เดือน   ปี  ที่ออกหนังสือรับรอง)</li>
             			</ul>
                     </td>

@@ -4,6 +4,7 @@
         <template id="x_withholding_tax_document_template">
 
             <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
                 <div class="page">
                     <!-- include CSS  -->
                     <xpath expr="." position="inside">
@@ -28,9 +29,11 @@
                                 ตามมาตรา 50 ทวิ แห่งประมวลรัษฎากร
                             </td>
                             <td class="col-xs-2">
-                                เล่มที่ ...........
+                                <t t-if="o.name">เล่มที่ <span t-field="o.name"/></t>
+                                <t t-else="">เล่มที่ ...........</t>
                                 <br/>
-                                เลขที่ ...........
+                                <t t-if="o.name">เลขที่ <span t-field="o.name"/></t>
+                                <t t-else="">เลขที่ ...........</t>
                             </td>
                         </tr>
                         <!-- The person liable to withhold tax -->
@@ -53,8 +56,8 @@
                         </tr>
 
                     </table>
-                    
                 </div> <!-- /.page -->
+            </t>
             </t>
 
         </template>

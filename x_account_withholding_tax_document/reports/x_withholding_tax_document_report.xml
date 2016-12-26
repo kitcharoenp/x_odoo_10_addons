@@ -5,7 +5,7 @@
     https://www.odoo.com/documentation/10.0/reference/reports.html
 -->
     <record id="x_withholding_tax_document_paperformat" model="report.paperformat">
-        <field name="name">Weekly Timesheet</field>
+        <field name="name">Withholding Tax</field>
         <field name="default" eval="True" />
         <field name="format">A4</field>
         <field name="orientation">Portrait</field>

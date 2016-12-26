@@ -1,14 +1,12 @@
 
 /* --- Generic Restyling and Resets --- */
-
-p {
+body {
     font-family:AngsanaUPC,Helvetica,Verdana,Arial,sans,Calibri;
-    font-size: 7pt;
 }
 
 table {
-    font-family:Helvetica,Verdana,Arial,sans,Calibri;
-    font-size: 7pt;
+    font-size: 9px;
+    border-top: 1px solid black !important;
     border: 1px solid black !important;
     margin-bottom: 5px !important;
 }
@@ -17,15 +15,28 @@ td {
     padding: 3px !important;
 }
 
-/* Table Styling */
-
-.header-document {
-    font-size: 9pt;
-    font-weight: bold;
+.copy {
+    font-size: 8px;
 }
 
+.main-header {
+    font-size: 20px;
+    font-weight: bold;
+}
+.sub-header {
+    font-size: 14px;
+}
+
+.book-no {
+    font-size: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+/* Table Styling */
+
 .company-info {
-    font-size: 8pt;
+    font-size: 12px;
     font-weight: bold;
 }
 
@@ -38,14 +49,20 @@ td {
 }
 
 .sub-text {
-    font-size: 6pt;
+    font-size: 8px;
     font-style: italic;
     padding-left: 0.25cm;
 }
 
 .sub-text-tax {
-    font-size: 6pt;
+    font-size: 8px;
     font-style: italic;
+}
+
+.thead-income {
+    background-color: #eee;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .withholding_tax table {
@@ -77,4 +94,46 @@ td {
 }
 .text_indent4 {
     text-indent: 50px;
+}
+
+.income-line {
+    font-size: 11px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.total-amount-title {
+    text-indent: 40px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.total-amount-text {
+    font-size: 11px;
+    background-color: #eee;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.payer {
+    font-size: 11px;
+}
+
+.signature {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.caution {
+    font-size: 10px;
+    margin-left: 40px;
+}
+
+.footer-table td {
+    border: 1px solid black;
+    padding: 3px !important;
+}
+.footer-table table {
+    border-spacing: 30px !important;
+    border-collapse: separate !important;
 }

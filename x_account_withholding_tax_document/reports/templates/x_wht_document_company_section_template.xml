@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="x_wht_document_company_section_template">
-        <table class="table">
+        <table class="table border-black">
             <tr>
                 <td>
 
@@ -14,7 +14,12 @@
                         <div class='col-xs-6'>
                             <span class="tax-id">
                                 เลขประจําตัวผู้เสียภาษีอากร (13 หลัก )*
-                                ....................................................
+                                <t t-if="o.company_id.vat">
+                                    <u>   <span t-field="o.company_id.vat"/></u>
+                                </t>
+                                <t t-else="">
+                                _____________________________
+                                </t>
                             </span>
 
                         </div>
@@ -25,11 +30,10 @@
                             <span class="company-info">
                                 ชื่อ
                                 <t t-if="o.company_id">
-                                    <span t-field="o.company_id"/>
+                                    <i><u><span t-field="o.company_id"/></u></i>
                                 </t>
                                 <t t-else="">
-                            .............................................
-                            ................................................
+                            ________________________
                                 </t>
                                 <br/>
                             </span>
@@ -40,7 +44,7 @@
                         <div class='col-xs-5'>
                             <span class="tax-id">
                                 เลขประจําตัวผู้เสียภาษีอากร
-                                ................................................
+                                __________________________
                                 <br/>
                             </span>
                             <span class="sub-text">
@@ -51,10 +55,21 @@
 
                     <div class="row">
                         <div class='col-xs-12'>
-                            <span class="company-info">ที่อยู่
-...............................................................................................
-...............................................................................................
-<br/>
+                            <span class="company-info">
+                                ที่อยู่
+                                <t t-if="o.company_id.street">
+                                    <i><u>
+                                        <span t-field="o.company_id.street"/>
+                                        <span t-field="o.company_id.street2"/>
+                                        <span t-field="o.company_id.city"/>
+                                        <span t-field="o.company_id.state_id"/>
+                                        <span t-field="o.company_id.zip"/>
+                                    </u></i>
+                                </t>
+                                <t t-else="">
+________________________________________________________________________________________________________________
+                                </t>
+                            <br/>
                             </span>
                             <span class="sub-text">
                                 (ให้ระบุ ชื่ออาคาร/หมู่บ้าน ห้องเลขที่ ชั้นที่ เลขที่ ตรอก/ซอย หมู่ที่ ถนน ตําบล/แขวง อําเภอ/เขต จังหวัด )

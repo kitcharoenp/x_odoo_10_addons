@@ -3,7 +3,7 @@
     <template id="x_wht_document_income_section_template">
 
         <table class="table withholding_tax">
-            <thead style="background-color: #eee">
+            <thead class="thead-income">
                 <tr>
                     <th class="col-xs-6">ประเภทเงินได้ที่จ่าย</th>
                     <th class="col-xs-2">วัน เดือน ปี<br/>ที่จ่ายเงิน</th>
@@ -159,76 +159,83 @@
                 <tr>
                     <td class='noborder_td'>6. อื่น ๆระบุ   เช่น
                         <t t-if="o.product_id">
-                            <span t-field="o.product_id"/>
+                            <u>
+                                <span class="income-line"
+                                    t-field="o.product_id"/>
+                            </u>
                         </t>
                         <t t-else="">
                             _____________________________
                         </t>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center income-line">
                         <t t-if="o.date">
                             <span t-field="o.date"/>
                         </t>
                     </td>
-                    <td class="text-right">
+                    <td class="text-right income-line">
                         <t t-if="o.total_amount">
                             <span t-field="o.total_amount"/>
                         </t>
                     </td>
-                    <td class="text-right">
+                    <td class="text-right income-line">
                         <t t-if="o.total_amount">
                             <span t-esc="o.total_amount-o.untaxed_amount"/>
                         </t>
                     </td>
                 </tr>
                 <tr>
-                    <td class='noborder_td' colspan="2">รวมเงินที่จ่ายและภาษีที่หักนำส่ง</td>
-                    <td class="text-right">
+                    <td class='noborder_td income-line text-right ' colspan="2">รวมเงินที่จ่ายและภาษีที่หักนำส่ง</td>
+                    <td class="text-right income-line">
                         <t t-if="o.total_amount">
                             <span t-field="o.total_amount"/>
                         </t>
                     </td>
-                    <td class="text-right">
+                    <td class="text-right income-line">
                         <t t-if="o.total_amount">
                             <span t-esc="o.total_amount-o.untaxed_amount"/>
                         </t>
                     </td>
                 </tr>
                 <tr>
-                    <td class='noborder_td' colspan="4">รวมเงินภาษีที่หักนำส่ง (ตัวอักษร)</td>
+                    <td class='noborder_td total-amount-title' colspan="4">
+                        <span>
+                            รวมเงินภาษีที่หักนำส่ง (ตัวอักษร)
+                        </span>
+                        <span class="total-amount-text" t-field="o.total_amount_text"/>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
             <table class="table border-black">
-                <tr>
-                    <td class="col-xs-1">ผู้จ่ายเงิน</td>
+                <tr class="payer">
+                    <td class="col-xs-1"><strong>ผู้จ่ายเงิน</strong></td>
                     <td class="col-xs-2">&#9744;(1) ออกภาษีให้ครั้งเดียว</td>
                     <td class="col-xs-2">&#9744;(2) ออกภาษีให้ตลอดไป</td>
-                    <td class="col-xs-2">&#9745;(3) หักภาษี ณ ที่จ่าย</td>
+                    <td class="col-xs-2"><strong>&#9745;(3) หักภาษี ณ ที่จ่าย</strong></td>
                     <td class="col-xs-2">&#9744;(4) อื่น ๆ …………………</td>
                 </tr>
             </table>
 
-            <table class="table">
+            <table class="table border-black footer-table">
                 <tr>
-                    <td class="col-xs-1">
-                        คำเตือน
+
+                    <td class="col-xs-5">
+                        <strong>คำเตือน</strong>:    ผู้มีหน้าที่ออกหนังสือรับรองการหักภาษี ณ ที่จ่าย<br/>
+            				<span class="caution">ฝ่าฝืนไม่ปฏิบัติตามมาตรา 50 ทวิ แห่งประมวล</span><br/>
+            				<span class="caution">รัษฎากรต้องรับโทษทางอาญาตามมาตรา 35</span><br/>
+            				<span class="caution">แห่งประมวลรัษฎากร</span>
                     </td>
-                    <td class="col-xs-4">
-                        <ul style="list-style-type: none;">
-            				<li>ผู้มีหน้าที่ออกหนังสือรับรองการหักภาษี ณ ที่จ่าย</li>
-            				<li>ฝ่าฝืนไม่ปฏิบัติตามมาตรา 50 ทวิ แห่งประมวล</li>
-            				<li>รัษฎากรต้องรับโทษทางอาญาตามมาตรา 25</li>
-            				<li>แห่งประมวลรัษฎากร</li>
-            			</ul>
-                    </td>
+
                     <td class="col-xs-7 text-center">
                         <ul style="list-style-type: none;">
             				<li>ขอรับรองว่าข้อความและตัวเลขดังกล่าวข้างต้นถูกต้องตรงกับความจริงทุกประการ</li>
             				<li><br/></li>
-            				<li>ลงชื่อ________________ผู้จ่ายเงิน</li>
-                            <li t-if="o.employee_id"><span t-field="o.employee_id"/></li>
+            				<li>ลงชื่อ_____________________________ผู้จ่ายเงิน</li>
+                            <li t-if="o.employee_id">
+                                <span class="signature" t-field="o.employee_id"/>
+                            </li>
             				<li >
                                 <t t-if="o.date">
                                     <span t-field="o.date"/>
@@ -240,6 +247,7 @@
                             <li>(  วัน   เดือน   ปี  ที่ออกหนังสือรับรอง)</li>
             			</ul>
                     </td>
+
                 </tr>
             </table>
 

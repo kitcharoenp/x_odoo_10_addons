@@ -44,6 +44,7 @@
                                 widget='monetary'
                                 options="{'currency_field': 'currency_id'}"
                             />
+                            <field name="total_amount_text"/>
                         </group>
                     </group>
                 </sheet>

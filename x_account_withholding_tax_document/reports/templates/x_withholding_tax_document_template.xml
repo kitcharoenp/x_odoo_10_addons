@@ -13,7 +13,7 @@
                             href="/x_account_withholding_tax_document/static/src/css/withholding_tax_document.css"/>
                     </xpath>
                     <!-- note on left top -->
-                    <p>
+                    <p class="copy">
                         <b>ฉบับที่ 1</b> (สําหรับผู้ถูกหักภาษี ณ ที่จ่าย ใช้แนบพร้อมกับแบบแสดงรายการภาษี )<br/>
                         <b>ฉบับที่ 2</b> (สําหรับผู้ถูกหักภาษี ณ ที่จ่าย เก็บไว้เป็นหลักฐาน)
                     </p>
@@ -21,36 +21,54 @@
                     <table class="table">
                         <!-- document header -->
                         <tr>
-                            <td class="col-xs-10 text-center">
-                                <span class="header-document">
+                            <td class="col-xs-2">
+                            </td>
+                            <td class="col-xs-8 text-center">
+                                <span class="main-header">
                                     หนังสือรับรองการหักภาษี ณ ที่จ่าย
                                 </span>
                                 <br/>
-                                ตามมาตรา 50 ทวิ แห่งประมวลรัษฎากร
+                                <p class="sub-header">ตามมาตรา 50 ทวิ แห่งประมวลรัษฎากร</p>
                             </td>
                             <td class="col-xs-2">
-                                <t t-if="o.name">เล่มที่ <span t-field="o.name"/></t>
-                                <t t-else="">เล่มที่ ...........</t>
+                            <span class="book-no">
                                 <br/>
-                                <t t-if="o.name">เลขที่ <span t-field="o.name"/></t>
-                                <t t-else="">เลขที่ ...........</t>
+                                <br/>
+                                <t t-if="o.name">
+                                    <t t-set="seq_split" t-value="o.name.split('-')"/>
+                                </t>
+
+                                <t t-if="seq_split[1]"><b>เล่มที่  </b>
+                                    <u><span t-esc="seq_split[0]"/>-
+                                        <span t-esc="seq_split[1]"/>
+                                    </u>
+                                </t>
+                                <t t-else=""><b>เล่มที่  </b> ...........</t>
+
+                                <br/>
+                                <t t-if="seq_split[2]"><b>เลขที่  </b>
+                                    <u><span t-esc="seq_split[2]"/></u>
+                                </t>
+                                <t t-else=""><b>เลขที่  </b> ...........</t>
+
+                            </span>
                             </td>
                         </tr>
                         <!-- The person liable to withhold tax -->
                         <tr>
-                            <td colspan="2">
+                            <td colspan="3">
                             <t t-call="x_account_withholding_tax_document.x_wht_document_company_section_template" />
                             </td>
                         </tr>
                         <!-- Taxpayer from whom tax is withheld -->
                         <tr>
-                            <td colspan="2">
+                            <td colspan="3">
                             <t t-call="x_account_withholding_tax_document.x_wht_document_taxpayer_section_template" />
                             </td>
                         </tr>
                         <!-- income list -->
                         <tr>
-                            <td colspan="2">
+                            <td colspan="3">
                                 <t t-call="x_account_withholding_tax_document.x_wht_document_income_section_template" />
                             </td>
                         </tr>

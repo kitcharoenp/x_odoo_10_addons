@@ -21,7 +21,7 @@
                         }
 
                         td {
-                            padding: 3px !important;
+                            padding: 5px !important;
                         }
 
                         .copy {
@@ -85,12 +85,12 @@
 
                         .withholding_tax td {
                             border: 1px solid black;
-                            padding: 3px !important;
+                            padding: 5px !important;
                         }
                         .noborder_td {
                             border-bottom: none !important;
                             border-top: none !important;
-                            padding: 3px !important;
+                            padding: 5px !important;
                         }
                         .text_indent1 {
                             text-indent: 10px;
@@ -140,7 +140,7 @@
 
                         .footer-table td {
                             border: 1px solid black;
-                            padding: 3px !important;
+                            padding: 5px !important;
                         }
                         .footer-table table {
                             border-spacing: 30px !important;

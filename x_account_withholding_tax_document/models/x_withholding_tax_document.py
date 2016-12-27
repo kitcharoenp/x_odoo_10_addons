@@ -51,7 +51,12 @@ class WithholdingTaxDocument(models.Model):
         'account.tax',
         string='Taxes')
     untaxed_amount = fields.Float(
-        string='Subtotal',
+        string='Untaxed',
+        store=True,
+        compute='_compute_amount',
+        digits=dp.get_precision('Account'))
+    taxed_amount = fields.Float(
+        string='Taxed',
         store=True,
         compute='_compute_amount',
         digits=dp.get_precision('Account'))
@@ -81,14 +86,15 @@ class WithholdingTaxDocument(models.Model):
     @api.depends('quantity', 'unit_amount', 'tax_ids', 'currency_id')
     def _compute_amount(self):
         for record in self:
-            record.untaxed_amount = record.unit_amount * record.quantity
             taxes = record.tax_ids.compute_all(
                 record.unit_amount,
                 record.currency_id,
                 record.quantity,
                 record.product_id,
                 record.employee_id.user_id.partner_id)
+            record.untaxed_amount = taxes.get('total_excluded')
             record.total_amount = taxes.get('total_included')
+            record.taxed_amount = record.total_amount - record.untaxed_amount
 
     @api.onchange('product_id')
     def _onchange_product_id(self):

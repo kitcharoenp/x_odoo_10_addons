@@ -7,16 +7,22 @@
     'category': 'Accounting & Finance',
     'description': """
         Withholding Tax Document""",
-    'depends': ['purchase', 'report'],
+    'depends': ['hr_contract',
+                'account',
+                'purchase',
+                'report'],
     'summary': 'Withholding Tax Document',
     'data': [
         # Menu and Action
         'actions/x_withholding_tax_document_act_window.xml',
+        'actions/x_withholding_tax_product_act_window.xml',
         'views/x_withholding_tax_document_menu_view.xml',
+        'views/x_withholding_tax_product_menu_view.xml',
         # Views
         'views/x_withholding_tax_document_form_view.xml',
         'views/x_withholding_tax_document_tree_view.xml',
         'views/x_withholding_tax_document_filter_view.xml',
+        'views/x_withholding_tax_product_form_view.xml',
         # Sequence
         'data/x_withholding_tax_document_sequence_data.xml',
 

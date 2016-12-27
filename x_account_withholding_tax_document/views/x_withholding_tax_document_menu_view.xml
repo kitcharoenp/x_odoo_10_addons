@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- main top menu for withholding tax document -->
     <menuitem
         id="x_withholding_tax_document_menu_view"
         action="x_withholding_tax_document_act_window"
@@ -7,4 +8,25 @@
         name="Documents"
         sequence="58"
     />
+    <!-- My withholding tax document menu-->
+    <menuitem
+        id="x_withholding_tax_document_title_menu"
+        name="My Documents"
+        parent="x_withholding_tax_document_menu_view"
+        sequence="90"
+    />
+
+    <menuitem
+        id="x_withholding_tax_document_my_menu"
+        name="My Withholding Tax Document"
+        parent="x_withholding_tax_document_title_menu"
+        action="x_withholding_tax_document_act_window"
+        sequence="90"
+    />
+
+    <record id="x_withholding_tax_document_menu_view"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
 </odoo>

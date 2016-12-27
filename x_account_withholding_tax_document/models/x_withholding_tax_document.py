@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 import odoo.addons.decimal_precision as dp
 
@@ -30,6 +31,7 @@ class WithholdingTaxDocument(models.Model):
     product_id = fields.Many2one(
         'product.product',
         string='Type of Income',
+        domain=[('for_withhoding_tax_doc', '=', True)],
         required=True)
     product_uom_id = fields.Many2one(
         'product.uom',
@@ -87,6 +89,23 @@ class WithholdingTaxDocument(models.Model):
                 record.product_id,
                 record.employee_id.user_id.partner_id)
             record.total_amount = taxes.get('total_included')
+
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
+        if self.product_id:
+            self.unit_amount = self.product_id.price_compute(
+                'standard_price')[self.product_id.id]
+            self.product_uom_id = self.product_id.uom_id
+            self.tax_ids = self.product_id.supplier_taxes_id
+
+    @api.onchange('product_uom_id')
+    def _onchange_product_uom_id(self):
+        if (self.product_id and
+                self.product_uom_id.category_id !=
+                self.product_id.uom_id.category_id):
+            raise UserError(_(
+                'Selected Unit of Measure does not belong to the same \
+                category as the product Unit of Measure'))
 
     @api.model
     def create(self, vals):

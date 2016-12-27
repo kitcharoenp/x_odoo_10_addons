@@ -31,7 +31,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td class='noborder_td'>4. (ก) ค่าดอกเบี้ย ฯลฯ ตามมาตรา 40(4) (ก)</td>
+                    <td class='noborder_td'>4. (ก) ค่าดอกเบี้ย ฯลฯ ตามมาตรา 40 (4) (ก)</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -157,7 +157,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td class='noborder_td'>6. อื่น ๆระบุ   เช่น
+                    <td class='noborder_td'>6. อื่น ๆ (ระบุ)
                         <t t-if="o.product_id">
                             <u>
                                 <span class="income-line"
@@ -222,7 +222,7 @@
                 <tr>
 
                     <td class="col-xs-5">
-                        <strong>คำเตือน</strong>:    ผู้มีหน้าที่ออกหนังสือรับรองการหักภาษี ณ ที่จ่าย<br/>
+                        <strong>คำเตือน</strong>:        ผู้มีหน้าที่ออกหนังสือรับรองการหักภาษี ณ ที่จ่าย<br/>
             				<span class="caution">ฝ่าฝืนไม่ปฏิบัติตามมาตรา 50 ทวิ แห่งประมวล</span><br/>
             				<span class="caution">รัษฎากรต้องรับโทษทางอาญาตามมาตรา 35</span><br/>
             				<span class="caution">แห่งประมวลรัษฎากร</span>

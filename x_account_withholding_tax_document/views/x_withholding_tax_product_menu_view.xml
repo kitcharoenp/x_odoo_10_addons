@@ -13,6 +13,7 @@
         name="Products"
         parent="x_withholding_tax_document_configuration_menu"
         action="x_withholding_tax_product_act_window"
+        groups="group_x_withholding_tax_document_manager"
         sequence="10"
     />
 

@@ -45,6 +45,7 @@ class WithholdingTaxDocument(models.Model):
         digits=dp.get_precision('Product Price'))
     quantity = fields.Float(
         required=True,
+        readonly=True,
         digits=dp.get_precision('Product Unit of Measure'),
         default=1)
     tax_ids = fields.Many2many(

@@ -7,12 +7,15 @@
     'category': 'Accounting & Finance',
     'description': """
         Withholding Tax Document""",
-    'depends': ['hr_contract',
-                'account',
+    'depends': ['hr_expense',
                 'purchase',
                 'report'],
     'summary': 'Withholding Tax Document',
     'data': [
+        # Security
+        'security/x_withholding_tax_document_groups.xml',
+        'security/ir.model.access.csv',
+        'security/ir_rule.xml',
         # Menu and Action
         'actions/x_withholding_tax_document_act_window.xml',
         'actions/x_withholding_tax_product_act_window.xml',

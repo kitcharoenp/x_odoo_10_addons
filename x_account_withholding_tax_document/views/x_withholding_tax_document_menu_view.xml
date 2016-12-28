@@ -7,6 +7,7 @@
         groups="base.group_user"
         name="Documents"
         sequence="58"
+        web_icon="x_withholding_tax_document,static/description/icon.png"
     />
     <!-- My withholding tax document menu-->
     <menuitem

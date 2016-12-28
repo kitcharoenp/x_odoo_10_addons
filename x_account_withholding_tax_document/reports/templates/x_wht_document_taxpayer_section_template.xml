@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="x_wht_document_taxpayer_section_template">
+        <style>
+            .indent_input_field {
+                padding-left: 0.25cm;
+                }
+        </style>
         <table class="table border-black">
             <tr>
                 <td>
@@ -15,7 +20,7 @@
                             <span class="tax-id">
                                 เลขประจําตัวผู้เสียภาษีอากร (13 หลัก )*
                                 <t t-if="o.partner_id.ref">
-                                    <u>   <span t-field="o.partner_id.ref"/></u>
+                                    <u><span class="indent_input_field" t-field="o.partner_id.ref"/></u>
                                 </t>
                                 <t t-else="">
                                 _____________________________
@@ -30,7 +35,7 @@
                             <span class="company-info">
                                 ชื่อ
                                 <t t-if="o.partner_id">
-                                    <i><u><span t-field="o.partner_id"/></u></i>
+                                    <i><u><span class="indent_input_field" t-field="o.partner_id"/></u></i>
                                 </t>
                                 <t t-else="">
                             ________________________
@@ -58,7 +63,7 @@
                             <span class="company-info">
                                 ที่อยู่
                                 <t t-if="o.partner_id.street">
-                                    <i><u>
+                                    <i><u class="indent_input_field">
                                         <span t-field="o.partner_id.street"/>
                                         <span t-field="o.partner_id.street2"/>
                                         <span t-field="o.partner_id.city"/>
@@ -92,7 +97,13 @@
                             &#9744; (3) <span class="tax-type">ภ.ง.ด.2</span>
                         </div>
                         <div class='col-xs-2'>
-                            &#9744; (4) <span class="tax-type">ภ.ง.ด.3</span>
+                            <t t-if="o.partner_id.is_company is False">
+                                &#9745;
+                            </t>
+                            <t t-else="">
+                                &#9744;
+                            </t>
+                                (4) <span class="tax-type">ภ.ง.ด.3</span>
                         </div>
                     </div>
 
@@ -110,7 +121,13 @@
                             &#9744; (6) <span class="tax-type">ภ.ง.ด.3ก</span>
                         </div>
                         <div class='col-xs-2'>
-                            &#9744; (7) <span class="tax-type">ภ.ง.ด.53</span>
+                            <t t-if="o.partner_id.is_company is True">
+                                &#9745;
+                            </t>
+                            <t t-else="">
+                                &#9744;
+                            </t>
+                             (7) <span class="tax-type">ภ.ง.ด.53</span>
                         </div>
                         <div class='col-xs-2'>
                             <br/>

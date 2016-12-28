@@ -179,21 +179,23 @@
                         </t>
                     </td>
                     <td class="text-right income-line">
-                        <t t-if="o.total_amount">
-                            <span t-esc="o.total_amount-o.untaxed_amount"/>
+                        <t t-if="o.taxed_amount">
+                            <span t-field="o.taxed_amount"/>
                         </t>
                     </td>
                 </tr>
                 <tr>
-                    <td class='noborder_td income-line text-right ' colspan="2">รวมเงินที่จ่ายและภาษีที่หักนำส่ง</td>
+                    <td class='noborder_td income-line text-right ' colspan="2">
+                        รวมเงินที่จ่ายและภาษีที่หักนำส่ง
+                    </td>
                     <td class="text-right income-line">
                         <t t-if="o.total_amount">
                             <span t-field="o.total_amount"/>
                         </t>
                     </td>
                     <td class="text-right income-line">
-                        <t t-if="o.total_amount">
-                            <span t-esc="o.total_amount-o.untaxed_amount"/>
+                        <t t-if="o.taxed_amount">
+                            <span t-field="o.taxed_amount" />
                         </t>
                     </td>
                 </tr>
@@ -232,9 +234,17 @@
                         <ul style="list-style-type: none;">
             				<li>ขอรับรองว่าข้อความและตัวเลขดังกล่าวข้างต้นถูกต้องตรงกับความจริงทุกประการ</li>
             				<li><br/></li>
-            				<li>ลงชื่อ_____________________________ผู้จ่ายเงิน</li>
-                            <li t-if="o.employee_id">
-                                <span class="signature" t-field="o.employee_id"/>
+                            <li >
+                                <t t-if="o.employee_id">
+                                    ลงชื่อ
+                                    <strong><u>______
+                                    <span class="signature" t-field="o.employee_id"/>
+                                    ______</u></strong>
+                                    ผู้จ่ายเงิน
+                                </t>
+                                <t t-else="">
+                                    ลงชื่อ_____________________________ผู้จ่ายเงิน
+                                </t>
                             </li>
             				<li >
                                 <t t-if="o.date">

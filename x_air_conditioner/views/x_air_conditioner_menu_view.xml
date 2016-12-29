@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- main top menu for air conditioner -->
+    <menuitem
+        id="x_air_conditioner_title_menu"
+        name="Air Conditioner"
+        sequence="58"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        web_icon="x_withholding_tax_document,static/description/icon.png"
+    />
+
+    <menuitem
+        id="x_air_conditioner_equipment_menu"
+        name="Air Conditioner"
+        parent="x_air_conditioner_title_menu"
+        action="x_air_conditioner_equipment_act_window"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="2"/>
+
+    <menuitem
+        id="x_air_conditioner_maintenance_menu"
+        name="Maintenance Requests"
+        parent="x_air_conditioner_title_menu"
+        action="x_air_conditioner_maintenance_act_window"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="1"/>
+
+        <record id="x_air_conditioner_title_menu"
+                model="ir.ui.menu">
+            <field name="load_xmlid" eval="True"/>
+        </record>
+
+</odoo>

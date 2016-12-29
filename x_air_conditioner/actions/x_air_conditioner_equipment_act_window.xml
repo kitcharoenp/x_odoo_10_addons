@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Air Conditioner : actions -->
+    <record id="x_air_conditioner_equipment_act_window" model="ir.actions.act_window">
+        <field name="name">Air Conditioner</field>
+        <field name="res_model">maintenance.equipment</field>
+        <field name="domain">[('category_id', '=', 'Computers')]</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="maintenance.hr_equipment_view_kanban"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new Air Conditioner.
+            </p><p>
+                This application helps you to track Air Conditioner used by employees.
+                Create some Air Conditioner and link each Air Conditioner to
+                an employee or departement. You will manage allocations, issues
+                and maintenance of Air Conditioner.
+            </p>
+        </field>
+    </record>
+
+</odoo>

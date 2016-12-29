@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Air Conditioner : actions -->
+    <record id="x_air_conditioner_maintenance_act_window" model="ir.actions.act_window">
+        <field name="name">Air Conditioner</field>
+        <field name="res_model">maintenance.equipment</field>
+        <field name="domain">[('category_id', '=', 'Computers')]</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="maintenance.hr_equipment_view_kanban"/>
+    </record>
+
+    <!-- Air Conditioner Maintenance.request : actions -->
+    <record id="x_air_conditioner_maintenance_act_window" model="ir.actions.act_window">
+        <field name="name">Air Conditioner Maintenance Requests</field>
+        <field name="res_model">maintenance.request</field>
+        <field name="view_mode">kanban,tree,form,pivot,graph,calendar</field>
+        <field name="domain">[('category_id', '=', 'Computers')]</field>
+        <field name="context">{'default_technician_user_id': uid}</field>
+        <field name="view_id" ref="maintenance.hr_equipment_request_view_kanban"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new maintenance request.
+            </p><p>
+                Follow the process of the request and communicate with the collaborator.
+            </p>
+        </field>
+    </record>
+
+</odoo>

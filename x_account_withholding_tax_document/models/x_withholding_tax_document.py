@@ -80,9 +80,12 @@ class WithholdingTaxDocument(models.Model):
         'res.partner',
         string='Vendor',
         required=True,
+        domain="[('supplier','=',True)]",
         help='Choose vendor for whom will be withholded tax.')
     origin = fields.Char(string="Source Document")
-    total_amount_text = fields.Char(string="Total Amount (Text)")
+    total_amount_text = fields.Char(
+        string="Total Amount (Text)",
+        required=True)
 
     @api.depends('quantity', 'unit_amount', 'tax_ids', 'currency_id')
     def _compute_amount(self):

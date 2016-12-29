@@ -25,6 +25,14 @@
         sequence="90"
     />
 
+    <menuitem
+        id="x_withholding_tax_document_vendors_menu"
+        name="Vendors"
+        parent="x_withholding_tax_document_title_menu"
+        action="base.action_partner_supplier_form"
+        sequence="97"
+    />
+
     <record id="x_withholding_tax_document_menu_view"
             model="ir.ui.menu">
         <field name="load_xmlid" eval="True"/>

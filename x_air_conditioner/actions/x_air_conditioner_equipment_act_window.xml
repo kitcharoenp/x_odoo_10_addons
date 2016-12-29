@@ -4,7 +4,8 @@
     <record id="x_air_conditioner_equipment_act_window" model="ir.actions.act_window">
         <field name="name">Air Conditioner</field>
         <field name="res_model">maintenance.equipment</field>
-        <field name="domain">[('category_id', '=', 'Computers')]</field>
+        <field name="domain">[
+            ('category_id', '=', 'Air Conditioner')]</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="view_id" ref="maintenance.hr_equipment_view_kanban"/>
         <field name="help" type="html">

@@ -13,6 +13,8 @@
         'actions/x_air_conditioner_equipment_act_window.xml',
         'actions/x_air_conditioner_maintenance_act_window.xml',
         'views/x_air_conditioner_menu_view.xml',
+        # Resource data
+        'data/x_air_conditioner_data.xml',
     ],
     'demo': [],
     'installable': True,

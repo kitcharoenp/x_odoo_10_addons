@@ -14,7 +14,7 @@
         <field name="name">Air Conditioner Maintenance Requests</field>
         <field name="res_model">maintenance.request</field>
         <field name="view_mode">kanban,tree,form,pivot,graph,calendar</field>
-        <field name="domain">[('category_id', '=', 'Computers')]</field>
+        <field name="domain">[('category_id', '=', 'Air Conditioner')]</field>
         <field name="context">{'default_technician_user_id': uid}</field>
         <field name="view_id" ref="maintenance.hr_equipment_request_view_kanban"/>
         <field name="help" type="html">

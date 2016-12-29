@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+    <!-- Resource: maintenance.equipment.category -->
+        <record id="equipment_category_air_conditioner"
+            model="maintenance.equipment.category">
+            <field name="name">Air Conditioner</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Air Conditioner equiment form : views -->
+    <record id="x_air_conditioner_maintenance_form_view" model="ir.ui.view">
+        <field name="name">Air Conditioner Equipment Form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='category_id']" position="attributes">
+                <attribute name='invisible'>1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

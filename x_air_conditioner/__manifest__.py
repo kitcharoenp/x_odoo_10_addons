@@ -11,6 +11,7 @@
     'data': [
         # Form
         'views/x_air_conditioner_equipment_form_view.xml',
+        'views/x_air_conditioner_maintenance_form_view.xml',
         # Menus and Actions
         'actions/x_air_conditioner_equipment_act_window.xml',
         'actions/x_air_conditioner_maintenance_act_window.xml',

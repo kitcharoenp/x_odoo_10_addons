@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Air Conditioner : actions -->
+    <!-- Air Conditioner equipment : actions -->
     <record id="x_air_conditioner_equipment_act_window" model="ir.actions.act_window">
         <field name="name">Air Conditioner</field>
         <field name="res_model">maintenance.equipment</field>

@@ -4,9 +4,10 @@
     <record id="x_air_conditioner_maintenance_act_window" model="ir.actions.act_window">
         <field name="name">Air Conditioner Maintenance Requests</field>
         <field name="res_model">maintenance.request</field>
+        <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form,pivot,graph,calendar</field>
-        <field name="domain">[('category_id', '=', 'Air Conditioner')]</field>
-        <field name="view_id" ref="maintenance.hr_equipment_request_view_kanban"/>
+        <field name="domain">[
+            ('category_id', '=', 'Air Conditioner')]</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to add a new Air Conditioner maintenance request.

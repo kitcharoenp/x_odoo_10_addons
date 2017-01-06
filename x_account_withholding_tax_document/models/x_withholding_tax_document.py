@@ -84,8 +84,9 @@ class WithholdingTaxDocument(models.Model):
         help='Choose vendor for whom will be withholded tax.')
     origin = fields.Char(string="Source Document")
     total_amount_text = fields.Char(
-        string="Total Amount (Text)",
-        required=True)
+        string="Total Taxed (in letters)",
+        compute='_compute_amount',
+        store=True)
 
     @api.depends('quantity', 'unit_amount', 'tax_ids', 'currency_id')
     def _compute_amount(self):
@@ -99,6 +100,8 @@ class WithholdingTaxDocument(models.Model):
             record.untaxed_amount = taxes.get('total_excluded')
             record.total_amount = taxes.get('total_included')
             record.taxed_amount = record.total_amount - record.untaxed_amount
+            record.total_amount_text = self._compute_amount_in_letter(
+                            record.taxed_amount)
 
     @api.onchange('product_id')
     def _onchange_product_id(self):
@@ -123,4 +126,42 @@ class WithholdingTaxDocument(models.Model):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'withholding.tax.document') or _('New')
         result = super(WithholdingTaxDocument, self).create(vals)
+        return result
+
+    def _thai_unit_process(self, val):
+        thai_number = (
+            "ศูนย์", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด",
+            "แปด", "เก้า")
+        unit = ("", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน")
+        length = len(val) > 1
+        result = ''
+        for index, current in enumerate(map(int, val)):
+            if current:
+                if index:
+                    result = unit[index] + result
+
+                if length and current == 1 and index == 0:
+                    result += 'เอ็ด'
+                elif index == 1 and current == 2:
+                    result = 'ยี่' + result
+                elif index != 1 or current != 1:
+                    result = thai_number[current] + result
+        return result
+
+    def _thai_num2text(self, num_val):
+        inverse_num_val = str(num_val)[::-1]
+        n_list = [inverse_num_val[i:i + 6].rstrip("0") for i in range(
+                                                0, len(inverse_num_val), 6)]
+        result = self._thai_unit_process(n_list.pop(0))
+
+        for i in n_list:
+            result = self._thai_unit_process(i) + 'ล้าน' + result
+        return result
+
+    def _compute_amount_in_letter(self, float_val):
+        float_val = format(float_val, ".2f")
+        float_val_split = str(float_val).split('.')
+        result = self._thai_num2text(float_val_split[0]) + "บาท"
+        if len(float_val_split) > 1 and int(float_val_split[1][0:2]) > 0:
+            result += self._thai_num2text(float_val_split[1][0:2]) + "สตางค์"
         return result

@@ -11,8 +11,6 @@
                         /* --- Generic Restyling and Resets --- */
                         body {
                             font-family:freeserif;
-                            width: 210mm;
-                            height: 297mm;
                         }
 
                         table {
@@ -162,7 +160,7 @@
                         <b>ฉบับที่ 2</b> (สําหรับผู้ถูกหักภาษี ณ ที่จ่าย เก็บไว้เป็นหลักฐาน)
                     </p>
                     <!-- main table -->
-                    <table class="table">
+                    <table class="table" style= "height: 277mm;" >
                         <!-- document header -->
                         <tr>
                             <td class="col-xs-2">

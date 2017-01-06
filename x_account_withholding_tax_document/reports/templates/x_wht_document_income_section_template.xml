@@ -224,7 +224,8 @@
                 <tr>
 
                     <td class="col-xs-5">
-                        <strong>คำเตือน</strong>:        ผู้มีหน้าที่ออกหนังสือรับรองการหักภาษี ณ ที่จ่าย<br/>
+                        <strong>คำเตือน</strong>:
+                            <span class="caution_1">ผู้มีหน้าที่ออกหนังสือรับรองการหักภาษี ณ ที่จ่าย</span><br/>
             				<span class="caution">ฝ่าฝืนไม่ปฏิบัติตามมาตรา 50 ทวิ แห่งประมวล</span><br/>
             				<span class="caution">รัษฎากรต้องรับโทษทางอาญาตามมาตรา 35</span><br/>
             				<span class="caution">แห่งประมวลรัษฎากร</span>

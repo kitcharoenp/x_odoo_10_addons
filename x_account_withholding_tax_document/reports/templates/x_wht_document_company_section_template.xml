@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="x_wht_document_company_section_template">
-        .indent_input_field {
-            padding-left: 0.25cm;
-            }
+        <style>
+            .indent_input_field {
+                padding-left: 0.25cm;
+                }
+        </style>
         <table class="table border-black">
             <tr>
                 <td>

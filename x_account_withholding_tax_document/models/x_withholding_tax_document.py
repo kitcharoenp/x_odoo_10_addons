@@ -20,7 +20,7 @@ class WithholdingTaxDocument(models.Model):
         copy=False,
         default=lambda self: _('New'))
     date = fields.Date(
-        string="Date Paid",
+        string="Payment Date",
         default=fields.Date.context_today)
     employee_id = fields.Many2one(
         'hr.employee',
@@ -40,7 +40,7 @@ class WithholdingTaxDocument(models.Model):
         default=lambda self: self.env['product.uom'].search(
             [], limit=1, order='id'))
     unit_amount = fields.Float(
-        string='Unit Price',
+        string='Amount',
         required=True,
         digits=dp.get_precision('Product Price'))
     quantity = fields.Float(
@@ -83,10 +83,14 @@ class WithholdingTaxDocument(models.Model):
         domain="[('supplier','=',True)]",
         help='Choose vendor for whom will be withholded tax.')
     origin = fields.Char(string="Source Document")
-    total_amount_text = fields.Char(
-        string="Total Taxed (in letters)",
+    taxed_in_text = fields.Char(
+        string="Taxed (in Text)",
         compute='_compute_amount',
         store=True)
+    sending_date = fields.Date(
+        string="Sending Date",
+        default=fields.Date.context_today)
+    description = fields.Text('Description')
 
     @api.depends('quantity', 'unit_amount', 'tax_ids', 'currency_id')
     def _compute_amount(self):
@@ -100,7 +104,7 @@ class WithholdingTaxDocument(models.Model):
             record.untaxed_amount = taxes.get('total_excluded')
             record.total_amount = taxes.get('total_included')
             record.taxed_amount = record.total_amount - record.untaxed_amount
-            record.total_amount_text = self._compute_amount_in_letter(
+            record.taxed_in_text = self._compute_amount_in_letter(
                             record.taxed_amount)
 
     @api.onchange('product_id')

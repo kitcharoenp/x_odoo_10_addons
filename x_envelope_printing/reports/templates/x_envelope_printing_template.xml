@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="x_envelope_printing_template">
+
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+
+                <t t-set="had_shipping_address" t-value="0" />
+
+                <t t-foreach="o.child_ids" t-as="child_id">
+                <t t-if="child_id['type'] == 'delivery' and not had_shipping_address">
+                    <t t-set="had_shipping_address" t-value="1" />
+                    <span t-field="o.name"/><br/>
+                    <span t-field="child_id.street"/>
+                    <span t-if="child_id.street2">
+                        <span t-field="child_id.street2"/><br/>
+                    </span>
+                    <span t-field="child_id.city"/>
+                    <span t-field="child_id.state_id"/><br/>
+                    <span t-field="child_id.zip"/><br/>
+                 </t>
+                </t>
+
+                 <t t-if="not had_shipping_address">
+                     <span t-if="o.name"><span t-field="o.name"/><br/></span>
+                     <span t-if="o.street"><span t-field="o.street"/><br/></span>
+                     <span t-if="o.street2"><span t-field="o.street2"/><br/></span>
+                     <span t-if="o.city"><span t-field="o.city"/></span>
+                     <span t-if="o.state_id"><span t-field="o.state_id"/><br/></span>
+                     <span t-if="o.zip"><span t-field="o.zip"/><br/></span>
+                 </t>
+
+                            </div>
+
+                        </div> <!-- /.row -->
+                    </div> <!-- /.page -->
+
+                </t>
+            </t>
+
+        </template>
+    </data>
+</odoo>

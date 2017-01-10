@@ -6,6 +6,15 @@
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
+                        <!-- include CSS  -->
+                        <style>
+                            /* --- s --- */
+                            body {
+                                font-family:freeserif;
+                                font-size: 19px;
+                                font-weight: bold;
+                            }
+                        </style>
                         <div class="row">
                             <div class="col-xs-12 text-center">
 
@@ -27,7 +36,7 @@
 
                  <t t-if="not had_shipping_address">
                      <span t-if="o.name"><span t-field="o.name"/><br/></span>
-                     <span t-if="o.street"><span t-field="o.street"/><br/></span>
+                     <span t-if="o.street"><span t-field="o.street"/></span>
                      <span t-if="o.street2"><span t-field="o.street2"/><br/></span>
                      <span t-if="o.city"><span t-field="o.city"/></span>
                      <span t-if="o.state_id"><span t-field="o.state_id"/><br/></span>

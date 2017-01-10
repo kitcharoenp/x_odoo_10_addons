@@ -39,6 +39,7 @@
                             <field name="partner_id" options="{'no_create': True}"/>
                             <field name="date"/>
                             <field name="employee_id" options="{'no_create': True}"/>
+                            <field name="sending_date"/>
                         </group>
                         <group>
                             <field name="untaxed_amount"
@@ -53,9 +54,10 @@
                                 widget='monetary'
                                 options="{'currency_field': 'currency_id'}"
                             />
-                            <field name="total_amount_text"/>
+                            <field name="taxed_in_text"/>
                         </group>
                     </group>
+                    <field name='description' placeholder="Internal Note ......."/>
                 </sheet>
 
                 <div class="oe_chatter">

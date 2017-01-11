@@ -15,10 +15,11 @@
                         <field name="x_end_date" required="1"/>
                         <field name="name"/>
                         <field name="project_id"
+                            string="Customer/Project"
                             required="1"
                             options="{'no_open': True, 'no_create': True}" />
                         <field name="x_vehicle_id"
-                            options="{'no_open': True, 'no_create': True}"/>
+                            options="{'no_open': False, 'no_create': True}"/>
                         <field name="unit_amount"
                             widget="float_time"
                             string="Hours"
@@ -39,10 +40,10 @@
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
                                 <field name="project_id"
+                                    string="Customer/Project"
                                     required="1"
-                                    options="{'no_open': True, 'no_create': True}" />
-                                <field name="x_vehicle_id"
-                                    options="{'no_open': True, 'no_create': True}"/>
+                                    options="{'no_open': True,
+                                        'no_create': True}" />
                                 <field name="name" invisible="1"/>
                                 <field name="unit_amount"
                                         widget="float_time"
@@ -54,7 +55,12 @@
                             <group>
                                 <field name="x_notes"
                                     required="1"
-                                    placeholder="Write here all other information relative to this activity" />
+                                    placeholder="Write here all other \
+                                        information relative to this activity"/>
+                                <field name="x_vehicle_id"
+                                        options="{'no_open': False,
+                                            'no_create': True}"/>
+                                <field name="x_odometer"/>
                             </group>
 
                         </group>
@@ -81,10 +87,9 @@
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
                                 <field name="project_id"
+                                    string="Customer/Project"
                                     required="1"
                                     options="{'no_open': True, 'no_create': True}" />
-                                <field name="x_vehicle_id"
-                                    options="{'no_open': True, 'no_create': True}"/>
                                 <field name="name" invisible="1"/>
                                 <field name="unit_amount"
                                         widget="float_time"
@@ -97,6 +102,10 @@
                                 <field name="x_notes"
                                     required="1"
                                     placeholder="Write here all other information relative to this activity" />
+                                <field name="x_vehicle_id"
+                                        options="{'no_open': False,
+                                            'no_create': True}"/>
+                                <field name="x_odometer"/>
                             </group>
                         </group>
                     </sheet>

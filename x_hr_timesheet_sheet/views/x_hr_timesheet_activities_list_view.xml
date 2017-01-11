@@ -15,7 +15,9 @@
                     <field name="x_end_date"/>
                     <field name="user_id" required="1" options='{"no_open": True}'/>
                     <field name="name"/>
-                    <field name="project_id" required="1"/>
+                    <field name="project_id"
+                        string="Customer/Project"
+                        required="1"/>
                     <field name="task_id"
                         invisible="1"
                         context="{'default_project_id': project_id}"

@@ -32,6 +32,15 @@ class AccountAnalyticLine(models.Model):
         string='Note',)
     is_overtime = fields.Boolean(
         string='Overtime')
+    x_odometer_id = fields.Many2one(
+        'fleet.vehicle.odometer',
+        string='Odometer',
+        help='Odometer measure of the vehicle at the moment of this activity')
+    x_odometer = fields.Float(
+        string='Odometer Value',
+        compute="_get_odometer",
+        inverse='_set_odometer',
+        help='Odometer measure of the vehicle at the moment of this activity')
 
     @api.onchange('x_start_date')
     def _compute_date_from_x_start_date(self):
@@ -128,3 +137,21 @@ class AccountAnalyticLine(models.Model):
                     raise UserError(_('You cannot modify an entry in a \
                         confirmed timesheet.'))
         return True
+
+    def _get_odometer(self):
+        for record in self:
+            if record.x_odometer_id:
+                record.x_odometer = record.x_odometer_id.value
+
+    def _set_odometer(self):
+        for record in self:
+            if record.x_vehicle_id:
+                if not record.x_odometer:
+                    raise UserError(_(
+                        'Emptying the odometer value of a vehicle is not allowed.'))
+            odometer = self.env['fleet.vehicle.odometer'].create({
+                'value': record.x_odometer,
+                'date': record.date or fields.Date.context_today(record),
+                'vehicle_id': record.x_vehicle_id.id
+            })
+            self.x_odometer_id = odometer

@@ -204,7 +204,7 @@
                         <span>
                             รวมเงินภาษีที่หักนำส่ง (ตัวอักษร)
                         </span>
-                        <span class="total-amount-text" t-field="o.total_amount_text"/>
+                        <span class="total-amount-text" t-field="o.taxed_in_text"/>
                     </td>
                 </tr>
             </tbody>

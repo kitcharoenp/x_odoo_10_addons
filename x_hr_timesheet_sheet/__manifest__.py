@@ -8,12 +8,13 @@
     'description': """
 Extended Timesheet with following :
 -------------
-    * Set the employee_id field to readonly
-    * Double Validate define in a department
+    * Added vehicle and odometer in activity timesheet
+    * Auto record vehicle odometer log when created activity
+    * Double validate timesheet by choosed manager
     * Set default search activities to own
     * Only edit own activities
-    * Added the start, end, vehicle, note and overtime field in the activities
-    * Changed the timesheets line inline edit to popup
+    * Added start/end time, note and overtime field in the activity
+    * Changed activity line to popup edit
         """,
     'depends': ['hr_timesheet_sheet', 'fleet', 'report'],
     'summary': 'Timesheets',

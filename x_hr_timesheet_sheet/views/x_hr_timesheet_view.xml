@@ -67,7 +67,7 @@
                 </field>
 
                 <!-- set employee_id as readonly -->
-                <xpath expr="//notebook/page[@string='Summary']" position="replace">
+                <xpath expr="//form/sheet/notebook/page[1]" position="replace">
                     <page string="Summary">
                         <widget
                             type="weekly_timesheet"
@@ -76,7 +76,7 @@
                     </page>
                 </xpath>
 
-                <xpath expr="//notebook/page[@string='Details']" position="after">
+                <xpath expr="//form/sheet/notebook/page[2]" position="after">
                     <page string="Validation">
                         <group>
                             <group string="Validation">

@@ -16,6 +16,7 @@
                         <field name="name"/>
                         <field name="project_id"
                             string="Customer/Project"
+                            filter_domain="[('project_id','ilike',self)]"
                             required="1"
                             options="{'no_open': True, 'no_create': True}" />
                         <field name="x_vehicle_id"
@@ -41,6 +42,7 @@
                                 <field name="x_end_date" required="1"/>
                                 <field name="project_id"
                                     string="Customer/Project"
+                                    filter_domain="[('project_id','ilike',self)]"
                                     required="1"
                                     options="{'no_open': True,
                                         'no_create': True}" />
@@ -87,6 +89,7 @@
                                 <field name="x_end_date" required="1"/>
                                 <field name="project_id"
                                     string="Customer/Project"
+                                    filter_domain="[('project_id','ilike',self)]"
                                     required="1"
                                     options="{'no_open': True, 'no_create': True}" />
                                 <field name="name" invisible="1"/>

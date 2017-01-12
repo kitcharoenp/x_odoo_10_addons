@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Extended Timesheets',
+    'name': 'Enhancement Timesheets',
     'version': '1.0',
     'license': 'AGPL-3',
     'category': 'Human Resources',
     'sequence': 135,
     'description': """
-Extended Timesheet with following :
+Enhancement Timesheet with following :
 -------------
     * Added vehicle and odometer in activity timesheet
     * Auto record vehicle odometer log when created activity
@@ -16,8 +16,12 @@ Extended Timesheet with following :
     * Added start/end time, note and overtime field in the activity
     * Changed activity line to popup edit
         """,
-    'depends': ['hr_timesheet_sheet', 'fleet', 'report'],
-    'summary': 'Timesheets',
+    'depends': [
+        'hr_timesheet_sheet',
+        'fleet',
+        'report',
+        'x_vehicle_odometer'],
+    'summary': 'Enhancement Timesheets',
     'data': [
         'views/x_hr_timesheet_view.xml',
         'views/x_hr_timesheet_filter_view.xml',

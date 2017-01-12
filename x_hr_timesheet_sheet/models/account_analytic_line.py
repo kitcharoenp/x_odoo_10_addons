@@ -152,6 +152,8 @@ class AccountAnalyticLine(models.Model):
             odometer = self.env['fleet.vehicle.odometer'].create({
                 'value': record.x_odometer,
                 'date': record.date or fields.Date.context_today(record),
-                'vehicle_id': record.x_vehicle_id.id
+                'vehicle_id': record.x_vehicle_id.id,
+                'x_description': record.x_notes,
+                'x_driver_id': record.user_id.id,
             })
             self.x_odometer_id = odometer

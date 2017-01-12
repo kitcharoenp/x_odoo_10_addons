@@ -36,17 +36,18 @@ class AccountAnalyticLine(models.Model):
     x_odometer_id = fields.Many2one(
         'fleet.vehicle.odometer',
         string='Odometer',
-        help='Odometer measure of the vehicle at the moment of this activity')
+        help='Odometer measure of the vehicle at the moment \
+            of this activity')
     x_odometer = fields.Float(
         string='Odometer Start',
         compute="_get_odometer",
         inverse='_set_odometer',
-        help='Odometer measure of the vehicle at the moment of this activity start')
+        help='Odometer measure of the vehicle at the moment \
+            of this activity start')
     y_odometer = fields.Float(
         string='Odometer End',
-        compute="_get_odometer",
-        store=True,
-        help='Odometer measure of the vehicle at the moment of this activity end')
+        help='Odometer measure of the vehicle at the moment \
+            of this activity end')
     employee_ids = fields.Many2many(
         'hr.employee',
         string='Collaborators')
@@ -158,7 +159,13 @@ class AccountAnalyticLine(models.Model):
             if record.x_vehicle_id:
                 if not record.x_odometer:
                     raise UserError(_(
-                        'Emptying the odometer value of a vehicle is not allowed.'))
+                        'Emptying the odometer value of a vehicle \
+                        is not allowed.'))
+                if record.x_odometer and (
+                        record.x_odometer > record.y_odometer):
+                    raise UserError(_(
+                        'the Odometer Start value must been less \
+                        than Odometer End value'))
                 odometer = self.env['fleet.vehicle.odometer'].create({
                     'value': record.x_odometer,
                     'y_odometer': record.y_odometer,

@@ -55,8 +55,7 @@
                             <group>
                                 <field name="x_notes"
                                     required="1"
-                                    placeholder="Write here all other \
-                                        information relative to this activity"/>
+                                    placeholder="Write here all other information relative to this activity"/>
                                 <field name="x_vehicle_id"
                                         options="{'no_open': False,
                                             'no_create': True}"/>

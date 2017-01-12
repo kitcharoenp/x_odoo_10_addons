@@ -38,10 +38,18 @@ class AccountAnalyticLine(models.Model):
         string='Odometer',
         help='Odometer measure of the vehicle at the moment of this activity')
     x_odometer = fields.Float(
-        string='Odometer Value',
+        string='Odometer Start',
         compute="_get_odometer",
         inverse='_set_odometer',
-        help='Odometer measure of the vehicle at the moment of this activity')
+        help='Odometer measure of the vehicle at the moment of this activity start')
+    y_odometer = fields.Float(
+        string='Odometer End',
+        compute="_get_odometer",
+        store=True,
+        help='Odometer measure of the vehicle at the moment of this activity end')
+    employee_ids = fields.Many2many(
+        'hr.employee',
+        string='Collaborators')
 
     @api.onchange('x_start_date')
     def _compute_date_from_x_start_date(self):
@@ -143,6 +151,7 @@ class AccountAnalyticLine(models.Model):
         for record in self:
             if record.x_odometer_id:
                 record.x_odometer = record.x_odometer_id.value
+                record.y_odometer = record.x_odometer_id.y_odometer
 
     def _set_odometer(self):
         for record in self:
@@ -152,6 +161,7 @@ class AccountAnalyticLine(models.Model):
                         'Emptying the odometer value of a vehicle is not allowed.'))
                 odometer = self.env['fleet.vehicle.odometer'].create({
                     'value': record.x_odometer,
+                    'y_odometer': record.y_odometer,
                     'date': record.date or fields.Date.context_today(record),
                     'vehicle_id': record.x_vehicle_id.id,
                     'x_description': record.x_notes,

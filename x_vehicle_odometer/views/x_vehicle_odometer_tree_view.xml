@@ -14,6 +14,7 @@
                     <field name="vehicle_id"/>
                     <field name="x_description"/>
                     <field name="value" />
+                    <field name="y_odometer" />
                     <field name="unit" />
                     <field name="x_driver_id" />
                 </tree>

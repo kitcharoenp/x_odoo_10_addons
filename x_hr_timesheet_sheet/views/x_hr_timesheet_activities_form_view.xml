@@ -34,9 +34,8 @@
                 <xpath expr="//field[@name='timesheet_ids']/form"
                     position="replace">
                     <form string="Timesheet Activities">
-                        <group>
-
-                            <group>
+                        <group col="2">
+                            <group string="Activity Details">
                                 <field name="date" required="0" invisible="1"/>
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
@@ -53,8 +52,7 @@
                                 <field name="user_id" invisible="1"/>
                                 <field name="is_overtime"/>
                             </group>
-
-                            <group>
+                            <group string="Other Details">
                                 <field name="x_notes"
                                     required="1"
                                     placeholder="Write here all other information relative to this activity"/>
@@ -62,8 +60,11 @@
                                         options="{'no_open': False,
                                             'no_create': True}"/>
                                 <field name="x_odometer"/>
+                                <field name="y_odometer"/>
                             </group>
-
+                        </group>
+                        <group string="Collaborators">
+                            <field name="employee_ids" nolabel="1"/>
                         </group>
                     </form>
                 </xpath>
@@ -82,8 +83,8 @@
 
                 <form string="Analytic Entry">
                     <sheet string="Analytic Entry">
-                        <group>
-                            <group>
+                        <group col="2">
+                            <group string="Activity Details">
                                 <field name="date" required="0" invisible="1"/>
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
@@ -99,16 +100,20 @@
                                 <field name="user_id" invisible="1"/>
                                 <field name="is_overtime"/>
                             </group>
-
-                            <group>
+                            <group string="Other Details">
                                 <field name="x_notes"
                                     required="1"
                                     placeholder="Write here all other information relative to this activity" />
+
                                 <field name="x_vehicle_id"
                                         options="{'no_open': False,
                                             'no_create': True}"/>
                                 <field name="x_odometer"/>
+                                <field name="y_odometer"/>
                             </group>
+                        </group>
+                        <group string="Collaborators">
+                            <field name="employee_ids" nolabel="1"/>
                         </group>
                     </sheet>
                 </form>

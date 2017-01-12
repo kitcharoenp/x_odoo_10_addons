@@ -11,9 +11,13 @@ class FleetVehicleOdometer(models.Model):
             'hr.employee'].search([('user_id', '=', self.env.uid)])
         return emp_ids and emp_ids[0] or False
 
-    x_description = fields.Text(string='Description')
+    x_description = fields.Text(
+        string='Description')
     x_driver_id = fields.Many2one(
-                    'hr.employee',
-                    string='Driver',
-                    default=_default_driver,
-                    help='Driver of the vehicle')
+        'hr.employee',
+        string='Driver',
+        default=_default_driver,
+        help='Driver of the vehicle')
+    y_odometer = fields.Float(
+        string='Odometer End',
+        group_operator="max")

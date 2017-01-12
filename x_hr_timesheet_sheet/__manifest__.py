@@ -8,13 +8,14 @@
     'description': """
 Enhancement Timesheet with following :
 -------------
-    * Added vehicle and odometer in activity timesheet
+    * Added vehicle in activity timesheet
     * Auto record vehicle odometer log when created activity
     * Double validate timesheet by choosed manager
     * Set default search activities to own
     * Only edit own activities
     * Added start/end time, note and overtime field in the activity
     * Changed activity line to popup edit
+    * Added odometer start/end and collaborators field in the activity
         """,
     'depends': [
         'hr_timesheet_sheet',

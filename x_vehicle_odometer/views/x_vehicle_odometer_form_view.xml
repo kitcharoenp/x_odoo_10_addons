@@ -22,6 +22,11 @@
                                 <field name="value"/>
                                 <field name="unit"/>
                             </div>
+                            <label for="y_odometer"/>
+                            <div class="o_row">
+                                <field name="y_odometer"/>
+                                <field name="unit"/>
+                            </div>
                             <field name="x_driver_id"
                                 options="{'no_open': False, 'no_create': True}"/>
                         </group>

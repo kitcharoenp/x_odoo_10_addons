@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Main template -->
+    <template id="x_timesheet_weekly_th_report_template">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+    			<!-- t-call="module_directory_name.xml_template_id" -->
+                <t  t-call="x_hr_timesheet_sheet.x_timesheet_weekly_th_document"
+                    t-lang="o.user_id.lang"/>
+                    <!-- include CSS  -->
+                    <style>
+                        body {
+                            font-family:freeserif;
+                        }
+                    </style>
+            </t>
+        </t>
+    </template>
+
+    <template id="x_timesheet_weekly_th_document">
+        <t t-call="x_hr_timesheet_sheet.x_timesheet_weekly_th_layout">
+            <t t-set="o" t-value="o.with_context({'lang':o.user_id.lang})"/>
+            <div class="page">
+                <!-- Timesheet infomation -->
+
+                <div class="row">
+                    <!-- header -->
+                    <div class="row text-center" style="border: 1px solid black;">
+                        <div class="col-xs-3" >
+                            <div class="col-xs-5" >
+                                <span>วันที่</span>
+                            </div>
+                            <div class="col-xs-7" >
+                                <span>เวลาทำงาน</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-5" >
+                            <span>รายละเอียดของาน</span>
+                        </div>
+                        <div class="col-xs-4" >
+                            <div class="col-xs-4" >
+                                <span>ใช้รถทะเบียน</span>
+                            </div>
+                            <div class="col-xs-3" >
+                                <span>จำนวนชั่วโมง(รวม)</span>
+                            </div>
+                            <div class="col-xs-5" >
+                                <span>ส่วนของ HR (เท่า)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.header -->
+
+                    <!-- body -->
+                <t t-foreach="o.timesheet_ids" t-as="l">
+                    <div class="row text-left">
+                        <div class="col-xs-4" >
+                            <div class="col-xs-5" >
+                                <span t-field="l.date"
+                                    t-options='{"format": "EEE d MMM"}'/>
+                            </div>
+                            <div class="col-xs-7" >
+                                <t t-if="l.is_overtime">
+                                    <span>O.T :</span>
+                                </t>
+                                <t t-else="">
+                                    <span>ปกติ:</span>
+                                </t>
+                                <span t-field="l.x_start_date"
+                                    t-options='{"format": "HH:mm"}'/>
+                                    -
+                                <span t-field="l.x_end_date"
+                                        t-options='{"format": "HH:mm"}'/>
+                            </div>
+                        </div>
+                        <div class="col-xs-4" >
+                            <span>[<span t-field="l.project_id"/>]</span>
+                            <span t-field="l.name"/>
+
+                        </div>
+                        <div class="col-xs-4" >
+                            <div class="col-xs-4" >
+                                <span t-field="l.x_vehicle_id.license_plate"/>
+                            </div>
+                            <div class="col-xs-3" >
+                                <span t-field="l.unit_amount"/>
+                            </div>
+                            <div class="col-xs-5" >
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                </div><!-- /.row -->
+            </div> <!-- /.page -->
+        </t>
+    </template>
+
+    <template id="x_timesheet_weekly_th_layout">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+
+        <t t-call="x_hr_timesheet_sheet.x_timesheet_weekly_th_header" />
+        <t t-raw="0" />
+        <t t-call="x_hr_timesheet_sheet.x_timesheet_weekly_th_footer" />
+    </template>
+
+    <template id="x_timesheet_weekly_th_header">
+        <div class="header">
+            <div class="row">
+                <div class="row">
+                    <div class="col-xs-3 text-center">
+                        <img
+                            t-if="company.logo"
+                            t-att-src="'data:image/png;base64,%s' % company.logo"
+                            style="max-height: 90px;"/>
+                    </div>
+    			    <div class="col-xs-6 text-center" >
+                        <h4>ใบบันทึกการปฎิบัติงาน / ใบอนุมัติทำงานล่วงเวลา (O.T)</h4>
+    			    </div>
+                    <div class="col-xs-3 text-right">
+                        <span>
+                            FM-299/TE.<br/>
+                            แก้ไขครั้งที่ -<br/>
+                            วันที่เริ่มใช้ 02/06/58<br/>
+                        </span>
+                    </div>
+                </div><!--./row -->
+                <div class="row">
+                    <div class="col-xs-2">
+                        <span>ประจำเดือน</span>
+                        <span t-field="o.date_from"/>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>ช่วงวันที่</span>
+                        <span t-field="o.date_from"/>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>ถึงวันที่</span>
+                        <span t-field="o.date_to"/>
+                    </div>
+        		</div><!--./row -->
+                <div class="row">
+                    <div class="col-xs-2">
+                        <span>ชื่อพนักงาน</span>
+                        <span t-field="o.employee_id"/>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>ตำแหน่ง</span>
+                        <span t-field="o.employee_id.job_id"/>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>แผนก</span>
+                        <span t-field="o.employee_id.department_id"/>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>ประจำจังหวัด</span>
+                        <span t-field="o.employee_id.work_location"/>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>รหัสพนักงาน</span>
+                        <span t-field="o.employee_id"/>
+                    </div>
+                </div><!--./row -->
+    		</div><!--./row -->
+
+        </div><!--./header -->
+    </template>
+
+    <template id="x_timesheet_weekly_th_footer">
+        <div class="footer">
+
+    	<div class="row zero_min_height">
+    			<div class="col-xs-12">
+    				<div style="border-bottom: 1px solid black;"></div>
+    			</div><!-- /.col-xs-12 -->
+    			<br/>
+    	</div><!-- /.row zero_min_height -->
+    		<!-- Signature -->
+    	<div class="row">
+    		<div class="col-xs-3  text-center" >
+    			<ul style="list-style-type: none;">
+    				<li>ผู้ขออนุมัติ</li>
+    				<li><br/></li>
+    				<li>________________</li>
+                    <li>______/_____/_____</li>
+    				<li><span t-field="o.employee_id"/></li>
+    				<li><span t-field="o.employee_id.job_id"/></li>
+    				<li>
+    				<t t-if="o.employee_id.mobile_phone">
+    					<span t-field="o.employee_id.mobile_phone"/>
+    				</t>
+    				</li>
+    			</ul>
+    		</div>
+    		<div class="col-xs-3 text-center" >
+    			<ul style="list-style-type: none;">
+    				<li>หัวหน้างานผู้ควบคุมงาน</li>
+    				<li><br/></li>
+    				<li>________________</li>
+                    <li>______/_____/_____</li>
+                    <li t-if="o.manager_id1"><span t-field="o.manager_id1"/></li>
+    				<li t-if="o.manager_id1"><span t-field="o.manager_id1.job_id"/></li>
+    				<li>
+    					<t t-if="o.manager_id1.mobile_phone">
+    					<span t-field="o.manager_id1.mobile_phone"/>
+    				</t>
+    				</li>
+    			</ul>
+    		</div>
+            <div class="col-xs-2 text-center" >
+    			<ul style="list-style-type: none;">
+    				<li>ผู้อนุมัติ</li>
+    				<li><br/></li>
+    				<li>________________</li>
+    				<li t-if="o.manager_id2"><span t-field="o.manager_id2"/></li>
+    				<li t-if="o.manager_id2"><span t-field="o.manager_id2.job_id"/></li>
+    				<li>
+    					<t t-if="o.manager_id2.mobile_phone">
+    					<span t-field="o.manager_id2.mobile_phone"/>
+    				</t>
+    				</li>
+    			</ul>
+    		</div>
+    		<div class="col-xs-2 text-center" >
+    			<ul style="list-style-type: none;">
+    				<li>กรรมการผู้จัดการ</li>
+    				<li><br/></li>
+    				<li>________________</li>
+    				<li><br/></li>
+    				<li>นายณัฐนัย อนันตรัมพร</li>
+    			</ul>
+    		</div>
+            <div class="col-xs-2 text-center" >
+    			<ul style="list-style-type: none;">
+    				<li>HR ตรวจสอบ</li>
+    				<li><br/></li>
+    				<li>________________</li>
+                    <li>______/_____/_____</li>
+    				<li><br/></li>
+    				<li>Human Resource</li>
+    			</ul>
+    		</div>
+    	</div><!-- /.row -->
+        </div><!-- /.footer -->
+    </template>
+
+</odoo>

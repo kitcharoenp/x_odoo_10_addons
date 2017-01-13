@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="weekly_timesheet_th_paperformat" model="report.paperformat">
+        <field name="name">Weekly Timesheet (TH)</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="header_line" eval="False" />
+        <field name="margin_bottom">40</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="x_hr_timesheet_weekly_th_report"
+            model="hr_timesheet_sheet.sheet"
+            string="Weekly Timesheet (TH)"
+            report_type="qweb-pdf"
+            name="x_hr_timesheet_sheet.x_timesheet_weekly_th_report_template"
+            file="x_hr_timesheet_sheet.x_timesheet_weekly_th_report_template"
+            paperformat="x_hr_timesheet_sheet.weekly_timesheet_th_paperformat"
+    />
+</odoo>

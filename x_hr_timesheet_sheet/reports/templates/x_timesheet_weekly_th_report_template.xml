@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <!-- Main template -->
-    <template id="x_timesheet_weekly_th_report_template">
+    <template id="x_weekly_th_report_template">
         <t t-call="report.html_container">
             <t t-foreach="docs" t-as="o">
     			<!-- t-call="module_directory_name.xml_template_id" -->
@@ -25,7 +25,7 @@
 
                 <div class="row">
                     <!-- header -->
-                    <div class="row text-center" style="border: 1px solid black;">
+                    <div class="row text-center" style="border-top: 1px solid black;">
                         <div class="col-xs-3" >
                             <div class="col-xs-5" >
                                 <span>วันที่</span>
@@ -50,48 +50,57 @@
                         </div>
                     </div>
                     <!-- /.header -->
-
                     <!-- body -->
-                <t t-foreach="o.timesheet_ids" t-as="l">
-                    <div class="row text-left">
-                        <div class="col-xs-4" >
-                            <div class="col-xs-5" >
-                                <span t-field="l.date"
-                                    t-options='{"format": "EEE d MMM"}'/>
-                            </div>
-                            <div class="col-xs-7" >
-                                <t t-if="l.is_overtime">
-                                    <span>O.T :</span>
-                                </t>
-                                <t t-else="">
-                                    <span>ปกติ:</span>
-                                </t>
-                                <span t-field="l.x_start_date"
-                                    t-options='{"format": "HH:mm"}'/>
-                                    -
-                                <span t-field="l.x_end_date"
-                                        t-options='{"format": "HH:mm"}'/>
-                            </div>
-                        </div>
-                        <div class="col-xs-4" >
-                            <span>[<span t-field="l.project_id"/>]</span>
-                            <span t-field="l.name"/>
+                <t t-foreach="get_day(o)" t-as="d1">
 
+                    <div class="row">
+                        <div class="col-xs-2 text-center" >
+                            <span t-esc="datetime.datetime.strftime(d1,'%A')"/><br/>
+                            <span t-esc="datetime.datetime.strftime(d1,'%d-%b-%y ')"/>
                         </div>
-                        <div class="col-xs-4" >
+
+                        <div class="col-xs-10 text-left" >
+                            <t t-foreach="o.timesheet_ids" t-as="l">
+                            <t t-if="str(d1) == str(l.date)">
+                            <div class="row">
+                            <div class="col-xs-2" >
+                                    <t t-if="l.is_overtime">
+                                        <span>O.T :</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span>ปกติ:</span>
+                                    </t>
+                                    <span t-field="l.x_start_date"
+                                        t-options='{"format": "HH:mm"}'/>
+                                        -
+                                    <span t-field="l.x_end_date"
+                                            t-options='{"format": "HH:mm"}'/>
+                            </div>
+                            <div class="col-xs-6" >
+                                <span>[<span t-field="l.project_id"/>]</span>
+                                <span t-field="l.name"/>
+
+                            </div>
                             <div class="col-xs-4" >
-                                <span t-field="l.x_vehicle_id.license_plate"/>
+                                <div class="col-xs-4" >
+                                    <span t-field="l.x_vehicle_id.license_plate"/>
+                                </div>
+                                <div class="col-xs-3" >
+                                    <span t-field="l.unit_amount"/>
+                                </div>
+                                <div class="col-xs-5" >
+                                    <span></span>
+                                </div>
                             </div>
-                            <div class="col-xs-3" >
-                                <span t-field="l.unit_amount"/>
                             </div>
-                            <div class="col-xs-5" >
-                                <span></span>
-                            </div>
+                            </t>
+                            </t><!-- /.timesheet_ids -->
                         </div>
+
                     </div>
-                </t>
+                </t><!-- /.get_day -->
                 </div><!-- /.row -->
+            <!-- ./body -->    
             </div> <!-- /.page -->
         </t>
     </template>
@@ -115,59 +124,99 @@
 
     <template id="x_timesheet_weekly_th_header">
         <div class="header">
+            <!-- include CSS  -->
+            <style>
+                body {
+                    font-family:freeserif;
+                }
+                span.x_timesheet_weekly_iso_doc {
+                    font-size: 8px;
+                }
+                p.x_timesheet_weekly_title {
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+                span.x_timesheet_duration {
+                    font-size: 15px;
+                    font-weight: bold;
+                }
+                span.x_timesheet_duration_value {
+                    font-size: 15px;
+                    font-weight: bold;
+                    font-style: italic;
+                    text-decoration: underline;
+                    margin-left: 13px;
+                    margin-right: 13px;
+                }
+                span.x_timesheet_employee {
+                    font-size: 15px;
+                    font-weight: bold;
+                }
+                span.x_timesheet_employee_data {
+                    font-size: 15px;
+                    font-weight: bold;
+                    font-style: italic;
+                    text-decoration: underline;
+                    margin-left: 13px;
+                    margin-right: 13px;
+                }
+            </style>
             <div class="row">
                 <div class="row">
                     <div class="col-xs-3 text-center">
-                        <img
-                            t-if="company.logo"
-                            t-att-src="'data:image/png;base64,%s' % company.logo"
-                            style="max-height: 90px;"/>
+
+                        <img t-if="o.employee_id.company_id and o.employee_id.company_id.logo"
+                            t-att-src="'data:image/png;base64,%s' % (o.employee_id.company_id.logo,)"
+                            style="max-height:45pt;max-width:90%" alt="Company Logo"/>
                     </div>
-    			    <div class="col-xs-6 text-center" >
-                        <h4>ใบบันทึกการปฎิบัติงาน / ใบอนุมัติทำงานล่วงเวลา (O.T)</h4>
+    			    <div class="col-xs-7 text-center x_timesheet_weekly_title" >
+                        <p class="x_timesheet_weekly_title">
+                            ใบบันทึกการปฎิบัติงาน / ใบอนุมัติทำงานล่วงเวลา (O.T)
+                        </p>
     			    </div>
-                    <div class="col-xs-3 text-right">
-                        <span>
+                    <div class="col-xs-2 text-right">
+                        <span class="x_timesheet_weekly_iso_doc">
                             FM-299/TE.<br/>
                             แก้ไขครั้งที่ -<br/>
                             วันที่เริ่มใช้ 02/06/58<br/>
                         </span>
                     </div>
                 </div><!--./row -->
-                <div class="row">
-                    <div class="col-xs-2">
-                        <span>ประจำเดือน</span>
-                        <span t-field="o.date_from"/>
-                    </div>
-                    <div class="col-xs-2">
-                        <span>ช่วงวันที่</span>
-                        <span t-field="o.date_from"/>
-                    </div>
-                    <div class="col-xs-2">
-                        <span>ถึงวันที่</span>
-                        <span t-field="o.date_to"/>
+                <div class="row text-center">
+                    <div class="col-xs-12 text-center">
+                        <span class="x_timesheet_duration">ประจำเดือน</span>
+                        <span class="x_timesheet_duration_value"
+                            t-field="o.date_from"
+                            t-options='{"format": "MMMM"}'/>
+
+                        <span class="x_timesheet_duration">ช่วงวันที่</span>
+                        <span class="x_timesheet_duration_value"
+                            t-field="o.date_from"
+                            t-options='{"format": "d MMMM yyyy"}'/>
+
+                        <span class="x_timesheet_duration">ถึงวันที่</span>
+                        <span class="x_timesheet_duration_value"
+                            t-field="o.date_to"
+                            t-options='{"format": "d MMMM yyyy"}'/>
                     </div>
         		</div><!--./row -->
                 <div class="row">
-                    <div class="col-xs-2">
-                        <span>ชื่อพนักงาน</span>
-                        <span t-field="o.employee_id"/>
-                    </div>
-                    <div class="col-xs-2">
-                        <span>ตำแหน่ง</span>
-                        <span t-field="o.employee_id.job_id"/>
-                    </div>
-                    <div class="col-xs-2">
-                        <span>แผนก</span>
-                        <span t-field="o.employee_id.department_id"/>
-                    </div>
-                    <div class="col-xs-2">
-                        <span>ประจำจังหวัด</span>
-                        <span t-field="o.employee_id.work_location"/>
-                    </div>
-                    <div class="col-xs-2">
-                        <span>รหัสพนักงาน</span>
-                        <span t-field="o.employee_id"/>
+                    <div class="col-xs-12 text-center">
+                        <span class="x_timesheet_employee">ชื่อพนักงาน</span>
+                        <span class="x_timesheet_employee_data"
+                            t-field="o.employee_id"/>
+                        <span class="x_timesheet_employee">ตำแหน่ง</span>
+                        <span class="x_timesheet_employee_data"
+                            t-field="o.employee_id.job_id"/>
+                        <span class="x_timesheet_employee">แผนก</span>
+                        <span class="x_timesheet_employee_data"
+                            t-field="o.employee_id.department_id"/>
+                        <span class="x_timesheet_employee">ประจำจังหวัด</span>
+                        <span class="x_timesheet_employee_data"
+                            t-field="o.employee_id.work_location"/>
+                        <span class="x_timesheet_employee">รหัสพนักงาน</span>
+                        <span class="x_timesheet_employee_data"
+                            t-field="o.employee_id"/>
                     </div>
                 </div><!--./row -->
     		</div><!--./row -->
@@ -177,7 +226,12 @@
 
     <template id="x_timesheet_weekly_th_footer">
         <div class="footer">
-
+            <!-- include CSS  -->
+            <style>
+                body {
+                    font-family:freeserif;
+                }
+            </style>
     	<div class="row zero_min_height">
     			<div class="col-xs-12">
     				<div style="border-bottom: 1px solid black;"></div>

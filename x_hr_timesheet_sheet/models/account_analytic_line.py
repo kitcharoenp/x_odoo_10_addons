@@ -11,7 +11,7 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 class AccountAnalyticLine(models.Model):
     _inherit = "account.analytic.line"
-    _order = 'date desc, x_start_date desc'
+    _order = 'date desc, x_start_date asc'
 
     x_vehicle_id = fields.Many2one(
         'fleet.vehicle',

@@ -7,12 +7,6 @@
     			<!-- t-call="module_directory_name.xml_template_id" -->
                 <t  t-call="x_hr_timesheet_sheet.x_timesheet_weekly_th_document"
                     t-lang="o.user_id.lang"/>
-                    <!-- include CSS  -->
-                    <style>
-                        body {
-                            font-family:freeserif;
-                        }
-                    </style>
             </t>
         </t>
     </template>
@@ -21,86 +15,164 @@
         <t t-call="x_hr_timesheet_sheet.x_timesheet_weekly_th_layout">
             <t t-set="o" t-value="o.with_context({'lang':o.user_id.lang})"/>
             <div class="page">
-                <!-- Timesheet infomation -->
+                <!-- include CSS  -->
+                <style>
+                    body {
+                        font-family:freeserif;
+                    }
+                    table {
+			            border-collapse:collapse;
+                    }
+                    tr.x_activities_head th.outer {
+                        border-bottom: 1px solid black;
+                        background-color: #eee;
+                        font-size: 13px;
+                        vertical-align: middle;
+                        padding: 0px;
+                    }
 
+                    tr.x_activities_head_inner th{
+                        background-color: #eee;
+                        font-size: 13px;
+                        vertical-align: middle;
+                        padding: 2px;
+                    }
+
+                    tr.x_multiply_head th{
+                        border: 1px solid black;
+                        width: 25%;
+                        text-align: center;
+                    }
+
+                    tr.x_activities_body td.outer{
+                        font-size: 11px;
+                        vertical-align: middle;
+                        padding: 0px;
+                        border-bottom: 1px solid black;
+                    }
+
+                    tr.x_activities_body_inner td{
+                        font-size: 11px;
+                        vertical-align: middle;
+                        padding: 2px;
+                        line-height: 18px;
+                    }
+
+                    tr.x_multiply td{
+                        border: 1px solid black;
+                    }
+
+
+                </style>
+                <!-- Timesheet infomation -->
                 <div class="row">
                     <!-- header -->
-                    <div class="row text-center" style="border-top: 1px solid black;">
-                        <div class="col-xs-3" >
-                            <div class="col-xs-5" >
+                <table class="col-xs-12" >
+                    <thead>
+                        <tr class="x_activities_head">
+                            <th class="col-xs-1 outer text-center" >
                                 <span>วันที่</span>
-                            </div>
-                            <div class="col-xs-7" >
-                                <span>เวลาทำงาน</span>
-                            </div>
-                        </div>
-                        <div class="col-xs-5" >
-                            <span>รายละเอียดของาน</span>
-                        </div>
-                        <div class="col-xs-4" >
-                            <div class="col-xs-4" >
-                                <span>ใช้รถทะเบียน</span>
-                            </div>
-                            <div class="col-xs-3" >
-                                <span>จำนวนชั่วโมง(รวม)</span>
-                            </div>
-                            <div class="col-xs-5" >
-                                <span>ส่วนของ HR (เท่า)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.header -->
-                    <!-- body -->
-                <t t-foreach="get_day(o)" t-as="d1">
-
-                    <div class="row">
-                        <div class="col-xs-2 text-center" >
-                            <span t-esc="datetime.datetime.strftime(d1,'%A')"/><br/>
-                            <span t-esc="datetime.datetime.strftime(d1,'%d-%b-%y ')"/>
-                        </div>
-
-                        <div class="col-xs-10 text-left" >
-                            <t t-foreach="o.timesheet_ids" t-as="l">
-                            <t t-if="str(d1) == str(l.date)">
-                            <div class="row">
-                            <div class="col-xs-2" >
-                                    <t t-if="l.is_overtime">
-                                        <span>O.T :</span>
+                            </th>
+                            <th class="col-xs-11 outer" >
+                                <table class="col-xs-12"> <!-- table in row -->
+                                    <tr class="x_activities_head_inner">
+                                        <th class="col-xs-2" >
+                                            <span>เวลาทำงาน</span>
+                                        </th>
+                                        <th class="col-xs-6" >
+                                            <span>รายละเอียดของาน</span>
+                                        </th>
+                                        <th class="col-xs-1 text-center" >
+                                            <span>ใช้รถทะเบียน</span>
+                                        </th>
+                                        <th class="col-xs-1 text-center" >
+                                            <span>จำนวน ชั่วโมง (รวม)</span>
+                                        </th>
+                                        <th class="col-xs-2" >
+                                            <table class="col-xs-12">
+                                                <tr class="text-center">
+                                                    <td colspan="4">
+                                                    <span>ส่วนของ HR (เท่า)</span>
+                                                    </td>
+                                                </tr>
+                                                <tr class="x_multiply_head">
+                                                    <th>1</th>
+                                                    <th>1.5</th>
+                                                    <th>2</th>
+                                                    <th>3</th>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                    </tr>
+                                </table><!-- /.table in row -->
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <t t-set="x_total" t-value="0" />
+                    <t t-foreach="get_day(o)" t-as="d1">
+                        <tr class="x_activities_body">
+                            <td class="col-xs-1 text-center outer" >
+                                <span t-esc="datetime.datetime.strftime(d1,'%A')"/><br/>
+                                <span t-esc="datetime.datetime.strftime(d1,'%d-%m-%y ')"/>
+                            </td>
+                            <td class="col-xs-11 outer">
+                                <table class="col-xs-12"> <!-- table in row -->
+                                    <t t-foreach="o.timesheet_ids" t-as="l">
+                                    <t t-if="str(d1) == str(l.date)">
+                                    <tr class="x_activities_body_inner">
+                                        <td class="col-xs-2" >
+                                            <t t-if="l.is_overtime">
+                                                <span>O.T :</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>ปกติ:</span>
+                                            </t>
+                                            <span t-field="l.x_start_date"
+                                                t-options='{"format": "HH:mm"}'/>
+                                                -
+                                            <span t-field="l.x_end_date"
+                                                    t-options='{"format": "HH:mm"}'/>
+                                        </td>
+                                        <td class="col-xs-6" >
+                                            <span>[<span t-field="l.project_id"/>]</span>
+                                            <span t-field="l.name"/>
+                                        </td>
+                                        <td class="col-xs-1 text-center" >
+                                            <span t-field="l.x_vehicle_id.license_plate"/>
+                                        </td>
+                                        <td class="col-xs-1 text-center" >
+                                            <span t-field="l.unit_amount"/>
+                                        </td>
+                                        <t t-set="x_total" t-value="x_total+l.unit_amount"/>
+                                        <td class="col-xs-2" >
+                                            <table class="col-xs-12">
+                                                <tr class="x_multiply">
+                                                    <td><br/></td>
+                                                    <td><br/></td>
+                                                    <td><br/></td>
+                                                    <td><br/></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
                                     </t>
-                                    <t t-else="">
-                                        <span>ปกติ:</span>
                                     </t>
-                                    <span t-field="l.x_start_date"
-                                        t-options='{"format": "HH:mm"}'/>
-                                        -
-                                    <span t-field="l.x_end_date"
-                                            t-options='{"format": "HH:mm"}'/>
-                            </div>
-                            <div class="col-xs-6" >
-                                <span>[<span t-field="l.project_id"/>]</span>
-                                <span t-field="l.name"/>
-
-                            </div>
-                            <div class="col-xs-4" >
-                                <div class="col-xs-4" >
-                                    <span t-field="l.x_vehicle_id.license_plate"/>
-                                </div>
-                                <div class="col-xs-3" >
-                                    <span t-field="l.unit_amount"/>
-                                </div>
-                                <div class="col-xs-5" >
-                                    <span></span>
-                                </div>
-                            </div>
-                            </div>
-                            </t>
-                            </t><!-- /.timesheet_ids -->
-                        </div>
-
-                    </div>
-                </t><!-- /.get_day -->
+                                </table><!-- /.table in row -->
+                            </td>
+                        </tr>
+                    </t>
+                    </tbody>
+                </table>
                 </div><!-- /.row -->
-            <!-- ./body -->    
+                <div class="row">
+                    <div class="col-xs-9 text-right">รวมจำนวนชั่วโมง</div>
+                    <div class="col-xs-1 text-right">
+                        <span t-esc="x_total"></span>
+                    </div>
+                    <div class="col-xs-2">ชั่วโมง</div>
+                </div>
+
             </div> <!-- /.page -->
         </t>
     </template>

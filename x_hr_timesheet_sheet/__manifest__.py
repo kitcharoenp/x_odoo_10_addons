@@ -32,10 +32,12 @@ Enhancement Timesheet with following :
         'views/x_hr_timesheet_activities_list_view.xml',
         # Reports
         'reports/x_hr_timesheet_sheet_report.xml',
+        'reports/x_hr_timesheet_weekly_th_report.xml',
         # report templates
         #
         # new - Weekly Timesheet pdf templates
         'reports/templates/x_hr_timesheet_sheet_weekly_report_template.xml',
+        'reports/templates/x_timesheet_weekly_th_report_template.xml',
         # inherit - Timesheet Entries pdf templates
         'reports/templates/x_report_timesheet_templates.xml',
         # Security

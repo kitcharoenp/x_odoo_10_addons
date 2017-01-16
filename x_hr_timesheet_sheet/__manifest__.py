@@ -19,6 +19,7 @@ Enhancement Timesheet with following :
         """,
     'depends': [
         'hr_timesheet_sheet',
+        'hr_attendance',
         'fleet',
         'report',
         'x_vehicle_odometer'],

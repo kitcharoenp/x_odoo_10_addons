@@ -288,7 +288,7 @@
                             t-field="o.employee_id.work_location"/>
                         <span class="x_timesheet_employee">รหัสพนักงาน</span>
                         <span class="x_timesheet_employee_data"
-                            t-field="o.employee_id"/>
+                            t-field="o.employee_id.barcode"/>
                     </div>
                 </div><!--./row -->
     		</div><!--./row -->

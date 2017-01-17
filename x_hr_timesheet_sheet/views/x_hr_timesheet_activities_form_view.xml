@@ -57,10 +57,13 @@
                                     required="1"
                                     placeholder="Write here all other information relative to this activity"/>
                                 <field name="x_vehicle_id"
-                                        options="{'no_open': False,
-                                            'no_create': True}"/>
-                                <field name="x_odometer"/>
-                                <field name="y_odometer"/>
+                                    string="เลขทะเบียน"
+                                    options="{'no_open': False,
+                                        'no_create': True}"/>
+                                <field name="x_odometer"
+                                    string="เลขไมล์เริ่มต้น" />
+                                <field name="y_odometer"
+                                    string="เลขไมล์สิ้นสุด" />
                             </group>
                         </group>
                         <group string="Collaborators">
@@ -105,11 +108,14 @@
                                     required="1"
                                     placeholder="Write here all other information relative to this activity" />
 
-                                <field name="x_vehicle_id"
+                                    <field name="x_vehicle_id"
+                                        string="เลขทะเบียน"
                                         options="{'no_open': False,
                                             'no_create': True}"/>
-                                <field name="x_odometer"/>
-                                <field name="y_odometer"/>
+                                    <field name="x_odometer"
+                                        string="เลขไมล์เริ่มต้น" />
+                                    <field name="y_odometer"
+                                        string="เลขไมล์สิ้นสุด" />
                             </group>
                         </group>
                         <group string="Collaborators">

@@ -14,7 +14,7 @@ class HrTimesheetWeeklyThReportUtil(models.AbstractModel):
         start_date = fields.Date.from_string(obj.date_from)
         end_date = fields.Date.from_string(obj.date_to)
         res = start_date
-        while res < end_date:
+        while res <= end_date:
             yield res
             res += timedelta(days=1)
 

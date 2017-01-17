@@ -26,14 +26,14 @@
                     tr.x_activities_head th.outer {
                         border-bottom: 1px solid black;
                         background-color: #eee;
-                        font-size: 13px;
+                        font-size: 15px;
                         vertical-align: middle;
                         padding: 0px;
                     }
 
                     tr.x_activities_head_inner th{
                         background-color: #eee;
-                        font-size: 13px;
+                        font-size: 15px;
                         vertical-align: middle;
                         padding: 2px;
                     }
@@ -45,14 +45,14 @@
                     }
 
                     tr.x_activities_body td.outer{
-                        font-size: 11px;
+                        font-size: 13px;
                         vertical-align: middle;
                         padding: 0px;
                         border-bottom: 1px solid black;
                     }
 
                     tr.x_activities_body_inner td{
-                        font-size: 11px;
+                        font-size: 13px;
                         vertical-align: middle;
                         padding: 2px;
                         line-height: 18px;
@@ -142,7 +142,7 @@
                                             <span t-field="l.x_vehicle_id.license_plate"/>
                                         </td>
                                         <td class="col-xs-1 text-center" >
-                                            <span t-field="l.unit_amount"/>
+                                            <span t-esc="'%02d:%02d' % (int(str(l.unit_amount).split('.')[0]), int(float(str('%.2f' % l.unit_amount).split('.')[1])/100*60))" />
                                         </td>
                                         <t t-set="x_total" t-value="x_total+l.unit_amount"/>
                                         <td class="col-xs-2" >
@@ -168,7 +168,7 @@
                 <div class="row">
                     <div class="col-xs-9 text-right">รวมจำนวนชั่วโมง</div>
                     <div class="col-xs-1 text-right">
-                        <span t-esc="x_total"></span>
+                        <span t-esc="'%02d:%02d' % (int(str(x_total).split('.')[0]), int(float(str('%.2f' % x_total).split('.')[1])/100*60))" />
                     </div>
                     <div class="col-xs-2">ชั่วโมง</div>
                 </div>
@@ -202,18 +202,18 @@
                     font-family:freeserif;
                 }
                 span.x_timesheet_weekly_iso_doc {
-                    font-size: 8px;
+                    font-size: 10px;
                 }
                 p.x_timesheet_weekly_title {
-                    font-size: 24px;
+                    font-size: 27px;
                     font-weight: bold;
                 }
                 span.x_timesheet_duration {
-                    font-size: 15px;
+                    font-size: 17px;
                     font-weight: bold;
                 }
                 span.x_timesheet_duration_value {
-                    font-size: 15px;
+                    font-size: 17px;
                     font-weight: bold;
                     font-style: italic;
                     text-decoration: underline;
@@ -221,11 +221,11 @@
                     margin-right: 13px;
                 }
                 span.x_timesheet_employee {
-                    font-size: 15px;
+                    font-size: 17px;
                     font-weight: bold;
                 }
                 span.x_timesheet_employee_data {
-                    font-size: 15px;
+                    font-size: 17px;
                     font-weight: bold;
                     font-style: italic;
                     text-decoration: underline;

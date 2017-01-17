@@ -27,6 +27,7 @@ Enhancement Timesheet with following :
     'data': [
         'views/x_hr_timesheet_view.xml',
         'views/x_hr_timesheet_filter_view.xml',
+        'views/x_hr_timesheet_sheet_tree_view.xml',
         # Activities
         'views/x_hr_timesheet_activities_filter_view.xml',
         'views/x_hr_timesheet_activities_form_view.xml',

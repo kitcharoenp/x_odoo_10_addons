@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_hr_timesheet_sheet_tree_view" model="ir.ui.view">
+        <field name="name">Timesheet Tree View</field>
+        <field name="model">hr_timesheet_sheet.sheet</field>
+        <field name="inherit_id"
+            ref="hr_timesheet_sheet.hr_timesheet_sheet_tree_simplified"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']"
+                position="after">
+                <field name="display_name"
+                    string="Week"/>
+            </xpath>
+        </field><!-- /arch -->
+    </record>
+</odoo>

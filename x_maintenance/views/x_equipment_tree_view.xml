@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!-- equiment tree : views -->
+    <record id="x_equipment_tree_view" model="ir.ui.view">
+        <field name="name">Equipment tree view</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id"
+            ref="hr_maintenance.maintenance_equipment_view_tree_inherit_hr"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree string="Assign To User"  decoration-bf="message_needaction==True">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name"/>
+                    <field name="model"/>
+                    <field name="serial_no"/>
+                    <field name="partner_ref" string="P.O"/>
+                    <field name="x_vehicle_id" string="Vehicle"/>
+                    <field name="employee_id" string="Employee"/>
+                    <field name="category_id"/>
+                    <field name="partner_id" invisible="1"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

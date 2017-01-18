@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--
+    QWeb Reports see parameter description at
+    https://www.odoo.com/documentation/10.0/reference/reports.html
+-->
+
+    <report id="x_receipt_bulk_posting_report"
+            model="res.partner"
+            string="Receipt/Send Posting"
+            report_type="qweb-pdf"
+            name="x_receipt_bulk_posting.x_receipt_bulk_posting_template"
+            file="x_receipt_bulk_posting.x_receipt_bulk_posting_template"
+    />
+</odoo>

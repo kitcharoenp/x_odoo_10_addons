@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="x_receipt_bulk_posting_template">
+
+            <t t-call="report.html_container">
+                <div class="page">
+
+                    <h2>Receipt for Bulk Posting</h2>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>นามผู้รับ</th>
+                                        <th>ปลายทาง</th>
+                                    </tr>
+                               </thead>
+
+                               <tbody>
+                                   <!-- loop selected vendor -->
+                                   <t t-foreach="docs" t-as="o">
+                                   </t>
+                               </tbody>
+
+                            </table>
+
+                        </div> <!-- /.col-md-12 -->
+                    </div> <!-- /.row -->
+
+                </div> <!-- /.page -->
+            </t>
+
+        </template>
+    </data>
+</odoo>

@@ -110,6 +110,7 @@
                     </thead>
                     <tbody>
                     <t t-set="x_total" t-value="0" />
+                    <t t-set="x_over_time_total" t-value="0" />
                     <t t-foreach="get_day(o)" t-as="d1">
                         <tr class="x_activities_body">
                             <td class="col-xs-1 text-center outer" >
@@ -144,7 +145,13 @@
                                         <td class="col-xs-1 text-center" >
                                             <span t-esc="'%02d:%02d' % (int(str(l.unit_amount).split('.')[0]), int(float(str('%.2f' % l.unit_amount).split('.')[1])/100*60))" />
                                         </td>
+                                        <!-- sum time total -->
                                         <t t-set="x_total" t-value="x_total+l.unit_amount"/>
+                                            <t t-if="l.is_overtime">
+                                                <t t-set="x_over_time_total"
+                                                    t-value="x_over_time_total+l.unit_amount"/>
+                                            </t>
+
                                         <td class="col-xs-2" >
                                             <table class="col-xs-12">
                                                 <tr class="x_multiply">
@@ -168,7 +175,7 @@
                 <div class="row">
                     <div class="col-xs-9 text-right">รวมจำนวนชั่วโมง</div>
                     <div class="col-xs-1 text-right">
-                        <span t-esc="'%02d:%02d' % (int(str(x_total).split('.')[0]), int(float(str('%.2f' % x_total).split('.')[1])/100*60))" />
+                        <span t-esc="'%02d:%02d' % (int(str(x_over_time_total).split('.')[0]), int(float(str('%.2f' % x_over_time_total).split('.')[1])/100*60))" />
                     </div>
                     <div class="col-xs-2">ชั่วโมง</div>
                 </div>

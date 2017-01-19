@@ -20,7 +20,9 @@
                             <span class="tax-id">
                                 เลขประจําตัวผู้เสียภาษีอากร (13 หลัก )*
                                 <t t-if="o.company_id.vat">
-                                    <u><span class="indent_input_field" t-field="o.company_id.vat"/></u>
+                                    <u>
+                                        <span class="indent_input_field" t-esc="o.company_id.vat.replace('TH','')"/>
+                                    </u>
                                 </t>
                                 <t t-else="">
                                 _____________________________

@@ -37,6 +37,7 @@
         'reports/templates/x_wht_document_taxpayer_section_template.xml',
         'reports/templates/x_wht_document_income_section_template.xml',
     ],
+    'images': ['static/description/icon.png'],
     'installable': True,
     'auto-install': True,
 }

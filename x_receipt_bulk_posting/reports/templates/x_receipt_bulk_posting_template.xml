@@ -8,6 +8,11 @@
 
             <t t-call="report.html_container">
                 <div class="page">
+                    <style>
+                        body {
+                            font-family:freeserif;
+                        }
+                    </style>
 
                     <h4><center>Receipt for Bulk Posting</center></h4>
                     <div class="row">
@@ -46,88 +51,41 @@
                               <td>บาท</td>
                               <td>สต.</td>
                             </tr>
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
 
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                            <!-- set a varialble 'count' -->
+                            <t t-set="count" t-value="1" />
+                            <t t-foreach="docs" t-as="o">
+                            <!-- make row data -->
+                                <tr>
+                                  <td><span t-esc="count" /></td>
+                                  <td><span t-esc="o.name"/></td>
 
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                  </tr>
+                            <!-- find destination  -->
+                                  <t t-set="had_shipping_address" t-value="0" />
+                                  <t t-foreach="o.child_ids" t-as="child_id">
+                                      <t t-if="child_id['type'] == 'delivery' and not had_shipping_address">
+                                          <t t-set="had_shipping_address" t-value="1" />
+                                          <td><span t-field="child_id.state_id"/></td>
+                                      </t>
+                                  </t><!-- /.t-foreach child_ids-->
+                                  <t t-if="not had_shipping_address">
+                                     <td>
+                                         <span t-if="o.state_id"><span t-field="o.state_id"/></span>
+                                     </td>
+                                  </t>
+
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                </tr>
+                                <!-- increase count +1 -->
+                                <t t-if="o.name">
+                                    <t t-set="count" t-value="count+1" />
+                                </t>
+                            </t><!-- /.t-foreach docs -->
+
                   </table>
 
                   <div class="row" >

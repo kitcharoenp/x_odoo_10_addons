@@ -16,6 +16,9 @@
         'actions/x_air_conditioner_equipment_act_window.xml',
         'actions/x_air_conditioner_maintenance_act_window.xml',
         'views/x_air_conditioner_menu_view.xml',
+        # inheritd from maintenance
+        'views/x_hr_equipment_form_view.xml',
+        'views/x_hr_maintenance_request_form_view.xml',
         # Resource data
         'data/x_air_conditioner_data.xml',
     ],

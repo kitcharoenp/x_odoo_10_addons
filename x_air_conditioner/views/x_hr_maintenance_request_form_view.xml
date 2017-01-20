@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_hr_maintenance_request_form_view" model="ir.ui.view">
+        <field name="name">Maintenance request form</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='maintenance_team_id']" position="after">
+                <field name="vendor_id"/>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="total_amount"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

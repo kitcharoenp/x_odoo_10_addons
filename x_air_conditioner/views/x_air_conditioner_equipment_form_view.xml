@@ -11,7 +11,6 @@
             <xpath expr="//field[@name='x_vehicle_id']" position="attributes">
                 <attribute name='invisible'>1</attribute>
             </xpath>
-
         </field>
     </record>
 

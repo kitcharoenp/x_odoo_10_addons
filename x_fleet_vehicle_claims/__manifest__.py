@@ -16,6 +16,7 @@
         # Views
         'views/x_fleet_vehicle_claims_form_view.xml',
         'views/x_fleet_vehicle_claims_tree_view.xml',
+
         # Sequence
         'data/x_fleet_vehicle_claims_sequence_data.xml',
     ],

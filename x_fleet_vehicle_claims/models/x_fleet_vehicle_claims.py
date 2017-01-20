@@ -39,6 +39,8 @@ class FleetVehicleClaims(models.Model):
         help='License plate number of the third party vehicle')
     description = fields.Text('Description')
     claimed = fields.Boolean(default=False)
+    at_fault_driver = fields.Boolean(default=False)
+    at_fault_driver_third_party = fields.Boolean(default=False)
 
     @api.model
     def create(self, vals):

@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Extend - Maintenance',
+    'name': 'Enhancement - Maintenance',
     'version': '1.0',
     'license': 'AGPL-3',
     'sequence': 125,
-    'category': 'Human Resources',
+    'category': 'Equipments',
     'description': """
         Extend Maintenance.""",
     'depends': ['hr_maintenance', 'fleet'],
-    'summary': 'Equipments',
+    'summary': 'Enhancement Equipments',
     'data': [
-        'views/x_equipment_form_views.xml',
-        'views/x_equipment_kanban_views.xml',
+        'views/x_equipment_form_view.xml',
+        'views/x_equipment_kanban_view.xml',
+        'views/x_equipment_tree_view.xml',
     ],
     'demo': [],
     'installable': True,

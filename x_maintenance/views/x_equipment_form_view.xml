@@ -3,11 +3,11 @@
 
     <!-- equiment : views -->
     <record id="x_maintenance_hr_equipment_view_form" model="ir.ui.view">
-        <field name="name">X Maintenance Equipment Form</field>
+        <field name="name">Equipment Form</field>
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='employee_id']" position="after">
+            <xpath expr="//field[@name='category_id']" position="after">
                 <field name="x_vehicle_id"
                     options="{'no_open': False, 'no_create': True}"/>
             </xpath>

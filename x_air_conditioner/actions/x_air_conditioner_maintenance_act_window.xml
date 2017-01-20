@@ -5,9 +5,12 @@
         <field name="name">Air Conditioner Maintenance Requests</field>
         <field name="res_model">maintenance.request</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form,pivot,graph,calendar</field>
+        <field name="view_mode">tree,kanban,form,pivot,graph,calendar</field>
         <field name="domain">[
-            ('category_id', '=', 'Air Conditioner')]</field>
+            ('is_airconditioner_maintenance', '=', True)]</field>
+        <field name="context">{
+            "default_is_airconditioner_maintenance": True,
+            "search_default_is_airconditioner_maintenance": True} </field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to add a new Air Conditioner maintenance request.

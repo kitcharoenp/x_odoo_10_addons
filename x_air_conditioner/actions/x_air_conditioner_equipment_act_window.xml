@@ -5,11 +5,12 @@
         <field name="name">Air Conditioner</field>
         <field name="res_model">maintenance.equipment</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
         <field name="domain">[
-            ('category_id', '=', 'Air Conditioner')]</field>
-        <field name="context" eval="{'search_default_category_id': ref(
-            'equipment_category_air_conditioner')}"/>
+            ('is_airconditioner_component', '=', True)]</field>
+        <field name="context">{
+            "default_is_airconditioner_component": 1,
+            'search_default_is_airconditioner_component': True} </field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to add a new Air Conditioner.

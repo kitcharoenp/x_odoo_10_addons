@@ -7,7 +7,7 @@
         name="Air Conditioner"
         sequence="58"
         groups="maintenance.group_equipment_manager,base.group_user"
-        web_icon="x_withholding_tax_document,static/description/icon.png"
+        web_icon="x_air_conditioner,static/description/icon.png"
     />
 
     <menuitem

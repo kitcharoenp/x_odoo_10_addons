@@ -19,7 +19,7 @@
         # Resource data
         'data/x_air_conditioner_data.xml',
     ],
-    'demo': [],
+    'images': ['static/description/icon.png'],
     'installable': True,
     'auto-install': True,
 }

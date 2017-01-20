@@ -8,10 +8,6 @@
         <field name="mode">primary</field>
         <field eval="25" name="priority"/>
         <field name="arch" type="xml">
-
-            <xpath expr="//field[@name='category_id']" position="attributes">
-                <attribute name='invisible'>1</attribute>
-            </xpath>
             <xpath expr="//field[@name='x_vehicle_id']" position="attributes">
                 <attribute name='invisible'>1</attribute>
             </xpath>

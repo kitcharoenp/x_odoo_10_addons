@@ -12,8 +12,8 @@
             <xpath expr="//field[@name='equipment_id']" position="replace">
                 <!-- fixed me : search_default_category by name -->
                 <field name="equipment_id"
-                    context="{'search_default_category_id':7}"
-                    placeholder="Air Conditioner"/>
+                    domain="[('is_airconditioner_component', '=', True)]"
+                    placeholder="Select a Air Conditioner for Maintenance"/>
             </xpath>
         </field>
 

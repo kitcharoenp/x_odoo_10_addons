@@ -15,5 +15,6 @@
         'reports/x_receipt_bulk_posting_report.xml',
         'reports/templates/x_receipt_bulk_posting_template.xml',
     ],
+    'images': ['static/src/img/thailand_post_logo.png'],
     'installable': True,
 }

@@ -91,6 +91,7 @@ class WithholdingTaxDocument(models.Model):
         string="Sending Date",
         default=fields.Date.context_today)
     description = fields.Text('Description')
+    tracking_number = fields.Char(string="Tracking No.")
 
     @api.depends('quantity', 'unit_amount', 'tax_ids', 'currency_id')
     def _compute_amount(self):

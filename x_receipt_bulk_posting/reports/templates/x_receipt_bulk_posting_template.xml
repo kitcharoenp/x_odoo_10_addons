@@ -11,6 +11,13 @@
                     .table_head th{
                         text-align: center;
                     }
+                    .prepare_user {
+                        font-size:14px
+                        font-weight: bold;
+                    }
+                    .text_indent {
+                        margin-left: 10px;
+                    }
                 </style>
                 <!-- Header Title and Logo -->
                 <div class="row">
@@ -32,22 +39,45 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <span class="col-xs-2">ได้รับฝาก</span>
-                        <span class="col-xs-2">&#9744; ไปรษณียภัณฑ์<br/>Letter-Post items</span>
-                        <span class="col-xs-2">&#9744; ไปรษณียภัณฑ์<br/>Letter-Post items</span>
-                        <span class="col-xs-2">&#9744; ลงทะเบียน<br/>Registered</span>
-                        <span class="col-xs-2">&#9744; EMS<br/>EMS</span>
+                        <span class="col-xs-2">
+                            &#9744; ไปรษณียภัณฑ์
+                            <br/>
+                            <span class="text_indent"> Letter-Post items</span>
+                        </span>
+                        <span class="col-xs-2">
+                            &#9744; ลงทะเบียน
+                            <br/>
+                            <span class="text_indent">Registered</span>
+                        </span>
+                        <span class="col-xs-2">
+                            &#9744; EMS
+                            <br/>
+                            <span class="text_indent">EMS</span>
+                        </span>
                     </div>
                     <div class="col-xs-12">
-                        <span class="col-xs-2 col-xs-offset-2">&#9744; พัสดุไปรษณีย์<br/>Parcels</span>
-                        <span class="col-xs-2">&#9744; รับประกัน<br/>Insured</span>
-                        <span class="col-xs-2">&#9744; รับรอง<br/>Certified</span>
+                        <span class="col-xs-2 col-xs-offset-2">
+                            &#9744; พัสดุไปรษณีย์
+                            <br/>
+                            <span class="text_indent">Parcels</span>
+                        </span>
+                        <span class="col-xs-2">
+                            &#9744; รับประกัน
+                            <br/>
+                            <span class="text_indent">Insured</span>
+                        </span>
+                        <span class="col-xs-2">
+                            &#9744; รับรอง
+                            <br/>
+                            <span class="text_indent">Certified</span>
+                        </span>
                     </div>
                  </div> <!-- /.row -->
 
                  <br/>
                  <div class="row" >
                     <div class="col-xs-9">
-                        จาก............................
+                        จาก....... <span class="prepare_user" t-esc="user.name" /> .......
                         <br/>From
                     </div>
                     <div class="col-xs-3">
@@ -69,8 +99,8 @@
                             <th rowspan="2">หมายเหตุ</th>
                         </tr>
                         <tr>
-                              <th>บาท</th>
-                              <th>สต.</th>
+                              <th>บาท (Baht)</th>
+                              <th>สต. (Stg.)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,6 +119,7 @@
                                 <t t-if="child_id['type'] == 'delivery' and not had_shipping_address">
                                     <t t-set="had_shipping_address" t-value="1" />
                                     <td>
+                                        <span t-field="child_id.city"/>
                                         <span t-field="child_id.state_id"/>
                                     </td>
                                 </t><!-- t-if -->
@@ -97,6 +128,7 @@
                             <t t-if="not had_shipping_address">
                                 <td>
                                     <span t-if="o.partner_id.state_id">
+                                        <span t-field="o.partner_id.city"/>
                                         <span t-field="o.partner_id.state_id"/>
                                     </span>
                                 </td>
@@ -122,14 +154,14 @@
 
                   <div class="row" >
                     <div class="col-xs-5 col-xs-offset-1 text-right">
-                        รวมทั้งสิ้น <span t-esc="count-1"/>
+                        รวมทั้งสิ้น <span class="text_indent" t-esc="count-1"/>
                         <br/>Total
                     </div>
                     <div class="col-xs-2">
                         ฉบับ/ห่อ<br/>Pieces
                     </div>
                     <div class="col-xs-4">
-                        เป็นเงิน<br/>Amout>
+                        เป็นเงิน<br/>Amout
                     </div>
                   </div>
 
@@ -148,10 +180,10 @@
                 <br/>
                 <br/>
                 <div class="row" >
-                      <div class="col-xs-9 text-center">
-                          *การขอสอบสวนและการสอบถามใดๆ เกี่ยวกับสิ่งของที่ฝาก>
+                      <div class="col-xs-6 text-center">
+                          *การขอสอบสวนและการสอบถามใดๆ เกี่ยวกับสิ่งของที่ฝาก
                       </div>
-                      <div class="col-xs-3 text-right">
+                      <div class="col-xs-6 text-right">
                           พนักงานรับฝาก...................................
                       </div>
                 </div>

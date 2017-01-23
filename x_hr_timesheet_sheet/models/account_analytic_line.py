@@ -68,6 +68,7 @@ class AccountAnalyticLine(models.Model):
         """
         for ts_line in self:
             if ts_line.x_start_date and ts_line.x_end_date:
+                '''
                 if ts_line.x_end_date < ts_line.x_start_date:
                     raise ValidationError(_(
                         '"Start" time cannot be earlier than "End" time.'))
@@ -82,7 +83,7 @@ class AccountAnalyticLine(models.Model):
                 if d1 != d2:
                     raise ValidationError(_(
                         '"Start" time must be the same date "End" time.'))
-
+                '''
                 domain = [
                     ('x_start_date', '<', ts_line.x_end_date),
                     ('x_end_date', '>', ts_line.x_start_date),

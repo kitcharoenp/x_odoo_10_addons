@@ -7,16 +7,34 @@
             <form string="Withholding Tax Document">
                <sheet string="Vehicle Claims">
                     <label for="name"/>
-                    <h1>
-                        <field name="name"/>
-                    </h1>
+
                     <group>
                         <group>
+
+                          <field name='date'/>
+                          <field name='vehicle_id' />
+                          <field name='driver_id'/>
+                          <field name='claimed' />
+
                         </group>
                         <group>
+                          <field name='third_party_id'  string="คู่กรณี" context="{'show_address': 1}"
+                            options='{"always_reload": True, "highlight_first_line": True}'/>
+                          <field name='third_party_plate' string="เลขทะเบียนคู่กรณี"/>
+
+                          <field name='at_fault_driver' string="กรณีความผิด" />
+
+        
+
+
+
+
+
                         </group>
+                        <field name='description' string="รายละเอียด" placeholder="Internal Note ......."   />
+
                     </group>
-                    <field name='description' placeholder="Internal Note ......."/>
+
                 </sheet>
 
                 <div class="oe_chatter">

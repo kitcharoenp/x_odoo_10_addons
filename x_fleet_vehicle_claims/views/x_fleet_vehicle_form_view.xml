@@ -1,0 +1,16 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id='x_fleet_vehicle_form_view' model='ir.ui.view'>
+      <field name="name">Fleet Vehicle Form</field>
+      <field name="model">fleet.vehicle</field>
+      <field name="inherit_id"
+          ref="fleet.fleet_vehicle_view_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//form/sheet/div[1]/button[@icon='fa-tachometer']/"
+            position="replace">
+
+        </xpath>
+      </field>
+  </record>
+</odoo>

@@ -10,7 +10,7 @@
                 <xpath expr="//field[@name='timesheet_ids']/tree"
                     position="replace">
                     <tree string="Timesheet Activities">
-                        <field name="date" required="0" invisible="1"/>
+                        <field name="date" required="1"/>
                         <field name="x_start_date" required="1"/>
                         <field name="x_end_date" required="1"/>
                         <field name="name"/>
@@ -36,7 +36,7 @@
                     <form string="Timesheet Activities">
                         <group col="2">
                             <group string="Activity Details">
-                                <field name="date" required="0" invisible="1"/>
+                                <field name="date" required="1"/>
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
                                 <field name="project_id"

@@ -10,7 +10,7 @@
             <xpath expr="//tree[@editable='top']"
                 position="replace">
                 <tree string="Timesheet Activities">
-                    <field name="date" invisible="1"/>
+                    <field name="date"/>
                     <field name="x_start_date"/>
                     <field name="x_end_date"/>
                     <field name="user_id" required="1" options='{"no_open": True}'/>

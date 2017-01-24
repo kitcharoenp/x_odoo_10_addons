@@ -5,8 +5,8 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
 
 from datetime import datetime, time
-from dateutil.relativedelta import relativedelta
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, DEFAULT_SERVER_DATE_FORMAT
+import pytz
 
 
 class AccountAnalyticLine(models.Model):
@@ -25,10 +25,6 @@ class AccountAnalyticLine(models.Model):
         string='End',
         default=fields.Datetime.from_string(
             fields.Datetime.now()).strftime('%Y-%m-%d 10:00:00'))
-    date = fields.Date(
-        compute='_compute_date_from_x_start_date',
-        string='Date',
-        index=True)
     x_notes = fields.Text(
         string='Note',)
     is_overtime = fields.Boolean(
@@ -57,9 +53,16 @@ class AccountAnalyticLine(models.Model):
         """ auto change 'date' onchange of 'x_start_date """
         for ts_line in self:
             if ts_line.x_start_date:
-                ts_line.date = datetime.strptime(
-                    ts_line.x_start_date,
-                    DEFAULT_SERVER_DATETIME_FORMAT).date()
+                start_datetime = ts_line.x_start_date
+                timezone = pytz.timezone(self._context.get('tz') or 'UTC')
+
+                attendance_dt = datetime.strptime(
+                    start_datetime, DEFAULT_SERVER_DATETIME_FORMAT)
+                att_tz_dt = pytz.utc.localize(attendance_dt)
+                att_tz_dt = att_tz_dt.astimezone(timezone)
+                att_tz_date_str = datetime.strftime(
+                    att_tz_dt, DEFAULT_SERVER_DATE_FORMAT)
+                ts_line.date = att_tz_date_str
 
     @api.constrains('x_start_date', 'x_end_date')
     def _check_validity_x_start_date_x_end_date(self):

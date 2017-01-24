@@ -115,7 +115,7 @@
                         <tr class="x_activities_body">
                             <td class="col-xs-1 text-center outer" >
                                 <span t-esc="datetime.datetime.strftime(d1,'%A')"/><br/>
-                                <span t-esc="datetime.datetime.strftime(d1,'%d-%m-%y ')"/>
+                                <span t-esc="datetime.datetime.strftime(d1,'%d-%m-%y')"/>
                             </td>
                             <td class="col-xs-11 outer">
                                 <table class="col-xs-12"> <!-- table in row -->

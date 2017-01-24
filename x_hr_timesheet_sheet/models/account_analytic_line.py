@@ -94,9 +94,9 @@ class AccountAnalyticLine(models.Model):
         for ts_line in self:
             if ts_line.x_start_date:
                 st_datetime = fields.Datetime.from_string(
-                    self.x_start_date)
+                    ts_line.x_start_date)
                 en_datetime = fields.Datetime.from_string(
-                    self.x_end_date)
+                    ts_line.x_end_date)
                 diff = en_datetime - st_datetime
                 if(time(1, 00) <= st_datetime.time() <= time(5, 00)):
                     if(time(6, 00) <= en_datetime.time() <= time(10, 00)):

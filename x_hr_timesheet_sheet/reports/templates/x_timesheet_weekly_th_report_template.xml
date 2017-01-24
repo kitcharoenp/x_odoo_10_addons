@@ -143,7 +143,7 @@
                                             <span t-field="l.x_vehicle_id.license_plate"/>
                                         </td>
                                         <td class="col-xs-1 text-center" >
-                                            <span t-esc="'%02d:%02d' % (int(str(l.unit_amount).split('.')[0]), int(float(str('%.2f' % l.unit_amount).split('.')[1])/100*60))" />
+                                            <span t-if="l.is_overtime" t-esc="'%02d:%02d' % (int(str(l.unit_amount).split('.')[0]), int(float(str('%.2f' % l.unit_amount).split('.')[1])/100*60))" />
                                         </td>
                                         <!-- sum time total -->
                                         <t t-set="x_total" t-value="x_total+l.unit_amount"/>

@@ -22,19 +22,19 @@
                                 <t t-if="o.partner_id.vat">
                                     <u>
                                         <span class="indent_input_field"
-                                            t-field="o.partner_id.vat"/>
+                                            t-esc="o.partner_id.vat.replace('TH','')"/>
                                     </u>
                                 </t>
                                 <t t-elif="o.partner_id.parent_id.vat">
                                     <u>
                                         <span class="indent_input_field"
-                                        t-field="o.partner_id.parent_id.vat"/>
+                                        t-esc="o.partner_id.parent_id.vat.replace('TH','')"/>
                                     </u>
                                 </t>
                                 <t t-elif="o.partner_id.ref">
                                     <u>
                                         <span class="indent_input_field"
-                                            t-field="o.partner_id.ref"/>
+                                            t-esc="o.partner_id.ref.replace('TH','')"/>
                                     </u>
                                 </t>
                                 <t t-else="">

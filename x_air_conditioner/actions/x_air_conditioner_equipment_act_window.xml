@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Air Conditioner equipment : actions -->
+    <record id="x_air_conditioner_equipment_act_window" model="ir.actions.act_window">
+        <field name="name">Air Conditioner</field>
+        <field name="res_model">maintenance.equipment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="domain">[
+            ('is_airconditioner_component', '=', True)]</field>
+        <field name="context">{
+            "default_is_airconditioner_component": 1,
+            'search_default_is_airconditioner_component': True} </field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new Air Conditioner.
+            </p><p>
+                This application helps you to track Air Conditioner used by employees.
+                Create some Air Conditioner and link each Air Conditioner to
+                an employee or departement. You will manage allocations, issues
+                and maintenance of Air Conditioner.
+            </p>
+        </field>
+    </record>
+
+    <record id="x_air_conditioner_equipment_kanban_act_window" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">kanban</field>
+        <field name="act_window_id" ref="x_air_conditioner_equipment_act_window"/>
+    </record>
+
+    <record id="x_air_conditioner_equipment_tree_act_window" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">tree</field>
+        <field name="act_window_id" ref="x_air_conditioner_equipment_act_window"/>
+    </record>
+
+    <record id="x_air_conditioner_equipment_form_act_window" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="x_air_conditioner_equipment_form_view"/>
+        <field name="act_window_id" ref="x_air_conditioner_equipment_act_window"/>
+    </record>
+
+</odoo>

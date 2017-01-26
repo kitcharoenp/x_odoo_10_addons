@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models, tools, _
+from odoo.modules.module import get_module_resource
 
 
 class FleetVehicleClaims(models.Model):
@@ -8,6 +9,13 @@ class FleetVehicleClaims(models.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']
     _description = "Fleet Vehicle Claims"
     _order = "date desc, id desc"
+
+    @api.model
+    def _default_image(self):
+        image_path = get_module_resource(
+            'hr', 'static/src/img', 'default_image.png')
+        return tools.image_resize_image_big(
+            open(image_path, 'rb').read().encode('base64'))
 
     name = fields.Char(
         string='Sequence',
@@ -40,12 +48,52 @@ class FleetVehicleClaims(models.Model):
     description = fields.Text('Description')
     claimed = fields.Boolean(default=False)
     at_fault_driver = fields.Boolean(default=False)
-    at_fault_driver_third_party = fields.Boolean(default=False)
+    at_fault_third_party = fields.Boolean(default=False)
+    image = fields.Binary(
+        string="Image",
+        default=_default_image,
+        attachment=True)
+    image01 = fields.Binary(
+        string="Image01",
+        default=_default_image,
+        attachment=True)
+    image02 = fields.Binary(
+        string="Image02",
+        default=_default_image,
+        attachment=True)
+    description_image = fields.Char(
+        string='Description Image')
+    description_image01 = fields.Char(
+        string='Description Image01')
+    description_image02 = fields.Char(
+        string='Description Image02')
 
     @api.model
     def create(self, vals):
+        tools.image_resize_images(vals)
+        if 'image01' in vals:
+            vals.update(tools.image_get_resized_images(vals['image01'],
+                        return_big=True,
+                        big_name='image01'))
+        if 'image02' in vals:
+            vals.update(tools.image_get_resized_images(vals['image02'],
+                        return_big=True,
+                        big_name='image02'))
         if not vals.get('name', False) or vals['name'] == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'fleet.vehicle.claims') or _('New')
         result = super(FleetVehicleClaims, self).create(vals)
         return result
+
+    @api.multi
+    def write(self, vals):
+        tools.image_resize_images(vals)
+        if 'image01' in vals:
+            vals.update(tools.image_get_resized_images(vals['image01'],
+                        return_big=True,
+                        big_name='image01'))
+        if 'image02' in vals:
+            vals.update(tools.image_get_resized_images(vals['image02'],
+                        return_big=True,
+                        big_name='image02'))                
+        return super(FleetVehicleClaims, self).write(vals)

@@ -15,23 +15,27 @@
                           <field name='claimed' />
                         </group>
                         <group string="Third Party Detail">
-                          <field name='third_party_id'
-                              string="คู่กรณี"
+                            <field name='third_party_id'
+                              string="3rd Party"
                               context="{'show_address': 1}"
                               options='{
                                 "always_reload": True,
                                 "highlight_first_line": True}'/>
-                          <field name='third_party_plate'
-                              string="เลขทะเบียนคู่กรณี"/>
-                          <field name='at_fault_driver'/>
+                            <field name='third_party_plate'
+                              string="Vehicle Plate 3rd"/>
+
+                            <field name='at_fault_driver' string="At Fault Driver"/>
+                            <field name='at_fault_third_party' string="At Fault 3rd"/>
+                            <field name='street'
+                              string="Location"/>
                         </group>
                     </group>
 
                     <group string="Other Detail" col="2">
-                            <field name='description'
-                                string="รายละเอียด"
-                                placeholder="Internal Note ......."/>
-                        </group>
+                        <field name='description'
+                            string="Description"
+                            placeholder="Description or Note for this vehicle claims ......."/>
+                    </group>
 
                     <group string="Claims Images" col="2">
                         <group>

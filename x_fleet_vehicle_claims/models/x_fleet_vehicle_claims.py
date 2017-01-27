@@ -67,6 +67,7 @@ class FleetVehicleClaims(models.Model):
         string='Description Image01')
     description_image02 = fields.Char(
         string='Description Image02')
+    street = fields.Char()    
 
     @api.model
     def create(self, vals):
@@ -95,5 +96,5 @@ class FleetVehicleClaims(models.Model):
         if 'image02' in vals:
             vals.update(tools.image_get_resized_images(vals['image02'],
                         return_big=True,
-                        big_name='image02'))                
+                        big_name='image02'))
         return super(FleetVehicleClaims, self).write(vals)

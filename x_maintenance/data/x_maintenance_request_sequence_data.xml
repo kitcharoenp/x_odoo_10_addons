@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="x_maintenance_request_sequence_data" model="ir.sequence">
+            <field name="name">Maintenance Request</field>
+            <field name="code">x_maintenance.request</field>
+            <field name="prefix">MRQ-%(range_year)s-</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">5</field>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+        </record>
+    </data>
+</odoo>

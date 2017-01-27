@@ -14,6 +14,8 @@
         'views/x_equipment_form_view.xml',
         'views/x_equipment_kanban_view.xml',
         'views/x_equipment_tree_view.xml',
+        # Sequence
+        'data/x_maintenance_request_sequence_data.xml',
     ],
     'demo': [],
     'installable': True,

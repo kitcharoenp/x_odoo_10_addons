@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- vehicle claims belong in vehicle menu-->
+    <menuitem
+        id="x_fleet_vehicle_claims_menu_view"
+        name="Vehicle Claims"
+        parent="fleet.fleet_vehicles"
+        action="x_fleet_vehicle_claims_act_window"
+        groups="fleet.fleet_group_user"
+        sequence="20"
+    />
+
+    <record id="x_fleet_vehicle_claims_menu_view"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+</odoo>

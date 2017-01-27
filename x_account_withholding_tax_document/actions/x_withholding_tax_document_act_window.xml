@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_withholding_tax_document_act_window" model="ir.actions.act_window">
+        <field name="name">Withholding Tax Document</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">withholding.tax.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a withholding tax document.
+            </p><p>
+                In a withholding tax document, you can
+            </p>
+        </field>
+    </record>
+</odoo>

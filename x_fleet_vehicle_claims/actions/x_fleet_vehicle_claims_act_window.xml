@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_fleet_vehicle_claims_act_window" model="ir.actions.act_window">
+        <field name="name">Fleet Vehicle Claims</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fleet.vehicle.claims</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a vehicle claims.
+            </p><p>
+                In a vehicle claims, you can record incident/accident vehicle
+            </p>
+        </field>
+    </record>
+</odoo>

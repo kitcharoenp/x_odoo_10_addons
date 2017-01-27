@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- fleet/user group see all vehicle -->
+    <record id="x_vehicle_info_user_read_rule" model="ir.rule">
+        <field name="name">User can see all vehicle</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle"/>
+        <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+    <!-- fleet/user group see all odometer -->
+    <record id="x_vehicle_odometer_user_read_rule" model="ir.rule">
+        <field name="name">User can see all vehicle's odometer</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_odometer"/>
+        <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+    <!-- user only can read/write own record -->
+    <record id="x_vehicle_odometer_owner_rule" model="ir.rule">
+        <field name="name">Owner can see/write his/her vehicle's odometer</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_odometer"/>
+        <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+    </record>
+</odoo>

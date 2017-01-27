@@ -15,10 +15,12 @@
                         <field name="x_end_date" required="1"/>
                         <field name="name"/>
                         <field name="project_id"
+                            string="Customer/Project"
+                            filter_domain="[('project_id','ilike',self)]"
                             required="1"
                             options="{'no_open': True, 'no_create': True}" />
                         <field name="x_vehicle_id"
-                            options="{'no_open': True, 'no_create': True}"/>
+                            options="{'no_open': False, 'no_create': True}"/>
                         <field name="unit_amount"
                             widget="float_time"
                             string="Hours"
@@ -32,17 +34,17 @@
                 <xpath expr="//field[@name='timesheet_ids']/form"
                     position="replace">
                     <form string="Timesheet Activities">
-                        <group>
-
-                            <group>
+                        <group col="2">
+                            <group string="Activity Details">
                                 <field name="date" required="0" invisible="1"/>
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
                                 <field name="project_id"
+                                    string="Customer/Project"
+                                    filter_domain="[('project_id','ilike',self)]"
                                     required="1"
-                                    options="{'no_open': True, 'no_create': True}" />
-                                <field name="x_vehicle_id"
-                                    options="{'no_open': True, 'no_create': True}"/>
+                                    options="{'no_open': True,
+                                        'no_create': True}" />
                                 <field name="name" invisible="1"/>
                                 <field name="unit_amount"
                                         widget="float_time"
@@ -50,12 +52,52 @@
                                 <field name="user_id" invisible="1"/>
                                 <field name="is_overtime"/>
                             </group>
-
-                            <group>
+                            <group string="Other Details">
                                 <field name="x_notes"
                                     required="1"
-                                    placeholder="Write here all other information relative to this activity" />
+                                    placeholder="Write here all other information relative to this activity"/>
+                                <field name="x_vehicle_id"
+                                    string="เลขทะเบียน"
+                                    options="{'no_open': False,
+                                        'no_create': True}"/>
+                                <field name="x_odometer"
+                                    string="เลขไมล์เริ่มต้น" />
+                                <field name="y_odometer"
+                                    string="เลขไมล์สิ้นสุด" />
+                                <field name="tag_ids" widget="many2many_tags"
+                                    options="{'no_open': True, 'no_create': True}"/>
                             </group>
+                        </group>
+                        <group string="Collaborators">
+
+                            <field name="employee_ids" widget="many2many_kanban" nolabel="1" colspan="2">
+                                <kanban>
+                                    <field name="name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click" style="position: relative">
+                                                <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                                <div class="o_kanban_image" style="min-height: 40px">
+                                                    <img t-att-src="kanban_image('hr.employee', 'image_medium', record.id.value)"/>
+                                                </div>
+                                                <div class="oe_kanban_details">
+                                                    <strong>
+                                                        <field name="name"/>
+                                                    </strong>
+                                                    <ul>
+                                                        <li id="last_login"/>
+                                                        <li t-if="record.job_id.raw_value"><field name="job_id"/></li>
+                                                        <li t-if="record.work_location.raw_value"><field name="work_location"/></li>
+                                                        <li t-if="record.work_email.raw_value"><i class="fa fa-envelope"></i> <field name="work_email"/></li>
+                                                        <li t-if="record.work_phone.raw_value"><i class="fa fa-phone"></i> <field name="work_phone"/></li>
+                                                        <li t-if="record.mobile_phone.raw_value"><i class="fa fa-mobile"></i> <field name="mobile_phone"/></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
 
                         </group>
                     </form>
@@ -75,16 +117,16 @@
 
                 <form string="Analytic Entry">
                     <sheet string="Analytic Entry">
-                        <group>
-                            <group>
+                        <group col="2">
+                            <group string="Activity Details">
                                 <field name="date" required="0" invisible="1"/>
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
                                 <field name="project_id"
+                                    string="Customer/Project"
+                                    filter_domain="[('project_id','ilike',self)]"
                                     required="1"
                                     options="{'no_open': True, 'no_create': True}" />
-                                <field name="x_vehicle_id"
-                                    options="{'no_open': True, 'no_create': True}"/>
                                 <field name="name" invisible="1"/>
                                 <field name="unit_amount"
                                         widget="float_time"
@@ -92,12 +134,54 @@
                                 <field name="user_id" invisible="1"/>
                                 <field name="is_overtime"/>
                             </group>
-
-                            <group>
+                            <group string="Other Details">
                                 <field name="x_notes"
                                     required="1"
                                     placeholder="Write here all other information relative to this activity" />
+
+                                    <field name="x_vehicle_id"
+                                        string="เลขทะเบียน"
+                                        options="{'no_open': False,
+                                            'no_create': True}"/>
+                                    <field name="x_odometer"
+                                        string="เลขไมล์เริ่มต้น" />
+                                    <field name="y_odometer"
+                                        string="เลขไมล์สิ้นสุด" />
+                                    <field name="tag_ids" widget="many2many_tags"
+                                        options="{'no_open': True, 'no_create': True}"/>
                             </group>
+                        </group>
+                        <group string="Collaborators">
+
+                            <field name="employee_ids" widget="many2many_kanban" nolabel="1" colspan="2">
+                                <kanban>
+                                    <field name="name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click" style="position: relative">
+                                                <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                                <div class="o_kanban_image" style="min-height: 40px">
+                                                    <img t-att-src="kanban_image('hr.employee', 'image_medium', record.id.value)"/>
+                                                </div>
+                                                <div class="oe_kanban_details">
+                                                    <strong>
+                                                        <field name="name"/>
+                                                    </strong>
+                                                    <ul>
+                                                        <li id="last_login"/>
+                                                        <li t-if="record.job_id.raw_value"><field name="job_id"/></li>
+                                                        <li t-if="record.work_location.raw_value"><field name="work_location"/></li>
+                                                        <li t-if="record.work_email.raw_value"><i class="fa fa-envelope"></i> <field name="work_email"/></li>
+                                                        <li t-if="record.work_phone.raw_value"><i class="fa fa-phone"></i> <field name="work_phone"/></li>
+                                                        <li t-if="record.mobile_phone.raw_value"><i class="fa fa-mobile"></i> <field name="mobile_phone"/></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+
                         </group>
                     </sheet>
                 </form>

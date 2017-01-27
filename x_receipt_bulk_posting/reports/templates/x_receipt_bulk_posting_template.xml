@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="x_receipt_bulk_posting_template">
+        <t t-call="report.html_container">
+            <div class="page">
+                <style>
+                    body {
+                        font-family:freeserif;
+                        font-size:11px
+                    }
+                    .table_head th{
+                        text-align: center;
+                    }
+                    .prepare_user {
+                        font-size:14px
+                        font-weight: bold;
+                    }
+                    .text_indent {
+                        margin-left: 10px;
+                    }
+                </style>
+                <!-- Header Title and Logo -->
+                <div class="row">
+                    <div class="col-xs-3">
+                        <img
+                            src="/x_receipt_bulk_posting/static/src/img/thailand_post_logo.png"
+                            style="padding: 0px; margin: 0px; height: auto; width: 50px;"
+                        />
+                    </div>
+                    <div class="col-xs-6 text-center" style="vertical-align: middle;">
+                        <h3>Receipt for Bulk Posting</h3>
+                    </div>
+                    <div class="col-xs-3">
+                        <br/>
+                    </div>
+                </div><!-- /.row -->
+
+                <br/>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span class="col-xs-2">ได้รับฝาก</span>
+                        <span class="col-xs-2">
+                            &#9744; ไปรษณียภัณฑ์
+                            <br/>
+                            <span class="text_indent"> Letter-Post items</span>
+                        </span>
+                        <span class="col-xs-2">
+                            &#9744; ลงทะเบียน
+                            <br/>
+                            <span class="text_indent">Registered</span>
+                        </span>
+                        <span class="col-xs-2">
+                            &#9744; EMS
+                            <br/>
+                            <span class="text_indent">EMS</span>
+                        </span>
+                    </div>
+                    <div class="col-xs-12">
+                        <span class="col-xs-2 col-xs-offset-2">
+                            &#9744; พัสดุไปรษณีย์
+                            <br/>
+                            <span class="text_indent">Parcels</span>
+                        </span>
+                        <span class="col-xs-2">
+                            &#9744; รับประกัน
+                            <br/>
+                            <span class="text_indent">Insured</span>
+                        </span>
+                        <span class="col-xs-2">
+                            &#9744; รับรอง
+                            <br/>
+                            <span class="text_indent">Certified</span>
+                        </span>
+                    </div>
+                 </div> <!-- /.row -->
+
+                 <br/>
+                 <div class="row" >
+                    <div class="col-xs-9">
+                        จาก....... <span class="prepare_user" t-esc="user.name" /> .......
+                        <br/>From
+                    </div>
+                    <div class="col-xs-3">
+                        ไว้ดังนี้ ตราประทับ
+                        <br/>As Follows Date
+                    </div>
+                </div>
+
+                <div class="row" >
+                    <table class="table table-bordered">
+                    <thead>
+                        <tr class="table_head text-center">
+                            <th rowspan="2">ลำดับ<br/>No.</th>
+                            <th rowspan="2">นามผู้รับ<br/>Name of Address</th>
+                            <th rowspan="2">ปลายทาง<br/>Destination</th>
+                            <th rowspan="2">เลขที่<br/>Number</th>
+                            <th rowspan="2">น้ำหนัก<br/>weight(Grammes)</th>
+                            <th colspan="2">ค่าบริการ<br/>Postal Charge</th>
+                            <th rowspan="2">หมายเหตุ</th>
+                        </tr>
+                        <tr>
+                              <th>บาท (Baht)</th>
+                              <th>สต. (Stg.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <!-- set a varialble 'count' -->
+                        <t t-set="count" t-value="1" />
+                        <t t-foreach="docs" t-as="o">
+                    <!-- make row data -->
+                        <tr>
+                            <td><span t-esc="count" /></td>
+                            <td><span t-field="o.partner_id"/></td>
+
+                            <!-- find destination  -->
+                            <t t-set="had_shipping_address" t-value="0" />
+
+                            <t t-foreach="o.partner_id.child_ids" t-as="child_id">
+                                <t t-if="child_id['type'] == 'delivery' and not had_shipping_address">
+                                    <t t-set="had_shipping_address" t-value="1" />
+                                    <td>
+                                        <span t-field="child_id.city"/>
+                                        <span t-field="child_id.state_id"/>
+                                    </td>
+                                </t><!-- t-if -->
+                            </t><!-- /.t-foreach o.partner_id-->
+
+                            <t t-if="not had_shipping_address">
+                                <td>
+                                    <span t-if="o.partner_id.state_id">
+                                        <span t-field="o.partner_id.city"/>
+                                        <span t-field="o.partner_id.state_id"/>
+                                    </span>
+                                </td>
+                            </t>
+
+                                <td>
+                                    <span t-if="o.tracking_number">
+                                        <span t-field="o.tracking_number"/>
+                                    </span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                        </tr>
+                        <!-- increase count +1 -->
+                        <t t-if="o.name">
+                            <t t-set="count" t-value="count+1" />
+                        </t>
+                    </t><!-- /.t-foreach docs -->
+                    </tbody>
+                 </table>
+
+                  <div class="row" >
+                    <div class="col-xs-5 col-xs-offset-1 text-right">
+                        รวมทั้งสิ้น <span class="text_indent" t-esc="count-1"/>
+                        <br/>Total
+                    </div>
+                    <div class="col-xs-2">
+                        ฉบับ/ห่อ<br/>Pieces
+                    </div>
+                    <div class="col-xs-4">
+                        เป็นเงิน<br/>Amout
+                    </div>
+                  </div>
+
+                </div>
+
+                <br/>
+                <br/>
+                <div class="row" >
+                    <div class="col-xs-12 text-center">
+                        *ใบรับนี้เป็นหลักฐานการฝากส่ง โปรดเก็บรักษาไว้จนแน่ใจว่าผู้รับได้รับ
+                        <br/>
+                        สิ่งของแล้วหรือจนหมดอายุการสอบสวน คือ 1ปี นับถัดจากวันฝากส่ง
+                    </div>
+                </div>
+
+                <br/>
+                <br/>
+                <div class="row" >
+                      <div class="col-xs-6 text-center">
+                          *การขอสอบสวนและการสอบถามใดๆ เกี่ยวกับสิ่งของที่ฝาก
+                      </div>
+                      <div class="col-xs-6 text-right">
+                          พนักงานรับฝาก...................................
+                      </div>
+                </div>
+
+                </div> <!-- /.page -->
+            </t><!-- /.container -->
+        </template>
+</odoo>

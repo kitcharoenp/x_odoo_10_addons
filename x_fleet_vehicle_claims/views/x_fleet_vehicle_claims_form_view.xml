@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_fleet_vehicle_claims_form_view" model="ir.ui.view">
+        <field name="name">Fleet vehicle claims form</field>
+        <field name="model">fleet.vehicle.claims</field>
+        <field name="arch" type="xml">
+            <form string="Fleet vehicle claims">
+               <sheet string="Vehicle Claims">
+                    <label for="name"/>
+                    <group>
+                        <group string="Claims Detail">
+                          <field name='date'/>
+                          <field name='vehicle_id' />
+                          <field name='driver_id'/>
+                          <field name='claimed' />
+                        </group>
+                        <group string="Third Party Detail">
+                            <field name='third_party_id'
+                              string="3rd Party"
+                              context="{'show_address': 1}"
+                              options='{
+                                "always_reload": True,
+                                "highlight_first_line": True}'/>
+                            <field name='third_party_plate'
+                              string="Vehicle Plate 3rd"/>
+
+                            <field name='at_fault_driver' string="At Fault Driver"/>
+                            <field name='at_fault_third_party' string="At Fault 3rd"/>
+                            <field name='street'
+                              string="Location"/>
+                        </group>
+                    </group>
+
+                    <group string="Other Detail" col="2">
+                        <field name='description'
+                            string="Description"
+                            placeholder="Description or Note for this vehicle claims ......."/>
+                    </group>
+
+                    <group string="Claims Images" col="2">
+                        <group>
+                            <div>
+                                <field name="image" widget="image" nolabel="1"
+                                    options='{"preview_image": "image", "size": [480,480]}'/>
+                                <field name='description_image' nolabel="0"
+                                    placeholder="Description Image ......."/>
+                            </div>
+                        </group>
+                        <group>
+                            <div>
+                                <field name="image01" widget="image" nolabel="1"
+                                    options='{"preview_image": "image01", "size": [480,480]}'/>
+                                <field name='description_image01' nolabel="0"
+                                    placeholder="Description Image01 ......."/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group>
+                            <div>
+                                <field name="image02" widget="image"
+                                    nolabel="1"
+                                    options='{"preview_image": "image02", "size": [480,480]}'/>
+                                <field name='description_image02' nolabel="0"
+                                    placeholder="Description Image02 ......."/>
+                            </div>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+</odoo>

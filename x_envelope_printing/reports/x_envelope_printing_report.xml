@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--
+    QWeb Reports see parameter description at
+    https://www.odoo.com/documentation/10.0/reference/reports.html
+-->
+    <record id="x_envelope_110x220_paperformat"
+        model="report.paperformat">
+        <field name="name">Envelope 110x220 </field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <field name="page_height">104</field>
+        <field name="page_width">241</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="dpi">90</field>
+    </record>
+
+
+    <report id="x_envelope_printing_pdf_report"
+            model="res.partner"
+            string="Envelope Printing"
+            report_type="qweb-pdf"
+            name="x_envelope_printing.x_envelope_printing_template"
+            file="x_envelope_printing.x_envelope_printing_template"
+            paperformat="x_envelope_printing.x_envelope_110x220_paperformat"
+    />
+</odoo>

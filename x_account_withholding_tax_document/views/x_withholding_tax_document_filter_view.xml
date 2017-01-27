@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="x_withholding_tax_document_filter_view" model="ir.ui.view">
+          <field name="name">Withholding tax document filter</field>
+          <field name="model">withholding.tax.document</field>
+          <field name="arch" type="xml">
+              <search string="Search Withholding Tax Documents">
+                  <field name="name" string="Withholding Tax Documents"/>
+                  <field name="date"/>
+                  <field name="employee_id"/>
+                  <field name="product_id"/>
+              </search>
+          </field>
+    </record>
+
+</odoo>

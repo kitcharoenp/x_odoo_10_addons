@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- main top menu for withholding tax document -->
+    <menuitem
+        id="x_withholding_tax_document_menu_view"
+        action="x_withholding_tax_document_act_window"
+        groups="base.group_user"
+        name="Documents"
+        sequence="58"
+        web_icon="x_account_withholding_tax_document,static/description/icon.png"
+    />
+    <!-- My withholding tax document menu-->
+    <menuitem
+        id="x_withholding_tax_document_title_menu"
+        name="My Documents"
+        parent="x_withholding_tax_document_menu_view"
+        sequence="90"
+    />
+
+    <menuitem
+        id="x_withholding_tax_document_my_menu"
+        name="My Withholding Tax Document"
+        parent="x_withholding_tax_document_title_menu"
+        action="x_withholding_tax_document_act_window"
+        sequence="90"
+    />
+
+    <menuitem
+        id="x_withholding_tax_document_vendors_menu"
+        name="Vendors"
+        parent="x_withholding_tax_document_title_menu"
+        action="base.action_partner_supplier_form"
+        sequence="97"
+    />
+
+    <record id="x_withholding_tax_document_menu_view"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
+</odoo>

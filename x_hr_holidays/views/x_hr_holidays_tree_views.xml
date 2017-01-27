@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- holidays : views -->
+  <record id="x_view_holiday_simple" model="ir.ui.view">
+      <field name="name">delete button create</field>
+      <field name="model">hr.holidays</field>
+      <field name="inherit_id" ref="hr_holidays.view_holiday_simple"/>
+      <field name="arch" type="xml">
+        <xpath expr="//tree" position="replace">
+          <tree   create="false" decoration-danger="state == 'refuse'"
+                  decoration-info="state == 'draft'"
+                  string="Leaves Summary">
+              <field name="employee_id"/>
+              <field name="category_id" invisible="1"/>
+              <field name="department_id" invisible="1"/>
+              <field name="type"/>
+              <field name="name"/>
+              <field name="number_of_days" string="Number of Days" sum="Remaining Days"/>
+              <field name="date_from"/>
+              <field name="date_to"/>
+              <field name="holiday_status_id"/>
+              <field name="manager_id" invisible="1"/>
+              <field name="user_id" invisible="1"/>
+              <field name="state"/>
+          </tree>
+          </xpath>
+      </field>
+
+  </record>
+
+</odoo>

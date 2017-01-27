@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--
+    QWeb Reports see parameter description at
+    https://www.odoo.com/documentation/10.0/reference/reports.html
+-->
+    <record id="x_withholding_tax_document_paperformat" model="report.paperformat">
+        <field name="name">Withholding Tax</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False" />
+        <field name="dpi">90</field>
+    </record>
+
+
+
+
+
+    <report id="x_withholding_tax_document_pdf_report"
+            model="withholding.tax.document"
+            string="Withholding Tax Document"
+            report_type="qweb-pdf"
+            name="x_account_withholding_tax_document.x_withholding_tax_document_template"
+            file="x_account_withholding_tax_document.x_withholding_tax_document_template"
+            paperformat="x_account_withholding_tax_document.x_withholding_tax_document_paperformat"
+    />
+</odoo>

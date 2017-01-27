@@ -1,0 +1,139 @@
+
+/* --- Generic Restyling and Resets --- */
+body {
+    font-family:AngsanaUPC,Helvetica,Verdana,Arial,sans,Calibri;
+}
+
+table {
+    font-size: 9px;
+    border-top: 1px solid black !important;
+    border: 1px solid black !important;
+    margin-bottom: 5px !important;
+}
+
+td {
+    padding: 3px !important;
+}
+
+.copy {
+    font-size: 8px;
+}
+
+.main-header {
+    font-size: 20px;
+    font-weight: bold;
+}
+.sub-header {
+    font-size: 14px;
+}
+
+.book-no {
+    font-size: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+/* Table Styling */
+
+.company-info {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.tax-id {
+    font-weight: bold;
+}
+
+.tax-type {
+    font-weight: bold;
+}
+
+.sub-text {
+    font-size: 8px;
+    font-style: italic;
+    padding-left: 0.25cm;
+}
+
+.sub-text-tax {
+    font-size: 8px;
+    font-style: italic;
+}
+
+.thead-income {
+    background-color: #eee;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.withholding_tax table {
+    border: 1px solid black !important;
+}
+
+.withholding_tax th {
+    border: 1px solid black !important;
+    text-align: center;
+}
+
+.withholding_tax td {
+    border: 1px solid black;
+    padding: 3px !important;
+}
+.noborder_td {
+    border-bottom: none !important;
+    border-top: none !important;
+    padding: 3px !important;
+}
+.text_indent1 {
+    text-indent: 10px;
+}
+.text_indent2 {
+    text-indent: 20px;
+}
+.text_indent3 {
+    text-indent: 30px;
+}
+.text_indent4 {
+    text-indent: 50px;
+}
+
+.income-line {
+    font-size: 11px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.total-amount-title {
+    text-indent: 40px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.total-amount-text {
+    font-size: 11px;
+    background-color: #eee;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.payer {
+    font-size: 11px;
+}
+
+.signature {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.caution {
+    font-size: 10px;
+    margin-left: 40px;
+}
+
+.footer-table td {
+    border: 1px solid black;
+    padding: 3px !important;
+}
+.footer-table table {
+    border-spacing: 30px !important;
+    border-collapse: separate !important;
+}

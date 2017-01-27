@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="x_withholding_tax_document_template">
+
+            <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <!-- include CSS  -->
+                    <style>
+                        /* --- Generic Restyling and Resets --- */
+                        body {
+                            font-family:freeserif;
+                        }
+
+                        table {
+                            font-size: 10px;
+                            border-top: 1px solid black !important;
+                            border: 1px solid black !important;
+                            margin-bottom: 5px !important;
+                        }
+
+                        td {
+                            padding: 4px !important;
+                        }
+
+                        .copy {
+                            font-size: 9px;
+                        }
+
+                        .main-header {
+                            font-size: 23px;
+                            font-weight: bold;
+                        }
+                        .sub-header {
+                            font-size: 15px;
+                        }
+
+                        .book-no {
+                            font-size: 11px;
+                            display: inline-block;
+                            vertical-align: middle;
+                            line-height: normal;
+                        }
+                        /* Table Styling */
+
+                        .company-info {
+                            font-size: 13px;
+                            font-weight: bold;
+                        }
+
+                        .tax-id {
+                            font-weight: bold;
+                        }
+
+                        .tax-type {
+                            font-weight: bold;
+                        }
+
+                        .sub-text {
+                            font-size: 9px;
+                            font-style: italic;
+                            padding-left: 0.25cm;
+                        }
+
+                        .sub-text-tax {
+                            font-size: 9px;
+                            font-style: italic;
+                        }
+
+                        .thead-income {
+                            background-color: #eee;
+                            font-size: 13px;
+                            font-weight: bold;
+                        }
+
+                        .withholding_tax table {
+                            border: 1px solid black !important;
+                        }
+
+                        .withholding_tax th {
+                            border: 1px solid black !important;
+                            text-align: center;
+                        }
+
+                        .withholding_tax td {
+                            border: 1px solid black;
+                            padding: 4px !important;
+                        }
+                        .noborder_td {
+                            border-bottom: none !important;
+                            border-top: none !important;
+                            padding: 4px !important;
+                        }
+                        .text_indent1 {
+                            text-indent: 10px;
+                        }
+                        .text_indent2 {
+                            text-indent: 20px;
+                        }
+                        .text_indent3 {
+                            text-indent: 30px;
+                        }
+                        .text_indent4 {
+                            text-indent: 50px;
+                        }
+
+                        .income-line {
+                            font-size: 12px;
+                            font-weight: bold;
+                            font-style: italic;
+                        }
+
+                        .total-amount-title {
+                            text-indent: 40px;
+                            font-size: 12px;
+                            font-weight: bold;
+                        }
+
+                        .total-amount-text {
+                            font-size: 12px;
+                            background-color: #eee;
+                            font-weight: bold;
+                            font-style: italic;
+                        }
+
+                        .payer {
+                            font-size: 12px;
+                        }
+
+                        .signature {
+                            font-size: 12px;
+                            font-weight: bold;
+                        }
+
+                        .caution_1 {
+                            font-size: 11px;
+                            margin-left: 10px;
+                        }
+
+                        .caution {
+                            font-size: 11px;
+                            margin-left: 40px;
+                        }
+
+                        .footer-table td {
+                            border: 1px solid black;
+                            padding: 5px !important;
+                        }
+                        .footer-table table {
+                            border-spacing: 30px !important;
+                            border-collapse: separate !important;
+                        }
+
+                    </style>
+
+                    <!-- note on left top -->
+                    <p class="copy">
+                        <b>ฉบับที่ 1</b> (สําหรับผู้ถูกหักภาษี ณ ที่จ่าย ใช้แนบพร้อมกับแบบแสดงรายการภาษี )<br/>
+                        <b>ฉบับที่ 2</b> (สําหรับผู้ถูกหักภาษี ณ ที่จ่าย เก็บไว้เป็นหลักฐาน)
+                    </p>
+                    <!-- main table -->
+                    <table class="table" style= "height: 277mm;" >
+                        <!-- document header -->
+                        <tr>
+                            <td class="col-xs-2">
+                            </td>
+                            <td class="col-xs-8 text-center">
+                                <span class="main-header">
+                                    หนังสือรับรองการหักภาษี ณ ที่จ่าย
+                                </span>
+                                <br/>
+                                <p class="sub-header">ตามมาตรา 50 ทวิ แห่งประมวลรัษฎากร</p>
+                            </td>
+                            <td class="col-xs-2">
+                            <span class="book-no">
+                                <br/>
+                                <br/>
+                                <t t-if="o.name">
+                                    <t t-set="seq_split" t-value="o.name.split('-')"/>
+                                </t>
+
+                                <t t-if="seq_split[1]"><b>เล่มที่  </b>
+                                    <u><span t-esc="seq_split[0]"/>-
+                                        <span t-esc="seq_split[1]"/>
+                                    </u>
+                                </t>
+                                <t t-else=""><b>เล่มที่  </b> ...........</t>
+
+                                <br/>
+                                <t t-if="seq_split[2]"><b>เลขที่  </b>
+                                    <u><span t-esc="seq_split[2]"/></u>
+                                </t>
+                                <t t-else=""><b>เลขที่  </b> ...........</t>
+
+                            </span>
+                            </td>
+                        </tr>
+                        <!-- The person liable to withhold tax -->
+                        <tr>
+                            <td colspan="3">
+                            <t t-call="x_account_withholding_tax_document.x_wht_document_company_section_template" />
+                            </td>
+                        </tr>
+                        <!-- Taxpayer from whom tax is withheld -->
+                        <tr>
+                            <td colspan="3">
+                            <t t-call="x_account_withholding_tax_document.x_wht_document_taxpayer_section_template" />
+                            </td>
+                        </tr>
+                        <!-- income list -->
+                        <tr>
+                            <td colspan="3">
+                                <t t-call="x_account_withholding_tax_document.x_wht_document_income_section_template" />
+                            </td>
+                        </tr>
+
+                    </table>
+                </div> <!-- /.page -->
+            </t>
+            </t>
+
+        </template>
+    </data>
+</odoo>

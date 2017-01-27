@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id='x_fleet_vehicle_claims_tree_view' model='ir.ui.view'>
+      <field name="name">Vehicle Claims Tree</field>
+      <field name="model">fleet.vehicle.claims</field>
+      <field name="arch" type="xml">
+          <tree string="viwe">
+            <field name="name" />
+            <field name="date" />
+            <field name="vehicle_id" />
+            <field name="driver_id" />
+            <field name="third_party_id" />
+            <field name="third_party_plate" />
+            <field name="claimed" />
+          </tree>
+      </field>
+  </record>
+</odoo>

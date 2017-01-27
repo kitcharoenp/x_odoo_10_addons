@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="x_wht_document_taxpayer_section_template">
+        <style>
+            .indent_input_field {
+                padding-left: 0.25cm;
+                }
+        </style>
+        <table class="table border-black">
+            <tr>
+                <td>
+
+                    <div class="row">
+                        <div class='col-xs-6'>
+                            <span class="company-info">
+                                ผู้ถูกหักภาษี ณ ที่จ่าย : -
+                            </span>
+                        </div>
+                        <div class='col-xs-6'>
+                            <span class="tax-id">
+                                เลขประจําตัวผู้เสียภาษีอากร (13 หลัก )*
+                                <t t-if="o.partner_id.vat">
+                                    <u>
+                                        <span class="indent_input_field"
+                                            t-esc="o.partner_id.vat.replace('TH','')"/>
+                                    </u>
+                                </t>
+                                <t t-elif="o.partner_id.parent_id.vat">
+                                    <u>
+                                        <span class="indent_input_field"
+                                        t-esc="o.partner_id.parent_id.vat.replace('TH','')"/>
+                                    </u>
+                                </t>
+                                <t t-elif="o.partner_id.ref">
+                                    <u>
+                                        <span class="indent_input_field"
+                                            t-esc="o.partner_id.ref.replace('TH','')"/>
+                                    </u>
+                                </t>
+                                <t t-else="">
+                                _____________________________
+                                </t>
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class='col-xs-7'>
+                            <span class="company-info">
+                                ชื่อ
+                                <t t-if="o.partner_id">
+                                    <i><u><span class="indent_input_field" t-field="o.partner_id"/></u></i>
+                                </t>
+                                <t t-else="">
+                            ________________________
+                                </t>
+                                <br/>
+                            </span>
+                            <span class="sub-text">
+                                (ให้ระบุว่าเป็น บุคคล นิติบุคคล บริษัท สมาคม หรือคณะบุคคล)
+                            </span>
+                        </div>
+                        <div class='col-xs-5'>
+                            <span class="tax-id">
+                                เลขประจําตัวผู้เสียภาษีอากร
+                                __________________________
+                                <br/>
+                            </span>
+                            <span class="sub-text">
+                                (กรอกเฉพาะกรณีเป็นผู้ไม่มีเลขบัตรประจำตัวประชาชน)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class='col-xs-12'>
+                            <span class="company-info">
+                                ที่อยู่
+                                <t t-if="o.partner_id.street">
+                                    <i><u class="indent_input_field">
+                                        <span t-field="o.partner_id.street"/>
+                                        <span t-field="o.partner_id.street2"/>
+                                        <span t-field="o.partner_id.city"/>
+                                        <span t-field="o.partner_id.state_id"/>
+                                        <span t-field="o.partner_id.zip"/>
+                                    </u></i>
+                                </t>
+                                <t t-else="">
+        ________________________________________________________________________________________________________________
+                                </t>
+                            <br/>
+                            </span>
+                            <span class="sub-text">
+                                (ให้ระบุ ชื่ออาคาร/หมู่บ้าน ห้องเลขที่ ชั้นที่ เลขที่ ตรอก/ซอย หมู่ที่ ถนน ตําบล/แขวง อําเภอ/เขต จังหวัด )
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class='col-xs-4'>
+                            <span class="tax-type">ลําดับที่</span>
+                            ________ ในแนบ
+                        </div>
+                        <div class='col-xs-2'>
+                            &#9744; (1) <span class="tax-type">ภ.ง.ด.1ก</span>
+                        </div>
+                        <div class='col-xs-2'>
+                            &#9744; (2) <span class="tax-type">ภ.ง.ด.1ก</span> พิเศษ
+                        </div>
+                        <div class='col-xs-2'>
+                            &#9744; (3) <span class="tax-type">ภ.ง.ด.2</span>
+                        </div>
+                        <div class='col-xs-2'>
+                            <t t-if="o.partner_id.is_company is False">
+                                &#9745;
+                            </t>
+                            <t t-else="">
+                                &#9744;
+                            </t>
+                                (4) <span class="tax-type">ภ.ง.ด.3</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class='col-xs-4'>
+                            <span class="sub-text-tax">
+                                (ให้สามารถอ้างอิงหรือสอบยันกันได้ระหว่างลําดับที่ตาม<br/>
+                                หนังสือรับรองฯ กับแบบยื่นรายการภาษีหักที่จ่าย)
+                            </span>
+                        </div>
+                        <div class='col-xs-2'>
+                            &#9744; (5) <span class="tax-type">ภ.ง.ด.2ก</span>
+                        </div>
+                        <div class='col-xs-2'>
+                            &#9744; (6) <span class="tax-type">ภ.ง.ด.3ก</span>
+                        </div>
+                        <div class='col-xs-2'>
+                            <t t-if="o.partner_id.is_company is True">
+                                &#9745;
+                            </t>
+                            <t t-else="">
+                                &#9744;
+                            </t>
+                             (7) <span class="tax-type">ภ.ง.ด.53</span>
+                        </div>
+                        <div class='col-xs-2'>
+                            <br/>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+    </template>
+</odoo>

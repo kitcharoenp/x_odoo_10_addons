@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="x_withholding_tax_product_template_form_view" model="ir.ui.view">
+        <field name="name">products template for withholding tax document form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <div name="options" position="inside">
+                <div>
+                    <field name="for_withhoding_tax_doc"/>
+                    <label for="for_withhoding_tax_doc"/>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <record id="x_withholding_tax_product_form_view" model="ir.ui.view">
+        <field name="name">products for withholding tax document form</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <form string="Products for Withholding Tax Doc">
+                    <sheet>
+                        <field name='product_variant_count' invisible='1'/>
+                        <field name="id" invisible="True"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"
+                                    options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <field name="image_medium" widget="image" class="oe_avatar"/>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="Product Name"/>
+                            <h1><field name="name" placeholder="e.g. Service"/></h1>
+                            <div name="options" groups="base.group_user" invisible="1">
+                                <div>
+                                    <field name="for_withhoding_tax_doc"/>
+                                    <label for="for_withhoding_tax_doc"/>
+                                </div>
+                            </div>
+                        </div>
+                        <group>
+                            <group string="General Information">
+                                <field name="type"/>
+                                <field name="standard_price"/>
+                                <field name="uom_id" groups="product.group_uom" options="{'no_create': True}"/>
+                                <field name="uom_po_id" invisible="1"/>
+                                <label for="default_code"/>
+                                <div>
+                                    <field name="default_code"/>
+                                    <i class="text-muted oe_edit_only">Use [Reference] as a subject prefix for incoming receipts</i>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+        </field>
+    </record>
+
+    <record id="x_withholding_tax_product_form_act_window" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="x_withholding_tax_product_form_view"/>
+        <field name="act_window_id" ref="x_withholding_tax_product_act_window"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id='x_vehicle_odometer_form_view' model='ir.ui.view'>
+        <field name="name">Vehicle Odometer Form View</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id"
+            ref="fleet.fleet_vehicle_odometer_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="replace">
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="vehicle_id"
+                                options="{'no_open': False, 'no_create': True}"/>
+                            <field name="date" />
+                            <field name="x_description"/>
+                        </group>
+                        <group>
+                            <label for="value"/>
+                            <div class="o_row">
+                                <field name="value"/>
+                                <field name="unit"/>
+                            </div>
+                            <label for="y_odometer"/>
+                            <div class="o_row">
+                                <field name="y_odometer"/>
+                                <field name="unit"/>
+                            </div>
+                            <field name="x_driver_id"
+                                options="{'no_open': False, 'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

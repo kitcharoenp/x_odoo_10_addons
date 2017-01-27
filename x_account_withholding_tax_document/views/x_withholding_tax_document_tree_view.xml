@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="x_withholding_tax_document_tree_view" model="ir.ui.view">
+        <field name="name">Withholding Tax Document Tree</field>
+        <field name="model">withholding.tax.document</field>
+        <field name="arch" type="xml">
+            <tree string="Withholding Tax Document" >
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="product_id" />
+                <field name="employee_id" />
+                <field name="date" />
+            </tree>
+        </field>
+    </record>
+
+    </data>
+</odoo>

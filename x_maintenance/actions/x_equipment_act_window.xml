@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- overide maintenance.hr_equipment_action -->
+    <record id="maintenance.hr_equipment_action" model="ir.actions.act_window">
+        <field name="name">Equipments</field>
+        <field name="res_model">maintenance.equipment</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_id" ref="maintenance.hr_equipment_view_tree"/>
+        <field name="context">{'group_by': ['x_vehicle_id']}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new equipment.
+            </p><p>
+                This application helps you to track equipments used by employees.
+                Create some laptop, printer or phone and link each equipment to
+                an employee or departement. You will manage allocations, issues
+                and maintenance of equipment.
+            </p>
+        </field>
+    </record>
+</odoo>

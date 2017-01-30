@@ -24,7 +24,7 @@ class FleetVehicleClaims(models.Model):
         index=True,
         copy=False,
         default=lambda self: _('New'))
-    date = fields.Date(
+    date = fields.Datetime(
         string="Date",
         required=True,
         default=fields.Date.context_today)
@@ -67,7 +67,7 @@ class FleetVehicleClaims(models.Model):
         string='Description Image01')
     description_image02 = fields.Char(
         string='Description Image02')
-    street = fields.Char()    
+    street = fields.Char()
 
     @api.model
     def create(self, vals):

@@ -153,13 +153,15 @@
                                         </td>
                                         <!-- description -->
                                         <td class="col-xs-5" >
-                                            <span><u><span t-field="l.project_id"/></u>: </span>
                                             <span t-field="l.name"/>
+                                            <!-- comment due to exceed page
+                                            <span><u><span t-field="l.project_id"/></u>: </span>
                                             <span> ;</span>
                                             <t t-foreach="l.employee_ids" t-as="emp">
                                                 <span t-if="emp" t-field="emp.name"
                                                     class="collaborators"/>,
                                             </t>
+                                            -->
                                         </td>
                                         <!-- vehicle plate -->
                                         <td class="col-xs-1 text-center" >

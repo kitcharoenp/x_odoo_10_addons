@@ -63,11 +63,11 @@
                     }
 
                     span.collaborators {
-                        padding-left:5px;
+                        padding-left:3px;
                         font-weight: bold;
                     }
                     span.overtime {
-                        background-color: #bebebe;
+                        background-color: #a6a6a6;
                         font-weight: bold;
                     }
                     span.tags {
@@ -153,13 +153,15 @@
                                         </td>
                                         <!-- description -->
                                         <td class="col-xs-5" >
-                                            <span>[<span t-field="l.project_id"/>]</span>
                                             <span t-field="l.name"/>
-                                            <span>=></span>
+                                            <!-- comment due to exceed page
+                                            <span><u><span t-field="l.project_id"/></u>: </span>
+                                            <span> ;</span>
                                             <t t-foreach="l.employee_ids" t-as="emp">
                                                 <span t-if="emp" t-field="emp.name"
                                                     class="collaborators"/>,
                                             </t>
+                                            -->
                                         </td>
                                         <!-- vehicle plate -->
                                         <td class="col-xs-1 text-center" >

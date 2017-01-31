@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="x_timesheet_summary_department_report_template">
+    <t t-call="report.html_container">
+        <t t-call="report.internal_layout">
+            <div class="page">
+                <h3 class="mb32">Timesheet Summary</h3>
+            </div>
+        </t>
+    </t>
+</template>
+
+</odoo>

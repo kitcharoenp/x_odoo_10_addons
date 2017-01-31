@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem
+        id="x_timesheet_summary_department_menu_view"
+        name="Timesheet by Department"
+        parent="hr_timesheet.menu_timesheets_reports"
+        action="x_timesheet_summary_department_act_window"
+        sequence="80"
+    />
+    <record id="x_timesheet_summary_department_menu_view"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+</odoo>

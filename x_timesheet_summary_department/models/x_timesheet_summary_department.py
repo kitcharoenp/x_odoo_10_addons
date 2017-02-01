@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
 import time
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -11,18 +12,38 @@ class xTimesheetSummaryDepartment(models.TransientModel):
     _name = 'x_timesheet.summary.department'
     _description = 'Timesheet Summary Report By Department'
 
+    def _default_date_from(self):
+        user = self.env['res.users'].browse(self.env.uid)
+        r = user.company_id and user.company_id.timesheet_range or 'month'
+        if r == 'month':
+            return time.strftime('%Y-%m-01')
+        elif r == 'week':
+            return (datetime.today() + relativedelta(weekday=0, days=-6)).strftime('%Y-%m-%d')
+        elif r == 'year':
+            return time.strftime('%Y-01-01')
+        return fields.date.context_today(self)
+
+    def _default_date_to(self):
+        user = self.env['res.users'].browse(self.env.uid)
+        r = user.company_id and user.company_id.timesheet_range or 'month'
+        if r == 'month':
+            return (datetime.today() + relativedelta(months=+1, day=1, days=-1)).strftime('%Y-%m-%d')
+        elif r == 'week':
+            return (datetime.today() + relativedelta(weekday=6)).strftime('%Y-%m-%d')
+        elif r == 'year':
+            return time.strftime('%Y-12-31')
+        return fields.date.context_today(self)
+
     date_from = fields.Date(
         string='From',
         required=True,
-        default=lambda *a: time.strftime('%Y-%m-01'))
+        default=_default_date_from)
     date_to = fields.Date(
         string='To',
-        required=True)
+        required=True,
+        default=_default_date_to)
     depts = fields.Many2many(
         'hr.department',
-        'summary_dept_rel',
-        'sum_id',
-        'dept_id',
         string='Department(s)')
 
     @api.multi

@@ -212,13 +212,19 @@ class AccountAnalyticLine(models.Model):
                 if not n_odometer_duplicate:
                     # Search overlaps odometer if rise error
                     self._find_overlap_odometer()
+                    # Search employee_id from user_id
+                    employee = self.env['hr.employee'].search(
+                        [('user_id', '=', record.user_id.id)], limit=1)
+                    if employee:
+                        employee_id = employee and employee[0].id
+                    # crete odometer log
                     odometer = odometer_obj.create({
                         'value': record.x_odometer,
                         'y_odometer': record.y_odometer,
                         'date': record.date or fields.Date.context_today(record),
                         'vehicle_id': record.x_vehicle_id.id,
                         'x_description': record.x_notes,
-                        'x_driver_id': record.user_id.id,
+                        'x_driver_id': employee_id,
                         })
                     self.x_odometer_id = odometer
                 else:

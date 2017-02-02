@@ -6,17 +6,12 @@ from odoo import api, fields, models
 class FleetVehicleOdometer(models.Model):
     _inherit = 'fleet.vehicle.odometer'
 
-    def _default_driver(self):
-        emp_ids = self.env[
-            'hr.employee'].search([('user_id', '=', self.env.uid)])
-        return emp_ids and emp_ids[0] or False
-
     x_description = fields.Text(
         string='Description')
     x_driver_id = fields.Many2one(
-        'hr.employee',
+        'res.users',
         string='Driver',
-        default=_default_driver,
+        default=lambda self: self.env.user,
         help='Driver of the vehicle')
     y_odometer = fields.Float(
         string='Odometer End',

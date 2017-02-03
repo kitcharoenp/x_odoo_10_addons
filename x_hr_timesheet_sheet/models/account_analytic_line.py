@@ -42,6 +42,8 @@ class AccountAnalyticLine(models.Model):
             of this activity start')
     y_odometer = fields.Float(
         string='Odometer End',
+        compute="_get_odometer",
+        inverse='_set_odometer',
         help='Odometer measure of the vehicle at the moment \
             of this activity end')
     employee_ids = fields.Many2many(
@@ -165,9 +167,15 @@ class AccountAnalyticLine(models.Model):
                 record.x_odometer = record.x_odometer_id.value
                 record.y_odometer = record.x_odometer_id.y_odometer
 
-    def _find_overlap_odometer(self):
+    def _check_start_end_odometer(self):
+        for record in self:
+            if record.x_odometer > record.y_odometer:
+                raise ValidationError(_(
+                    "the Odometer Start value must been less \
+                    than Odometer End value (%s).") % record.x_notes)
+
+    def _check_overlap_odometer(self):
         odometer_obj = self.env['fleet.vehicle.odometer']
-        # domain for search overlaps odometer
         for record in self:
             domain_overlap = [
                 ('value', '<', record.y_odometer),
@@ -175,51 +183,50 @@ class AccountAnalyticLine(models.Model):
                 ('vehicle_id', '=', record.x_vehicle_id.id),
                 ('id', '!=', record.x_odometer_id.id)]
             n_odometer_overlaps = odometer_obj.search_count(domain_overlap)
-            if n_odometer_overlaps:
-                raise ValidationError(_('You can not have 2 odometer line that \
-                    overlaps'))
-
-    def _get_then_update_odometer(self):
-        odometer_obj = self.env['fleet.vehicle.odometer']
-        for record in self:
-            domain = [
-                ('value', '=', record.x_odometer),
-                ('y_odometer', '=', record.y_odometer),
-                ('vehicle_id', '=', record.x_vehicle_id.id),
-                ('id', '!=', record.x_odometer_id.id)]
-            vehicle_odometer = odometer_obj.search(
-                    domain, limit=1, order='value desc')
-            self.x_odometer_id = vehicle_odometer
+            if n_odometer_overlaps > 0:
+                raise ValidationError(_("You can not have 2 odometer line that \
+                    overlaps (%s).") % record.x_notes)
 
     def _set_odometer(self):
         odometer_obj = self.env['fleet.vehicle.odometer']
         for record in self:
-            if record.x_vehicle_id and record.x_odometer:
-                if record.x_odometer > record.y_odometer:
-                    raise UserError(_(
-                        'the Odometer Start value must been less \
-                        than Odometer End value'))
-                # domain for search duplicate odometer
-                domain = [
+            self._check_start_end_odometer()
+            # domain for search duplicate odometer
+            domain = [
                     ('value', '=', record.x_odometer),
                     ('y_odometer', '=', record.y_odometer),
                     ('vehicle_id', '=', record.x_vehicle_id.id),
                     ('id', '!=', record.x_odometer_id.id)]
-                n_odometer_duplicate = odometer_obj.search_count(domain)
+            vehicle_odometer = odometer_obj.search(
+                        domain, limit=1, order='value desc')
+            # Search employee_id from user_id
+            employee = self.env['hr.employee'].search(
+                    [('user_id', '=', record.user_id.id)], limit=1)
+            if employee:
+                employee_id = employee and employee[0].id
 
             # if not duplicate odometer then create the new one with validate
             # overlap else update exist
-                if not n_odometer_duplicate:
-                    # Search overlaps odometer if rise error
-                    self._find_overlap_odometer()
+            if vehicle_odometer:
+                self.x_odometer_id = vehicle_odometer
+            else:
+                self._check_overlap_odometer()
+                if not self.x_odometer_id:
                     odometer = odometer_obj.create({
                         'value': record.x_odometer,
                         'y_odometer': record.y_odometer,
                         'date': record.date or fields.Date.context_today(record),
                         'vehicle_id': record.x_vehicle_id.id,
                         'x_description': record.x_notes,
-                        'x_driver_id': record.user_id.id,
+                        'x_driver_id': employee_id,
                         })
                     self.x_odometer_id = odometer
                 else:
-                    self._get_then_update_odometer()
+                    self.x_odometer_id.write({
+                        'value': record.x_odometer,
+                        'y_odometer': record.y_odometer,
+                        'date': record.date or fields.Date.context_today(record),
+                        'vehicle_id': record.x_vehicle_id.id,
+                        'x_description': record.x_notes,
+                        'x_driver_id': employee_id,
+                        })

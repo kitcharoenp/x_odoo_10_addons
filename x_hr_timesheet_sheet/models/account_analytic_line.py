@@ -221,12 +221,3 @@ class AccountAnalyticLine(models.Model):
                         'x_driver_id': employee_id,
                         })
                     self.x_odometer_id = odometer
-                else:
-                    self.x_odometer_id.write({
-                        'value': record.x_odometer,
-                        'y_odometer': record.y_odometer,
-                        'date': record.date or fields.Date.context_today(record),
-                        'vehicle_id': record.x_vehicle_id.id,
-                        'x_description': record.x_notes,
-                        'x_driver_id': employee_id,
-                        })

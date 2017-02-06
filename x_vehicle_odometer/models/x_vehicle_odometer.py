@@ -21,3 +21,13 @@ class FleetVehicleOdometer(models.Model):
     y_odometer = fields.Float(
         string='Odometer End',
         group_operator="max")
+
+    def _compute_vehicle_log_name(self):
+        super(FleetVehicleOdometer, self)._compute_vehicle_log_name()
+        for record in self:
+            name = record.vehicle_id.name
+            if not name:
+                name = record.date
+            elif record.date:
+                name += ' / ' + record.date
+            record.name = name

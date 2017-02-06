@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- equiment search : views -->
+    <record id="x_equipment_search_view" model="ir.ui.view">
+        <field name="name">Equipment search and filter</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/group/filter[1]" position="before">
+                <filter string='Vehicle' name="vehicle" domain="[]" context="{'group_by': 'x_vehicle_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

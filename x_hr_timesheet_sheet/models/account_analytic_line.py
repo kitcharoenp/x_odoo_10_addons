@@ -42,8 +42,6 @@ class AccountAnalyticLine(models.Model):
             of this activity start')
     y_odometer = fields.Float(
         string='Odometer End',
-        compute="_get_odometer",
-        inverse='_set_odometer',
         help='Odometer measure of the vehicle at the moment \
             of this activity end')
     employee_ids = fields.Many2many(
@@ -187,6 +185,7 @@ class AccountAnalyticLine(models.Model):
                 raise ValidationError(_("You can not have 2 odometer line that \
                     overlaps (%s).") % record.x_notes)
 
+    @api.depends('x_vehicle_id')
     def _set_odometer(self):
         odometer_obj = self.env['fleet.vehicle.odometer']
         for record in self:
@@ -211,13 +210,13 @@ class AccountAnalyticLine(models.Model):
                 self.x_odometer_id = vehicle_odometer
             else:
                 self._check_overlap_odometer()
-                if not self.x_odometer_id:
+                if not self.x_odometer_id and record.x_vehicle_id.id:
                     odometer = odometer_obj.create({
                         'value': record.x_odometer,
                         'y_odometer': record.y_odometer,
                         'date': record.date or fields.Date.context_today(record),
                         'vehicle_id': record.x_vehicle_id.id,
                         'x_description': record.x_notes,
-                        'x_driver_id': employee_id,
+                        'x_driver_id': employee_id or False,
                         })
                     self.x_odometer_id = odometer

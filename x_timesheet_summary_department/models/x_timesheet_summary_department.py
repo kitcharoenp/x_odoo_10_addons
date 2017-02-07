@@ -61,5 +61,5 @@ class xTimesheetSummaryDepartment(models.TransientModel):
         }
         return self.env['report'].get_action(
             departments,
-            'x_timesheet_summary_department.x_timesheet_summary_department_report_template',
+            'x_timesheet_summary_department.x_ts_dept_report_template',
             data=datas)

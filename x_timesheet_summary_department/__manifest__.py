@@ -10,11 +10,11 @@
     'depends': ['x_hr_timesheet_sheet'],
     'summary': 'Timesheet Summary by Department',
     'data': [
+        # Views
+        'views/x_timesheet_summary_department_form_view.xml',
         # Menu and Action
         'actions/x_timesheet_summary_department_act_window.xml',
         'views/x_timesheet_summary_department_menu_view.xml',
-        # Views
-        'views/x_timesheet_summary_department_form_view.xml',
         # Report
         'report/x_timesheet_summary_department_report.xml',
         'report/templates/x_timesheet_summary_department_report_template.xml',

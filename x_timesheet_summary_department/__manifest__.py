@@ -7,7 +7,7 @@
     'category': 'Human Resource',
     'description': """
         Timesheet Summary by Department""",
-    'depends': ['x_hr_timesheet_sheet'],
+    'depends': ['x_hr_timesheet_sheet', 'report'],
     'summary': 'Timesheet Summary by Department',
     'data': [
         # Views

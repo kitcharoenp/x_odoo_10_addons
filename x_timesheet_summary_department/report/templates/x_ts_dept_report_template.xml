@@ -11,15 +11,15 @@
                     body {
                         font-family:freeserif;
                     }
-                    table {
+                    table, th, td {
                         font-size: 11px;
                         border: 1px solid #ababab !important;
-                        margin-bottom: 5px !important;
+                        margin-bottom: 0px !important;
+                        border-collapse: collapse !important;
+                        vertical-align: middle;
                     }
-
                     td {
-                        padding: 3px !important;
-                        border: 1px solid #ababab !important;
+                        padding: 0px !important;
                     }
                 </style>
                 <h3 class="text-center">Departments Timesheet Summary</h3>
@@ -44,7 +44,7 @@
                             <th class="text-center col-xs-1">Sum</th>
                         </tr>
                         <tr>
-                            <td rowspan="2" class="col-xs-3" style="vertical-align: middle;">
+                            <td rowspan="2" class="col-xs-4" style="vertical-align: middle;">
                                 <strong>Departments / Employees</strong>
                             </td>
                             <t t-foreach="get_day" t-as="day">
@@ -68,7 +68,7 @@
                     <tbody>
                         <t t-foreach="get_data_for_report" t-as="obj">
                             <tr t-if="'dept' in obj">
-                                <td class="col-xs-3" style="background-color:#bebebe">
+                                <td class="col-xs-4" style="background-color:#bebebe">
                                     <strong><t t-esc="obj['dept']"/></strong>
                                 </td>
                                 <t t-foreach="obj['color']" t-as="c">
@@ -77,14 +77,24 @@
                                 <td/>
                             </tr>
                             <tr t-foreach="obj['data']" t-as="emp">
-                                <td class="col-xs-3"><t t-esc="emp['emp']"/></td>
+                                <td class="col-xs-4">
+                                    <table class="col-xs-12">
+                                        <tr>
+                                            <td class="col-xs-3"><t t-esc="emp['emp_barcode']"/></td>
+                                            <td class="col-xs-6"><t t-esc="emp['emp']"/></td>
+                                            <td class="col-xs-3"><t t-esc="emp['work_location']"/></td>
+                                        </tr>
+                                    </table>
+                                </td>
                                 <t t-foreach="emp['display']" t-as="details">
                                     &lt;td class="text-center oe_leftfit oe_rightfit" style=background-color:
                                     <t t-esc="details['color']"/> !important &gt;
                                     <t t-esc="details['type']"/>
                                     &lt;/td&gt;
                                 </t>
-                                <td class="text-right col-xs-1"><strong><t t-esc="emp['sum']"/></strong></td>
+                                <td class="text-right col-xs-1">
+                                    <strong><span t-esc="'%02d:%02d' % (int(str(emp['sum']).split('.')[0]), int(float(str('%.2f' % emp['sum']).split('.')[1])/100*60))" /></strong>
+                                </td>
                             </tr>
                         </t>
                     </tbody>

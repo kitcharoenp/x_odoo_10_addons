@@ -5,7 +5,8 @@
         name="Timesheet by Department"
         parent="hr_timesheet.menu_timesheets_reports"
         action="x_timesheet_summary_department_act_window"
-        sequence="80"
+        groups="hr_timesheet.group_hr_timesheet_user"
+        sequence="180"
     />
     <record id="x_timesheet_summary_department_menu_view"
             model="ir.ui.menu">

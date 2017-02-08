@@ -19,7 +19,7 @@
                         vertical-align: middle;
                     }
                     td {
-                        padding: 0px !important;
+                        padding: 2px !important;
                     }
                 </style>
                 <h3 class="text-center">Departments Timesheet Summary</h3>
@@ -78,13 +78,9 @@
                             </tr>
                             <tr t-foreach="obj['data']" t-as="emp">
                                 <td class="col-xs-4">
-                                    <table class="col-xs-12">
-                                        <tr>
-                                            <td class="col-xs-3"><t t-esc="emp['emp_barcode']"/></td>
-                                            <td class="col-xs-6"><t t-esc="emp['emp']"/></td>
-                                            <td class="col-xs-3"><t t-esc="emp['work_location']"/></td>
-                                        </tr>
-                                    </table>
+                                    <span class="col-xs-3"><t t-esc="emp['emp_barcode']"/></span>
+                                    <span class="col-xs-6"><t t-esc="emp['emp']"/></span>
+                                    <span class="col-xs-3"><t t-esc="emp['work_location']"/></span>
                                 </td>
                                 <t t-foreach="emp['display']" t-as="details">
                                     &lt;td class="text-center oe_leftfit oe_rightfit" style=background-color:

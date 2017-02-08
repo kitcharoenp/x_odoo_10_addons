@@ -85,7 +85,7 @@ class xTimesheetSummaryDepartmentReportUtil(models.AbstractModel):
                         res[(date_from-start_date).days]['type'] = '/'
                     count += 1
                 date_from += timedelta(1)
-        self.sum = overtime_amount
+        self.sum = round(overtime_amount, 2)
         return res
 
     def _get_data_for_report(self, data):

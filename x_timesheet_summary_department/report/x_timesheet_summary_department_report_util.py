@@ -61,6 +61,7 @@ class xTimesheetSummaryDepartmentReportUtil(models.AbstractModel):
             ('x_start_date', '<=', str(end_date)),
             ('x_end_date', '>=', str(start_date))
         ])
+        overtime_amount = 0
         for line in analytic_lines:
             # Convert date to user timezone, otherwise the report will
             # not be consistent with the value displayed in the interface.
@@ -68,30 +69,23 @@ class xTimesheetSummaryDepartmentReportUtil(models.AbstractModel):
             date_from = fields.Datetime.context_timestamp(line, date_from).date()
             date_to = fields.Datetime.from_string(line.x_end_date)
             date_to = fields.Datetime.context_timestamp(line, date_to).date()
-            overtime_amount = 0
-            overtime_record = False
-            normal_record = False
+
             for index in range(0, ((date_to - date_from).days + 1)):
                 if date_from >= start_date and date_from <= end_date:
                     if line.is_overtime:
-                        overtime_record = True
+                        if (res[(date_from-start_date).days]['type'] == '/'):
+                            res[(date_from-start_date).days]['color'] = '#F78181'
+                            res[(date_from-start_date).days]['type'] = 'X'
+                        else:
+                            res[(date_from-start_date).days]['color'] = '#FAAC58'
+                            res[(date_from-start_date).days]['type'] = 'O'
                         overtime_amount += line.unit_amount
                     else:
-                        normal_record = True
-
-                    if overtime_record and not normal_record:
-                        res[(date_from-start_date).days]['color'] = 'orange'
-                        res[(date_from-start_date).days]['type'] = 'O'
-                    elif overtime_record and normal_record:
-                        res[(date_from-start_date).days]['color'] = 'red'
-                        res[(date_from-start_date).days]['type'] = 'X'
-                    else:
-                        res[(date_from-start_date).days]['color'] = 'green'
-                        res[(date_from-start_date).days]['type'] = 'I'
-
+                        res[(date_from-start_date).days]['color'] = '#A9F5BC'
+                        res[(date_from-start_date).days]['type'] = '/'
                     count += 1
                 date_from += timedelta(1)
-        self.sum = count
+        self.sum = overtime_amount
         return res
 
     def _get_data_for_report(self, data):

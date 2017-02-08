@@ -17,7 +17,7 @@
         'views/x_timesheet_summary_department_menu_view.xml',
         # Report
         'report/x_timesheet_summary_department_report.xml',
-        'report/templates/x_timesheet_summary_department_report_template.xml',
+        'report/templates/x_ts_dept_report_template.xml',
     ],
     'installable': True,
     'auto-install': False,

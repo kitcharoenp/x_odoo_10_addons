@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="x_ts_dept_report_template">
+    <t t-call="report.html_container">
+        <t t-call="report.external_layout">
+            <div class="page">
+                <!-- include CSS  -->
+                <style>
+                    /* --- Generic Restyling and Resets --- */
+                    body {
+                        font-family:freeserif;
+                    }
+                    table {
+                        font-size: 11px;
+                        border: 1px solid #ababab !important;
+                        margin-bottom: 5px !important;
+                    }
+
+                    td {
+                        padding: 3px !important;
+                        border: 1px solid #ababab !important;
+                    }
+                </style>
+                <h3 class="text-center">Departments Timesheet Summary</h3>
+                <t t-set="info" t-value="get_header_info"/>
+                <h5 class="text-center">
+                    From
+                    <u><b><t t-esc="info['start_date']"/></b></u> To
+                    <u><b><t t-esc="info['end_date']"/></b></u>
+                </h5>
+
+            <div class="row">
+                <table class="table table-bordered" style="table-layout:auto">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <t t-foreach="get_months" t-as="month">
+                                &lt;th class="text-center" colspan=
+                                <t t-esc="month['days']"/>&gt;
+                                <t t-esc="month['month_name']"/>
+                                &lt;/th&gt;
+                            </t>
+                            <th class="text-center col-xs-1">Sum</th>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" class="col-xs-3" style="vertical-align: middle;">
+                                <strong>Departments / Employees</strong>
+                            </td>
+                            <t t-foreach="get_day" t-as="day">
+                                &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:
+                                <t t-esc="day['color']"/>!important; font-size: 8px; min-width: 18px"&gt;
+                                <t t-esc="day['day_str']"/>
+                                &lt;/td&gt;
+                            </t>
+                            <td class="text-center col-xs-1">Overtime</td>
+                        </tr>
+                        <tr>
+                            <t t-foreach="get_day" t-as="day">
+                                &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:
+                                <t t-esc="day['color']"/>!important; font-size: 10px" &gt;
+                                <t t-esc="day['day']"/>
+                                &lt;/td&gt;
+                            </t>
+                            <td class="text-center col-xs-1">(Hrs.)</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="get_data_for_report" t-as="obj">
+                            <tr t-if="'dept' in obj">
+                                <td class="col-xs-3" style="background-color:#bebebe">
+                                    <strong><t t-esc="obj['dept']"/></strong>
+                                </td>
+                                <t t-foreach="obj['color']" t-as="c">
+                                    &lt;td style=background-color:<t t-esc="c['color']"/> !important/&gt;
+                                </t>
+                                <td/>
+                            </tr>
+                            <tr t-foreach="obj['data']" t-as="emp">
+                                <td class="col-xs-3"><t t-esc="emp['emp']"/></td>
+                                <t t-foreach="emp['display']" t-as="details">
+                                    &lt;td class="text-center oe_leftfit oe_rightfit" style=background-color:
+                                    <t t-esc="details['color']"/> !important &gt;
+                                    <t t-esc="details['type']"/>
+                                    &lt;/td&gt;
+                                </t>
+                                <td class="text-right col-xs-1"><strong><t t-esc="emp['sum']"/></strong></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div><!--/.row -->
+
+            <div class="row">
+                <div class="col-xs-3 col-xs-offset-9 mt16">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-1">Sign</th>
+                                <th class="text-center">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center"><b>/</b></td>
+                                <td>Working</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><b>O</b></td>
+                                <td>Overtime</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><b>X</b></td>
+                                <td>Working+Overtime</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!--/.row -->
+
+        </div><!--/.page -->
+        </t>
+    </t>
+</template>
+
+</odoo>

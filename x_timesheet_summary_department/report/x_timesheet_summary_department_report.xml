@@ -2,7 +2,7 @@
 <odoo>
     <report
         id="x_timesheet_summary_department_report"
-        string="Timesheet Summary"
+        string="Department Timesheet Summary"
         model="account.analytic.line"
         report_type="qweb-pdf"
         name="x_timesheet_summary_department.x_ts_dept_report_template"

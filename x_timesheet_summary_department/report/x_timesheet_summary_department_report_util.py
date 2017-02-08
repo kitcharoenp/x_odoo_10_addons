@@ -59,8 +59,7 @@ class xTimesheetSummaryDepartmentReportUtil(models.AbstractModel):
         analytic_lines = self.env['account.analytic.line'].search([
             ('user_id', '=', user_id),
             ('x_start_date', '<=', str(end_date)),
-            ('x_end_date', '>=', str(start_date))],
-            order='user_id.employee.work_location asc')
+            ('x_end_date', '>=', str(start_date))])
         overtime_amount = 0
         for line in analytic_lines:
             # Convert date to user timezone, otherwise the report will

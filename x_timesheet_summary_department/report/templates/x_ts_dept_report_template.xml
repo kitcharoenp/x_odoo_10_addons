@@ -16,10 +16,10 @@
                         border: 1px solid #ababab !important;
                         margin-bottom: 0px !important;
                         border-collapse: collapse !important;
-                        vertical-align: middle;
+                        vertical-align: middle !important;
                     }
                     td {
-                        padding: 2px !important;
+                        padding: 3px !important;
                     }
                 </style>
                 <h3 class="text-center">Departments Timesheet Summary</h3>
@@ -34,7 +34,7 @@
                 <table class="table table-bordered" style="table-layout:auto">
                     <thead>
                         <tr>
-                            <th>Month</th>
+                            <th colspan="3">Month</th>
                             <t t-foreach="get_months" t-as="month">
                                 &lt;th class="text-center" colspan=
                                 <t t-esc="month['days']"/>&gt;
@@ -44,7 +44,7 @@
                             <th class="text-center col-xs-1">Sum</th>
                         </tr>
                         <tr>
-                            <td rowspan="2" class="col-xs-4" style="vertical-align: middle;">
+                            <td colspan="3" rowspan="2" class="col-xs-4" style="vertical-align: middle;">
                                 <strong>Departments / Employees</strong>
                             </td>
                             <t t-foreach="get_day" t-as="day">
@@ -68,7 +68,7 @@
                     <tbody>
                         <t t-foreach="get_data_for_report" t-as="obj">
                             <tr t-if="'dept' in obj">
-                                <td class="col-xs-4" style="background-color:#bebebe">
+                                <td colspan="3" class="col-xs-4" style="background-color:#bebebe">
                                     <strong><t t-esc="obj['dept']"/></strong>
                                 </td>
                                 <t t-foreach="obj['color']" t-as="c">
@@ -77,11 +77,9 @@
                                 <td/>
                             </tr>
                             <tr t-foreach="obj['data']" t-as="emp">
-                                <td class="col-xs-4">
-                                    <span class="col-xs-3"><t t-esc="emp['emp_barcode']"/></span>
-                                    <span class="col-xs-6"><t t-esc="emp['emp']"/></span>
-                                    <span class="col-xs-3"><t t-esc="emp['work_location']"/></span>
-                                </td>
+                                <td class="col-xs-1"><t t-esc="emp['emp_barcode']"/></td>
+                                <td class="col-xs-2"><t t-esc="emp['emp']"/></td>
+                                <td class="col-xs-1"><t t-esc="emp['work_location']"/></td>
                                 <t t-foreach="emp['display']" t-as="details">
                                     &lt;td class="text-center oe_leftfit oe_rightfit" style=background-color:
                                     <t t-esc="details['color']"/> !important &gt;

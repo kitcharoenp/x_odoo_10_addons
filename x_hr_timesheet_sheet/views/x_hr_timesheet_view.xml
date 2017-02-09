@@ -87,10 +87,12 @@
                 <!-- set employee_id as readonly -->
                 <xpath expr="//form/sheet/notebook/page[1]" position="replace">
                     <page string="Summary">
+                        <!--
                         <widget
                             type="weekly_timesheet"
                             attrs="{'readonly': [['state', 'not in', []]]}">
                         </widget>
+                        -->
                     </page>
                 </xpath>
 

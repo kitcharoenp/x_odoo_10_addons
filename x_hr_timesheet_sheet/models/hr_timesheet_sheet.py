@@ -8,6 +8,12 @@ from odoo.tools.translate import _
 class HrTimesheetSheet(models.Model):
     _inherit = 'hr_timesheet_sheet.sheet'
 
+    # get a default Reviewer from current user coach
+    def _default_reviewer_get(self):
+        employee = self.env['hr.employee'].search(
+                [('user_id', '=', self.env.uid)], limit=1)
+        return employee.coach_id
+
     # get a default first Manager from current user Manager
     def _default_manager1_get(self):
         employee = self.env['hr.employee'].search(
@@ -23,6 +29,7 @@ class HrTimesheetSheet(models.Model):
     state = fields.Selection([
                 ('new', 'New'),
                 ('draft', 'Open'),
+                ('x_under_review', 'Under Review'),
                 ('x_validate', 'Waiting Validation'),
                 ('confirm', 'Waiting Approval'),
                 ('done', 'Approved')],
@@ -30,6 +37,7 @@ class HrTimesheetSheet(models.Model):
                 select=True,
                 required=True,
                 readonly=True,
+                index=True,
                 track_visibility='onchange',
                 help=' * The \'Draft\' status is used when a user is encoding a new \
                     and unconfirmed timesheet. \
@@ -39,6 +47,15 @@ class HrTimesheetSheet(models.Model):
                     by user. \
             \n* The \'Done\' status is used when users timesheet is accepted \
                     by his/her senior.')
+    reviewer_id = fields.Many2one(
+                    'hr.employee',
+                    string='Reviewer',
+                    required=True,
+                    readonly=True,
+                    states={
+                        'new': [('readonly', False)],
+                        'draft': [('readonly', False)]},
+                    default=_default_reviewer_get)
     manager_id1 = fields.Many2one(
                     'hr.employee',
                     string='First Approval',
@@ -103,6 +120,16 @@ class HrTimesheetSheet(models.Model):
         self.write({'state': 'x_validate'})
         return True
 
+    @api.multi
+    def action_timesheet_x_under_review(self):
+        for sheet in self:
+            if (sheet.employee_id and sheet.employee_id.coach_id and
+                    sheet.employee_id.coach_id.user_id):
+                self.message_subscribe_users(
+                    user_ids=[sheet.employee_id.coach_id.user_id.id])
+        self.write({'state': 'x_under_review'})
+        return True
+
     def _check_state(self):
         for line in self:
             if line.sheet_id and line.sheet_id.state not in ('draft', 'new'):
@@ -124,11 +151,14 @@ class HrTimesheetSheet(models.Model):
                     'x_hr_timesheet_sheet.x_group_hr_timesheet_manager')
         for timesheet in self:
             timesheet.can_approve = False
-            if (timesheet.manager_id1 and timesheet.state == 'x_validate' and
-                    timesheet.manager_id1.user_id == user):
+            if (timesheet.reviewer_id and timesheet.state == 'x_under_review'
+                    and timesheet.reviewer_id.user_id == user):
                 timesheet.can_approve = True
-            if (timesheet.manager_id2 and timesheet.state == 'confirm' and
-                    timesheet.manager_id2.user_id == user):
+            if (timesheet.manager_id1 and timesheet.state == 'x_validate'
+                    and timesheet.manager_id1.user_id == user):
+                timesheet.can_approve = True
+            if (timesheet.manager_id2 and timesheet.state == 'confirm'
+                    and timesheet.manager_id2.user_id == user):
                 timesheet.can_approve = True
             if group_timesheet_manager in user.groups_id:
                 timesheet.can_approve = True

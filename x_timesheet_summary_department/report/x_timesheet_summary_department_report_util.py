@@ -95,9 +95,11 @@ class xTimesheetSummaryDepartmentReportUtil(models.AbstractModel):
                 res.append({
                     'dept': department.name,
                     'data': [],
-                    'color': self._get_day(data['date_from'], data['date_to'])})
+                    'color': self._get_day(
+                        data['date_from'], data['date_to'])})
                 for emp in Employee.search(
-                        [('department_id', '=', department.id)]):
+                        [('department_id', '=', department.id)],
+                        order="work_location asc"):
                     res[len(res)-1]['data'].append({
                         'emp': emp.name,
                         'emp_barcode': emp.barcode,

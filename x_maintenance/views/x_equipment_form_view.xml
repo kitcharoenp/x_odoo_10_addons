@@ -7,13 +7,53 @@
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
         <field name="arch" type="xml">
+            <!-- vehicle -->
             <xpath expr="//field[@name='category_id']" position="after">
                 <field name="x_vehicle_id"
                     options="{'no_open': False, 'no_create': True}"/>
             </xpath>
+
+            <!-- asset number -->
             <xpath expr="//field[@name='warranty']" position="after">
                 <field name="x_asset_number"/>
             </xpath>
+
+            <!-- images -->
+            <xpath expr="//notebook/page[3]" position="after">
+                <page string="Images">
+                    <!-- images row#1 -->
+                    <group string="Equipment Images">
+                        <group>
+                            <div>
+                                <field name="image01" widget="image" nolabel="1"
+                                    options='{"preview_image": "image01", "size": [360,360]}'/>
+                            </div>
+                        </group>
+                        <group>
+                            <div>
+                                <field name="image02" widget="image" nolabel="1"
+                                    options='{"preview_image": "image02", "size": [360,360]}'/>
+                            </div>
+                        </group>
+                    </group>
+                    <!-- images row#2 -->
+                    <group>
+                        <group>
+                            <div>
+                                <field name="image03" widget="image" nolabel="1"
+                                    options='{"preview_image": "image03", "size": [360,360]}'/>
+                            </div>
+                        </group>
+                        <group>
+                            <div>
+                                <field name="image04" widget="image" nolabel="1"
+                                    options='{"preview_image": "image04", "size": [360,360]}'/>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
         </field>
     </record>
 

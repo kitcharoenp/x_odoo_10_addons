@@ -10,7 +10,17 @@
             <field name="inherit_id"
                 ref="hr_timesheet_sheet.hr_timesheet_sheet_form"/>
             <field name="arch" type="xml">
-                <!-- show action_timesheet_draft in state 'x_validate or confirm' -->
+
+                <!-- show Refuse button in state 'x_under_review' -->
+                <button name="action_timesheet_draft" position="after">
+                    <button name="action_timesheet_draft"
+                        states="x_under_review"
+                        string="Refuse"
+                        type="object"
+                        groups="hr_timesheet.group_hr_timesheet_user"/>
+                </button>
+
+                <!-- show Refuse button in state 'x_validate' -->
                 <button name="action_timesheet_draft" position="after">
                     <button name="action_timesheet_draft"
                         states="x_validate"
@@ -40,10 +50,23 @@
                             ('state', 'not in', ['confirm'])]}"/>
                 </button>
 
+                <!--
+                    define Validation Submit button (first approval summit)
+                    in x_under_review state
+                -->
 				<button name="action_timesheet_confirm" position="before">
                     <button name="action_timesheet_x_validate"
-                        states="draft"
+                        states="x_under_review"
                         string="Submit to Validation"
+                        type="object"
+                        class="oe_highlight"/>
+                </button>
+
+                <!-- define Submit button (Reviewer summit) in draft state-->
+                <button name="action_timesheet_confirm" position="before">
+                    <button name="action_timesheet_x_under_review"
+                        states="draft"
+                        string="Submit"
                         type="object"
                         class="oe_highlight"/>
                 </button>
@@ -52,7 +75,7 @@
                 <field name="state" position="replace">
                     <field name="state"
                         widget="statusbar"
-                        statusbar_visible="new,x_validate,confirm,done"/>
+                        statusbar_visible="new,x_under_review,x_validate,confirm,done"/>
                 </field>
                 <!-- set employee_id as readonly -->
                 <field name="employee_id" position="replace">
@@ -77,6 +100,7 @@
                             class="oe_inline"
                             attrs="{'readonly': [('state','not in',('draft','new'))]}"/>
                     </div>
+                    <field name="reviewer_id"/>
                 </xpath>
 
                 <!-- append can_approve after user_id -->
@@ -87,12 +111,10 @@
                 <!-- set employee_id as readonly -->
                 <xpath expr="//form/sheet/notebook/page[1]" position="replace">
                     <page string="Summary">
-                        <!--
                         <widget
                             type="weekly_timesheet"
                             attrs="{'readonly': [['state', 'not in', []]]}">
                         </widget>
-                        -->
                     </page>
                 </xpath>
 

@@ -10,8 +10,10 @@
             <filter name="to_approve" position="replace">
                 <filter name="to_approve"
                     string="To Approve"
-                    domain="[('state','in',('x_validate', 'confirm')),
+                    domain="[
+                        ('state','in',('x_under_review','x_validate', 'confirm')),
                         '|',
+                        ('reviewer_id.user_id', '=', uid),
                         ('manager_id1.user_id', '=', uid),
                         ('manager_id2.user_id', '=', uid)]"
                     help="Confirmed Timesheets"/>

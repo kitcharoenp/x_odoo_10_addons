@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem
+        id="x_equipment_product_menu"
+        name="Products"
+        parent="maintenance.menu_maintenance_configuration"
+        action="x_equipment_product_act_window"
+        groups="maintenance.group_equipment_manager"
+        sequence="10"
+    />
+
+    <record id="x_equipment_product_menu"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+</odoo>

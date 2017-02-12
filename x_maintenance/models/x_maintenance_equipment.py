@@ -34,44 +34,29 @@ class MaintenanceEquipment(models.Model):
         string="Image04",
         default=_default_image,
         attachment=True)
+    product_id = fields.Many2one(
+        'product.product',
+        string='Equipment Product',
+        domain=[('is_equipment', '=', True)],
+        required=True)
+
+    def _resize_big_images(self, images, values):
+        for image in images:
+            if image in values:
+                values.update(tools.image_get_resized_images(
+                        values[image],
+                        return_big=True,
+                        big_name=image))
 
     @api.model
     def create(self, vals):
-        if 'image01' in vals:
-            vals.update(tools.image_get_resized_images(vals['image01'],
-                        return_big=True,
-                        big_name='image01'))
-        if 'image02' in vals:
-            vals.update(tools.image_get_resized_images(vals['image02'],
-                        return_big=True,
-                        big_name='image02'))
-        if 'image03' in vals:
-            vals.update(tools.image_get_resized_images(vals['image03'],
-                        return_big=True,
-                        big_name='image03'))
-        if 'image04' in vals:
-            vals.update(tools.image_get_resized_images(vals['image04'],
-                        return_big=True,
-                        big_name='image04'))
+        images = ['image01', 'image02', 'image03', 'image04']
+        self._resize_big_images(images, vals)
         result = super(MaintenanceEquipment, self).create(vals)
         return result
 
     @api.multi
     def write(self, vals):
-        if 'image01' in vals:
-            vals.update(tools.image_get_resized_images(vals['image01'],
-                        return_big=True,
-                        big_name='image01'))
-        if 'image02' in vals:
-            vals.update(tools.image_get_resized_images(vals['image02'],
-                        return_big=True,
-                        big_name='image02'))
-        if 'image03' in vals:
-            vals.update(tools.image_get_resized_images(vals['image03'],
-                        return_big=True,
-                        big_name='image03'))
-        if 'image04' in vals:
-            vals.update(tools.image_get_resized_images(vals['image04'],
-                        return_big=True,
-                        big_name='image04'))
+        images = ['image01', 'image02', 'image03', 'image04']
+        self._resize_big_images(images, vals)
         return super(MaintenanceEquipment, self).write(vals)

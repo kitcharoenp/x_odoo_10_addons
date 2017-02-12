@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="x_equipment_product_act_window" model="ir.actions.act_window">
+        <field name="name">Products for Equipments</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{
+            "default_is_equipment": 1}
+        </field>
+        <field name="domain">[('is_equipment', '=', True)]</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new products for equipment category.
+          </p>
+        </field>
+    </record>
+
+</odoo>

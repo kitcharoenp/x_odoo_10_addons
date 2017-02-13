@@ -7,6 +7,16 @@
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
         <field name="arch" type="xml">
+            <!-- image -->
+            <xpath expr="//div[@class='oe_title']" position="before">
+                <field name="image_medium" widget='image' class="oe_avatar"/>
+            </xpath>
+            <!-- procuct -->
+            <xpath expr="//field[@name='category_id']" position="before">
+                <field name="product_id"
+                    options="{'no_open': False, 'no_create': True}"/>
+            </xpath>
+
             <!-- vehicle -->
             <xpath expr="//field[@name='category_id']" position="after">
                 <field name="x_vehicle_id"

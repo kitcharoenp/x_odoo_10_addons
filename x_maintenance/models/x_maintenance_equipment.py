@@ -37,8 +37,21 @@ class MaintenanceEquipment(models.Model):
     product_id = fields.Many2one(
         'product.product',
         string='Equipment Product',
-        domain=[('is_equipment', '=', True)],
-        required=True)
+        domain=[('is_equipment', '=', True)])
+    image = fields.Binary(
+        related='product_id.image', string="Equipment Logo")
+    image_small = fields.Binary(
+        related='product_id.image_small', string="Equipment Logo (small)")
+    image_medium = fields.Binary(
+        related='product_id.image_medium', string="Equipment Logo (medium)")
+
+    @api.onchange('product_id')
+    def _onchange_model(self):
+        if self.product_id:
+            self.image_medium = self.product_id.image
+            self.name = self.product_id.name
+        else:
+            self.image_medium = False
 
     def _resize_big_images(self, images, values):
         for image in images:
@@ -50,6 +63,7 @@ class MaintenanceEquipment(models.Model):
 
     @api.model
     def create(self, vals):
+        tools.image_resize_images(vals)
         images = ['image01', 'image02', 'image03', 'image04']
         self._resize_big_images(images, vals)
         result = super(MaintenanceEquipment, self).create(vals)
@@ -57,6 +71,7 @@ class MaintenanceEquipment(models.Model):
 
     @api.multi
     def write(self, vals):
+        tools.image_resize_images(vals)
         images = ['image01', 'image02', 'image03', 'image04']
         self._resize_big_images(images, vals)
         return super(MaintenanceEquipment, self).write(vals)

@@ -8,11 +8,10 @@
     'category': 'Equipments',
     'description': """
 Extend Maintenance Request & Equipment:
--------------
-    * Images fields for Equipment
-    * Asset Number for Equipment
-    * related a vehicle to equipment
-    * Linked a Product Template to a Equipment
+    Images fields for Equipment
+    Asset Number for Equipment
+    related a vehicle to equipment
+    Linked a Product Template to a Equipment
         """,
     'depends': ['hr_maintenance', 'fleet'],
     'summary': 'Enhancement Equipments',

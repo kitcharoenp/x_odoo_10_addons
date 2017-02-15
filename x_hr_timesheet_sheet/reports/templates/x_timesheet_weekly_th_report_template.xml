@@ -355,21 +355,20 @@
     			<ul style="list-style-type: none;">
 
     				<li>ผู้ขออนุมัติ</li>
-    				<li><br/></li>
-    				<li t-if="o.employee_id.x_signature_img">
-                        <span t-field="o.employee_id.x_signature_img"
-                        t-options='{
-                            "widget": "image",
-                            "class":
-                                "center-block",
-                                "style":"width: 120px;
-                                height: 60px;
-                                margin-right: 10px;
-                                display:inline"}'/>
-                    </li>
-                    <li t-if="not o.employee_id.x_signature_img">
-                        ________________
-                    </li>
+                    <!-- show signature image or line -->
+                    <t t-if="o.employee_id.x_signature_img">
+                        <li>
+                            <span t-field="o.employee_id.x_signature_img"
+                                t-options='{"widget": "image", "class": "center-block"}'/>
+                        </li>
+                    </t>
+                    <t t-else="">
+                        <li><br/></li>
+                        <li>
+                            ________________
+                        </li>
+                    </t>
+                    <!--end  signature -->
                     <li>______/_____/_____</li>
     				<li><span t-field="o.employee_id"/></li>
     				<li><span t-field="o.employee_id.job_id"/></li>
@@ -383,8 +382,20 @@
     		<div class="col-xs-3 text-center" >
     			<ul style="list-style-type: none;">
     				<li>หัวหน้างานผู้ควบคุมงาน</li>
-    				<li><br/></li>
-    				<li>________________</li>
+                    <!-- show signature image or line -->
+                    <t t-if="o.manager_id1.x_signature_img and (o.state == 'confirm' or o.state == 'done')">
+                        <li>
+                            <span t-field="o.manager_id1.x_signature_img"
+                                t-options='{"widget": "image", "class": "center-block"}'/>
+                            </li>
+                    </t>
+                    <t t-else="">
+                        <li><br/></li>
+                        <li>
+                            ________________
+                        </li>
+                    </t>
+                    <!--end  signature -->
                     <li>______/_____/_____</li>
                     <li t-if="o.manager_id1"><span t-field="o.manager_id1"/></li>
     				<li t-if="o.manager_id1"><span t-field="o.manager_id1.job_id"/></li>
@@ -398,8 +409,20 @@
             <div class="col-xs-2 text-center" >
     			<ul style="list-style-type: none;">
     				<li>ผู้อนุมัติ</li>
-    				<li><br/></li>
-    				<li>________________</li>
+                    <!-- show signature image or line -->
+                    <t t-if="o.manager_id2.x_signature_img and (o.state == 'done')">
+                        <li>
+                            <span t-field="o.manager_id2.x_signature_img"
+                        t-options='{"widget": "image"}'/>
+                        </li>
+                    </t>
+                    <t t-else="">
+                        <li><br/></li>
+                        <li>
+                            ________________
+                        </li>
+                    </t>
+                    <!--end  signature -->
     				<li t-if="o.manager_id2"><span t-field="o.manager_id2"/></li>
     				<li t-if="o.manager_id2"><span t-field="o.manager_id2.job_id"/></li>
     				<li>

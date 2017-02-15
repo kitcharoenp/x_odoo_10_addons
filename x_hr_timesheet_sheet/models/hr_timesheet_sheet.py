@@ -50,7 +50,6 @@ class HrTimesheetSheet(models.Model):
     reviewer_id = fields.Many2one(
                     'hr.employee',
                     string='Reviewer',
-                    required=True,
                     readonly=True,
                     states={
                         'new': [('readonly', False)],

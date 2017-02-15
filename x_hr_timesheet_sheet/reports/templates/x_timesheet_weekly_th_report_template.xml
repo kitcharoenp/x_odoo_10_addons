@@ -353,9 +353,23 @@
     	<div class="row">
     		<div class="col-xs-3  text-center" >
     			<ul style="list-style-type: none;">
+
     				<li>ผู้ขออนุมัติ</li>
     				<li><br/></li>
-    				<li>________________</li>
+    				<li t-if="o.employee_id.x_signature_img">
+                        <span t-field="o.employee_id.x_signature_img"
+                        t-options='{
+                            "widget": "image",
+                            "class":
+                                "center-block",
+                                "style":"width: 120px;
+                                height: 60px;
+                                margin-right: 10px;
+                                display:inline"}'/>
+                    </li>
+                    <li t-if="not o.employee_id.x_signature_img">
+                        ________________
+                    </li>
                     <li>______/_____/_____</li>
     				<li><span t-field="o.employee_id"/></li>
     				<li><span t-field="o.employee_id.job_id"/></li>

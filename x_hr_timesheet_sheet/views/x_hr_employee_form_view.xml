@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_hr_employee_form_view" model="ir.ui.view">
+        <field name="name">Employee Form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id"
+            ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <!-- Other Information tab'-->
+            <xpath expr="//form/sheet/notebook/page[3]" position="after">
+                <page string="Other Information">
+                    <group>
+                        <group>
+                            <div>
+                                <field
+                                    name="x_signature_img"
+                                    widget="image" nolabel="1"
+                                    options='{
+                                        "preview_image": "x_signature_img"}'/>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

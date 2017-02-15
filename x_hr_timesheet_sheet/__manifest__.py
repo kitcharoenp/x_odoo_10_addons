@@ -25,6 +25,9 @@ Enhancement Timesheet with following :
         'x_vehicle_odometer'],
     'summary': 'Enhancement Timesheets',
     'data': [
+        # Employee
+        'views/x_hr_employee_form_view.xml',
+        # Timesheet
         'views/x_hr_timesheet_view.xml',
         'views/x_hr_timesheet_filter_view.xml',
         'views/x_hr_timesheet_sheet_tree_view.xml',

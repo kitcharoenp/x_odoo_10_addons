@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
         <!--
 			inherit hr_timesheet_sheet.hr_timesheet_sheet_form
         -->
@@ -143,6 +142,11 @@
             </field><!-- ./arch -->
         </record>
 
+        <record id="x_hr_timesheet_sheet_form_inherit"
+                model="ir.ui.view">
+            <field name="load_xmlid" eval="True"/>
+        </record>
+
         <record id="x_hr_timesheet_sheet_form_inherit_hr_officer" model="ir.ui.view">
             <field name="name">x_hr_timesheet_sheet.form.inherit.hr_officer</field>
             <field name="model">hr_timesheet_sheet.sheet</field>
@@ -161,5 +165,4 @@
             </field>
         </record>
 
-    </data>
 </odoo>

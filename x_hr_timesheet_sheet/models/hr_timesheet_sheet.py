@@ -77,10 +77,10 @@ class HrTimesheetSheet(models.Model):
     can_approve = fields.Boolean(
                     string='Can approve',
                     compute='_compute_can_approve')
-    summit_date = fields.Datetime('Summit Date')
-    review_date = fields.Datetime('Review Date')
-    validated_date = fields.Datetime('Validated Date')
-    approved_date = fields.Datetime('Approved Date')
+    summit_date = fields.Datetime(string='Summit Date')
+    review_date = fields.Datetime(string='Review Date')
+    validated_date = fields.Datetime(string='Validated Date')
+    approved_date = fields.Datetime(string='Approved Date')
 
     @api.multi
     def action_timesheet_confirm(self):

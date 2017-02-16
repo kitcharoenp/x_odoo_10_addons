@@ -17,6 +17,7 @@ Enhancement Timesheet with following :
     * Changed activity line to popup edit
     * Added odometer start/end and collaborators field in the activity
     * Qweb report for weeekly timesheet with employee signature
+    * Validated date related to timesheet state
         """,
     'depends': [
         'hr_timesheet_sheet',

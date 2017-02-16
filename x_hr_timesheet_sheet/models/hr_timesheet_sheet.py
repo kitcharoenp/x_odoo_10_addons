@@ -77,6 +77,10 @@ class HrTimesheetSheet(models.Model):
     can_approve = fields.Boolean(
                     string='Can approve',
                     compute='_compute_can_approve')
+    summit_date = fields.Datetime('Summit Date')
+    review_date = fields.Datetime('Review Date')
+    validated_date = fields.Datetime('Validated Date')
+    approved_date = fields.Datetime('Approved Date')
 
     @api.multi
     def action_timesheet_confirm(self):
@@ -87,6 +91,7 @@ class HrTimesheetSheet(models.Model):
                 raise UserError(_(
                     'Only an Timesheet Manager or First Approval \
                     can validate timesheet.'))
+        self.write({'validated_date': fields.Datetime.now()})
         return super(HrTimesheetSheet, self).action_timesheet_confirm()
 
     @api.multi
@@ -98,6 +103,7 @@ class HrTimesheetSheet(models.Model):
                 raise UserError(_(
                     'Only an Timesheet Manager or Second Approval can approve \
                     timesheet.'))
+        self.write({'approved_date': fields.Datetime.now()})
         return super(HrTimesheetSheet, self).action_timesheet_done()
 
     @api.multi
@@ -116,7 +122,9 @@ class HrTimesheetSheet(models.Model):
                     sheet.employee_id.parent_id.user_id):
                 self.message_subscribe_users(
                     user_ids=[sheet.employee_id.parent_id.user_id.id])
-        self.write({'state': 'x_validate'})
+        self.write({
+            'state': 'x_validate',
+            'review_date': fields.Datetime.now()})
         return True
 
     @api.multi
@@ -126,7 +134,9 @@ class HrTimesheetSheet(models.Model):
                     sheet.employee_id.coach_id.user_id):
                 self.message_subscribe_users(
                     user_ids=[sheet.employee_id.coach_id.user_id.id])
-        self.write({'state': 'x_under_review'})
+        self.write({
+            'state': 'x_under_review',
+            'summit_date': fields.Datetime.now()})
         return True
 
     def _check_state(self):

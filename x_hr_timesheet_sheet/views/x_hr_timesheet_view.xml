@@ -121,7 +121,13 @@
                 <xpath expr="//form/sheet/notebook/page[2]" position="after">
                     <page string="Validation">
                         <group>
-                            <group string="Validation">
+                            <group>
+                                <field name="summit_date" readonly="1"/>
+                                <field name="review_date" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="validated_date" readonly="1"/>
+                                <field name="approved_date" readonly="1"/>
                             </group>
                         </group>
                     </page>

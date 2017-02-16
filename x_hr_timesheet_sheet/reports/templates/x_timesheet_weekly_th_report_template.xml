@@ -359,7 +359,7 @@
                     <t t-if="o.employee_id.x_signature_img">
                         <li>
                             <span t-field="o.employee_id.x_signature_img"
-                                t-options='{"widget": "image", "class": "center-block"}'/>
+                                t-options='{"widget": "image", "class": "center-block", "max_width": 100}'/>
                         </li>
                     </t>
                     <t t-else="">
@@ -369,7 +369,17 @@
                         </li>
                     </t>
                     <!--end  signature -->
-                    <li>______/_____/_____</li>
+
+                    <t t-if="o.summit_date">
+                        <li>
+                            <span t-field="o.summit_date"
+                                t-options='{"format": "dd / MM / yyyy"}' />
+                        </li>
+                    </t>
+                    <t t-else="">
+                        <li>______/_____/_____</li>
+                    </t>
+
     				<li><span t-field="o.employee_id"/></li>
     				<li><span t-field="o.employee_id.job_id"/></li>
     				<li>
@@ -387,7 +397,7 @@
                         o.state == 'x_validate' or o.state == 'confirm' or o.state == 'done')">
                         <li>
                             <span t-field="o.reviewer_id.x_signature_img"
-                                t-options='{"widget": "image", "class": "center-block"}'/>
+                                t-options='{"widget": "image", "class": "center-block", "max_width": 100}'/>
                             </li>
                     </t>
                     <t t-else="">
@@ -397,7 +407,17 @@
                         </li>
                     </t>
                     <!--end  signature -->
-                    <li>______/_____/_____</li>
+
+                    <t t-if="o.review_date">
+                        <li>
+                            <span t-field="o.review_date"
+                                t-options='{"format": "dd / MM / yyyy"}' />
+                        </li>
+                    </t>
+                    <t t-else="">
+                        <li>______/_____/_____</li>
+                    </t>
+
                     <li t-if="o.reviewer_id"><span t-field="o.reviewer_id"/></li>
     				<li t-if="o.reviewer_id"><span t-field="o.reviewer_id.job_id"/></li>
     				<li>
@@ -414,7 +434,7 @@
                     <t t-if="o.manager_id1.x_signature_img and (o.state == 'confirm' or o.state == 'done')">
                         <li>
                             <span t-field="o.manager_id1.x_signature_img"
-                                t-options='{"widget": "image", "class": "center-block"}'/>
+                                t-options='{"widget": "image", "class": "center-block", "max_width": 100}'/>
                             </li>
                     </t>
                     <t t-else="">
@@ -424,7 +444,15 @@
                         </li>
                     </t>
                     <!--end  signature -->
-                    <li>______/_____/_____</li>
+                    <t t-if="o.validated_date">
+                        <li>
+                            <span t-field="o.validated_date"
+                                t-options='{"format": "dd / MM / yyyy"}' />
+                        </li>
+                    </t>
+                    <t t-else="">
+                        <li>______/_____/_____</li>
+                    </t>
                     <li t-if="o.manager_id1"><span t-field="o.manager_id1"/></li>
     				<li t-if="o.manager_id1"><span t-field="o.manager_id1.job_id"/></li>
     				<li>
@@ -441,7 +469,7 @@
                     <t t-if="o.manager_id2.x_signature_img and (o.state == 'done')">
                         <li>
                             <span t-field="o.manager_id2.x_signature_img"
-                        t-options='{"widget": "image"}'/>
+                        t-options='{"widget": "image", "class": "center-block", "max_width": 100}'/>
                         </li>
                     </t>
                     <t t-else="">
@@ -451,6 +479,15 @@
                         </li>
                     </t>
                     <!--end  signature -->
+                    <t t-if="o.approved_date">
+                        <li>
+                            <span t-field="o.approved_date"
+                                t-options='{"format": "dd / MM / yyyy"}' />
+                        </li>
+                    </t>
+                    <t t-else="">
+                        <li>______/_____/_____</li>
+                    </t>
     				<li t-if="o.manager_id2"><span t-field="o.manager_id2"/></li>
     				<li t-if="o.manager_id2"><span t-field="o.manager_id2.job_id"/></li>
     				<li>

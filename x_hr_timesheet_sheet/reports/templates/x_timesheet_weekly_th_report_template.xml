@@ -368,7 +368,7 @@
                             ________________
                         </li>
                     </t>
-                    <!--end  signature 
+                    <!--end  signature -->
 
                     <t t-if="o.summit_date">
                         <li>
@@ -379,7 +379,7 @@
                     <t t-else="">
                         <li>______/_____/_____</li>
                     </t>
-                    -->
+
     				<li><span t-field="o.employee_id"/></li>
     				<li><span t-field="o.employee_id.job_id"/></li>
     				<li>
@@ -406,7 +406,7 @@
                             ________________
                         </li>
                     </t>
-                    <!--end  signature
+                    <!--end  signature -->
 
                     <t t-if="o.review_date">
                         <li>
@@ -417,7 +417,7 @@
                     <t t-else="">
                         <li>______/_____/_____</li>
                     </t>
--->
+
                     <li t-if="o.reviewer_id"><span t-field="o.reviewer_id"/></li>
     				<li t-if="o.reviewer_id"><span t-field="o.reviewer_id.job_id"/></li>
     				<li>
@@ -443,16 +443,16 @@
                             ________________
                         </li>
                     </t>
-                    <!--end  signature
+                    <!--end  signature -->
                     <t t-if="o.validated_date">
                         <li>
-
+                            <span t-field="o.validated_date"
+                                t-options='{"format": "dd / MM / yyyy"}' />
                         </li>
                     </t>
                     <t t-else="">
                         <li>______/_____/_____</li>
                     </t>
-                    -->
                     <li t-if="o.manager_id1"><span t-field="o.manager_id1"/></li>
     				<li t-if="o.manager_id1"><span t-field="o.manager_id1.job_id"/></li>
     				<li>
@@ -478,7 +478,7 @@
                             ________________
                         </li>
                     </t>
-                    <!--end  signature
+                    <!--end  signature -->
                     <t t-if="o.approved_date">
                         <li>
                             <span t-field="o.approved_date"
@@ -488,7 +488,6 @@
                     <t t-else="">
                         <li>______/_____/_____</li>
                     </t>
-                    -->
     				<li t-if="o.manager_id2"><span t-field="o.manager_id2"/></li>
     				<li t-if="o.manager_id2"><span t-field="o.manager_id2.job_id"/></li>
     				<li>

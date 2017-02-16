@@ -359,7 +359,7 @@
                     <t t-if="o.employee_id.x_signature_img">
                         <li>
                             <span t-field="o.employee_id.x_signature_img"
-                                t-options='{"widget": "image", "class": "center-block", "max_width": 100}'/>
+                                t-options='{"widget": "image", "class": "center-block", "max_width": 130}'/>
                         </li>
                     </t>
                     <t t-else="">
@@ -397,7 +397,7 @@
                         o.state == 'x_validate' or o.state == 'confirm' or o.state == 'done')">
                         <li>
                             <span t-field="o.reviewer_id.x_signature_img"
-                                t-options='{"widget": "image", "class": "center-block", "max_width": 100}'/>
+                                t-options='{"widget": "image", "class": "center-block", "max_width": 130}'/>
                             </li>
                     </t>
                     <t t-else="">
@@ -434,7 +434,7 @@
                     <t t-if="o.manager_id1.x_signature_img and (o.state == 'confirm' or o.state == 'done')">
                         <li>
                             <span t-field="o.manager_id1.x_signature_img"
-                                t-options='{"widget": "image", "class": "center-block", "max_width": 100}'/>
+                                t-options='{"widget": "image", "class": "center-block", "max_width": 130}'/>
                             </li>
                     </t>
                     <t t-else="">
@@ -469,7 +469,7 @@
                     <t t-if="o.manager_id2.x_signature_img and (o.state == 'done')">
                         <li>
                             <span t-field="o.manager_id2.x_signature_img"
-                        t-options='{"widget": "image", "class": "center-block", "max_width": 100}'/>
+                        t-options='{"widget": "image", "class": "center-block", "max_width": 130}'/>
                         </li>
                     </t>
                     <t t-else="">

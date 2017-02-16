@@ -351,7 +351,7 @@
     	</div><!-- /.row zero_min_height -->
     		<!-- Signature -->
     	<div class="row">
-    		<div class="col-xs-3  text-center" >
+    		<div class="col-xs-2  text-center" >
     			<ul style="list-style-type: none;">
 
     				<li>ผู้ขออนุมัติ</li>
@@ -379,9 +379,37 @@
     				</li>
     			</ul>
     		</div>
-    		<div class="col-xs-3 text-center" >
+            <div class="col-xs-2 text-center" >
     			<ul style="list-style-type: none;">
-    				<li>หัวหน้างานผู้ควบคุมงาน</li>
+    				<li>หัวหน้างาน/ผู้ควบคุมงาน</li>
+                    <!-- show signature image or line -->
+                    <t t-if="o.reviewer_id.x_signature_img and (
+                        o.state == 'x_validate' or o.state == 'confirm' or o.state == 'done')">
+                        <li>
+                            <span t-field="o.reviewer_id.x_signature_img"
+                                t-options='{"widget": "image", "class": "center-block"}'/>
+                            </li>
+                    </t>
+                    <t t-else="">
+                        <li><br/></li>
+                        <li>
+                            ________________
+                        </li>
+                    </t>
+                    <!--end  signature -->
+                    <li>______/_____/_____</li>
+                    <li t-if="o.reviewer_id"><span t-field="o.reviewer_id"/></li>
+    				<li t-if="o.reviewer_id"><span t-field="o.reviewer_id.job_id"/></li>
+    				<li>
+    					<t t-if="o.reviewer_id.mobile_phone">
+    					<span t-field="o.reviewer_id.mobile_phone"/>
+    				</t>
+    				</li>
+    			</ul>
+    		</div>
+    		<div class="col-xs-2 text-center" >
+    			<ul style="list-style-type: none;">
+    				<li>หัวหน้างาน/ผู้ควบคุมงาน</li>
                     <!-- show signature image or line -->
                     <t t-if="o.manager_id1.x_signature_img and (o.state == 'confirm' or o.state == 'done')">
                         <li>

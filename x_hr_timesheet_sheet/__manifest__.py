@@ -16,6 +16,7 @@ Enhancement Timesheet with following :
     * Added start/end time, note and overtime field in the activity
     * Changed activity line to popup edit
     * Added odometer start/end and collaborators field in the activity
+    * Qweb report for weeekly timesheet with employee signature
         """,
     'depends': [
         'hr_timesheet_sheet',

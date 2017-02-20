@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <template id="timesheet_external_layout" inherit_id="report.external_layout" primary="True">
+        <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+            <attribute name="t-call">x_timesheet_summary_department.timesheet_external_layout_header</attribute>
+        </xpath>
+    </template>
+
+    <template id="timesheet_external_layout_header" inherit_id="report.external_layout_header" primary="True">
+        <xpath expr="//div[@name='company_address']" position="replace">
+            <div></div>
+        </xpath>
+    </template>
+
 <template id="x_ts_dept_report_template">
     <t t-call="report.html_container">
-        <t t-call="report.external_layout">
+        <t t-call="x_timesheet_summary_department.timesheet_external_layout">
             <div class="page">
                 <!-- include CSS  -->
                 <style>

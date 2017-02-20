@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="ts_emp_tags_external_layout" inherit_id="report.external_layout" primary="True">
+        <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+            <attribute name="t-call">x_timesheet_summary_employee_tags.ts_emp_tags_external_layout_header</attribute>
+        </xpath>
+    </template>
+
+    <template id="ts_emp_tags_external_layout_header" inherit_id="report.external_layout_header" primary="True">
+        <xpath expr="//div[@name='company_address']" position="replace">
+            <div></div>
+        </xpath>
+    </template>
+
+<template id="x_ts_emp_tags_template">
+    <t t-call="report.html_container">
+        <t t-call="x_timesheet_summary_employee_tags.ts_emp_tags_external_layout">
+            <div class="page">
+                <!-- include CSS  -->
+                <style>
+                    /* --- Generic Restyling and Resets --- */
+                    body {
+                        font-family:freeserif;
+                    }
+                    table, th, td {
+                        font-size: 11px;
+                        border: 1px solid #ababab !important;
+                        margin-bottom: 0px !important;
+                        border-collapse: collapse !important;
+                        vertical-align: middle !important;
+                    }
+                    td {
+                        padding: 3px !important;
+                    }
+                </style>
+                <h3 class="text-center">Employee Tags Timesheet Summary</h3>
+                <t t-set="info" t-value="get_header_info"/>
+                <h5 class="text-center">
+                    From
+                    <u><b><t t-esc="info['start_date']"/></b></u> To
+                    <u><b><t t-esc="info['end_date']"/></b></u>
+                </h5>
+
+            <div class="row">
+                <table class="table table-bordered" style="table-layout:auto">
+                    <thead>
+                        <tr>
+                            <th colspan="3">Month</th>
+                            <t t-foreach="get_months" t-as="month">
+                                &lt;th class="text-center" colspan=
+                                <t t-esc="month['days']"/>&gt;
+                                <t t-esc="month['month_name']"/>
+                                &lt;/th&gt;
+                            </t>
+                            <th class="text-center col-xs-1">Sum</th>
+                        </tr>
+                        <tr>
+                            <td colspan="3" rowspan="2" class="col-xs-4" style="vertical-align: middle;">
+                                <strong>Tags / Employees</strong>
+                            </td>
+                            <t t-foreach="get_day" t-as="day">
+                                &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:
+                                <t t-esc="day['color']"/>!important; font-size: 8px; min-width: 18px"&gt;
+                                <t t-esc="day['day_str']"/>
+                                &lt;/td&gt;
+                            </t>
+                            <td class="text-center col-xs-1">Overtime</td>
+                        </tr>
+                        <tr>
+                            <t t-foreach="get_day" t-as="day">
+                                &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:
+                                <t t-esc="day['color']"/>!important; font-size: 10px" &gt;
+                                <t t-esc="day['day']"/>
+                                &lt;/td&gt;
+                            </t>
+                            <td class="text-center col-xs-1">(Hrs.)</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="get_data_for_report" t-as="obj">
+                            <tr t-if="'employee_tag' in obj">
+                                <td colspan="3" class="col-xs-4" style="background-color:#bebebe">
+                                    <strong><t t-esc="obj['employee_tag']"/></strong>
+                                </td>
+                                <t t-foreach="obj['color']" t-as="c">
+                                    &lt;td style=background-color:<t t-esc="c['color']"/> !important/&gt;
+                                </t>
+                                <td/>
+                            </tr>
+                            <tr t-foreach="obj['data']" t-as="emp">
+                                <td class="col-xs-1"><t t-esc="emp['emp_barcode']"/></td>
+                                <td class="col-xs-2"><t t-esc="emp['emp']"/></td>
+                                <td class="col-xs-1"><t t-esc="emp['work_location']"/></td>
+                                <t t-foreach="emp['display']" t-as="details">
+                                    &lt;td class="text-center oe_leftfit oe_rightfit" style=background-color:
+                                    <t t-esc="details['color']"/> !important &gt;
+                                    <t t-esc="details['type']"/>
+                                    &lt;/td&gt;
+                                </t>
+                                <td class="text-right col-xs-1">
+                                    <strong><span t-esc="'%02d:%02d' % (int(str(emp['sum']).split('.')[0]), int(float(str('%.2f' % emp['sum']).split('.')[1])/100*60))" /></strong>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div><!--/.row -->
+
+            <div class="row">
+                <div class="col-xs-3 col-xs-offset-9 mt16">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-1">Sign</th>
+                                <th class="text-center">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center"><b>/</b></td>
+                                <td>Working</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><b>O</b></td>
+                                <td>Overtime</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><b>X</b></td>
+                                <td>Working+Overtime</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!--/.row -->
+
+        </div><!--/.page -->
+        </t>
+    </t>
+</template>
+
+</odoo>

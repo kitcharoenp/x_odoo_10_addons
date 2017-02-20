@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report
+        id="x_timesheet_summary_employee_tags_report"
+        string="Employee Tags Timesheet Summary"
+        model="account.analytic.line"
+        report_type="qweb-pdf"
+        name="x_timesheet_summary_employee_tags.x_ts_emp_tags_template"
+        file="x_timesheet_summary_employee_tags.x_ts_emp_tags_template"
+        menu="False"
+    />
+</odoo>

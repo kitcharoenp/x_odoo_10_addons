@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_timesheet_summary_employee_tags_act_window" model="ir.actions.act_window">
+        <field name="name">Timesheet by Employee Tags</field>
+        <field name="res_model">x_timesheet.summary.employee.tags</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="x_timesheet_summary_employee_tags_form_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

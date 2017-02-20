@@ -58,7 +58,8 @@
                         states="x_under_review"
                         string="Submit to Validation"
                         type="object"
-                        class="oe_highlight"/>
+                        class="oe_highlight"
+                        groups="hr_timesheet.group_hr_timesheet_user"/>
                 </button>
 
                 <!-- define Submit button (Reviewer summit) in draft state-->

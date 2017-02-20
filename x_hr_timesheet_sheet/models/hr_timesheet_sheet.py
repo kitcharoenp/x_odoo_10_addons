@@ -111,13 +111,17 @@ class HrTimesheetSheet(models.Model):
         for sheet in self:
             if not sheet.can_approve:
                 raise UserError(_(
-                    'Only an Timesheet Manager or Manager can refuse timesheets \
+                    'Only an Timesheet Manager or Reviewer / Manager can Refuse timesheets \
                     or reset them to draft.'))
         return super(HrTimesheetSheet, self).action_timesheet_draft()
 
     @api.multi
     def action_timesheet_x_validate(self):
         for sheet in self:
+            if not sheet.can_approve:
+                raise UserError(_(
+                    'Only an Timesheet Manager or Reviewer can approve \
+                    timesheet.'))
             if (sheet.employee_id and sheet.employee_id.parent_id and
                     sheet.employee_id.parent_id.user_id):
                 self.message_subscribe_users(

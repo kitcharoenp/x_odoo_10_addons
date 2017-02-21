@@ -92,7 +92,12 @@ class HrTimesheetSheet(models.Model):
                     'Only an Timesheet Manager or First Approval \
                     can validate timesheet.'))
         self.write({'validated_date': fields.Datetime.now()})
-        return super(HrTimesheetSheet, self).action_timesheet_confirm()
+        super(HrTimesheetSheet, self).action_timesheet_confirm()
+        if self.manager_id2 == self.manager_id1:
+            self.write({
+                'state': 'done',
+                'approved_date': fields.Datetime.now()})
+        return True
 
     @api.multi
     def action_timesheet_done(self):
@@ -111,29 +116,42 @@ class HrTimesheetSheet(models.Model):
         for sheet in self:
             if not sheet.can_approve:
                 raise UserError(_(
-                    'Only an Timesheet Manager or Manager can refuse timesheets \
+                    'Only an Timesheet Manager or Reviewer / Manager can Refuse timesheets \
                     or reset them to draft.'))
         return super(HrTimesheetSheet, self).action_timesheet_draft()
 
     @api.multi
     def action_timesheet_x_validate(self):
         for sheet in self:
-            if (sheet.employee_id and sheet.employee_id.parent_id and
-                    sheet.employee_id.parent_id.user_id):
+            if not sheet.can_approve:
+                raise UserError(_(
+                    'Only an Timesheet Manager or Reviewer can approve \
+                    timesheet.'))
+            if (sheet.employee_id and sheet.manager_id1 and
+                    sheet.manager_id1.user_id):
                 self.message_subscribe_users(
-                    user_ids=[sheet.employee_id.parent_id.user_id.id])
+                    user_ids=[sheet.manager_id1.user_id.id])
         self.write({
             'state': 'x_validate',
             'review_date': fields.Datetime.now()})
+        if self.reviewer_id == self.manager_id1:
+            self.write({
+                'state': 'confirm',
+                'validated_date': fields.Datetime.now()})
+        if (self.reviewer_id == self.manager_id1) and (
+                self.manager_id1 == self.manager_id2):
+            self.write({
+                'state': 'done',
+                'approved_date': fields.Datetime.now()})
         return True
 
     @api.multi
     def action_timesheet_x_under_review(self):
         for sheet in self:
-            if (sheet.employee_id and sheet.employee_id.coach_id and
-                    sheet.employee_id.coach_id.user_id):
+            if (sheet.employee_id and sheet.reviewer_id and
+                    sheet.reviewer_id.user_id):
                 self.message_subscribe_users(
-                    user_ids=[sheet.employee_id.coach_id.user_id.id])
+                    user_ids=[sheet.reviewer_id.user_id.id])
         self.write({
             'state': 'x_under_review',
             'summit_date': fields.Datetime.now()})

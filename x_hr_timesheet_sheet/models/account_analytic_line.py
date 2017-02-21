@@ -138,12 +138,13 @@ class AccountAnalyticLine(models.Model):
     def _check_owner(self):
         for line in self:
             user = self.env.user
-            group_timesheet_manager = self.env.ref(
-                        'x_hr_timesheet_sheet.x_group_hr_timesheet_manager')
-            if (line.user_id != user and
-                    group_timesheet_manager not in user.groups_id):
-                raise UserError(_('You cannot modify entry that do not \
-                    belong to you.'))
+            group_timesheet_officer = self.env.ref(
+                        'hr_timesheet.group_hr_timesheet_user')
+            if (user != line.user_id):
+                    if (group_timesheet_officer not in user.groups_id):
+                        if (user != line.user_id.parent_id
+                                or user != line.user_id.coach_id):
+                            raise UserError(_('You cannot modify this entry.'))
         return True
 
     # overide _check_state() method.

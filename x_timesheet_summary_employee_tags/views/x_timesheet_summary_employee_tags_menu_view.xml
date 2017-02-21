@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- override view group of timesheet report menu to base.group_user -->
+    <menuitem
+        id="hr_timesheet.menu_timesheets_reports"
+        name="Reports"
+        parent="hr_timesheet.timesheet_menu_root"
+        sequence="99"
+        groups="base.group_user"/>
+
     <menuitem
         id="x_timesheet_summary_employee_tags_menu_view"
         name="Timesheet by Employee Tags"
         parent="hr_timesheet.menu_timesheets_reports"
         action="x_timesheet_summary_employee_tags_act_window"
-        groups="hr_timesheet.group_hr_timesheet_user"
+        groups="base.group_user"
         sequence="180"
     />
-    <record id="x_timesheet_summary_employee_tags_menu_view"
+
+    <record id="hr_timesheet.menu_timesheets_reports"
             model="ir.ui.menu">
         <field name="load_xmlid" eval="True"/>
     </record>
+    
 </odoo>

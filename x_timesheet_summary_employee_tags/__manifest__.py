@@ -18,6 +18,8 @@
         # Report
         'report/x_timesheet_summary_employee_tags_report.xml',
         'report/templates/x_ts_emp_tags_template.xml',
+        # Security
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'auto-install': False,

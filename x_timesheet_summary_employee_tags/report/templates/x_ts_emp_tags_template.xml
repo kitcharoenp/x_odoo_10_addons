@@ -65,7 +65,7 @@
                                 <t t-esc="day['day_str']"/>
                                 &lt;/td&gt;
                             </t>
-                            <td class="text-center col-xs-1">Overtime</td>
+                            <td class="text-center col-xs-1"></td>
                         </tr>
                         <tr>
                             <t t-foreach="get_day" t-as="day">
@@ -99,7 +99,9 @@
                                     &lt;/td&gt;
                                 </t>
                                 <td class="text-right col-xs-1">
+                                <!--
                                     <strong><span t-esc="'%02d:%02d' % (int(str(emp['sum']).split('.')[0]), int(float(str('%.2f' % emp['sum']).split('.')[1])/100*60))" /></strong>
+                                -->
                                 </td>
                             </tr>
                         </t>

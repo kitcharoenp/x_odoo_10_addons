@@ -5,10 +5,10 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 
 
-class xTimesheetSummaryEmployeeTagsReportUtil(models.AbstractModel):
+class xTimesheetForPayrollReportUtil(models.AbstractModel):
     # _name is format:
     # report.module_name.template_id
-    _name = 'report.x_timesheet_summary_employee_tags.x_ts_emp_tags_template'
+    _name = 'report.x_timesheet_for_payroll.x_ts_for_payroll_template'
 
     def _get_header_info(self, start_date, end_date):
         st_date = fields.Date.from_string(start_date)
@@ -44,7 +44,7 @@ class xTimesheetSummaryEmployeeTagsReportUtil(models.AbstractModel):
             start_date += relativedelta(day=1, months=+1)
         return res
 
-    def _get_timesheet_summary(self, start_date, end_date, user_id):
+    def _get_timesheet_summary(self, start_date, end_date, data_overtime, user_id):
         res = []
         count = 0
         start_date = fields.Date.from_string(start_date)
@@ -52,7 +52,12 @@ class xTimesheetSummaryEmployeeTagsReportUtil(models.AbstractModel):
         delta = end_date - start_date
         for index in range(delta.days + 1):
             current = start_date + timedelta(index)
-            res.append({'day': current.day, 'color': '', 'type': ''})
+            res.append({
+                'day': current.day,
+                'color': '',
+                'type': '',
+                'check_in': '',
+                'check_out': ''})
             if current.strftime('%a') == 'Sat' or current.strftime('%a') == 'Sun':
                 res[index]['color'] = '#ababab'
         # get analytic line summary details.
@@ -64,24 +69,30 @@ class xTimesheetSummaryEmployeeTagsReportUtil(models.AbstractModel):
         for line in analytic_lines:
             # Convert date to user timezone, otherwise the report will
             # not be consistent with the value displayed in the interface.
-            date_from = fields.Datetime.from_string(line.x_start_date)
-            date_from = fields.Datetime.context_timestamp(line, date_from).date()
-            date_to = fields.Datetime.from_string(line.x_end_date)
-            date_to = fields.Datetime.context_timestamp(line, date_to).date()
+            x_start_date = fields.Datetime.from_string(line.x_start_date)
+            date_from = fields.Datetime.context_timestamp(line, x_start_date).date()
+            check_in = fields.Datetime.context_timestamp(line, x_start_date)
+            check_in_datetime = check_in.strftime('%Y%m%d%H%M%S')
+            check_in_time = check_in.strftime('%H:%M:%S')
+            x_end_date = fields.Datetime.from_string(line.x_end_date)
+            date_to = fields.Datetime.context_timestamp(line, x_end_date).date()
+            check_out = fields.Datetime.context_timestamp(line, x_end_date)
+            check_out_datetime = check_out.strftime('%Y%m%d%H%M%S')
+            check_out_time = check_out.strftime('%H:%M:%S')
 
             for index in range(0, ((date_to - date_from).days + 1)):
                 if date_from >= start_date and date_from <= end_date:
-                    if line.is_overtime:
-                        if (res[(date_from-start_date).days]['type'] == '/'):
-                            res[(date_from-start_date).days]['color'] = '#F78181'
-                            res[(date_from-start_date).days]['type'] = 'X'
-                        else:
-                            res[(date_from-start_date).days]['color'] = '#FAAC58'
-                            res[(date_from-start_date).days]['type'] = 'O'
-                        overtime_amount += line.unit_amount
-                    else:
+                    if line.is_overtime and data_overtime:
+                        res[(date_from-start_date).days]['color'] = '#FAAC58'
+                        res[(date_from-start_date).days]['type'] = str(check_in_time) + ' / ' + str(check_out_time)
+                        res[(date_from-start_date).days]['check_in'] = str(check_in_datetime)
+                        res[(date_from-start_date).days]['check_out'] = str(check_out_datetime)
+                    overtime_amount += line.unit_amount
+                    if not line.is_overtime and not data_overtime:
                         res[(date_from-start_date).days]['color'] = '#A9F5BC'
-                        res[(date_from-start_date).days]['type'] = '/'
+                        res[(date_from-start_date).days]['type'] = str(check_in_time) + ' / ' + str(check_out_time)
+                        res[(date_from-start_date).days]['check_in'] = str(check_in_datetime)
+                        res[(date_from-start_date).days]['check_out'] = str(check_out_datetime)
                     count += 1
                 date_from += timedelta(1)
         self.sum = round(overtime_amount, 2)
@@ -108,6 +119,7 @@ class xTimesheetSummaryEmployeeTagsReportUtil(models.AbstractModel):
                         'display': self._get_timesheet_summary(
                             data['date_from'],
                             data['date_to'],
+                            data['is_overtime'],
                             emp.user_id.id),
                         'sum': self.sum
                     })
@@ -118,7 +130,7 @@ class xTimesheetSummaryEmployeeTagsReportUtil(models.AbstractModel):
         Report = self.env['report']
         # get report template from template id
         timesheet_report = Report._get_report_from_name(
-            'x_timesheet_summary_employee_tags.x_ts_emp_tags_template')
+            'x_timesheet_for_payroll.x_ts_for_payroll_template')
         analytic_lines = self.env['account.analytic.line'].browse(self.ids)
         docargs = {
             'doc_ids': self.ids,
@@ -135,4 +147,4 @@ class xTimesheetSummaryEmployeeTagsReportUtil(models.AbstractModel):
             'get_data_for_report': self._get_data_for_report(data['form']),
         }
         return Report.render(
-            'x_timesheet_summary_employee_tags.x_ts_emp_tags_template', docargs)
+            'x_timesheet_for_payroll.x_ts_for_payroll_template', docargs)

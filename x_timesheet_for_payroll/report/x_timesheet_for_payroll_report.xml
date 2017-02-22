@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report
+        id="x_timesheet_for_payroll_report"
+        string="Timesheet for Payroll"
+        model="account.analytic.line"
+        report_type="qweb-html"
+        name="x_timesheet_for_payroll.x_ts_for_payroll_template"
+        file="x_timesheet_for_payroll.x_ts_for_payroll_template"
+        menu="False"
+    />
+</odoo>

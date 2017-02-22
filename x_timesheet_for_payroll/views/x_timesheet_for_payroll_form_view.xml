@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="x_timesheet_for_payroll_form_view" model="ir.ui.view">
+            <field name="name">Timesheet for External Payroll</field>
+            <field name="model">x_timesheet.for.payroll</field>
+            <field name="arch" type="xml">
+            <form string="Timesheet for External Payroll">
+                <group>
+                    <field name="date_from" />
+                    <field name="date_to" />
+                    <field name="is_overtime" />
+                    <field name="employee_tag_ids"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+</odoo>

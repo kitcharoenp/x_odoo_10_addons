@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="ts_for_payroll_external_layout" inherit_id="report.external_layout" primary="True">
+        <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+            <attribute name="t-call">x_timesheet_for_payroll.ts_for_payroll_external_layout_header</attribute>
+        </xpath>
+    </template>
+
+    <template id="ts_for_payroll_external_layout_header" inherit_id="report.external_layout_header" primary="True">
+        <xpath expr="//div[@name='company_address']" position="replace">
+            <div></div>
+        </xpath>
+    </template>
+
+<template id="x_ts_for_payroll_template">
+    <t t-call="report.html_container">
+        <t t-call="x_timesheet_for_payroll.ts_for_payroll_external_layout">
+            <div class="page">
+                <!-- include CSS  -->
+                <style>
+                    /* --- Generic Restyling and Resets --- */
+                    body {
+                        font-family:freeserif;
+                    }
+                    table, th, td {
+                        font-size: 11px;
+                        border: 1px solid #ababab !important;
+                        margin-bottom: 0px !important;
+                        border-collapse: collapse !important;
+                        vertical-align: middle !important;
+                    }
+                    td {
+                        padding: 3px !important;
+                    }
+                </style>
+                <h3 class="text-center">Timesheet Report for the External Payroll</h3>
+                <t t-set="info" t-value="get_header_info"/>
+                <h5 class="text-center">
+                    From
+                    <u><b><t t-esc="info['start_date']"/></b></u> To
+                    <u><b><t t-esc="info['end_date']"/></b></u>
+                </h5>
+
+            <div class="row">
+                <table class="table table-bordered" style="table-layout:auto">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="get_data_for_report" t-as="obj">
+                            <tr t-if="'employee_tag' in obj">
+                                <td colspan="3" class="col-xs-4" style="background-color:#bebebe">
+                                    <strong><t t-esc="obj['employee_tag']"/></strong>
+                                </td>
+                                <td class="col-xs-2" style="background-color:#bebebe">
+                                    <strong>Type</strong>
+                                </td>
+                                <td class="col-xs-2" style="background-color:#bebebe">
+                                    <strong>Check In</strong>
+                                </td>
+                                <td class="col-xs-2" style="background-color:#bebebe">
+                                    <strong>Check Out</strong>
+                                </td>
+                            </tr>
+
+                            <t t-foreach="obj['data']" t-as="emp">
+                                <tr t-foreach="emp['display']" t-as="details">
+                                    <td class="col-xs-1"><t t-esc="emp['emp_barcode']"/></td>
+                                    <td class="col-xs-2"><t t-esc="emp['emp']"/></td>
+                                    <td class="col-xs-1"><t t-esc="details['day']"/></td>
+                                    &lt;td class="text-center oe_leftfit oe_rightfit" style=background-color:
+                                    <t t-esc="details['color']"/> !important &gt;
+                                    <t t-esc="details['type']"/>
+                                    &lt;/td&gt;
+                                    <td class="col-xs-2">
+                                        <t t-esc="emp['emp_barcode']"/><t t-esc="details['check_in']"/>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <t t-esc="emp['emp_barcode']"/><t t-esc="details['check_out']"/>
+                                    </td>
+                                </tr>
+                            </t>
+
+                        </t>
+                    </tbody>
+                </table>
+            </div><!--/.row -->
+
+        </div><!--/.page -->
+        </t>
+    </t>
+</template>
+
+</odoo>

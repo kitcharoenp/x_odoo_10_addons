@@ -93,8 +93,8 @@
                                 <td class="col-xs-2"><t t-esc="emp['emp']"/></td>
                                 <td class="col-xs-1"><t t-esc="emp['work_location']"/></td>
                                 <t t-foreach="emp['display']" t-as="details">
-                                    &lt;td class="text-center oe_leftfit oe_rightfit" style=background-color:
-                                    <t t-esc="details['color']"/> !important &gt;
+                                    &lt;td style="background-color:
+                                    <t t-esc="details['color']"/>!important;"&gt;
                                     <t t-esc="details['type']"/>
                                     &lt;/td&gt;
                                 </t>

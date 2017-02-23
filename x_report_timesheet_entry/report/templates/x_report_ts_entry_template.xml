@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="ts_for_payroll_external_layout" inherit_id="report.external_layout" primary="True">
+    <template id="ts_entry_report_external_layout" inherit_id="report.external_layout" primary="True">
         <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
-            <attribute name="t-call">x_timesheet_for_payroll.ts_for_payroll_external_layout_header</attribute>
+            <attribute name="t-call">x_report_timesheet_entry.ts_entry_report_external_layout_header</attribute>
         </xpath>
     </template>
 
-    <template id="ts_for_payroll_external_layout_header" inherit_id="report.external_layout_header" primary="True">
+    <template id="ts_entry_report_external_layout_header" inherit_id="report.external_layout_header" primary="True">
         <xpath expr="//div[@name='company_address']" position="replace">
             <div></div>
         </xpath>
     </template>
 
-<template id="x_ts_for_payroll_template">
+<template id="x_report_ts_entry_template">
     <t t-call="report.html_container">
-        <t t-call="x_timesheet_for_payroll.ts_for_payroll_external_layout">
+        <t t-call="x_report_timesheet_entry.ts_entry_report_external_layout">
             <div class="page">
                 <!-- include CSS  -->
                 <style>
@@ -52,32 +52,33 @@
                                 <td colspan="3" class="col-xs-4" style="background-color:#bebebe">
                                     <strong><t t-esc="obj['employee_tag']"/></strong>
                                 </td>
-                                <td class="col-xs-2" style="background-color:#bebebe">
-                                    <strong>Type</strong>
+                                <td class="col-xs-8" style="background-color:#bebebe">
+                                    <strong>Description</strong>
                                 </td>
-                                <td class="col-xs-2" style="background-color:#bebebe">
-                                    <strong>Check In</strong>
-                                </td>
-                                <td class="col-xs-2" style="background-color:#bebebe">
-                                    <strong>Check Out</strong>
-                                </td>
+
                             </tr>
 
                             <t t-foreach="obj['data']" t-as="emp">
                                 <tr t-foreach="emp['display']" t-as="details">
                                     <td class="col-xs-1"><t t-esc="emp['emp_barcode']"/></td>
                                     <td class="col-xs-2"><t t-esc="emp['emp']"/></td>
-                                    <td class="col-xs-1"><t t-esc="details['day']"/></td>
-                                    &lt;td class="text-center oe_leftfit oe_rightfit" style=background-color:
-                                    <t t-esc="details['color']"/> !important &gt;
-                                    <t t-esc="details['type']"/>
+                                    &lt;td class="col-xs-1" style="background-color:
+                                    <t t-esc="details['color']"/>!important;"&gt;
+                                        <t t-esc="details['day']"/>
                                     &lt;/td&gt;
-                                    <td class="col-xs-2">
-                                        <t t-esc="emp['emp_barcode']"/><t t-esc="details['check_in']"/>
-                                    </td>
-                                    <td class="col-xs-2">
-                                        <t t-esc="emp['emp_barcode']"/><t t-esc="details['check_out']"/>
-                                    </td>
+
+                                    &lt;td class="col-xs-8" style="background-color:
+                                    <t t-esc="details['color']"/>!important;"&gt;
+                                        <table class="col-xs-12">
+                                            <t t-foreach="details['description']" t-as="desc">
+                                                <t t-set="desc_split" t-value="desc.split('\/')"/>
+                                                <tr>
+                                                        <td class="col-xs-3" t-esc="desc_split[0]"></td>
+                                                        <td class="col-xs-9" t-esc="desc_split[1]"></td>
+                                                </tr>
+                                            </t>
+                                        </table>
+                                    &lt;/td&gt; <!--/.col-xs-8 -->
                                 </tr>
                             </t>
 

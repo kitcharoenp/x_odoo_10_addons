@@ -9,10 +9,10 @@
         groups="base.group_user"/>
 
     <menuitem
-        id="x_timesheet_for_payroll_menu_view"
-        name="Timesheet for External Payroll"
+        id="x_report_timesheet_entry_menu_view"
+        name="Timesheet Entry Report"
         parent="hr_timesheet.menu_timesheets_reports"
-        action="x_timesheet_for_payroll_act_window"
+        action="x_report_timesheet_entry_act_window"
         groups="base.group_user"
         sequence="180"
     />

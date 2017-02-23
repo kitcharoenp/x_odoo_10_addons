@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report
+        id="x_report_timesheet_entry_report"
+        string="Timesheet Entry Report"
+        model="account.analytic.line"
+        report_type="qweb-html"
+        name="x_report_timesheet_entry.x_report_ts_entry_template"
+        file="x_report_timesheet_entry.x_report_ts_entry_template"
+        menu="False"
+    />
+</odoo>

@@ -8,7 +8,7 @@ from odoo import api, fields, models
 class xTimesheetForPayrollReportUtil(models.AbstractModel):
     # _name is format:
     # report.module_name.template_id
-    _name = 'report.x_timesheet_for_payroll.x_ts_for_payroll_template'
+    _name = 'report.x_report_timesheet_entry.x_report_ts_entry_template'
 
     def _get_header_info(self, start_date, end_date):
         st_date = fields.Date.from_string(start_date)
@@ -44,9 +44,12 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
             start_date += relativedelta(day=1, months=+1)
         return res
 
-    def _get_timesheet_summary(self, start_date, end_date, data_overtime, user_id):
+    def _get_timesheet_summary(
+            self, start_date, end_date, is_overtime, approved,
+            user_id, user_barcode):
         res = []
         count = 0
+        overtime_amount = 0
         start_date = fields.Date.from_string(start_date)
         end_date = fields.Date.from_string(end_date)
         delta = end_date - start_date
@@ -56,44 +59,64 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
                 'day': current.day,
                 'color': '',
                 'type': '',
-                'check_in': '',
-                'check_out': ''})
+                'description': [],
+                'check_in': [],
+                'check_out': []})
             if current.strftime('%a') == 'Sat' or current.strftime('%a') == 'Sun':
                 res[index]['color'] = '#ababab'
+
         # get analytic line summary details.
-        analytic_lines = self.env['account.analytic.line'].search([
-            ('user_id', '=', user_id),
-            ('x_start_date', '<=', str(end_date)),
-            ('x_end_date', '>=', str(start_date))])
-        overtime_amount = 0
+        if is_overtime:
+            analytic_lines = self.env['account.analytic.line'].search([
+                ('user_id', '=', user_id),
+                ('is_overtime', '=', is_overtime),
+                ('x_start_date', '<=', str(end_date)),
+                ('x_end_date', '>=', str(start_date))])
+        else:
+            analytic_lines = self.env['account.analytic.line'].search([
+                ('user_id', '=', user_id),
+                ('x_start_date', '<=', str(end_date)),
+                ('x_end_date', '>=', str(start_date))])
+
         for line in analytic_lines:
             # Convert date to user timezone, otherwise the report will
             # not be consistent with the value displayed in the interface.
             x_start_date = fields.Datetime.from_string(line.x_start_date)
-            date_from = fields.Datetime.context_timestamp(line, x_start_date).date()
+            date_from = fields.Datetime.context_timestamp(
+                            line, x_start_date).date()
+
             check_in = fields.Datetime.context_timestamp(line, x_start_date)
             check_in_datetime = check_in.strftime('%Y%m%d%H%M%S')
             check_in_time = check_in.strftime('%H:%M:%S')
+
             x_end_date = fields.Datetime.from_string(line.x_end_date)
-            date_to = fields.Datetime.context_timestamp(line, x_end_date).date()
+            date_to = fields.Datetime.context_timestamp(
+                            line, x_end_date).date()
+
             check_out = fields.Datetime.context_timestamp(line, x_end_date)
             check_out_datetime = check_out.strftime('%Y%m%d%H%M%S')
             check_out_time = check_out.strftime('%H:%M:%S')
 
             for index in range(0, ((date_to - date_from).days + 1)):
                 if date_from >= start_date and date_from <= end_date:
-                    if line.is_overtime and data_overtime:
-                        res[(date_from-start_date).days]['color'] = '#FAAC58'
-                        res[(date_from-start_date).days]['type'] = str(check_in_time) + ' / ' + str(check_out_time)
-                        res[(date_from-start_date).days]['check_in'] = str(check_in_datetime)
-                        res[(date_from-start_date).days]['check_out'] = str(check_out_datetime)
-                    overtime_amount += line.unit_amount
-                    if not line.is_overtime and not data_overtime:
-                        res[(date_from-start_date).days]['color'] = '#A9F5BC'
-                        res[(date_from-start_date).days]['type'] = str(check_in_time) + ' / ' + str(check_out_time)
-                        res[(date_from-start_date).days]['check_in'] = str(check_in_datetime)
-                        res[(date_from-start_date).days]['check_out'] = str(check_out_datetime)
+
+                    description = str(check_in_time) + ' / ' + str(check_out_time)
+
+                    if line.is_overtime:
+                        description += '\/[ O ]'
+                    else:
+                        description += '\/[ / ]'
+
+                    description += line.x_notes
+
+                    check_in_time = user_barcode + check_in_time
+                    check_out_time = user_barcode + check_out_time
+
+                    res[(date_from-start_date).days]['description'].append(description)
+                    res[(date_from-start_date).days]['check_in'].append(check_in_time)
+                    res[(date_from-start_date).days]['check_out'].append(check_out_time)
                     count += 1
+
                 date_from += timedelta(1)
         self.sum = round(overtime_amount, 2)
         return res
@@ -120,7 +143,9 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
                             data['date_from'],
                             data['date_to'],
                             data['is_overtime'],
-                            emp.user_id.id),
+                            data['approved'],
+                            emp.user_id.id,
+                            emp.barcode),
                         'sum': self.sum
                     })
         return res
@@ -130,7 +155,7 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
         Report = self.env['report']
         # get report template from template id
         timesheet_report = Report._get_report_from_name(
-            'x_timesheet_for_payroll.x_ts_for_payroll_template')
+            'x_report_timesheet_entry.x_report_ts_entry_template')
         analytic_lines = self.env['account.analytic.line'].browse(self.ids)
         docargs = {
             'doc_ids': self.ids,
@@ -147,4 +172,4 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
             'get_data_for_report': self._get_data_for_report(data['form']),
         }
         return Report.render(
-            'x_timesheet_for_payroll.x_ts_for_payroll_template', docargs)
+            'x_report_timesheet_entry.x_report_ts_entry_template', docargs)

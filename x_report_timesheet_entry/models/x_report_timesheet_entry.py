@@ -7,10 +7,10 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class xTimesheetForPayroll(models.TransientModel):
+class xReportTimesheetEntry(models.TransientModel):
 
-    _name = 'x_timesheet.for.payroll'
-    _description = 'Timesheet Report for Payroll'
+    _name = 'x_report.timesheet.entry'
+    _description = 'Timesheet Entry Report'
 
     def _default_date_from(self):
         user = self.env['res.users'].browse(self.env.uid)
@@ -50,6 +50,10 @@ class xTimesheetForPayroll(models.TransientModel):
         string='Employee Tags')
     is_overtime = fields.Boolean(
                     string='Overtime')
+    approved = fields.Boolean(
+                    string='Approved')
+    export_attendance = fields.Boolean(
+                    string='Export Attendance')
 
     @api.multi
     def print_report(self):
@@ -67,5 +71,5 @@ class xTimesheetForPayroll(models.TransientModel):
         }
         return self.env['report'].get_action(
             employee_tags,
-            'x_timesheet_for_payroll.x_ts_for_payroll_template',
+            'x_report_timesheet_entry.x_report_ts_entry_template',
             data=datas)

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_report_timesheet_entry_act_window" model="ir.actions.act_window">
+        <field name="name">Timesheet Entry Report</field>
+        <field name="res_model">x_report.timesheet.entry</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="x_report_timesheet_entry_form_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

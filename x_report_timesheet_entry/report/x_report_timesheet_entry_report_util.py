@@ -10,12 +10,13 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
     # report.module_name.template_id
     _name = 'report.x_report_timesheet_entry.x_report_ts_entry_template'
 
-    def _get_header_info(self, start_date, end_date):
+    def _get_header_info(self, start_date, end_date, export_attendance):
         st_date = fields.Date.from_string(start_date)
         en_date = fields.Date.from_string(end_date)
         return {
             'start_date': fields.Date.to_string(st_date),
-            'end_date': fields.Date.to_string(en_date)
+            'end_date': fields.Date.to_string(en_date),
+            'export_attendance': export_attendance
             }
 
     def _get_day(self, start_date, end_date):
@@ -60,23 +61,24 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
                 'color': '',
                 'type': '',
                 'description': [],
-                'check_in': [],
-                'check_out': []})
+                'check_in_out': []})
             if current.strftime('%a') == 'Sat' or current.strftime('%a') == 'Sun':
                 res[index]['color'] = '#ababab'
 
         # get analytic line summary details.
-        if is_overtime:
-            analytic_lines = self.env['account.analytic.line'].search([
+
+        analytic_lines = self.env['account.analytic.line'].search([
                 ('user_id', '=', user_id),
                 ('is_overtime', '=', is_overtime),
                 ('x_start_date', '<=', str(end_date)),
                 ('x_end_date', '>=', str(start_date))])
+
+        if approved:
+            analytic_lines = analytic_lines.filtered(
+                                lambda a_line: a_line.sheet_id.state == 'done')
         else:
-            analytic_lines = self.env['account.analytic.line'].search([
-                ('user_id', '=', user_id),
-                ('x_start_date', '<=', str(end_date)),
-                ('x_end_date', '>=', str(start_date))])
+            analytic_lines = analytic_lines.filtered(
+                                lambda a_line: a_line.sheet_id.state != 'done')                        
 
         for line in analytic_lines:
             # Convert date to user timezone, otherwise the report will
@@ -109,12 +111,12 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
 
                     description += line.x_notes
 
-                    check_in_time = user_barcode + check_in_time
-                    check_out_time = user_barcode + check_out_time
+                    check_in = user_barcode + check_in_datetime
+                    check_out = user_barcode + check_out_datetime
+                    check_in_out = check_in + '\/' + check_out
 
                     res[(date_from-start_date).days]['description'].append(description)
-                    res[(date_from-start_date).days]['check_in'].append(check_in_time)
-                    res[(date_from-start_date).days]['check_out'].append(check_out_time)
+                    res[(date_from-start_date).days]['check_in_out'].append(check_in_out)
                     count += 1
 
                 date_from += timedelta(1)
@@ -162,7 +164,9 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
             'doc_model': timesheet_report.model,
             'docs': analytic_lines,
             'get_header_info': self._get_header_info(
-                data['form']['date_from'], data['form']['date_to']),
+                data['form']['date_from'],
+                data['form']['date_to'],
+                data['form']['export_attendance']),
             'get_day': self._get_day(
                 data['form']['date_from'],
                 data['form']['date_to']),

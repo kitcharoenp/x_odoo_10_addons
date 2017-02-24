@@ -13,7 +13,14 @@
         </xpath>
     </template>
 
-<template id="x_report_ts_entry_template">
+    <template id="x_report_ts_check_in_out_template">
+        <t t-call="report.html_container">
+            <div class="page">
+            </div>
+        </t>
+    </template>
+
+<template id="x_report_ts_entry_summary_template">
     <t t-call="report.html_container">
         <t t-call="x_report_timesheet_entry.ts_entry_report_external_layout">
             <div class="page">
@@ -90,6 +97,35 @@
         </div><!--/.page -->
         </t>
     </t>
+</template>
+
+<template id="x_report_ts_check_in_out_template">
+    <t t-call="report.html_container">
+        <div class="page">
+            <t t-foreach="get_data_for_report" t-as="obj">
+                <t t-foreach="obj['data']" t-as="emp">
+                    <t t-foreach="emp['display']" t-as="details">
+                        <t t-foreach="details['check_in_out']" t-as="in_out">
+                            <t t-set="in_out_split" t-value="in_out.split('\/')"/>
+                            <span><t t-esc="in_out_split[0]"/><br/></span>
+                            <span><t t-esc="in_out_split[1]"/><br/></span>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </div>
+    </t>
+</template>
+
+<template id="x_report_ts_entry_template">
+    <t t-set="head_info" t-value="get_header_info"/>
+        <t t-if="head_info['export_attendance']">
+            <t t-call="x_report_timesheet_entry.x_report_ts_check_in_out_template" />
+        </t>
+        <t t-if="not head_info['export_attendance']">
+            <t t-call="x_report_timesheet_entry.x_report_ts_entry_summary_template" />
+        </t>
+
 </template>
 
 </odoo>

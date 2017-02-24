@@ -26,6 +26,7 @@ Extend Maintenance Request & Equipment:
         'views/x_equipment_search_view.xml',
         'views/x_equipment_product_form_view.xml',
         'views/x_equipment_product_menu.xml',
+        'views/x_fleet_vehicle_form_view.xml',
         # Sequence
         'data/x_maintenance_request_sequence_data.xml',
     ],

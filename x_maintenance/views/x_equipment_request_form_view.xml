@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="x_maintenance_hr_equipment_view_form" model="ir.ui.view">
+        <field name="name">equipment.request.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='equipment_id']" position="replace">
+                <field name="equipment_id"
+                    context="{'default_category_id':category_id}"
+                    required="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

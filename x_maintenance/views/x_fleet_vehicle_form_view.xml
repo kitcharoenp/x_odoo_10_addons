@@ -10,9 +10,9 @@
                 <button name="act_show_equipment"
                     type="object"
                     class="oe_stat_button"
-                    icon="fa-usd"
+                    icon="fa-briefcase"
                     help="show all the equipments for this vehicle"
-                    groups="fleet.fleet_group_manager">
+                    groups="fleet.fleet_group_user">
                     <field name="equipment_count" widget="statinfo" string="Equipments"/>
                 </button>
             </xpath>

@@ -35,11 +35,4 @@
         <field name="act_window_id" ref="x_air_conditioner_equipment_act_window"/>
     </record>
 
-    <record id="x_air_conditioner_equipment_form_act_window" model="ir.actions.act_window.view">
-        <field name="sequence" eval="3"/>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="x_air_conditioner_equipment_form_view"/>
-        <field name="act_window_id" ref="x_air_conditioner_equipment_act_window"/>
-    </record>
-
 </odoo>

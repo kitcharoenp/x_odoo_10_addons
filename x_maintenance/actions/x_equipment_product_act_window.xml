@@ -20,7 +20,7 @@
 
     <record id="x_equipment_product_tree_act_window" model="ir.actions.act_window.view">
         <field name="sequence" eval="2"/>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">kanban</field>
         <field name="act_window_id" ref="x_equipment_product_act_window"/>
     </record>
 

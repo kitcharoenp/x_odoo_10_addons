@@ -2,7 +2,7 @@
 <odoo>
 
     <!-- equiment : views -->
-    <record id="x_maintenance_hr_equipment_view_form" model="ir.ui.view">
+    <record id="x_equipment_form_view" model="ir.ui.view">
         <field name="name">Equipment Form</field>
         <field name="model">maintenance.equipment</field>
         <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>

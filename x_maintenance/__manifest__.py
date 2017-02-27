@@ -17,7 +17,6 @@ Extend Maintenance Request & Equipment:
     'summary': 'Enhancement Equipments',
     'data': [
         # Actions
-        'actions/x_equipment_act_window.xml',
         'actions/x_equipment_product_act_window.xml',
         # View
         'views/x_equipment_form_view.xml',

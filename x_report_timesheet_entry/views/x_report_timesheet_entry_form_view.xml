@@ -11,8 +11,8 @@
                         <field name="date_to" />
                     </group>
                     <group>
-                        <field name="is_overtime" />
-                        <field name="approved"/>
+                        <field name="is_overtime" invisible="1" />
+                        <field name="approved" invisible="1"/>
                     </group>
                 </group>
                 <group>

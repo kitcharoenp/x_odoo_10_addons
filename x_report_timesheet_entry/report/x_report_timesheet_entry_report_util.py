@@ -69,17 +69,16 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
 
         analytic_lines = self.env['account.analytic.line'].search([
                 ('user_id', '=', user_id),
-                ('is_overtime', '=', is_overtime),
                 ('x_start_date', '<=', str(end_date)),
                 ('x_end_date', '>=', str(start_date))])
 
-        if approved:
-            analytic_lines = analytic_lines.filtered(
-                                lambda a_line: a_line.sheet_id.state == 'done')
-        else:
-            analytic_lines = analytic_lines.filtered(
-                                lambda a_line: a_line.sheet_id.state != 'done')                        
-
+        # if approved:
+        #    analytic_lines = analytic_lines.filtered(
+        #                       lambda a_line: a_line.sheet_id.state == 'done')
+        # else:
+        #    analytic_lines = analytic_lines.filtered(
+        #                       lambda a_line: a_line.sheet_id.state != 'done')
+        #
         for line in analytic_lines:
             # Convert date to user timezone, otherwise the report will
             # not be consistent with the value displayed in the interface.

@@ -80,8 +80,12 @@ class xTimesheetSummaryEmployeeTagsReportUtil(models.AbstractModel):
                             res[(date_from-start_date).days]['type'] = 'O'
                         overtime_amount += line.unit_amount
                     else:
-                        res[(date_from-start_date).days]['color'] = '#A9F5BC'
-                        res[(date_from-start_date).days]['type'] = '/'
+                        if (res[(date_from-start_date).days]['type'] == 'O'):
+                            res[(date_from-start_date).days]['color'] = '#F78181'
+                            res[(date_from-start_date).days]['type'] = 'X'
+                        else:
+                            res[(date_from-start_date).days]['color'] = '#A9F5BC'
+                            res[(date_from-start_date).days]['type'] = '/'
                     count += 1
                 date_from += timedelta(1)
         self.sum = round(overtime_amount, 2)

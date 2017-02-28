@@ -9,6 +9,9 @@
             <xpath expr="//search/group/filter[1]" position="before">
                 <filter string='Vehicle' name="vehicle" domain="[]" context="{'group_by': 'x_vehicle_id'}"/>
             </xpath>
+            <xpath expr="//search/group/filter[2]" position="replace">
+                <filter string='Category' name="category" domain="[]" context="{'group_by': 'category_id'}"/>
+            </xpath>
         </field>
     </record>
 </odoo>

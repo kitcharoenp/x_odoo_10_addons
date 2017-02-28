@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem
+        id="maintenance.x_equipment_menu_view"
+        name="Reports"
+        parent="maintenance.menu_maintenance_title"
+        action="x_equipment_act_window"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="2"/>
+
+    <record
+        id="maintenance.menu_equipment_form"
+        model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
+</odoo>

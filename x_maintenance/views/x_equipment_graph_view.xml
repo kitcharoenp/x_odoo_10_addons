@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_equipment_graph_view" model="ir.ui.view">
+        <field name="name">Equipment Graph</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="arch" type="xml">
+            <graph string="Equipment">
+                <field name="category_id" type="row"/>
+            </graph>
+        </field>
+    </record>
+</odoo>

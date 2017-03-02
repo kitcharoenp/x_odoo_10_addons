@@ -68,6 +68,15 @@ class FleetVehicleClaims(models.Model):
     description_image02 = fields.Char(
         string='Description Image02')
     street = fields.Char()
+    claim_state = fields.Selection([
+        ('draft', 'Draft'),
+        ('confirm', 'Confirmed'),
+        ('done', 'Done'),
+        ('cancel', 'Cancelled')],
+        string='State',
+        readonly=True,
+        required=True,
+        default='draft')
 
     @api.model
     def create(self, vals):
@@ -98,3 +107,18 @@ class FleetVehicleClaims(models.Model):
                         return_big=True,
                         big_name='image02'))
         return super(FleetVehicleClaims, self).write(vals)
+
+    @api.multi
+    def button_confirm(self):
+        for record in self:
+            record.claim_state = 'confirm'
+
+    @api.multi
+    def button_done(self):
+        for record in self:
+            record.claim_state = 'done'
+
+    @api.multi
+    def button_cancel(self):
+        for record in self:
+            record.claim_state = 'cancel'

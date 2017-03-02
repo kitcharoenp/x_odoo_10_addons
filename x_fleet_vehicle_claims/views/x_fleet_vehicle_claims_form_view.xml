@@ -5,8 +5,33 @@
         <field name="model">fleet.vehicle.claims</field>
         <field name="arch" type="xml">
             <form string="Fleet vehicle claims">
+                <header>
+                    <button
+                        string="Confirm"
+                        name="button_confirm"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [['claim_state', '!=', 'draft']]}"/>
+                    <button
+                        string="Done"
+                        name="button_done"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [['claim_state', '!=', 'confirm']]}"/>
+                    <!-- for button_cancel show in state draft, confirm -->
+                    <button
+                        string="Cancel"
+                        name="button_cancel"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [['claim_state', '=', 'cancel']]}"/>
+
+                    <field name="claim_state" widget="statusbar" />
+                </header>
                <sheet string="Vehicle Claims">
-                    <label for="name"/>
+                   <h1>
+                       <field name="name"/>
+                   </h1>
                     <group>
                         <group string="Claims Detail">
                           <field name='date'/>

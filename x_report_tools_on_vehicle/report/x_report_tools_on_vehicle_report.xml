@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <report
+        id="x_report_tools_on_vehicle_report"
+        string="Tools on Vehicle Report"
+        model="fleet.vehicle"
+        report_type="qweb-html"
+        name="x_report_tools_on_vehicle.x_tools_on_vehicle_template"
+        file="x_report_tools_on_vehicle.x_tools_on_vehicle_template"
+        menu="True"
+    />
+</odoo>

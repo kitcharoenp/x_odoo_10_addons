@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <record id="x_tools_on_vehicle_paperformat" model="report.paperformat">
+        <field name="name">Tools on Vehicle</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">43</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">40</field>
+        <field name="dpi">90</field>
+    </record>
+
     <report
         id="x_report_tools_on_vehicle_report"
         string="Tools on Vehicle Report"
@@ -7,6 +21,6 @@
         report_type="qweb-html"
         name="x_report_tools_on_vehicle.x_tools_on_vehicle_template"
         file="x_report_tools_on_vehicle.x_tools_on_vehicle_template"
-        menu="True"
+        paperformat="x_report_tools_on_vehicle.x_tools_on_vehicle_paperformat"
     />
 </odoo>

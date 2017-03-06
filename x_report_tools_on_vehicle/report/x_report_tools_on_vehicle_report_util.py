@@ -36,7 +36,6 @@ class xToolsOnVehicleReportUtil(models.AbstractModel):
             'doc_model': tools_on_vehicle_report.model,
             'docs': fleet_vehicles,
             'get_data_for_report': self._get_data_for_report,
-            'data': data,
         }
         return Report.render(
             'x_report_tools_on_vehicle.x_tools_on_vehicle_template', docargs)

@@ -47,6 +47,14 @@ class AccountAnalyticLine(models.Model):
     employee_ids = fields.Many2many(
         'hr.employee',
         string='Collaborators')
+    x_overtime_pay = fields.Float(
+        string='Overtime Pay')
+    x_is_leave = fields.Boolean(
+        string='Leave')
+    x_is_holiday = fields.Boolean(
+        string='Holiday')
+    x_is_per_diem = fields.Boolean(
+        string='Per Diem')
 
     @api.onchange('x_start_date')
     def _compute_date_from_x_start_date(self):

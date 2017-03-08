@@ -47,6 +47,14 @@ class AccountAnalyticLine(models.Model):
     employee_ids = fields.Many2many(
         'hr.employee',
         string='Collaborators')
+    x_overtime_pay = fields.Float(
+        string='Overtime Pay')
+    x_is_leave = fields.Boolean(
+        string='Leave')
+    x_is_holiday = fields.Boolean(
+        string='Holiday')
+    x_is_per_diem = fields.Boolean(
+        string='Per Diem')
 
     @api.onchange('x_start_date')
     def _compute_date_from_x_start_date(self):
@@ -88,7 +96,13 @@ class AccountAnalyticLine(models.Model):
     def _onchange_x_notes(self):
         for ts_line in self:
             if ts_line.x_notes:
-                ts_line.name = ts_line.x_notes
+                ts_line.name = ts_line.user_id.name + '/' + ts_line.x_start_date
+
+    @api.onchange('unit_amount')
+    def _onchange_unit_amount(self):
+        for ts_line in self:
+            if ts_line.unit_amount and ts_line.is_overtime:
+                ts_line.x_overtime_pay = ts_line.unit_amount
 
     @api.onchange('x_start_date', 'x_end_date')
     def _compute_duration(self):

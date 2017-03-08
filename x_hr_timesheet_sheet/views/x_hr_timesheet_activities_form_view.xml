@@ -35,7 +35,7 @@
                     position="replace">
                     <form string="Timesheet Activities">
                         <group col="2">
-                            <group string="Activity Details">
+                            <group string="Activity Information">
                                 <field name="date" required="0" invisible="1"/>
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
@@ -66,6 +66,17 @@
                                     string="เลขไมล์สิ้นสุด" />
                                 <field name="tag_ids" widget="many2many_tags"
                                     options="{'no_open': True, 'no_create': True}"/>
+                                <field name="x_is_per_diem"/>
+                            </group>
+                        </group>
+                        <group col="2">
+                            <group string="Human Resources">
+                                <field name="x_overtime_pay"
+                                    widget="float_time" />
+                                <field name="x_is_leave" readonly="1"/>
+                                <field name="x_is_holiday" readonly="1"/>
+                            </group>
+                            <group>
                             </group>
                         </group>
                         <group string="Collaborators">
@@ -149,6 +160,16 @@
                                         string="เลขไมล์สิ้นสุด" />
                                     <field name="tag_ids" widget="many2many_tags"
                                         options="{'no_open': True, 'no_create': True}"/>
+                                    <field name="x_is_per_diem"/>
+                            </group>
+                        </group>
+                        <group col="2">
+                            <group string="Human Resources">
+                                <field name="x_overtime_pay" widget="float_time"/>
+                                <field name="x_is_leave" readonly="1"/>
+                                <field name="x_is_holiday" readonly="1"/>
+                            </group>
+                            <group>
                             </group>
                         </group>
                         <group string="Collaborators">

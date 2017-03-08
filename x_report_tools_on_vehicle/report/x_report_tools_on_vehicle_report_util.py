@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models
 
+
 class xToolsOnVehicleReportUtil(models.AbstractModel):
     # _name is format:
     # report.module_name.template_id
@@ -12,7 +13,7 @@ class xToolsOnVehicleReportUtil(models.AbstractModel):
         Equipment = self.env['maintenance.equipment']
         for equip in Equipment.search(
                         [('x_vehicle_id', '=', vehicle_id)],
-                        order="category_id asc, name asc"):
+                        order="name asc"):
                 res = {}
                 res['category'] = equip.category_id.name
                 res['image_small'] = equip.image_small

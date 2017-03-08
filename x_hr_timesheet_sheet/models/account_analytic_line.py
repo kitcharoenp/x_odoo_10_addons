@@ -96,7 +96,13 @@ class AccountAnalyticLine(models.Model):
     def _onchange_x_notes(self):
         for ts_line in self:
             if ts_line.x_notes:
-                ts_line.name = ts_line.x_notes
+                ts_line.name = ts_line.user_id.name + '/' + ts_line.x_start_date
+
+    @api.onchange('unit_amount')
+    def _onchange_unit_amount(self):
+        for ts_line in self:
+            if ts_line.unit_amount and ts_line.is_overtime:
+                ts_line.x_overtime_pay = ts_line.unit_amount
 
     @api.onchange('x_start_date', 'x_end_date')
     def _compute_duration(self):

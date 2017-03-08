@@ -175,13 +175,26 @@
                                         </td>
                                         <!-- is overtime -->
                                         <td class="col-xs-1 text-center" >
-                                            <span t-if="l.is_overtime" t-esc="'%02d:%02d' % (int(str(l.unit_amount).split('.')[0]), int(float(str('%.2f' % l.unit_amount).split('.')[1])/100*60))" />
+                                            <t t-if="l.is_overtime">
+                                                <t t-if="l.x_overtime_pay > 0">
+                                                    <span  t-esc="'%02d:%02d' % (int(str(l.x_overtime_pay).split('.')[0]), int(float(str('%.2f' % l.x_overtime_pay).split('.')[1])/100*60))" />
+                                                </t>
+                                                <t t-else="">
+                                                    <span t-esc="'%02d:%02d' % (int(str(l.unit_amount).split('.')[0]), int(float(str('%.2f' % l.unit_amount).split('.')[1])/100*60))" />
+                                                </t>
+                                            </t>
                                         </td>
                                         <!-- sum time total -->
                                         <t t-set="x_total" t-value="x_total+l.unit_amount"/>
                                             <t t-if="l.is_overtime">
-                                                <t t-set="x_over_time_total"
-                                                    t-value="x_over_time_total+l.unit_amount"/>
+                                                <t t-if="l.x_overtime_pay > 0">
+                                                    <t t-set="x_over_time_total"
+                                                        t-value="x_over_time_total+l.x_overtime_pay"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="x_over_time_total"
+                                                        t-value="x_over_time_total+l.unit_amount"/>
+                                                </t>
                                             </t>
 
                                         <td class="col-xs-2" >

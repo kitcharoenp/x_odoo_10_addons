@@ -12,10 +12,11 @@ Enhancement Information on a vehicle :
     * Second driver field related to employee
     * Maintenance Administrator field related to employee
         """,
-    'depends': ['fleet'],
+    'depends': ['hr', 'fleet'],
     'summary': 'Enhancement Information on a vehicle',
     'data': [
-
+        'views/x_fleet_vehicle_form_view.xml',
+        'views/x_fleet_vehicle_tree_view.xml',
     ],
     'installable': True,
     'auto-install': False,

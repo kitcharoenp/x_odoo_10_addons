@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id='x_fleet_vehicle_form_view' model='ir.ui.view'>
+    <field name="name">Fleet vehicle Form</field>
+    <field name="model">fleet.vehicle</field>
+    <field name="inherit_id"
+        ref="fleet.fleet_vehicle_view_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='driver_id']" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='driver_id']" position="after">
+            <field name="x_driver_id1" />
+            <field name="x_driver_id2" />
+        </xpath>
+        <xpath expr="//field[@name='car_value']" position="after">
+            <field name="x_administrator_id" />
+        </xpath>
+    </field>
+</record>
+</odoo>

@@ -14,7 +14,8 @@
                     <field name="x_start_date"/>
                     <field name="x_end_date"/>
                     <field name="user_id" required="1" options='{"no_open": True}'/>
-                    <field name="name"/>
+                    <field name="name" invisible="1"/>
+                    <field name="x_notes"/>
                     <field name="project_id"
                         string="Customer/Project"
                         required="1"/>

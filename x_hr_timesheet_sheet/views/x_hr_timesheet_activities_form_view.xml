@@ -13,7 +13,8 @@
                         <field name="date" required="0" invisible="1"/>
                         <field name="x_start_date" required="1"/>
                         <field name="x_end_date" required="1"/>
-                        <field name="name"/>
+                        <field name="name" invisible="1"/>
+                        <field name="x_notes" />
                         <field name="project_id"
                             string="Customer/Project"
                             filter_domain="[('project_id','ilike',self)]"

@@ -7,7 +7,7 @@
     'category': 'Fleet',
     'description': """
         Tools on Vehicle Report""",
-    'depends': ['x_maintenance', 'report'],
+    'depends': ['x_maintenance', 'report', 'x_fleet_vehicle'],
     'summary': 'Tools on Vehicle Report',
     'data': [
         # Views

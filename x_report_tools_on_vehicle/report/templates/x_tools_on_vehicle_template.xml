@@ -27,43 +27,65 @@
     <template id="x_tools_on_vehicle_layout_footer">
         <div class="footer">
     		<!-- Signature -->
-    	<div class="row">
+    	<div class="row" style="font-size: 9px;">
             <div class="col-xs-3 text-center" >
     			<ul style="list-style-type: none;">
-    				<li>Owner</li>
+    				<li>Checks by</li>
     				<li><br/></li>
-    				<li>________________</li>
-    				<li t-if="o.driver_id">
-                        <span t-field="o.driver_id"/>
-                    </li>
-                    <li>__/__/__</li>
-    			</ul>
-    		</div>
-            <div class="col-xs-3 text-center" >
-    			<ul style="list-style-type: none;">
-    				<li>Owner</li>
-    				<li><br/></li>
-    				<li>________________</li>
                     <li><br/></li>
-                    <li>__/__/__</li>
+    				<li>________________</li>
+                    <li>___/___/___</li>
+                    <li><span t-field="o.x_driver_id1"/></li>
+    				<li><span t-field="o.x_driver_id1.job_id"/></li>
+    				<li>
+    				<t t-if="o.x_driver_id1.mobile_phone">
+    					<span t-field="o.x_driver_id1.mobile_phone"/>
+    				</t>
+    				</li>
     			</ul>
     		</div>
             <div class="col-xs-3 text-center" >
-    			<ul style="list-style-type: none;">
-    				<li>Receipt</li>
+                <ul style="list-style-type: none;">
+    				<li>Confirmed by</li>
     				<li><br/></li>
+                    <li><br/></li>
     				<li>________________</li>
+                    <li>___/___/___</li>
+                    <li><span t-field="o.x_administrator_id"/></li>
+    				<li><span t-field="o.x_administrator_id.job_id"/></li>
+    				<li>
+    				<t t-if="o.x_administrator_id.mobile_phone">
+    					<span t-field="o.x_administrator_id.mobile_phone"/>
+    				</t>
+    				</li>
+    			</ul>
+    		</div>
+            <div class="col-xs-3 text-center" >
+                <ul style="list-style-type: none;">
+    				<li>Verified by</li>
     				<li><br/></li>
-                    <li>__/__/__</li>
+                    <li><br/></li>
+    				<li>________________</li>
+                    <li>___/___/___</li>
+                    <li><span t-field="o.x_driver_id1.coach_id"/></li>
+    				<li><span t-field="o.x_driver_id1.coach_id.job_id"/></li>
+    				<li>
+    				<t t-if="o.x_driver_id1.coach_id.mobile_phone">
+    					<span t-field="o.x_driver_id1.coach_id.mobile_phone"/>
+    				</t>
+    				</li>
     			</ul>
     		</div>
     		<div class="col-xs-3 text-center" >
     			<ul style="list-style-type: none;">
-    				<li>Sender</li>
+    				<li>Approved by</li>
     				<li><br/></li>
-    				<li>________________</li>
                     <li><br/></li>
+    				<li>________________</li>
                     <li>__/__/__</li>
+                    <li><br/></li>
+                    <li><br/></li>
+                    <li><br/></li>
     			</ul>
     		</div>
     	</div> <!-- /.row -->

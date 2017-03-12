@@ -173,6 +173,7 @@ class HrTimesheetSheet(models.Model):
 
     @api.onchange('manager_id1')
     def _onchange_manager_id1(self):
+        if self.manager_id1:
             self.manager_id2 = self.manager_id1.parent_id
 
     @api.multi
@@ -196,3 +197,13 @@ class HrTimesheetSheet(models.Model):
                 timesheet.can_approve = True
             if group_timesheet_manager in user.groups_id:
                 timesheet.can_approve = True
+
+    # validate user who can write the record
+    @api.multi
+    def write(self, vals):
+        for sheet in self:
+            if not sheet.can_approve and sheet.state not in ('draft', 'new'):
+                raise UserError(_(
+                    'In this status only the Reviewer/Manager can write \
+                    this timesheet'))
+        return super(HrTimesheetSheet, self).write(vals)

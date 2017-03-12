@@ -146,7 +146,8 @@ class AccountAnalyticLine(models.Model):
 
     @api.multi
     def write(self, values):
-        self._check_owner()
+        # to do fix validate user to edit line by _check_owner methods
+        # self._check_owner()
         return super(AccountAnalyticLine, self).write(values)
 
     def _check_owner(self):
@@ -156,8 +157,9 @@ class AccountAnalyticLine(models.Model):
                         'x_hr_timesheet_sheet.x_group_hr_timesheet_manager')
             if (user != line.user_id):
                     if (group_timesheet_manager not in user.groups_id):
-                        if (user != line.user_id.parent_id
-                                or user != line.user_id.coach_id):
+                        if (user != line.sheet_id.reviewer_id.user_id
+                                or user != line.sheet_id.manager_id1.user_id
+                                or user != line.sheet_id.manager_id2.user_id):
                             raise UserError(_('You cannot modify this entry \
                                 because you is not Manager/Coach \
                                 of this employee.'))

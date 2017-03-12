@@ -152,26 +152,28 @@ class AccountAnalyticLine(models.Model):
     def _check_owner(self):
         for line in self:
             user = self.env.user
-            group_timesheet_officer = self.env.ref(
-                        'hr_timesheet.group_hr_timesheet_user')
+            group_timesheet_manager = self.env.ref(
+                        'x_hr_timesheet_sheet.x_group_hr_timesheet_manager')
             if (user != line.user_id):
-                    if (group_timesheet_officer not in user.groups_id):
+                    if (group_timesheet_manager not in user.groups_id):
                         if (user != line.user_id.parent_id
                                 or user != line.user_id.coach_id):
-                            raise UserError(_('You cannot modify this entry.'))
+                            raise UserError(_('You cannot modify this entry \
+                                because you is not Manager/Coach \
+                                of this employee.'))
         return True
 
     # overide _check_state() method.
     def _check_state(self):
         for line in self:
             user = self.env.user
-            group_timesheet_manager = self.env.ref(
-                        'x_hr_timesheet_sheet.x_group_hr_timesheet_manager')
-            if group_timesheet_manager not in user.groups_id:
+            group_hr_timesheet_officer = self.env.ref(
+                        'hr_timesheet.group_hr_timesheet_user')
+            if group_hr_timesheet_officer not in user.groups_id:
                 if (line.sheet_id and
                         line.sheet_id.state not in ('draft', 'new')):
                     raise UserError(_('You cannot modify an entry in a \
-                        confirmed timesheet.'))
+                        confirmed timesheet'))
         return True
 
     def _get_odometer(self):

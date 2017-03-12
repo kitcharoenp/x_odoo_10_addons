@@ -81,6 +81,13 @@ class HrTimesheetSheet(models.Model):
     review_date = fields.Datetime(string='Review Date')
     validated_date = fields.Datetime(string='Validated Date')
     approved_date = fields.Datetime(string='Approved Date')
+    timesheet_ids = fields.One2many(
+        'account.analytic.line',
+        'sheet_id',
+        string='Timesheet lines',
+        readonly=False, states={
+            'draft': [('readonly', False)],
+            'new': [('readonly', False)]})
 
     @api.multi
     def action_timesheet_confirm(self):

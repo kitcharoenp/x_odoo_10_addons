@@ -41,7 +41,7 @@
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
                                 <field name="project_id"
-                                    string="Customer/Project"
+                                    string="Customer"
                                     filter_domain="[('project_id','ilike',self)]"
                                     required="1"
                                     options="{'no_open': True,
@@ -52,6 +52,9 @@
                                         string="Hours"/>
                                 <field name="user_id" invisible="1"/>
                                 <field name="is_overtime"/>
+                                <field name="x_state_id"
+                                    string="Province"
+                                    options="{'no_open': True, 'no_create': True}"/>
                             </group>
                             <group string="Other Details">
                                 <field name="x_notes"
@@ -65,7 +68,9 @@
                                     string="เลขไมล์เริ่มต้น" />
                                 <field name="y_odometer"
                                     string="เลขไมล์สิ้นสุด" />
-                                <field name="tag_ids" widget="many2many_tags"
+                                <field name="tag_ids"
+                                    string="Project Code"
+                                    widget="many2many_tags"
                                     options="{'no_open': True, 'no_create': True}"/>
                                 <field name="x_is_per_diem"/>
                             </group>
@@ -135,7 +140,7 @@
                                 <field name="x_start_date" required="1"/>
                                 <field name="x_end_date" required="1"/>
                                 <field name="project_id"
-                                    string="Customer/Project"
+                                    string="Customer"
                                     filter_domain="[('project_id','ilike',self)]"
                                     required="1"
                                     options="{'no_open': True, 'no_create': True}" />
@@ -145,6 +150,9 @@
                                         string="Hours"/>
                                 <field name="user_id" invisible="1"/>
                                 <field name="is_overtime"/>
+                                <field name="x_state_id"
+                                    string="Province"
+                                    options="{'no_open': True, 'no_create': True}"/>
                             </group>
                             <group string="Other Details">
                                 <field name="x_notes"
@@ -159,7 +167,9 @@
                                         string="เลขไมล์เริ่มต้น" />
                                     <field name="y_odometer"
                                         string="เลขไมล์สิ้นสุด" />
-                                    <field name="tag_ids" widget="many2many_tags"
+                                    <field name="tag_ids"
+                                        string="Project Code"
+                                        widget="many2many_tags"
                                         options="{'no_open': True, 'no_create': True}"/>
                                     <field name="x_is_per_diem"/>
                             </group>

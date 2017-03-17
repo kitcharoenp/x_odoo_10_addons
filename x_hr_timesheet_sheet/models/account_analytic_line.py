@@ -55,6 +55,9 @@ class AccountAnalyticLine(models.Model):
         string='Holiday')
     x_is_per_diem = fields.Boolean(
         string='Per Diem')
+    x_state_id = fields.Many2one(
+        "res.country.state",
+        string='State')
 
     @api.onchange('x_start_date')
     def _compute_date_from_x_start_date(self):

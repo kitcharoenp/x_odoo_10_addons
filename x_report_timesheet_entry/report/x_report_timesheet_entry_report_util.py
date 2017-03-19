@@ -47,7 +47,7 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
 
     def _get_timesheet_summary(
             self, start_date, end_date, is_overtime, approved,
-            user_id, user_barcode):
+            export_attendance, user_id, user_barcode):
         res = []
         count = 0
         overtime_amount = 0
@@ -62,7 +62,8 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
                 'type': '',
                 'description': [],
                 'check_in_out': []})
-            if current.strftime('%a') == 'Sat' or current.strftime('%a') == 'Sun':
+            if current.strftime('%a') == 'Sat' or \
+                    current.strftime('%a') == 'Sun':
                 res[index]['color'] = '#ababab'
 
         # get analytic line summary details.
@@ -72,9 +73,9 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
                 ('x_start_date', '<=', str(end_date)),
                 ('x_end_date', '>=', str(start_date))])
 
-        # if approved:
-        #    analytic_lines = analytic_lines.filtered(
-        #                       lambda a_line: a_line.sheet_id.state == 'done')
+        if export_attendance:
+            analytic_lines = analytic_lines.filtered(
+                               lambda a_line: a_line.sheet_id.state == 'done')
         # else:
         #    analytic_lines = analytic_lines.filtered(
         #                       lambda a_line: a_line.sheet_id.state != 'done')
@@ -101,7 +102,8 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
             for index in range(0, ((date_to - date_from).days + 1)):
                 if date_from >= start_date and date_from <= end_date:
 
-                    description = str(check_in_time) + ' / ' + str(check_out_time)
+                    description = str(check_in_time) + ' / ' + str(
+                                    check_out_time)
 
                     if line.is_overtime:
                         description += '\/[ O ]'
@@ -114,8 +116,10 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
                     check_out = user_barcode + check_out_datetime
                     check_in_out = check_in + '\/' + check_out
 
-                    res[(date_from-start_date).days]['description'].append(description)
-                    res[(date_from-start_date).days]['check_in_out'].append(check_in_out)
+                    res[(date_from-start_date).days]['description'].append(
+                            description)
+                    res[(date_from-start_date).days]['check_in_out'].append(
+                            check_in_out)
                     count += 1
 
                 date_from += timedelta(1)
@@ -126,7 +130,8 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
         res = []
         Employee = self.env['hr.employee']
         if 'employee_tag_ids' in data:
-            for employee_tag in self.env['hr.employee.category'].browse(data['employee_tag_ids']):
+            for employee_tag in self.env['hr.employee.category'].browse(
+                    data['employee_tag_ids']):
                 res.append({
                     'employee_tag': employee_tag.name,
                     'data': [],
@@ -145,6 +150,7 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
                             data['date_to'],
                             data['is_overtime'],
                             data['approved'],
+                            data['export_attendance'],
                             emp.user_id.id,
                             emp.barcode),
                         'sum': self.sum

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_report_timesheet_perdiem_act_window" model="ir.actions.act_window">
+        <field name="name">Timesheet Perdiem Report</field>
+        <field name="res_model">x_report.timesheet.perdiem</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="x_report_timesheet_perdiem_form_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

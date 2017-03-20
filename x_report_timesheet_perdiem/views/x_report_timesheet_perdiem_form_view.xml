@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="x_report_timesheet_perdiem_form_view" model="ir.ui.view">
+            <field name="name">Timesheet Perdiem Report</field>
+            <field name="model">x_report.timesheet.perdiem</field>
+            <field name="arch" type="xml">
+            <form string="Timesheet Perdiem Report">
+                <group>
+                    <group>
+                        <field name="date_from" />
+                        <field name="date_to" />
+                    </group>
+                    <group>
+                        <field name="approved" invisible="1"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="employee_tag_ids"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+</odoo>

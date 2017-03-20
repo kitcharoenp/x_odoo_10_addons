@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="ts_perdiem_report_external_layout" inherit_id="report.external_layout" primary="True">
+        <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+            <attribute name="t-call">x_report_timesheet_perdiem.ts_perdiem_report_external_layout_header</attribute>
+        </xpath>
+    </template>
+
+    <template id="ts_perdiem_report_external_layout_header" inherit_id="report.external_layout_header" primary="True">
+        <xpath expr="//div[@name='company_address']" position="replace">
+            <div></div>
+        </xpath>
+    </template>
+
+<template id="x_report_ts_perdiem_template">
+    <t t-call="report.html_container">
+        <t t-call="x_report_timesheet_perdiem.ts_perdiem_report_external_layout">
+            <div class="page">
+                <!-- include CSS  -->
+                <style>
+                    /* --- Generic Restyling and Resets --- */
+                    body {
+                        font-family:freeserif;
+                    }
+                    table, th, td {
+                        font-size: 11px;
+                        border: 1px solid #ababab !important;
+                        margin-bottom: 0px !important;
+                        border-collapse: collapse !important;
+                        vertical-align: middle !important;
+                    }
+                    td {
+                        padding: 3px !important;
+                    }
+                </style>
+                <h3 class="text-center">Per Diem Timesheet Report</h3>
+                <t t-set="info" t-value="get_header_info"/>
+                <h5 class="text-center">
+                    From
+                    <u><b><t t-esc="info['start_date']"/></b></u> To
+                    <u><b><t t-esc="info['end_date']"/></b></u>
+                </h5>
+
+            <div class="row">
+                <table class="table table-bordered" style="table-layout:auto">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="get_data_for_report" t-as="obj">
+                            <tr t-if="'employee_tag' in obj">
+                                <td colspan="3" class="col-xs-4" style="background-color:#bebebe">
+                                    <strong><t t-esc="obj['employee_tag']"/></strong>
+                                </td>
+                                <td class="col-xs-8" style="background-color:#bebebe">
+                                    <strong>Description</strong>
+                                </td>
+
+                            </tr>
+
+                            <t t-foreach="obj['data']" t-as="emp">
+                                <tr t-foreach="emp['display']" t-as="details">
+                                    <td class="col-xs-1"><t t-esc="emp['emp_barcode']"/></td>
+                                    <td class="col-xs-2"><t t-esc="emp['emp']"/></td>
+                                    &lt;td class="col-xs-1" style="background-color:
+                                    <t t-esc="details['color']"/>!important;"&gt;
+                                        <t t-esc="details['day']"/>
+                                    &lt;/td&gt;
+
+                                    &lt;td class="col-xs-8" style="background-color:
+                                    <t t-esc="details['color']"/>!important;"&gt;
+                                        <table class="col-xs-12">
+                                            <t t-foreach="details['description']" t-as="desc">
+                                                <t t-set="desc_split" t-value="desc.split('\/')"/>
+                                                <tr>
+                                                        <td class="col-xs-3" t-esc="desc_split[0]"></td>
+                                                        <td class="col-xs-9" t-esc="desc_split[1]"></td>
+                                                </tr>
+                                            </t>
+                                        </table>
+                                    &lt;/td&gt; <!--/.col-xs-8 -->
+                                </tr>
+                            </t>
+
+                        </t>
+                    </tbody>
+                </table>
+            </div><!--/.row -->
+
+        </div><!--/.page -->
+        </t>
+    </t>
+</template>
+
+</odoo>

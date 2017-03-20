@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- override view group of timesheet report menu to base.group_user -->
+    <menuitem
+        id="hr_timesheet.menu_timesheets_reports"
+        name="Reports"
+        parent="hr_timesheet.timesheet_menu_root"
+        sequence="99"
+        groups="base.group_user"/>
+
+    <menuitem
+        id="x_report_timesheet_perdiem_menu_view"
+        name="Timesheet Perdiem Report"
+        parent="hr_timesheet.menu_timesheets_reports"
+        action="x_report_timesheet_perdiem_act_window"
+        groups="base.group_user"
+        sequence="150"
+    />
+
+    <record id="hr_timesheet.menu_timesheets_reports"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
+</odoo>

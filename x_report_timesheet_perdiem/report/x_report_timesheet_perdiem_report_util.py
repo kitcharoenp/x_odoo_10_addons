@@ -67,9 +67,8 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
         analytic_lines = self.env['account.analytic.line'].search([
                 ('user_id', '=', user_id),
                 ('x_start_date', '<=', str(end_date)),
-                ('x_end_date', '>=', str(start_date))
-                ('x_is_per_diem', '=', True)
-                ])
+                ('x_end_date', '>=', str(start_date)),
+                ('x_is_per_diem', '=', True)])
 
         for line in analytic_lines:
             # Convert date to user timezone, otherwise the report will

@@ -47,7 +47,6 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
             self, start_date, end_date, approved, user_id, user_barcode):
         res = []
         count = 0
-        overtime_amount = 0
         start_date = fields.Date.from_string(start_date)
         end_date = fields.Date.from_string(end_date)
         delta = end_date - start_date
@@ -55,21 +54,23 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
             current = start_date + timedelta(index)
             res.append({
                 'day': current.day,
+                'date': current,
                 'color': '',
-                'type': '',
                 'description': [],
-                'check_in_out': []})
+                'province': [],
+                'vehicle': []})
             if current.strftime('%a') == 'Sat' or \
                     current.strftime('%a') == 'Sun':
                 res[index]['color'] = '#ababab'
 
         # get analytic line summary details.
-
         analytic_lines = self.env['account.analytic.line'].search([
                 ('user_id', '=', user_id),
                 ('x_start_date', '<=', str(end_date)),
-                ('x_end_date', '>=', str(start_date))])
-                
+                ('x_end_date', '>=', str(start_date))
+                ('x_is_per_diem', '=', True)
+                ])
+
         for line in analytic_lines:
             # Convert date to user timezone, otherwise the report will
             # not be consistent with the value displayed in the interface.
@@ -77,49 +78,29 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
             date_from = fields.Datetime.context_timestamp(
                             line, x_start_date).date()
 
-            check_in = fields.Datetime.context_timestamp(line, x_start_date)
-            check_in_datetime = check_in.strftime('%Y%m%d%H%M%S')
-            check_in_time = check_in.strftime('%H:%M:%S')
-
             x_end_date = fields.Datetime.from_string(line.x_end_date)
             date_to = fields.Datetime.context_timestamp(
                             line, x_end_date).date()
 
-            check_out = fields.Datetime.context_timestamp(line, x_end_date)
-            check_out_datetime = check_out.strftime('%Y%m%d%H%M%S')
-            check_out_time = check_out.strftime('%H:%M:%S')
-
             for index in range(0, ((date_to - date_from).days + 1)):
                 if date_from >= start_date and date_from <= end_date:
-
-                    description = str(check_in_time) + ' / ' + str(
-                                    check_out_time)
-
-                    if line.is_overtime:
-                        description += '\/[ O ]'
-                    else:
-                        description += '\/[ / ]'
-
-                    description += line.x_notes
-
-                    check_in = user_barcode + check_in_datetime
-                    check_out = user_barcode + check_out_datetime
-                    check_in_out = check_in + '\/' + check_out
-
-                    res[(date_from-start_date).days]['description'].append(
-                            description)
-                    res[(date_from-start_date).days]['check_in_out'].append(
-                            check_in_out)
-                    count += 1
-
+                    res[(date_from-start_date).days][
+                            'description'] = line.x_notes
+                    res[(date_from-start_date).days][
+                            'province'] = line.x_state_id.name
+                    res[(date_from-start_date).days][
+                            'vehicle'] = line.x_vehicle_id.license_plate
                 date_from += timedelta(1)
-        self.sum = round(overtime_amount, 2)
+            # count line match condtion
+            count += 1
+        self.sum = round(count, 0)
         return res
 
     def _get_data_for_report(self, data):
         res = []
         Employee = self.env['hr.employee']
         if 'employee_tag_ids' in data:
+            # loop by employee tags
             for employee_tag in self.env['hr.employee.category'].browse(
                     data['employee_tag_ids']):
                 res.append({
@@ -127,14 +108,20 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                     'data': [],
                     'color': self._get_day(
                         data['date_from'], data['date_to'])})
+                # loop by employee in each tags
                 for emp in Employee.search(
                         [('category_ids', 'in', employee_tag.id)],
                         order="work_location asc, barcode asc"):
                     res[len(res)-1]['data'].append({
                         'emp': emp.name,
+                        'emp_signature': emp.x_signature_img,
+                        'emp_job': emp.job_id.name,
+                        'emp_mobile_phone': emp.mobile_phone,
                         'emp_barcode': emp.barcode,
                         'work_location': emp.work_location,
-                        # call method to get timesheet
+                        'month': fields.Date.from_string(data['date_to']).strftime('%B'),
+                        'year': fields.Date.from_string(data['date_to']).strftime('%Y'),
+                        # call method to get the timesheet line
                         'display': self._get_timesheet_summary(
                             data['date_from'],
                             data['date_to'],

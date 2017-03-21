@@ -5,18 +5,149 @@
         <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
             <attribute name="t-call">x_report_timesheet_perdiem.ts_perdiem_report_external_layout_header</attribute>
         </xpath>
+        <xpath expr="//t[@t-call='report.external_layout_footer']" position="attributes">
+            <attribute name="t-call">x_report_timesheet_perdiem.ts_perdiem_report_external_layout_footer</attribute>
+        </xpath>
     </template>
 
     <template id="ts_perdiem_report_external_layout_header" inherit_id="report.external_layout_header" primary="True">
         <xpath expr="//div[@name='company_address']" position="replace">
-            <div></div>
+            <div>
+                <style>
+                    body {
+                        font-family:freeserif;
+                    }
+                    .employee_info {
+                        font-size:15px;
+                        font-weight: bold;
+                        padding: 3px;
+                    }
+
+                </style>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-8 col-xs-offset-2 text-center" >
+                        <span style="font-size:23px;">
+                            <b>ใบเบิกค่าเบี้ยเลี้ยง (ต่างจังหวัด)</b>
+                        </span>
+                    </div>
+                    <div class="col-xs-2 text-right" >
+                        <span style="font-size:8px;">
+                            FM-199/HR.<br/>
+                            แก้ไขครั้งที่ 2<br/>
+                            วันที่เริ่มใช้ 02/06/58<br/>
+                        </span>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <span class="col-xs-3 col-xs-offset-3 employee_info">
+                        ประจำเดือน  <u><i><t t-esc="emp['month']"/></i></u>
+                    </span>
+                    <span class="col-xs-3 employee_info">
+                        ปี พ.ศ.  <u><i><t t-esc="emp['year']"/></i></u>
+                    </span>
+                </div>
+                <div class="row text-center">
+                    <span class="col-xs-4 employee_info">
+                        ชื่อ-สกุล  <u><i><t t-esc="emp['emp']"/></i></u>
+                    </span>
+                    <span class="col-xs-4 employee_info">
+                        ตำแหน่ง  <u><i><t t-esc="emp['emp_job']"/></i></u>
+                    </span>
+                    <span class="col-xs-4 employee_info">
+                        ประจำจังหวัด  <u><t t-esc="emp['work_location']"/></u>
+                    </span>
+                </div>
+                <div class="row text-center">
+                    <span class="col-xs-4 employee_info">
+                        เลขที่บัญชี  <u><i>_________________</i></u>
+                    </span>
+                    <span class="col-xs-4 employee_info">
+                        สาขา  <u><i>_________________</i></u>
+                    </span>
+                    <span class="col-xs-4 employee_info">
+                        จังหวัด  <u><i>_________________</i></u>
+                    </span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="ts_perdiem_report_external_layout_footer" inherit_id="report.external_layout_footer" primary="True">
+        <xpath expr="//div[@class='text-center']" position="before">
+            <div class="text-center"
+                style=" color: black; font-weight: bold; font-size:11px;">
+                <!-- include CSS  -->
+                <style>
+                        body {
+                            font-family:freeserif;
+                        }
+                </style>
+                <div class="row zero_min_height">
+                        <div class="col-xs-12">
+                            <div style="border-bottom: 1px solid black;"></div>
+                        </div><!-- /.col-xs-12 -->
+                        <br/>
+                </div><!-- /.row zero_min_height -->
+                    <!-- Signature -->
+                <div class="row">
+                    <div class="col-xs-3 text-center" >
+                        <ul style="list-style-type: none;">
+                            <li>ผู้เบิก</li>
+                            <li><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li><t t-esc="emp['emp']"/></li>
+                            <li><t t-esc="emp['emp_job']"/></li>
+                            <li><t t-esc="emp['emp_mobile_phone']"/></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-3 text-center" >
+                        <ul style="list-style-type: none;">
+                            <li>หัวหน้างาน</li>
+                            <li><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li>วินัย ไพบูลย์กุลวงศ์</li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-3 text-center" >
+                        <ul style="list-style-type: none;">
+                            <li>ผู้อนุมัติ</li>
+                            <li><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li>ณัฐนัย อนันตรัมพร</li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-3 text-center" >
+                        <ul style="list-style-type: none;">
+                            <li>ผู้ตรวจสอบ</li>
+                            <li><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li>แผนกทรัพยากรบุคคล</li>
+                        </ul>
+                    </div>
+                </div><!-- /.row -->
+                <div class="row">
+                    <p>
+                        หมายเหตุ : การตรวจสอบเบี้ยเลี้ยงจะยึดบันทึกการลงเวลาและเอกสารบันทึกชี้แจ้งการไม่เข้า Office เป็นสำคัญ<br/>
+                        หากขาดเอกสารอย่างใดอย่างหนึ่งหรือไม่สมบูรณ์ บริษัทสงวนสิทธิ์ที่จะไม่พิจารณาเบี้ยเลี้ยงในวันนั้น
+                    </p>
+                </div>
+            </div>
         </xpath>
     </template>
 
 <template id="x_report_ts_perdiem_template">
     <t t-call="report.html_container">
-        <t t-call="x_report_timesheet_perdiem.ts_perdiem_report_external_layout">
-            <div class="page">
+        <t t-foreach="get_data_for_report" t-as="obj">
+        <t t-foreach="obj['data']" t-as="emp">
+            <t t-if="emp['sum']">
+                <t t-call="x_report_timesheet_perdiem.ts_perdiem_report_external_layout">
+
+                <div class="page">
                 <!-- include CSS  -->
                 <style>
                     /* --- Generic Restyling and Resets --- */
@@ -33,62 +164,46 @@
                     td {
                         padding: 3px !important;
                     }
+                    span.employee_info {
+                        font-size: 13px;
+                        font-weight: bold;
+                    }
                 </style>
-                <h3 class="text-center">Per Diem Timesheet Report</h3>
-                <t t-set="info" t-value="get_header_info"/>
-                <h5 class="text-center">
-                    From
-                    <u><b><t t-esc="info['start_date']"/></b></u> To
-                    <u><b><t t-esc="info['end_date']"/></b></u>
-                </h5>
-
-            <div class="row">
-                <table class="table table-bordered" style="table-layout:auto">
-                    <thead>
-                    </thead>
-                    <tbody>
-                        <t t-foreach="get_data_for_report" t-as="obj">
-                            <tr t-if="'employee_tag' in obj">
-                                <td colspan="3" class="col-xs-4" style="background-color:#bebebe">
-                                    <strong><t t-esc="obj['employee_tag']"/></strong>
-                                </td>
-                                <td class="col-xs-8" style="background-color:#bebebe">
-                                    <strong>Description</strong>
-                                </td>
-
+                <br/><br/>
+                <br/>
+                <div class="row">
+                    <table class="table table-bordered" style="table-layout:auto">
+                        <thead>
+                            <tr class="text-center" style="background-color: #a6a6a6;">
+                                <th class="text-center">วัน เดือน ปี</th>
+                                <th class="text-center">สถานที่ปฎิบัติงาน / ชื่อลูกค้า / ชื่องานโครงการ</th>
+                                <th class="text-center">จังหวัดทีไปปฎิบัติงาน</th>
+                                <th class="text-center">ใช้รถทะเบียน</th>
+                                <th class="text-center">เบี้ยเลี้ยง / วัน</th>
                             </tr>
-
-                            <t t-foreach="obj['data']" t-as="emp">
-                                <tr t-foreach="emp['display']" t-as="details">
-                                    <td class="col-xs-1"><t t-esc="emp['emp_barcode']"/></td>
-                                    <td class="col-xs-2"><t t-esc="emp['emp']"/></td>
-                                    &lt;td class="col-xs-1" style="background-color:
-                                    <t t-esc="details['color']"/>!important;"&gt;
-                                        <t t-esc="details['day']"/>
-                                    &lt;/td&gt;
-
-                                    &lt;td class="col-xs-8" style="background-color:
-                                    <t t-esc="details['color']"/>!important;"&gt;
-                                        <table class="col-xs-12">
-                                            <t t-foreach="details['description']" t-as="desc">
-                                                <t t-set="desc_split" t-value="desc.split('\/')"/>
-                                                <tr>
-                                                        <td class="col-xs-3" t-esc="desc_split[0]"></td>
-                                                        <td class="col-xs-9" t-esc="desc_split[1]"></td>
-                                                </tr>
-                                            </t>
-                                        </table>
-                                    &lt;/td&gt; <!--/.col-xs-8 -->
+                        </thead>
+                        <tbody>
+                            <t t-foreach="emp['display']" t-as="details">
+                                <tr t-if="details['description']">
+                                    <td class="col-xs-2"><t t-esc="details['date']"/></td>
+                                    <td class="col-xs-6"><t t-esc="details['description']"/></td>
+                                    <td class="col-xs-2"><t t-esc="details['province']"/></td>
+                                    <td class="col-xs-1"><t t-esc="details['vehicle']"/></td>
+                                    <td class="col-xs-1 text-right">200</td>
                                 </tr>
                             </t>
-
-                        </t>
-                    </tbody>
-                </table>
-            </div><!--/.row -->
-
-        </div><!--/.page -->
-        </t>
+                            <tr  style="background-color: #a6a6a6;">
+                                <td colspan='4'>รวมจำนวนเงิน (อักษร) (...........................)</td>
+                                <td><t t-esc="emp['sum']*200"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!--/.row -->
+                </div><!--/.page -->
+                </t> <!-- ./t-call -->
+            </t> <!-- ./t-if -->
+        </t> <!-- ./t-foreach -->
+        </t> <!-- ./t-foreach -->
     </t>
 </template>
 

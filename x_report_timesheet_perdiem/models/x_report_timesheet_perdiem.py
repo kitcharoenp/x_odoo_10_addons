@@ -13,8 +13,7 @@ class xReportTimesheetPerDiem(models.TransientModel):
     _description = 'Timesheet Per Diem Report'
 
     def _default_date_from(self):
-        user = self.env['res.users'].browse(self.env.uid)
-        r = user.company_id and user.company_id.timesheet_range or 'month'
+        r = 'month'
         if r == 'month':
             return time.strftime('%Y-%m-01')
         elif r == 'week':
@@ -25,8 +24,7 @@ class xReportTimesheetPerDiem(models.TransientModel):
         return fields.date.context_today(self)
 
     def _default_date_to(self):
-        user = self.env['res.users'].browse(self.env.uid)
-        r = user.company_id and user.company_id.timesheet_range or 'month'
+        r = 'month'
         if r == 'month':
             return (datetime.today() + relativedelta(
                     months=+1, day=1, days=-1)).strftime('%Y-%m-%d')

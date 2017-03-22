@@ -113,13 +113,18 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                         order="work_location asc, barcode asc"):
                     res[len(res)-1]['data'].append({
                         'emp': emp.name,
-                        'emp_signature': emp.x_signature_img,
                         'emp_job': emp.job_id.name,
+                        'emp_department': emp.department_id.name,
                         'emp_mobile_phone': emp.mobile_phone,
                         'emp_barcode': emp.barcode,
+                        'emp_signature': emp.x_signature_img,
                         'work_location': emp.work_location,
-                        'month': fields.Date.from_string(data['date_to']).strftime('%B'),
-                        'year': fields.Date.from_string(data['date_to']).strftime('%Y'),
+                        'emp_bank_account_id': emp.bank_account_id.acc_number,
+                        'emp_bank_account': emp.bank_account_id.bank_name,
+                        'month': fields.Date.from_string(
+                                    data['date_to']).strftime('%B'),
+                        'year': fields.Date.from_string(
+                                    data['date_to']).strftime('%Y'),
                         # call method to get the timesheet line
                         'display': self._get_timesheet_summary(
                             data['date_from'],

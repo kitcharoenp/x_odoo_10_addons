@@ -153,7 +153,7 @@
                                         </td>
                                         <!-- description -->
                                         <td class="col-xs-5" >
-                                            <span t-field="l.x_notes"/>
+                                            <span t-esc="l.x_notes"/>
                                             <!-- comment due to exceed page
                                             <span><u><span t-field="l.project_id"/></u>: </span>
                                             <span> ;</span>
@@ -411,7 +411,7 @@
                         <li>
                             <span t-field="o.reviewer_id.x_signature_img"
                                 t-options='{"widget": "image", "class": "center-block", "max_width": 130}'/>
-                            </li>
+                        </li>
                     </t>
                     <t t-else="">
                         <li><br/></li>

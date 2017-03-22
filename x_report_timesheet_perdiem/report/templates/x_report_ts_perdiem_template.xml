@@ -40,11 +40,13 @@
                     </div>
                 </div>
                 <div class="row text-center">
-                    <span class="col-xs-3 col-xs-offset-3 employee_info">
-                        ประจำเดือน  <u><i><t t-esc="emp['month']"/></i></u>
+                    <span class="col-xs-2 col-xs-offset-4 employee_info">
+                        ประจำเดือน
+                        <u><i><t t-esc="emp['month']"/></i></u>
                     </span>
-                    <span class="col-xs-3 employee_info">
-                        ปี พ.ศ.  <u><i><t t-esc="emp['year']"/></i></u>
+                    <span class="col-xs-2 employee_info">
+                        ปี พ.ศ.
+                        <u><i><t t-esc="emp['year']"/></i></u>
                     </span>
                 </div>
                 <div class="row text-center">
@@ -52,21 +54,21 @@
                         ชื่อ-สกุล  <u><i><t t-esc="emp['emp']"/></i></u>
                     </span>
                     <span class="col-xs-4 employee_info">
-                        ตำแหน่ง  <u><i><t t-esc="emp['emp_job']"/></i></u>
+                        หน่วยงาน <u><i><t t-esc="emp['emp_department']"/></i></u>
                     </span>
                     <span class="col-xs-4 employee_info">
-                        ประจำจังหวัด  <u><t t-esc="emp['work_location']"/></u>
+                        ประจำจังหวัด
+                        <u><i><t t-esc="emp['work_location']"/></i></u>
                     </span>
                 </div>
                 <div class="row text-center">
-                    <span class="col-xs-4 employee_info">
-                        เลขที่บัญชี  <u><i>_________________</i></u>
+                    <span class="col-xs-4 col-xs-offset-2 employee_info">
+                        ธนาคาร (สาขา)
+                        <u><i><t t-esc="emp['emp_bank_account']"/></i></u>
                     </span>
                     <span class="col-xs-4 employee_info">
-                        สาขา  <u><i>_________________</i></u>
-                    </span>
-                    <span class="col-xs-4 employee_info">
-                        จังหวัด  <u><i>_________________</i></u>
+                        เลขที่บัญชี
+                        <u><i><t t-esc="emp['emp_bank_account_id']"/></i></u>
                     </span>
                 </div>
             </div>
@@ -94,8 +96,11 @@
                     <div class="col-xs-3 text-center" >
                         <ul style="list-style-type: none;">
                             <li>ผู้เบิก</li>
-                            <li><br/></li>
-                            <li>________________</li>
+                            <li>
+                                <img t-if="emp['emp_signature']"
+                                    t-att-src="'data:image/png;base64,%s' % (emp['emp_signature'],)"
+                                    style="max-height:30pt;max-width:90%"/>
+                            </li>
                             <li>______/_____/_____</li>
                             <li><t t-esc="emp['emp']"/></li>
                             <li><t t-esc="emp['emp_job']"/></li>
@@ -105,7 +110,7 @@
                     <div class="col-xs-3 text-center" >
                         <ul style="list-style-type: none;">
                             <li>หัวหน้างาน</li>
-                            <li><br/></li>
+                            <li><br/><br/><br/></li>
                             <li>________________</li>
                             <li>______/_____/_____</li>
                             <li>วินัย ไพบูลย์กุลวงศ์</li>
@@ -114,7 +119,7 @@
                     <div class="col-xs-3 text-center" >
                         <ul style="list-style-type: none;">
                             <li>ผู้อนุมัติ</li>
-                            <li><br/></li>
+                            <li><br/><br/><br/></li>
                             <li>________________</li>
                             <li>______/_____/_____</li>
                             <li>ณัฐนัย อนันตรัมพร</li>
@@ -123,7 +128,7 @@
                     <div class="col-xs-3 text-center" >
                         <ul style="list-style-type: none;">
                             <li>ผู้ตรวจสอบ</li>
-                            <li><br/></li>
+                            <li><br/><br/><br/></li>
                             <li>________________</li>
                             <li>______/_____/_____</li>
                             <li>แผนกทรัพยากรบุคคล</li>
@@ -193,8 +198,15 @@
                                 </tr>
                             </t>
                             <tr  style="background-color: #a6a6a6;">
-                                <td colspan='4'>รวมจำนวนเงิน (อักษร) (...........................)</td>
-                                <td><t t-esc="emp['sum']*200"/></td>
+                                <td>
+                                    รวมจำนวนเงิน (อักษร)
+                                </td>
+                                <td colspan='3' class="text-center">
+                                    (..............................................................................................................)
+                                </td>
+                                <td class="text-right">
+                                    <t t-esc="emp['sum']*200"/>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

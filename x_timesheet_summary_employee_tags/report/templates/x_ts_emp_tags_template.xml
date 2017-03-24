@@ -90,7 +90,7 @@
                             </tr>
                             <tr t-foreach="obj['data']" t-as="emp">
                                 <td><t t-esc="emp['emp_barcode']"/></td>
-                                <td><t t-esc="emp['emp']"/></td>
+                                <td class="col-xs-2"><t t-esc="emp['emp']"/></td>
                                 <td class="col-xs-1"><t t-esc="emp['work_location']"/></td>
                                 <t t-foreach="emp['display']" t-as="details">
                                     &lt;td style="background-color:

@@ -73,7 +73,7 @@ class xTimesheetForPayrollReportUtil(models.AbstractModel):
                 ('x_start_date', '<=', str(end_date)),
                 ('x_end_date', '>=', str(start_date))])
 
-        if export_attendance:
+        if (export_attendance and approved) or approved:
             analytic_lines = analytic_lines.filtered(
                                lambda a_line: a_line.sheet_id.state == 'done')
         # else:

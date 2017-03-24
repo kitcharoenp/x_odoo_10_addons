@@ -49,9 +49,11 @@ class xReportTimesheetEntry(models.TransientModel):
         'hr.employee.category',
         string='Employee Tags')
     is_overtime = fields.Boolean(
-                    string='Overtime')
+        string='Overtime')
     approved = fields.Boolean(
-                    string='Approved')
+        help="If True show only Approved Timesheet, \
+                Else show All Timesheet",
+        string='Approved')
     export_attendance = fields.Boolean(
                     string='Export Attendance')
 

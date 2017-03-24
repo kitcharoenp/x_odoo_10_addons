@@ -12,7 +12,7 @@
                     </group>
                     <group>
                         <field name="is_overtime" invisible="1" />
-                        <field name="approved" invisible="1"/>
+                        <field name="approved"/>
                     </group>
                 </group>
                 <group>

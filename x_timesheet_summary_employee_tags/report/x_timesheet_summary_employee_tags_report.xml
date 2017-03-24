@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <record id="timesheet_employee_tags_paperformat" model="report.paperformat">
+        <field name="name">Timesheet by Employee Tags</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="header_line" eval="False" />
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="dpi">90</field>
+    </record>
     <report
         id="x_timesheet_summary_employee_tags_report"
         string="Employee Tags Timesheet Summary"
@@ -8,5 +18,6 @@
         name="x_timesheet_summary_employee_tags.x_ts_emp_tags_template"
         file="x_timesheet_summary_employee_tags.x_ts_emp_tags_template"
         menu="False"
+        paperformat="x_timesheet_summary_employee_tags.timesheet_employee_tags_paperformat"
     />
 </odoo>

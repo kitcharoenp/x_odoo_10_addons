@@ -34,7 +34,7 @@
                         padding: 3px !important;
                     }
                 </style>
-                <h3 class="text-center">Employee Tags Timesheet Summary</h3>
+                <h3 class="text-center">Timesheet Summary by Employee Tags</h3>
                 <t t-set="info" t-value="get_header_info"/>
                 <h5 class="text-center">
                     From
@@ -53,10 +53,10 @@
                                 <t t-esc="month['month_name']"/>
                                 &lt;/th&gt;
                             </t>
-                            <th class="text-center col-xs-1">Sum</th>
+                            <th class="text-center">Sum</th>
                         </tr>
                         <tr>
-                            <td colspan="3" rowspan="2" class="col-xs-4" style="vertical-align: middle;">
+                            <td colspan="3" rowspan="2" style="vertical-align: middle;">
                                 <strong>Tags / Employees</strong>
                             </td>
                             <t t-foreach="get_day" t-as="day">
@@ -65,7 +65,7 @@
                                 <t t-esc="day['day_str']"/>
                                 &lt;/td&gt;
                             </t>
-                            <td class="text-center col-xs-1"></td>
+                            <td class="text-center"></td>
                         </tr>
                         <tr>
                             <t t-foreach="get_day" t-as="day">
@@ -74,13 +74,13 @@
                                 <t t-esc="day['day']"/>
                                 &lt;/td&gt;
                             </t>
-                            <td class="text-center col-xs-1">(Hrs.)</td>
+                            <td class="text-center">(Hrs.)</td>
                         </tr>
                     </thead>
                     <tbody>
                         <t t-foreach="get_data_for_report" t-as="obj">
                             <tr t-if="'employee_tag' in obj">
-                                <td colspan="3" class="col-xs-4" style="background-color:#bebebe">
+                                <td colspan="3" style="background-color:#bebebe">
                                     <strong><t t-esc="obj['employee_tag']"/></strong>
                                 </td>
                                 <t t-foreach="obj['color']" t-as="c">
@@ -89,8 +89,8 @@
                                 <td/>
                             </tr>
                             <tr t-foreach="obj['data']" t-as="emp">
-                                <td class="col-xs-1"><t t-esc="emp['emp_barcode']"/></td>
-                                <td class="col-xs-2"><t t-esc="emp['emp']"/></td>
+                                <td><t t-esc="emp['emp_barcode']"/></td>
+                                <td><t t-esc="emp['emp']"/></td>
                                 <td class="col-xs-1"><t t-esc="emp['work_location']"/></td>
                                 <t t-foreach="emp['display']" t-as="details">
                                     &lt;td style="background-color:
@@ -98,7 +98,7 @@
                                     <t t-esc="details['type']"/>
                                     &lt;/td&gt;
                                 </t>
-                                <td class="text-right col-xs-1">
+                                <td class="text-right">
                                 <!--
                                     <strong><span t-esc="'%02d:%02d' % (int(str(emp['sum']).split('.')[0]), int(float(str('%.2f' % emp['sum']).split('.')[1])/100*60))" /></strong>
                                 -->
@@ -120,15 +120,15 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="text-center"><b>/</b></td>
+                                <td class="text-center" style="background-color:#A9F5BC"><b>/</b></td>
                                 <td>Working</td>
                             </tr>
                             <tr>
-                                <td class="text-center"><b>O</b></td>
+                                <td class="text-center" style="background-color:#FAAC58"><b>O</b></td>
                                 <td>Overtime</td>
                             </tr>
                             <tr>
-                                <td class="text-center"><b>X</b></td>
+                                <td class="text-center" style="background-color:#F78181"><b>X</b></td>
                                 <td>Working+Overtime</td>
                             </tr>
                         </tbody>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="x_hr_holidays assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/x_hr_holidays/static/src/js/x_web_calendar.js"></script>
+        </xpath>
+    </template>
+</odoo>

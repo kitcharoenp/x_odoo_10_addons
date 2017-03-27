@@ -13,13 +13,13 @@
         action="hr_holidays.open_allocation_holidays"
         sequence="40"/>
 
-        <!-- Holidays: Allocation Request Approve Menu-->
-        <!-- Show allocation request approve only user in Holiday Manager group-->
+    <!-- Holidays: Allocation Request Approve Menu-->
+    <!-- Show allocation request approve only user in Holiday Manager group-->
     <menuitem
         id="hr_holidays.menu_open_department_leave_allocation_approve"
-        groups="hr_holidays.group_hr_holidays_manager"
-        name="Leaves Allocation"
         parent="hr_holidays.menu_hr_holidays_approvals"
+        name="Leaves Allocation"
+        groups="hr_holidays.group_hr_holidays_manager"
         action="hr_holidays.open_department_holidays_allocation_approve"
         sequence="2"/>
 

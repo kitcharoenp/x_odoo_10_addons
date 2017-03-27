@@ -16,6 +16,7 @@
         'views/x_hr_holidays_form_views.xml',
         'views/x_hr_holidays_filter_view.xml',
         # 'views/x_web_calendar_templates.xml',
+        'actions/x_leave_request_to_approve_act_window.xml',
     ],
     'demo': [],
     'installable': True,

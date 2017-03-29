@@ -112,3 +112,14 @@ class Holidays(models.Model):
         res = super(Holidays, self).action_refuse()
         self._remove_ts_analytic_line()
         return res
+
+    @api.multi
+    def name_get(self):
+        res = super(Holidays, self).name_get()
+        res = []
+        for leave in self:
+            res.append((leave.id, _("%s on %s : %.2f Hours") % (
+                leave.employee_id.name or leave.category_id.name,
+                leave.holiday_status_id.name,
+                leave.number_of_days_temp * 8)))
+        return res

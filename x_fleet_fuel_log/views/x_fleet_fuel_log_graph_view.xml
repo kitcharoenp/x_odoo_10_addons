@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='x_fleet_fuel_log_graph_view' model='ir.ui.view'>
+        <field name="name">Fleet fuel log graph</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id"
+            ref="fleet.fleet_vehicle_log_fuel_view_graph"/>
+        <field name="arch" type="xml">
+            <!-- -->
+            <xpath expr="//field[@name='cost_amount']" position="replace">
+                <field name="x_fuel_consumption" type="measure"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

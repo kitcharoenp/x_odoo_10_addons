@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='x_fleet_fuel_log_tree_view' model='ir.ui.view'>
+        <field name="name">Fleet fuel log tree</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id"
+            ref="fleet.fleet_vehicle_log_fuel_view_tree"/>
+        <field name="arch" type="xml">
+            <!-- -->
+            <xpath expr="//field[@name='liter']" position="after">
+                <field name="x_fuel_consumption"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='x_fleet_fuel_log_form_view' model='ir.ui.view'>
+        <field name="name">Fleet fuel log form</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id"
+            ref="fleet.fleet_vehicle_log_fuel_view_form"/>
+        <field name="arch" type="xml">
+            <!-- add fuel cousumption after vehicle-->
+            <xpath expr="//field[@name='vehicle_id']" position="after">
+                <label for="x_fuel_consumption"/>
+                <div class="o_row">
+                    <field name="x_fuel_consumption"/><span>Kilometers/Liter</span>
+                </div>
+            </xpath>
+
+            <!-- add last refill odometer -->
+            <xpath expr="//form/sheet/group[2]/group[1]" position="replace">
+                <group string="Odometer Details">
+
+                    <label for="x_last_refill_odometer"/>
+                    <div class="o_row">
+                        <field name="x_last_refill_odometer"/><span>Kilometers</span>
+                    </div>
+
+                    <label for="odometer"/>
+                    <div class="o_row">
+                        <field name="odometer"/>
+                        <field name="odometer_unit"/>
+                    </div>
+                </group>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

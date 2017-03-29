@@ -6,7 +6,11 @@
     'license': 'AGPL-3',
     'category': 'Human Resource',
     'description': """
-        Timesheet Summary by Employee Tags""",
+Timesheet Summary by Employee Tags :
+-------------
+    * report timesheet line base on Employee tags
+    * show leave timesheet line on report
+        """,
     'depends': ['x_hr_timesheet_sheet', 'report'],
     'summary': 'Timesheet Summary by Employee Tags',
     'data': [

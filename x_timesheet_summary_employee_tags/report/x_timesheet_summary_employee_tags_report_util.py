@@ -71,7 +71,10 @@ class xTimesheetSummaryEmployeeTagsReportUtil(models.AbstractModel):
 
             for index in range(0, ((date_to - date_from).days + 1)):
                 if date_from >= start_date and date_from <= end_date:
-                    if line.is_overtime:
+                    if line.x_is_leave:
+                        res[(date_from-start_date).days]['color'] = '#81BCF7'
+                        res[(date_from-start_date).days]['type'] = 'L'
+                    elif line.is_overtime:
                         if (res[(date_from-start_date).days]['type'] == '/'):
                             res[(date_from-start_date).days]['color'] = '#F78181'
                             res[(date_from-start_date).days]['type'] = 'X'

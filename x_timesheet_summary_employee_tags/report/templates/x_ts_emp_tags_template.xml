@@ -131,6 +131,10 @@
                                 <td class="text-center" style="background-color:#F78181"><b>X</b></td>
                                 <td>Working+Overtime</td>
                             </tr>
+                            <tr>
+                                <td class="text-center" style="background-color:#81BCF7"><b>L</b></td>
+                                <td>Leave</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

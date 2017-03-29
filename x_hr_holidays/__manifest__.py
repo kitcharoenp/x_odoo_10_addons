@@ -7,8 +7,13 @@
     'version': '1.0',
     'sequence': 125,
     'description': """
-        Enhancement HR Holidays.""",
-    'depends': ['hr_holidays', 'web_calendar'],
+Enhancement HR Holidays :
+-------------
+    * created a related timesheet line when leave is approved
+    * deleted a related timesheet line when refuse the leave
+    * computed can approve leave base on first/second approval
+        """,
+    'depends': ['hr_holidays', 'x_hr_timesheet_sheet'],
     'summary': 'HR Holidays',
     'data': [
         'views/x_hr_holidays_menu_views.xml',

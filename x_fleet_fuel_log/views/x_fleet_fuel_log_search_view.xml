@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='x_fleet_fuel_log_search_view' model='ir.ui.view'>
+        <field name="name">Fleet fuel log search</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id"
+            ref="fleet.fleet_vehicle_log_fuel_view_search"/>
+        <field name="arch" type="xml">
+            <!-- -->
+            <xpath expr="//filter[@name='groupby_vehicle']" position="after">
+                <filter name="groupby_date" context="{'group_by': 'date:month'}" string="Month"/>
+                <filter name="groupby_year" context="{'group_by': 'date:year'}" string="Year"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

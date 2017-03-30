@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='fleet.fleet_vehicle_log_fuel_action' model='ir.actions.act_window'>
+        <field name="view_mode">tree,form,graph,pivot</field>
+    </record>
+</odoo>

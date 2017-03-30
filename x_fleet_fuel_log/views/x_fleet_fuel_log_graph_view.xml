@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <!-- -->
             <xpath expr="//field[@name='cost_amount']" position="replace">
+                <field name="date" interval="year"/>
                 <field name="x_fuel_consumption" type="measure"/>
             </xpath>
 

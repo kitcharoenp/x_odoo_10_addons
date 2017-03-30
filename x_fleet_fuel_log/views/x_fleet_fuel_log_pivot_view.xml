@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='x_fleet_fuel_log_pivot_view' model='ir.ui.view'>
+        <field name="name">Fleet fuel log pivot</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="arch" type="xml">
+            <pivot string="Vehicles Fuel Log">
+                <field name="vehicle_id" type="row"/>
+                <field name="date" interval="month" type="col"/>
+                <field name="x_fuel_consumption" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+</odoo>

@@ -8,6 +8,7 @@ class FleetVehicleLogFuel(models.Model):
 
     x_fuel_consumption = fields.Float(
         compute="_compute_fuel_consumption",
+        group_operator="avg",
         string="Fuel Consumption",
         store="True")
     x_last_refill_odometer = fields.Float(string="Last Refill Odometer")

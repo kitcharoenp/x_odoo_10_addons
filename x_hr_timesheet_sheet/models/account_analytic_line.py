@@ -189,10 +189,11 @@ class AccountAnalyticLine(models.Model):
 
     def _check_start_end_odometer(self):
         for record in self:
-            if record.x_odometer > record.y_odometer:
-                raise ValidationError(_(
-                    "the Odometer Start value must been less \
-                    than Odometer End value (%s).") % record.x_notes)
+            if record.x_vehicle_id:
+                if record.x_odometer >= record.y_odometer:
+                    raise ValidationError(_(
+                        "the Odometer Start value must been less \
+                        than Odometer End value (%s).") % record.x_notes)
 
     def _check_overlap_odometer(self):
         odometer_obj = self.env['fleet.vehicle.odometer']
@@ -231,7 +232,7 @@ class AccountAnalyticLine(models.Model):
             if vehicle_odometer:
                 self.x_odometer_id = vehicle_odometer
             else:
-                self._check_overlap_odometer()
+                # self._check_overlap_odometer()
                 if not self.x_odometer_id and record.x_vehicle_id.id:
                     odometer = odometer_obj.create({
                         'value': record.x_odometer,

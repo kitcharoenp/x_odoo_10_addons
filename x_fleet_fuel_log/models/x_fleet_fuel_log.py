@@ -31,6 +31,3 @@ class FleetVehicleLogFuel(models.Model):
     @api.onchange('vehicle_id')
     def _onchange_vehicle(self):
         super(FleetVehicleLogFuel, self)._onchange_vehicle()
-        if self.vehicle_id:
-            x_last_refuel_odometer = self._get_last_refuel_odometer()
-            self.x_last_refuel_odometer = x_last_refuel_odometer

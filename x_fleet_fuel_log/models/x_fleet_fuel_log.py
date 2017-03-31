@@ -21,13 +21,14 @@ class FleetVehicleLogFuel(models.Model):
             if fuel_log.liter > 0:
                 fuel_log.x_fuel_consumption = distance / fuel_log.liter
 
-    def _get_last_refuel_odometer(self):
-        vehicle_log_fuel = self.env['fleet.vehicle.log.fuel'].search([
-                ('vehicle_id', '=', self.vehicle_id.id)],
-                order="odometer desc",
-                limit=1)
-        return vehicle_log_fuel.odometer
-
     @api.onchange('vehicle_id')
     def _onchange_vehicle(self):
         super(FleetVehicleLogFuel, self)._onchange_vehicle()
+        for record in self:
+            if record.vehicle_id:
+                vehicle_cost = self.env['fleet.vehicle.cost'].search([
+                    ('vehicle_id', '=', record.vehicle_id.id),
+                    ('cost_type', '=', 'fuel')],
+                    order="id desc",
+                    limit=1)
+                record.x_last_refuel_odometer = vehicle_cost.odometer_id.value

@@ -14,13 +14,13 @@
                 </div>
             </xpath>
 
-            <!-- add last refill odometer -->
+            <!-- add last refuel odometer -->
             <xpath expr="//form/sheet/group[2]/group[1]" position="replace">
                 <group string="Odometer Details">
 
-                    <label for="x_last_refill_odometer"/>
+                    <label for="x_last_refuel_odometer"/>
                     <div class="o_row">
-                        <field name="x_last_refill_odometer"/><span>Kilometers</span>
+                        <field name="x_last_refuel_odometer"/><span>Kilometers</span>
                     </div>
 
                     <label for="odometer"/>

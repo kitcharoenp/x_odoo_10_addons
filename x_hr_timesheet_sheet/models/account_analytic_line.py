@@ -190,7 +190,7 @@ class AccountAnalyticLine(models.Model):
     def _check_start_end_odometer(self):
         for record in self:
             if record.x_vehicle_id:
-                if record.x_odometer >= record.y_odometer:
+                if record.x_odometer > record.y_odometer:
                     raise ValidationError(_(
                         "the Odometer Start value must been less \
                         than Odometer End value (%s).") % record.x_notes)

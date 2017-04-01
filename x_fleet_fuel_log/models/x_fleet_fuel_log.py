@@ -12,6 +12,17 @@ class FleetVehicleLogFuel(models.Model):
         string="Fuel Consumption",
         store="True")
     x_last_refuel_odometer = fields.Float(string="Last Refuel Odometer")
+    x_fuel_type = fields.Selection([
+        ('gasoline', 'Gasoline'),
+        ('diesel', 'Diesel'),
+        ('ngv', 'NGV'),
+        ('lpg', 'LPG')],
+        string='Fuel Type',
+        help='Fuel Used by the vehicle')
+    x_payment_type = fields.Selection([
+        ('fleet_card', 'Fleet Card'),
+        ('cash', 'Cash')],
+        string='Payment Type')
 
     @api.multi
     @api.depends('liter', 'odometer', 'x_last_refuel_odometer')

@@ -14,6 +14,10 @@
                 </div>
             </xpath>
 
+            <xpath expr="//field[@name='amount']" position="after">
+                <field name="x_payment_type"/>
+            </xpath>
+
             <!-- add last refuel odometer -->
             <xpath expr="//form/sheet/group[2]/group[1]" position="replace">
                 <group string="Odometer Details">

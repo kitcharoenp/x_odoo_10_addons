@@ -22,7 +22,8 @@ class FleetVehicleLogFuel(models.Model):
     x_payment_type = fields.Selection([
         ('fleet_card', 'Fleet Card'),
         ('cash', 'Cash')],
-        string='Payment Type')
+        string='Payment Type',
+        help='Payment Type (Cash or Fleet Card)')
 
     @api.multi
     @api.depends('liter', 'odometer', 'x_last_refuel_odometer')

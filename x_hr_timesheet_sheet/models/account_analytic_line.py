@@ -64,22 +64,25 @@ class AccountAnalyticLine(models.Model):
         """ auto change 'date' onchange of 'x_start_date """
         for ts_line in self:
             if ts_line.x_start_date:
-                start_datetime = ts_line.x_start_date
-                timezone = pytz.timezone(self._context.get('tz') or 'UTC')
-
-                attendance_dt = datetime.strptime(
-                    start_datetime, DEFAULT_SERVER_DATETIME_FORMAT)
-                att_tz_dt = pytz.utc.localize(attendance_dt)
-                att_tz_dt = att_tz_dt.astimezone(timezone)
-                att_tz_date_str = datetime.strftime(
-                    att_tz_dt, DEFAULT_SERVER_DATE_FORMAT)
-                ts_line.date = att_tz_date_str    
+                st_datetime = fields.Datetime.from_string(
+                    ts_line.x_start_date)
+                # autocomplete  date from start date
+                st_date_tz = fields.Datetime.context_timestamp(
+                                self, st_datetime).date()
+                ts_line.date = st_date_tz
 
     @api.onchange('x_notes')
     def _onchange_x_notes(self):
         for ts_line in self:
             if ts_line.x_notes:
-                ts_line.name = ts_line.user_id.name + '/' + ts_line.x_start_date
+                st_datetime = fields.Datetime.from_string(
+                    ts_line.x_start_date)
+                # autocomplete name from start date
+                st_datetime_tz = fields.Datetime.context_timestamp(
+                                self, st_datetime)
+                string_st_dt_tz = fields.Datetime.to_string(st_datetime_tz)
+                ts_line.name = ts_line.user_id.name + '/' + string_st_dt_tz
+
 
     @api.constrains('x_start_date', 'x_end_date')
     def _check_validity_x_start_date_x_end_date(self):

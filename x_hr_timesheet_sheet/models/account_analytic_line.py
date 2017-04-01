@@ -59,22 +59,6 @@ class AccountAnalyticLine(models.Model):
         "res.country.state",
         string='State')
 
-    @api.onchange('x_start_date')
-    def _compute_date_from_x_start_date(self):
-        """ auto change 'date' onchange of 'x_start_date """
-        for ts_line in self:
-            if ts_line.x_start_date:
-                start_datetime = ts_line.x_start_date
-                timezone = pytz.timezone(self._context.get('tz') or 'UTC')
-
-                attendance_dt = datetime.strptime(
-                    start_datetime, DEFAULT_SERVER_DATETIME_FORMAT)
-                att_tz_dt = pytz.utc.localize(attendance_dt)
-                att_tz_dt = att_tz_dt.astimezone(timezone)
-                att_tz_date_str = datetime.strftime(
-                    att_tz_dt, DEFAULT_SERVER_DATE_FORMAT)
-                ts_line.date = att_tz_date_str
-
     @api.constrains('x_start_date', 'x_end_date')
     def _check_validity_x_start_date_x_end_date(self):
         for ts_line in self:
@@ -95,12 +79,6 @@ class AccountAnalyticLine(models.Model):
                     raise ValidationError(_('You can not have 2 timesheet line that \
                         overlaps on same day!'))
 
-    @api.onchange('x_notes')
-    def _onchange_x_notes(self):
-        for ts_line in self:
-            if ts_line.x_notes:
-                ts_line.name = ts_line.user_id.name + '/' + ts_line.x_start_date
-
     @api.onchange('unit_amount')
     def _onchange_unit_amount(self):
         for ts_line in self:
@@ -115,6 +93,17 @@ class AccountAnalyticLine(models.Model):
             if ts_line.x_start_date:
                 st_datetime = fields.Datetime.from_string(
                     ts_line.x_start_date)
+                # autocomplete  date from start date
+                st_date_tz = fields.Datetime.context_timestamp(
+                                self, st_datetime).date()
+                ts_line.date = st_date_tz
+
+                # autocomplete name from start date
+                st_datetime_tz = fields.Datetime.context_timestamp(
+                                self, st_datetime)
+                string_st_dt_tz = fields.Datetime.to_string(st_datetime_tz)
+                ts_line.name = ts_line.user_id.name + '/' + string_st_dt_tz
+
                 en_datetime = fields.Datetime.from_string(
                     ts_line.x_end_date)
                 diff = en_datetime - st_datetime

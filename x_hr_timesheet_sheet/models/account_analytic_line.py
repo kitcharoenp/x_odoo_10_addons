@@ -59,6 +59,28 @@ class AccountAnalyticLine(models.Model):
         "res.country.state",
         string='State')
 
+    @api.onchange('x_start_date')
+    def _compute_date_from_x_start_date(self):
+        """ auto change 'date' onchange of 'x_start_date """
+        for ts_line in self:
+            if ts_line.x_start_date:
+                start_datetime = ts_line.x_start_date
+                timezone = pytz.timezone(self._context.get('tz') or 'UTC')
+
+                attendance_dt = datetime.strptime(
+                    start_datetime, DEFAULT_SERVER_DATETIME_FORMAT)
+                att_tz_dt = pytz.utc.localize(attendance_dt)
+                att_tz_dt = att_tz_dt.astimezone(timezone)
+                att_tz_date_str = datetime.strftime(
+                    att_tz_dt, DEFAULT_SERVER_DATE_FORMAT)
+                ts_line.date = att_tz_date_str    
+
+    @api.onchange('x_notes')
+    def _onchange_x_notes(self):
+        for ts_line in self:
+            if ts_line.x_notes:
+                ts_line.name = ts_line.user_id.name + '/' + ts_line.x_start_date
+
     @api.constrains('x_start_date', 'x_end_date')
     def _check_validity_x_start_date_x_end_date(self):
         for ts_line in self:

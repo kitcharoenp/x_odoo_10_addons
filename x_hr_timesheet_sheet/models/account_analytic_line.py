@@ -243,3 +243,13 @@ class AccountAnalyticLine(models.Model):
                         'x_driver_id': employee_id or False,
                         })
                     self.x_odometer_id = odometer
+
+    @api.onchange('x_vehicle_id')
+    def _onchange_vehicle(self):
+        for record in self:
+            if record.x_vehicle_id:
+                vehicle_odometer = self.env['fleet.vehicle.odometer'].search([
+                    ('vehicle_id', '=', record.x_vehicle_id.id)],
+                    order="y_odometer desc, value desc",
+                    limit=1)
+                record.x_odometer = vehicle_odometer.y_odometer

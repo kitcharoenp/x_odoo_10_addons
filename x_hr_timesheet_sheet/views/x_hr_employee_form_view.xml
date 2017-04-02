@@ -6,6 +6,11 @@
         <field name="inherit_id"
             ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
+            <!-- append Administrator, State field after Coach -->
+            <xpath expr="//field[@name='coach_id']" position="after">
+                <field name="x_administrator_id" />
+                <field name="x_state_id" />
+            </xpath>
             <!-- Other Information tab'-->
             <xpath expr="//form/sheet/notebook/page[3]" position="after">
                 <page string="Other Information">

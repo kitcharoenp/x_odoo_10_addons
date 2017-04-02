@@ -9,6 +9,12 @@ class HrEmployee(models.Model):
     x_signature_img = fields.Binary(
         string="Signature Image",
         attachment=True)
+    x_administrator_id = fields.Many2one(
+        'hr.employee',
+        string='Administrator')
+    x_state_id = fields.Many2one(
+        "res.country.state",
+        string='State')
 
     @api.model
     def create(self, vals):

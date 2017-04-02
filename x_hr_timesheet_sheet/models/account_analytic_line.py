@@ -227,36 +227,35 @@ class AccountAnalyticLine(models.Model):
         odometer_obj = self.env['fleet.vehicle.odometer']
         for record in self:
             self._check_start_end_odometer()
-            # domain for search duplicate odometer
-            domain = [
-                    ('value', '=', record.x_odometer),
-                    ('y_odometer', '=', record.y_odometer),
-                    ('vehicle_id', '=', record.x_vehicle_id.id),
-                    ('id', '!=', record.x_odometer_id.id)]
-            vehicle_odometer = odometer_obj.search(
-                        domain, limit=1, order='value desc')
             # Search employee_id from user_id
             employee = self.env['hr.employee'].search(
                     [('user_id', '=', record.user_id.id)], limit=1)
             if employee:
                 employee_id = employee and employee[0].id
 
-            # if not duplicate odometer then create the new one with validate
-            # overlap else update exist
-            if vehicle_odometer:
-                self.x_odometer_id = vehicle_odometer
-            else:
-                # self._check_overlap_odometer()
-                if not self.x_odometer_id and record.x_vehicle_id.id:
+            # self._check_overlap_odometer()
+            if record.x_vehicle_id.id:
+                if not record.x_odometer_id:
                     odometer = odometer_obj.create({
                         'value': record.x_odometer,
                         'y_odometer': record.y_odometer,
-                        'date': record.date or fields.Date.context_today(record),
+                        'date': record.date or fields.Date.context_today(
+                                                    record),
                         'vehicle_id': record.x_vehicle_id.id,
                         'x_description': record.x_notes,
                         'x_driver_id': employee_id or False,
                         })
-                    self.x_odometer_id = odometer
+                    record.x_odometer_id = odometer
+                else:
+                    record.x_odometer_id.update({
+                        'value': record.x_odometer,
+                        'y_odometer': record.y_odometer,
+                        'date': record.date or fields.Date.context_today(
+                                                    record),
+                        'vehicle_id': record.x_vehicle_id.id,
+                        'x_description': record.x_notes,
+                        'x_driver_id': employee_id or False,
+                        })
 
     @api.onchange('x_vehicle_id')
     def _onchange_vehicle(self):
@@ -264,6 +263,7 @@ class AccountAnalyticLine(models.Model):
             if record.x_vehicle_id:
                 vehicle_odometer = self.env['fleet.vehicle.odometer'].search([
                     ('vehicle_id', '=', record.x_vehicle_id.id)],
-                    order="y_odometer desc, value desc",
+                    order="y_odometer desc, id desc",
                     limit=1)
-                record.x_odometer = vehicle_odometer.y_odometer
+                if vehicle_odometer.y_odometer:
+                    record.x_odometer = vehicle_odometer.y_odometer

@@ -23,8 +23,12 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
         end_date = fields.Date.from_string(end_date)
         delta = end_date - start_date
         for x in range(delta.days + 1):
-            color = '#ababab' if start_date.strftime('%a') == 'Sat' or start_date.strftime('%a') == 'Sun' else ''
-            res.append({'day_str': start_date.strftime('%a'), 'day': start_date.day , 'color': color})
+            color = '#ababab' if start_date.strftime('%a') == 'Sat' \
+                            or start_date.strftime('%a') == 'Sun' else ''
+            res.append({
+                'day_str': start_date.strftime('%a'),
+                'day': start_date.day,
+                'color': color})
             start_date = start_date + relativedelta(days=1)
         return res
 
@@ -43,6 +47,44 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
             start_date += relativedelta(day=1, months=+1)
         return res
 
+    def _thai_unit_process(self, val):
+        thai_number = (
+            "ศูนย์", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด",
+            "แปด", "เก้า")
+        unit = ("", "สิบ", "ร้อย", "พัน", "หมื่น", "แสน", "ล้าน")
+        length = len(val) > 1
+        result = ''
+        for index, current in enumerate(map(int, val)):
+            if current:
+                if index:
+                    result = unit[index] + result
+
+                if length and current == 1 and index == 0:
+                    result += 'เอ็ด'
+                elif index == 1 and current == 2:
+                    result = 'ยี่' + result
+                elif index != 1 or current != 1:
+                    result = thai_number[current] + result
+        return result
+
+    def _thai_num2text(self, num_val):
+        inverse_num_val = str(num_val)[::-1]
+        n_list = [inverse_num_val[i:i + 6].rstrip("0") for i in range(
+                                                0, len(inverse_num_val), 6)]
+        result = self._thai_unit_process(n_list.pop(0))
+
+        for i in n_list:
+            result = self._thai_unit_process(i) + 'ล้าน' + result
+        return result
+
+    def _compute_amount_in_letter(self, float_val):
+        float_val = format(float_val, ".2f")
+        float_val_split = str(float_val).split('.')
+        result = self._thai_num2text(float_val_split[0]) + "บาท"
+        if len(float_val_split) > 1 and int(float_val_split[1][0:2]) > 0:
+            result += self._thai_num2text(float_val_split[1][0:2]) + "สตางค์"
+        return result
+
     def _get_timesheet_summary(
             self, start_date, end_date, approved, user_id, user_barcode):
         res = []
@@ -58,7 +100,8 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                 'color': '',
                 'description': [],
                 'province': [],
-                'vehicle': []})
+                'vehicle': [],
+                'project': []},)
             if current.strftime('%a') == 'Sat' or \
                     current.strftime('%a') == 'Sun':
                 res[index]['color'] = '#ababab'
@@ -80,19 +123,26 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
             x_end_date = fields.Datetime.from_string(line.x_end_date)
             date_to = fields.Datetime.context_timestamp(
                             line, x_end_date).date()
+            str_tag = ''
+            for tag in line.tag_ids:
+                str_tag += tag.name
 
             for index in range(0, ((date_to - date_from).days + 1)):
                 if date_from >= start_date and date_from <= end_date:
                     res[(date_from-start_date).days][
-                            'description'] = line.x_notes
+                        'description'] = line.x_notes \
+                                            + ' / ' \
+                                            + line.project_id.name
                     res[(date_from-start_date).days][
-                            'province'] = line.x_state_id.name
+                        'province'] = str_tag + ' / ' + line.x_state_id.name
                     res[(date_from-start_date).days][
-                            'vehicle'] = line.x_vehicle_id.license_plate
+                        'vehicle'] = line.x_vehicle_id.license_plate
+                    res[(date_from-start_date).days][
+                        'project'] = line.tag_ids[0]    
                 date_from += timedelta(1)
             # count line match condtion
             count += 1
-        self.sum = round(count, 0)
+        self.sum = round(count*200, 0)
         return res
 
     def _get_data_for_report(self, data):
@@ -132,7 +182,8 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                             data['approved'],
                             emp.user_id.id,
                             emp.barcode),
-                        'sum': self.sum
+                        'sum': self.sum,
+                        'amount_text': self._compute_amount_in_letter(self.sum)
                     })
         return res
 

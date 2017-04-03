@@ -62,7 +62,7 @@
                     </span>
                 </div>
                 <div class="row text-center">
-                    <span class="col-xs-4 col-xs-offset-2 employee_info">
+                    <span class="col-xs-5 col-xs-offset-1 employee_info">
                         ธนาคาร (สาขา)
                         <u><i><t t-esc="emp['emp_bank_account']"/></i></u>
                     </span>
@@ -205,7 +205,7 @@
                                     (..............................................................................................................)
                                 </td>
                                 <td class="text-right">
-                                    <t t-esc="emp['sum']*200"/>
+                                    <t t-esc="int(emp['sum']*200)"/>
                                 </td>
                             </tr>
                         </tbody>

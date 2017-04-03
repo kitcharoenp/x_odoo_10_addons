@@ -94,12 +94,12 @@
                     <!-- Signature -->
                 <div class="row">
                     <div class="col-xs-3 text-center" >
-                        <ul style="list-style-type: none;">
+                        <ul style="list-style-type: none; font-size:11px;">
                             <li>ผู้เบิก</li>
                             <li>
                                 <img t-if="emp['emp_signature']"
                                     t-att-src="'data:image/png;base64,%s' % (emp['emp_signature'],)"
-                                    style="max-height:30pt;max-width:90%"/>
+                                    style="max-height:40pt;max-width:90%"/>
                             </li>
                             <li>______/_____/_____</li>
                             <li><t t-esc="emp['emp']"/></li>
@@ -108,7 +108,7 @@
                         </ul>
                     </div>
                     <div class="col-xs-3 text-center" >
-                        <ul style="list-style-type: none;">
+                        <ul style="list-style-type: none; font-size:11px;">
                             <li>หัวหน้างาน</li>
                             <li><br/><br/><br/></li>
                             <li>________________</li>
@@ -117,7 +117,7 @@
                         </ul>
                     </div>
                     <div class="col-xs-3 text-center" >
-                        <ul style="list-style-type: none;">
+                        <ul style="list-style-type: none; font-size:11px;">
                             <li>ผู้อนุมัติ</li>
                             <li><br/><br/><br/></li>
                             <li>________________</li>
@@ -126,7 +126,7 @@
                         </ul>
                     </div>
                     <div class="col-xs-3 text-center" >
-                        <ul style="list-style-type: none;">
+                        <ul style="list-style-type: none; font-size:11px;">
                             <li>ผู้ตรวจสอบ</li>
                             <li><br/><br/><br/></li>
                             <li>________________</li>
@@ -181,8 +181,8 @@
                         <thead>
                             <tr class="text-center" style="background-color: #a6a6a6;">
                                 <th class="text-center">วัน เดือน ปี</th>
-                                <th class="text-center">สถานที่ปฎิบัติงาน / ชื่อลูกค้า / ชื่องานโครงการ</th>
-                                <th class="text-center">จังหวัดทีไปปฎิบัติงาน</th>
+                                <th class="text-center">สถานที่ปฎิบัติงาน / ชื่อลูกค้า </th>
+                                <th class="text-center">ชื่อโครงการ / จังหวัด</th>
                                 <th class="text-center">ใช้รถทะเบียน</th>
                                 <th class="text-center">เบี้ยเลี้ยง / วัน</th>
                             </tr>
@@ -190,7 +190,7 @@
                         <tbody>
                             <t t-foreach="emp['display']" t-as="details">
                                 <tr t-if="details['description']">
-                                    <td class="col-xs-2"><t t-esc="details['date']"/></td>
+                                    <td class="col-xs-1"><t t-esc="details['date']"/></td>
                                     <td class="col-xs-6"><t t-esc="details['description']"/></td>
                                     <td class="col-xs-2"><t t-esc="details['province']"/></td>
                                     <td class="col-xs-1"><t t-esc="details['vehicle']"/></td>
@@ -198,14 +198,16 @@
                                 </tr>
                             </t>
                             <tr  style="background-color: #a6a6a6;">
-                                <td>
-                                    รวมจำนวนเงิน (อักษร)
-                                </td>
-                                <td colspan='3' class="text-center">
-                                    (..............................................................................................................)
+                                <td colspan='4' class="text-right">
+                                    <span>รวมจำนวนเงิน (อักษร)</span>
+                                    <span>
+                                        (..............................
+                                        <t t-esc="emp['amount_text']"/>
+                                        ..............................)
+                                    </span>
                                 </td>
                                 <td class="text-right">
-                                    <t t-esc="int(emp['sum']*200)"/>
+                                    <t t-esc="int(emp['sum'])"/>
                                 </td>
                             </tr>
                         </tbody>

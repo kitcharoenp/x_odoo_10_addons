@@ -83,7 +83,6 @@ class AccountAnalyticLine(models.Model):
                 string_st_dt_tz = fields.Datetime.to_string(st_datetime_tz)
                 ts_line.name = ts_line.user_id.name + '/' + string_st_dt_tz
 
-
     @api.constrains('x_start_date', 'x_end_date')
     def _check_validity_x_start_date_x_end_date(self):
         for ts_line in self:
@@ -159,7 +158,15 @@ class AccountAnalyticLine(models.Model):
                                 diff.total_seconds() / 3600.0, 2)-1
                 else:
                     diff_float = round(diff.total_seconds() / 3600.0, 2)
+                    ts_line.x_is_per_diem = False
                 ts_line.unit_amount = diff_float
+
+    @api.onchange('x_is_per_diem')
+    def _compute_x_is_per_diem(self):
+        for ts_line in self:
+            if ts_line.x_is_per_diem:
+                ts_line.is_overtime = False
+                ts_line.x_overtime_pay = 0
 
     @api.multi
     def write(self, values):

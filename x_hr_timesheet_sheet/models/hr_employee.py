@@ -15,6 +15,8 @@ class HrEmployee(models.Model):
     x_state_id = fields.Many2one(
         "res.country.state",
         string='State')
+    x_nickname = fields.Char(
+        string='Nickname')
 
     @api.model
     def create(self, vals):

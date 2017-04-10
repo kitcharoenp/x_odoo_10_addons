@@ -23,7 +23,7 @@ class FleetVehicleOdometer(models.Model):
         group_operator="max")
 
     def _compute_vehicle_log_name(self):
-        super(FleetVehicleOdometer, self)._compute_vehicle_log_name()
+        # super(FleetVehicleOdometer, self)._compute_vehicle_log_name()
         for record in self:
             name = record.vehicle_id.name
             if not name:

@@ -60,8 +60,6 @@ class Holidays(models.Model):
         """
         project = self._get_project()
         for holiday in self:
-            from_dt = fields.Datetime.from_string(holiday.date_from)
-            from_dt = fields.Date.to_string(from_dt.date)
             self.env['account.analytic.line'].create({
                 'x_holiday_id': holiday.id,
                 'name': holiday.display_name,

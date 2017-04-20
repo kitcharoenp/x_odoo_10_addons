@@ -75,7 +75,7 @@
                 <field name="state" position="replace">
                     <field name="state"
                         widget="statusbar"
-                        statusbar_visible="new,x_under_review,x_validate,confirm,done"/>
+                        statusbar_visible="new,x_under_review,x_second_review,x_validate,confirm,done"/>
                 </field>
                 <!-- set employee_id as readonly -->
                 <field name="employee_id" position="replace">

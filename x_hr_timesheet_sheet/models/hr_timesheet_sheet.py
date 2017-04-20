@@ -12,6 +12,11 @@ class HrTimesheetSheet(models.Model):
     def _default_reviewer_get(self):
         employee = self.env['hr.employee'].search(
                 [('user_id', '=', self.env.uid)], limit=1)
+        return employee.x_administrator_id
+
+    def _default_reviewer2_get(self):
+        employee = self.env['hr.employee'].search(
+                [('user_id', '=', self.env.uid)], limit=1)
         return employee.coach_id
 
     # get a default first Manager from current user Manager
@@ -30,6 +35,7 @@ class HrTimesheetSheet(models.Model):
                 ('new', 'New'),
                 ('draft', 'Open'),
                 ('x_under_review', 'Under Review'),
+                ('x_second_review', 'Second Review'),
                 ('x_validate', 'Waiting Validation'),
                 ('confirm', 'Waiting Approval'),
                 ('done', 'Approved')],
@@ -55,6 +61,14 @@ class HrTimesheetSheet(models.Model):
                         'new': [('readonly', False)],
                         'draft': [('readonly', False)]},
                     default=_default_reviewer_get)
+    reviewer_id2 = fields.Many2one(
+                    'hr.employee',
+                    string='Second Reviewer',
+                    readonly=True,
+                    states={
+                        'new': [('readonly', False)],
+                        'draft': [('readonly', False)]},
+                    default=_default_reviewer2_get)
     manager_id1 = fields.Many2one(
                     'hr.employee',
                     string='First Approval',
@@ -79,6 +93,7 @@ class HrTimesheetSheet(models.Model):
                     compute='_compute_can_approve')
     summit_date = fields.Datetime(string='Summit Date')
     review_date = fields.Datetime(string='Review Date')
+    second_review_date = fields.Datetime(string='Second Review Date')
     validated_date = fields.Datetime(string='Validated Date')
     approved_date = fields.Datetime(string='Approved Date')
     timesheet_ids = fields.One2many(
@@ -132,7 +147,7 @@ class HrTimesheetSheet(models.Model):
         for sheet in self:
             if not sheet.can_approve:
                 raise UserError(_(
-                    'Only an Timesheet Manager or Reviewer can approve \
+                    'Only an Timesheet Manager or Authority can Summit \
                     timesheet.'))
             if (sheet.employee_id and sheet.manager_id1 and
                     sheet.manager_id1.user_id):
@@ -140,7 +155,7 @@ class HrTimesheetSheet(models.Model):
                     user_ids=[sheet.manager_id1.user_id.id])
         self.write({
             'state': 'x_validate',
-            'review_date': fields.Datetime.now()})
+            'second_review_date': fields.Datetime.now()})
         if self.reviewer_id == self.manager_id1:
             self.write({
                 'state': 'confirm',
@@ -155,6 +170,10 @@ class HrTimesheetSheet(models.Model):
     @api.multi
     def action_timesheet_x_under_review(self):
         for sheet in self:
+            if not sheet.can_approve:
+                raise UserError(_(
+                    'Only an Timesheet Manager or Reviewer can Summit \
+                    timesheet.'))
             if (sheet.employee_id and sheet.reviewer_id and
                     sheet.reviewer_id.user_id):
                 self.message_subscribe_users(
@@ -162,6 +181,22 @@ class HrTimesheetSheet(models.Model):
         self.write({
             'state': 'x_under_review',
             'summit_date': fields.Datetime.now()})
+        return True
+
+    @api.multi
+    def action_timesheet_x_second_review(self):
+        for sheet in self:
+            if not sheet.can_approve:
+                raise UserError(_(
+                    'Only an Timesheet Manager or Reviewer can Summit \
+                    timesheet.'))
+            if (sheet.employee_id and sheet.reviewer_id2 and
+                    sheet.reviewer_id2.user_id):
+                self.message_subscribe_users(
+                    user_ids=[sheet.reviewer_id2.user_id.id])
+        self.write({
+            'state': 'x_second_review',
+            'review_date': fields.Datetime.now()})
         return True
 
     def _check_state(self):
@@ -188,6 +223,9 @@ class HrTimesheetSheet(models.Model):
             timesheet.can_approve = False
             if (timesheet.reviewer_id and timesheet.state == 'x_under_review'
                     and timesheet.reviewer_id.user_id == user):
+                timesheet.can_approve = True
+            if (timesheet.reviewer_id2 and timesheet.state == 'x_second_review'
+                    and timesheet.reviewer_id2.user_id == user):
                 timesheet.can_approve = True
             if (timesheet.manager_id1 and timesheet.state == 'x_validate'
                     and timesheet.manager_id1.user_id == user):

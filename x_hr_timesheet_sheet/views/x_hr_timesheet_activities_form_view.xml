@@ -16,10 +16,11 @@
                         <field name="name" invisible="1"/>
                         <field name="x_notes" />
                         <field name="project_id"
-                            string="Customer/Project"
+                            string="Customer"
                             filter_domain="[('project_id','ilike',self)]"
                             required="1"
                             options="{'no_open': True, 'no_create': True}" />
+                        <field name="tag_ids" string="Project"/>
                         <field name="x_vehicle_id"
                             options="{'no_open': False, 'no_create': True}"/>
                         <field name="unit_amount"
@@ -28,6 +29,7 @@
                             sum="Hours"/>
                         <field name="user_id" invisible="1"/>
                         <field name="is_overtime"/>
+                        <field name="x_is_per_diem"/>
                     </tree>
                 </xpath>
 

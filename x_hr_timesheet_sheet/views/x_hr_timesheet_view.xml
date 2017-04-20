@@ -55,7 +55,7 @@
                 -->
 				<button name="action_timesheet_confirm" position="before">
                     <button name="action_timesheet_x_validate"
-                        states="x_under_review"
+                        states="x_second_review"
                         string="Submit to Validation"
                         type="object"
                         class="oe_highlight"
@@ -69,6 +69,16 @@
                         string="Submit"
                         type="object"
                         class="oe_highlight"/>
+                </button>
+
+                <!-- define Submit button (Second Reviewer summit) in x_under_review state-->
+                <button name="action_timesheet_confirm" position="before">
+                    <button name="action_timesheet_x_second_review"
+                        states="x_under_review"
+                        string="Submit to Second Review"
+                        type="object"
+                        class="oe_highlight"
+                        groups="hr_timesheet.group_hr_timesheet_user"/>
                 </button>
 
         <!-- replace the old state field with a new state field including x_validate -->
@@ -100,7 +110,8 @@
                             class="oe_inline"
                             attrs="{'readonly': [('state','not in',('draft','new'))]}"/>
                     </div>
-                    <field name="reviewer_id"/>
+                    <field name="reviewer_id" string="First Reviewer"/>
+                    <field name="reviewer_id2"/>
                 </xpath>
 
                 <!-- append can_approve after user_id -->

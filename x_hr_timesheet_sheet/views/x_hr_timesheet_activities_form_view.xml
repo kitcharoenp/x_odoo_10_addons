@@ -53,9 +53,9 @@
                                 <field name="user_id" invisible="1"/>
                                 <field name="is_overtime"/>
                                 <field name="x_state_id"
+                                    required="1"
                                     string="Province"
-                                    options="{'no_open': True, 'no_create': True}"
-                                    attrs="{'required': [('x_is_per_diem', '=', True)]}"/>
+                                    options="{'no_open': True, 'no_create': True}"/>
                             </group>
                             <group string="Other Details">
                                 <field name="x_notes"
@@ -64,13 +64,23 @@
                                 <field name="x_vehicle_id"
                                     string="License Plate"
                                     options="{'no_open': False,
-                                        'no_create': True}"/>
+                                        'no_create': True}"
+                                        attrs="{'required': ['|',
+                                            ('is_overtime', '=', True),
+                                            ('x_is_per_diem', '=', True),]}"/>
                                 <field name="x_odometer"
-                                    string="Start Odometer" />
+                                    string="Start Odometer"
+                                    attrs="{'required': ['|',
+                                        ('x_vehicle_id', '>', 0),
+                                        ('x_is_per_diem', '=', True)]}"/>
                                 <field name="y_odometer"
-                                    string="End Odometer" />
+                                    string="End Odometer"
+                                    attrs="{'required': ['|',
+                                        ('x_vehicle_id', '>', 0),
+                                        ('x_is_per_diem', '=', True)]}"/>
                                 <field name="tag_ids"
                                     string="Project Code"
+                                    required="1"
                                     widget="many2many_tags"
                                     options="{'no_open': True, 'no_create': True}"/>
                                 <field name="x_is_per_diem"/>
@@ -153,8 +163,8 @@
                                 <field name="is_overtime"/>
                                 <field name="x_state_id"
                                     string="Province"
-                                    options="{'no_open': True, 'no_create': True}"
-                                    attrs="{'required': [('x_is_per_diem', '=', True)]}"/>
+                                    required="1"
+                                    options="{'no_open': True, 'no_create': True}"/>
                             </group>
                             <group string="Other Details">
                                 <field name="x_notes"
@@ -164,14 +174,25 @@
                                     <field name="x_vehicle_id"
                                         string="License Plate"
                                         options="{'no_open': False,
-                                            'no_create': True}"/>
+                                            'no_create': True}"
+                                        attrs="{'required': ['|',
+                                            ('is_overtime', '=', True),
+                                            ('x_is_per_diem', '=', True),]}"
+                                            />
                                     <field name="x_odometer"
-                                        string="Start Odometer" />
+                                        string="Start Odometer"
+                                        attrs="{'required': ['|',
+                                            ('x_vehicle_id', '>', 0),
+                                            ('x_is_per_diem', '=', True)]}"/>
                                     <field name="y_odometer"
-                                        string="End Odometer" />
+                                        string="End Odometer"
+                                        attrs="{'required': ['|',
+                                            ('x_vehicle_id', '>', 0),
+                                            ('x_is_per_diem', '=', True)]}"/>
                                     <field name="tag_ids"
                                         string="Project Code"
                                         widget="many2many_tags"
+                                        required="1"
                                         options="{'no_open': True, 'no_create': True}"/>
                                     <field name="x_is_per_diem"/>
                             </group>

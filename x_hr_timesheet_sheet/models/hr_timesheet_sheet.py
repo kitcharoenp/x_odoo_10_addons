@@ -156,12 +156,43 @@ class HrTimesheetSheet(models.Model):
         self.write({
             'state': 'x_validate',
             'second_review_date': fields.Datetime.now()})
-        if self.reviewer_id == self.manager_id1:
+        if self.reviewer_id2 == self.manager_id1:
             self.write({
                 'state': 'confirm',
                 'validated_date': fields.Datetime.now()})
-        if (self.reviewer_id == self.manager_id1) and (
+        if (self.reviewer_id2 == self.manager_id1) and (
                 self.manager_id1 == self.manager_id2):
+            self.write({
+                'state': 'done',
+                'approved_date': fields.Datetime.now()})
+        return True
+
+    @api.multi
+    def action_timesheet_x_second_review(self):
+        for sheet in self:
+            if not sheet.can_approve:
+                raise UserError(_(
+                    'Only an Timesheet Manager or Reviewer can Summit \
+                    timesheet.'))
+            if (sheet.employee_id and sheet.reviewer_id2 and
+                    sheet.reviewer_id2.user_id):
+                self.message_subscribe_users(
+                    user_ids=[sheet.reviewer_id2.user_id.id])
+        self.write({
+            'state': 'x_second_review',
+            'review_date': fields.Datetime.now()})
+        if self.reviewer_id == self.reviewer_id2:
+            self.write({
+                'state': 'x_validate',
+                'second_review_date': fields.Datetime.now()})
+        if (self.reviewer_id == self.reviewer_id2) and (
+                self.reviewer_id2 == self.manager_id1):
+            self.write({
+                'state': 'confirm',
+                'validated_date': fields.Datetime.now()})
+        if (self.reviewer_id == self.reviewer_id2) and (
+                self.reviewer_id2 == self.manager_id1) and (
+                        self.manager_id1 == self.manager_id2):
             self.write({
                 'state': 'done',
                 'approved_date': fields.Datetime.now()})
@@ -181,22 +212,6 @@ class HrTimesheetSheet(models.Model):
         self.write({
             'state': 'x_under_review',
             'summit_date': fields.Datetime.now()})
-        return True
-
-    @api.multi
-    def action_timesheet_x_second_review(self):
-        for sheet in self:
-            if not sheet.can_approve:
-                raise UserError(_(
-                    'Only an Timesheet Manager or Reviewer can Summit \
-                    timesheet.'))
-            if (sheet.employee_id and sheet.reviewer_id2 and
-                    sheet.reviewer_id2.user_id):
-                self.message_subscribe_users(
-                    user_ids=[sheet.reviewer_id2.user_id.id])
-        self.write({
-            'state': 'x_second_review',
-            'review_date': fields.Datetime.now()})
         return True
 
     def _check_state(self):

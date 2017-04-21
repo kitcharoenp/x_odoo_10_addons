@@ -23,7 +23,7 @@ Extend Maintenance Request & Equipment:
         'actions/x_equipment_act_window.xml',
         # View
         'views/x_equipment_form_view.xml',
-        'views/x_equipment_kanban_view.xml',
+        #'views/x_equipment_kanban_view.xml',
         'views/x_equipment_tree_view.xml',
         'views/x_equipment_search_view.xml',
         'views/x_equipment_product_form_view.xml',

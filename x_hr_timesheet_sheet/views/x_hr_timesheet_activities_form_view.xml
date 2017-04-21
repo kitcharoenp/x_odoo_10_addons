@@ -21,8 +21,9 @@
                             required="1"
                             options="{'no_open': True, 'no_create': True}" />
                         <field name="tag_ids" string="Project"/>
-                        <field name="x_vehicle_id"
+                        <field name="x_vehicle_id" invisible="1"
                             options="{'no_open': False, 'no_create': True}"/>
+                        <field name="x_license_plate"/>    
                         <field name="unit_amount"
                             widget="float_time"
                             string="Hours"

@@ -10,10 +10,13 @@
             <filter name="to_approve" position="replace">
                 <filter name="to_approve"
                     string="To Approve"
-                    domain="['|','|',
+                    domain="['|','|','|',
                         '&amp;',
                         ('state','=','x_under_review'),
                         ('reviewer_id.user_id', '=', uid),
+                        '&amp;',
+                        ('state','=','x_second_review'),
+                        ('reviewer_id2.user_id', '=', uid),
                         '&amp;',
                         ('state','=','x_validate'),
                         ('manager_id1.user_id', '=', uid),

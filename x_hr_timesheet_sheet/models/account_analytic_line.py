@@ -175,7 +175,7 @@ class AccountAnalyticLine(models.Model):
     @api.multi
     def write(self, values):
         # to do fix validate user to edit line by _check_owner methods
-        self._check_owner()
+        # self._check_owner()
         return super(AccountAnalyticLine, self).write(values)
 
     def _check_owner(self):

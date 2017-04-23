@@ -201,10 +201,6 @@ class HrTimesheetSheet(models.Model):
     @api.multi
     def action_timesheet_x_under_review(self):
         for sheet in self:
-            if not sheet.can_approve:
-                raise UserError(_(
-                    'Only an Timesheet Manager or Reviewer can Summit \
-                    timesheet.'))
             if (sheet.employee_id and sheet.reviewer_id and
                     sheet.reviewer_id.user_id):
                 self.message_subscribe_users(

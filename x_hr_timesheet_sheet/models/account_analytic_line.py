@@ -85,7 +85,7 @@ class AccountAnalyticLine(models.Model):
                 st_datetime_tz = fields.Datetime.context_timestamp(
                                 self, st_datetime)
                 string_st_dt_tz = fields.Datetime.to_string(st_datetime_tz)
-                ts_line.name = ts_line.user_id.name + '/' + string_st_drelatedt_tz
+                ts_line.name = ts_line.user_id.name + '/' + string_st_dt_tz
 
     @api.constrains('x_start_date', 'x_end_date')
     def _check_validity_x_start_date_x_end_date(self):

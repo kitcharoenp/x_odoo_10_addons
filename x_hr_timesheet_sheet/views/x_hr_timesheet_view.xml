@@ -19,6 +19,15 @@
                         groups="hr_timesheet.group_hr_timesheet_user"/>
                 </button>
 
+                <!-- show Refuse button in state 'x_second_review' -->
+                <button name="action_timesheet_draft" position="after">
+                    <button name="action_timesheet_draft"
+                        states="x_second_review"
+                        string="Refuse"
+                        type="object"
+                        groups="hr_timesheet.group_hr_timesheet_user"/>
+                </button>
+
                 <!-- show Refuse button in state 'x_validate' -->
                 <button name="action_timesheet_draft" position="after">
                     <button name="action_timesheet_draft"

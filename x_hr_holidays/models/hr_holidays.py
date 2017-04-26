@@ -71,6 +71,8 @@ class Holidays(models.Model):
                 'x_start_date': holiday.date_from,
                 'x_end_date': holiday.date_to,
                 'x_is_leave': True,
+                'x_state_id': holiday.employee_id.x_state_id.id,
+                'date': fields.Datetime.from_string(holiday.date_from).date()
             })
         return True
 

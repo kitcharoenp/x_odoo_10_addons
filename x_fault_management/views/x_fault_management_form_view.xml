@@ -6,17 +6,41 @@
         <field name="arch" type="xml">
             <form string="Fault Management">
                <sheet string="Fault Management">
-                    <label for="name"/>
-                    <h1>
-                        <field name="name"/>
-                    </h1>
-                    <field name='cause_of_fault' placeholder="Internal Note ......."/>
+                   <div>
+                        <h1>
+                            <field name="name" nolabel="1"/>
+                        </h1>
+                    </div>
+                    <group col="2">
+                        <group string="Customer details">
+                            <field name="customer_reference"/>
+                            <field name="partner_id1"
+                                context="{'search_default_customer':1, 'show_address': 1}"
+                                options='{"always_reload": True}'/>
+                            <field name="partner_id2"
+                                context="{'search_default_customer':1, 'show_address': 1}"
+                                options='{"always_reload": True}'/>
+                        </group>
+                        <group string="Fault details">
+                            <field name="start_datetime"/>
+                            <field name="end_datetime"/>
+                        </group>
+                    </group>
+                    <group string="Cause of Fault">
+                        <field name='cause_of_fault' nolabel="1"
+                            placeholder="Cause of Fault Note ......."/>
+                    </group>
+                    <group string="Troubleshooting">
+                        <field name='troubleshooting' nolabel="1"
+                            placeholder="Troubleshooting Note ......."/>
+                    </group>
                 </sheet>
 
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
+
             </form>
         </field>
     </record>

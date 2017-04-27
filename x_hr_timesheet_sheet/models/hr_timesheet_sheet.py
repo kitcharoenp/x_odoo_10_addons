@@ -103,6 +103,12 @@ class HrTimesheetSheet(models.Model):
         readonly=False, states={
             'draft': [('readonly', False)],
             'new': [('readonly', False)]})
+    user_id = fields.Many2one(
+        'res.users',
+        related='employee_id.user_id',
+        string='User',
+        store=True,
+        readonly=False)
 
     @api.multi
     def action_timesheet_confirm(self):

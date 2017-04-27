@@ -19,8 +19,15 @@
                             string="Customer"
                             filter_domain="[('project_id','ilike',self)]"
                             required="1"
+                            invisible="1"
                             options="{'no_open': True, 'no_create': True}" />
                         <field name="tag_ids" string="Project"/>
+                        <field name="x_state_id"
+                            attrs="{'required': ['|',
+                                ('is_overtime', '=', True),
+                                ('x_is_per_diem', '=', True),]}"
+                            string="Province"
+                            options="{'no_open': True, 'no_create': True}"/>
                         <field name="x_vehicle_id" invisible="1"
                             options="{'no_open': False, 'no_create': True}"/>
                         <field name="x_license_plate"/>

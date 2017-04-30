@@ -20,19 +20,43 @@
                             <field name="partner_id2"
                                 context="{'search_default_customer':1, 'show_address': 1}"
                                 options='{"always_reload": True}'/>
+                            <label for="process_time"/>    
+                            <div class="o_row">
+                                <field name="process_time"/><span>Days</span>
+                            </div>
                         </group>
                         <group string="Fault details">
+                            <field name="state_id"
+                                options="{'no_open': True, 'no_create': True}"/>
                             <field name="start_datetime"/>
                             <field name="end_datetime"/>
+                            <label for="duration"/>
+                            <div class="o_row">
+                                <field name="duration"/><span>Minutes</span>
+                            </div>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                            <label for="distance"/>
+                            <div class="o_row">
+                                <field name="distance"/><span>m.</span>
+                            </div>
                         </group>
                     </group>
                     <group string="Cause of Fault">
                         <field name='cause_of_fault' nolabel="1"
                             placeholder="Cause of Fault Note ......."/>
                     </group>
-                    <group string="Troubleshooting">
-                        <field name='troubleshooting' nolabel="1"
-                            placeholder="Troubleshooting Note ......."/>
+                    <group col="2" string="Troubleshooting">
+                        <group>
+                            <field name="permanant"/>
+                        </group>
+                        <group>
+                            <field name="temporarily"/>
+                        </group>
+                        <group col="2">
+                            <field name='troubleshooting' nolabel="1"
+                                placeholder="Troubleshooting Note ......."/>
+                        </group>
                     </group>
                 </sheet>
 

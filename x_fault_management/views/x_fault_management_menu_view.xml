@@ -6,7 +6,7 @@
         action="x_fault_management_act_window"
         groups="base.group_user"
         name="Fault Management"
-        sequence="58"
+        sequence="301"
         web_icon="x_fault_management,static/description/icon.png"
     />
     <!-- My withholding tax document menu-->
@@ -14,7 +14,7 @@
         id="x_fault_management_title_menu"
         name="Fault Management"
         parent="x_fault_management_menu_view"
-        sequence="90"
+        sequence="302"
     />
 
     <record id="x_fault_management_menu_view"

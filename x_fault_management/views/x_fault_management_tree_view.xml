@@ -8,7 +8,8 @@
                 <field name="name" />
                 <field name="customer_reference" />
                 <field name="partner_id1" />
-                <field name="start_datetime" />
+                <field name="state_id" />
+                <field name="duration" />
             </tree>
         </field>
     </record>

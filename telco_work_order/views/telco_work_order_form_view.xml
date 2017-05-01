@@ -20,6 +20,8 @@
                             <field name="partner_id"
                                 context="{'search_default_customer':1, 'show_address': 1}"
                                 options='{"always_reload": True}'/>
+                            <field name="submit_date"/>
+                            <field name="revised_drawing"/>
                         </group>
                         <group string="Other details">
                             <field name="employee_id"

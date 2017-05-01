@@ -52,6 +52,9 @@ class TelcoWorkOrder(models.Model):
                 date_start = fields.Datetime.from_string(work_order.start_date)
                 delta = date_end - date_start
                 work_order.duration = delta.days
+    submit_date = fields.Date(
+        string="Submit Date")
+    revised_drawing = fields.Boolean(default=False)
 
     @api.model
     def create(self, vals):

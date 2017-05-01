@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="telco_work_order_form_view" model="ir.ui.view">
+        <field name="name">Telco Work Order Form</field>
+        <field name="model">telco.work.order</field>
+        <field name="arch" type="xml">
+            <form string="Telco Work Order">
+               <sheet string="Telco Work Order">
+                   <div>
+                        <h1>
+                            <field name="name" nolabel="1"/>
+                        </h1>
+                    </div>
+                    <group col="2">
+                        <group string="Customer details">
+                            <field name="telco_fault_id"
+                                options="{'no_open': False, 'no_create': True}"/>
+                            <field name="state_id"
+                                options="{'no_open': True, 'no_create': True}"/>
+                            <field name="partner_id"
+                                context="{'search_default_customer':1, 'show_address': 1}"
+                                options='{"always_reload": True}'/>
+                        </group>
+                        <group string="Other details">
+                            <field name="employee_id"
+                                options="{'no_open': False, 'no_create': True}"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <label for="duration"/>
+                            <div class="o_row">
+                                <field name="duration"/><span>Days</span>
+                            </div>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name='description' nolabel="1"
+                            placeholder="Description of Work Order ......."/>
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+</odoo>

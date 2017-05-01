@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="telco_work_order_sequence_data" model="ir.sequence">
+            <field name="name">Telco Work Order</field>
+            <field name="code">telco.work.order</field>
+            <field name="prefix">WO-%(range_year)s%(month)s-</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">4</field>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+        </record>
+    </data>
+</odoo>

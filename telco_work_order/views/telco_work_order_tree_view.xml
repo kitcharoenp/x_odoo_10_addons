@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="telco_work_order_tree_view" model="ir.ui.view">
+        <field name="name">Telco Work Order Tree</field>
+        <field name="model">telco.work.order</field>
+        <field name="arch" type="xml">
+            <tree string="Telco Work Order" >
+                <field name="name" />
+                <field name="telco_fault_id" />
+                <field name="partner_id" />
+                <field name="state_id" />
+                <field name="employee_id" />
+            </tree>
+        </field>
+    </record>
+</odoo>

@@ -5,6 +5,7 @@
     'version': '1.0',
     'license': 'AGPL-3',
     'category': 'Telecommunication',
+    "author": "kicharoenp@gmail.com",
     'description': """
         Work Order for Telecommunication""",
     'depends': [
@@ -18,10 +19,16 @@
     'data': [
         # Security
         # Menu and Action
+        'actions/telco_work_order_act_window.xml',
+        'views/telco_work_order_menu_view.xml',
         # Views
+        'views/telco_work_order_tree_view.xml',
+        'views/telco_work_order_form_view.xml',
         # Sequence
+        'data/telco_work_order_sequence_data.xml',
         # Reports
     ],
+    'images': ['static/description/icon.png'],
     'installable': True,
     'auto-install': False,
 }

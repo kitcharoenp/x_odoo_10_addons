@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Fault Management (Telco)',
+    'name': 'Telco Fault Management',
     'version': '1.0',
     'license': 'AGPL-3',
     'category': 'Telecommunication',
+    "author": "kicharoenp@gmail.com",
     'description': """
         Fault Management for Telecommunication""",
     'depends': [
@@ -18,13 +19,13 @@
     'data': [
         # Security
         # Menu and Action
-        'actions/x_fault_management_act_window.xml',
-        'views/x_fault_management_menu_view.xml',
+        'actions/telco_fault_management_act_window.xml',
+        'views/telco_fault_management_menu_view.xml',
         # Views
-        'views/x_fault_management_form_view.xml',
-        'views/x_fault_management_tree_view.xml',
+        'views/telco_fault_management_form_view.xml',
+        'views/telco_fault_management_tree_view.xml',
         # Sequence
-        'data/x_fault_management_sequence_data.xml',
+        'data/telco_fault_management_sequence_data.xml',
         # Reports
     ],
     'images': ['static/description/icon.png'],

@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
 
-import odoo.addons.decimal_precision as dp
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime
 
 
-class XFaultManagement(models.Model):
-    _name = "x.fault.management"
+class TelcoFaultManagement(models.Model):
+    _name = "telco.fault.management"
     _inherit = ['mail.thread', 'ir.needaction_mixin']
-    _description = "Fault Management"
+    _description = "Telco Fault Management"
     _order = "id desc"
 
     name = fields.Char(
@@ -66,6 +64,6 @@ class XFaultManagement(models.Model):
     def create(self, vals):
         if not vals.get('name', False) or vals['name'] == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code(
-                'x.fault.management') or _('New')
-        result = super(XFaultManagement, self).create(vals)
+                'telco.fault.management') or _('New')
+        result = super(TelcoFaultManagement, self).create(vals)
         return result

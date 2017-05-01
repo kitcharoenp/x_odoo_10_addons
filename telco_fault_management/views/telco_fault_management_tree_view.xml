@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="x_fault_management_tree_view" model="ir.ui.view">
-        <field name="name">Fault Management Tree</field>
-        <field name="model">x.fault.management</field>
+    <record id="telco_fault_management_tree_view" model="ir.ui.view">
+        <field name="name">Telco Fault Management Tree</field>
+        <field name="model">telco.fault.management</field>
         <field name="arch" type="xml">
             <tree string="Fault Management" >
                 <field name="name" />

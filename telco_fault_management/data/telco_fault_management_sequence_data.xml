@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <record id="x_fault_management_sequence_data" model="ir.sequence">
-            <field name="name">Fault Management</field>
-            <field name="code">x.fault.management</field>
+        <record id="telco_fault_management_sequence_data" model="ir.sequence">
+            <field name="name">Telco Fault Management</field>
+            <field name="code">telco.fault.management</field>
             <field name="prefix">FM-%(range_year)s%(month)s-</field>
             <field eval="1" name="number_next"/>
             <field eval="1" name="number_increment"/>
             <field name="padding">4</field>
             <field eval="True" name="use_date_range"/>
             <field eval="False" name="company_id"/>
-
         </record>
     </data>
 </odoo>

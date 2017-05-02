@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Full access to all record -->
+        <record id="property_rule_fault_management_manager" model="ir.rule">
+            <field name="name">Telco Fault Management Manager</field>
+            <field name="model_id" ref="model_telco_fault_management"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups"
+                eval="[(4, ref('group_telco_fault_management_manager'))]"/>
+        </record>
+
+        <!-- access only record that employee field is user login -->
+        <record id="property_rule_fault_management_officer" model="ir.rule">
+            <field name="name">Telco Fault Management Officer</field>
+            <field name="model_id" ref="model_telco_fault_management"/>
+            <field name="domain_force">[('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_telco_fault_management_officer'))]"/>
+        </record>
+
+    </data>
+</odoo>

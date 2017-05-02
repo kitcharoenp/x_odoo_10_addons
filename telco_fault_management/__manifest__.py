@@ -18,6 +18,9 @@
         """,
     'data': [
         # Security
+        'security/telco_fault_management_groups.xml',
+        'security/ir.model.access.csv',
+        'security/ir_rule.xml',
         # Menu and Action
         'actions/telco_fault_management_act_window.xml',
         'views/telco_fault_management_menu_view.xml',

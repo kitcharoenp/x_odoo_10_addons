@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_telco_fault_management_officer,telco.fault.management.officer,model_telco_fault_management,group_telco_fault_management_officer,1,1,1,

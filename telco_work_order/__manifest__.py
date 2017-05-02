@@ -18,6 +18,9 @@
         """,
     'data': [
         # Security
+        'security/telco_work_order_groups.xml',
+        'security/ir.model.access.csv',
+        'security/ir_rule.xml',
         # Menu and Action
         'actions/telco_work_order_act_window.xml',
         'views/telco_work_order_menu_view.xml',

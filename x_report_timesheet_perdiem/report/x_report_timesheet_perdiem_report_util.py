@@ -100,8 +100,7 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                 'color': '',
                 'description': [],
                 'province': [],
-                'vehicle': [],
-                'project': []},)
+                'vehicle': []},)
             if current.strftime('%a') == 'Sat' or \
                     current.strftime('%a') == 'Sun':
                 res[index]['color'] = '#ababab'
@@ -137,8 +136,6 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                         'province'] = str_tag + ' / ' + line.x_state_id.name
                     res[(date_from-start_date).days][
                         'vehicle'] = line.x_vehicle_id.license_plate
-                    res[(date_from-start_date).days][
-                        'project'] = line.tag_ids[0]    
                 date_from += timedelta(1)
             # count line match condtion
             count += 1

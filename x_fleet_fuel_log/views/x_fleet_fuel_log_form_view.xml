@@ -32,6 +32,11 @@
                         <field name="odometer"/>
                         <field name="odometer_unit"/>
                     </div>
+
+                    <label for="x_distance"/>
+                    <div class="o_row">
+                        <field name="x_distance"/><span>Kilometers</span>
+                    </div>
                 </group>
 
             </xpath>

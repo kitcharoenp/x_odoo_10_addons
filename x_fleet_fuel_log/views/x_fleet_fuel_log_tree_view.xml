@@ -7,6 +7,9 @@
             ref="fleet.fleet_vehicle_log_fuel_view_tree"/>
         <field name="arch" type="xml">
             <!-- -->
+            <xpath expr="//field[@name='liter']" position="before">
+                <field name="x_distance"/>
+            </xpath>
             <xpath expr="//field[@name='liter']" position="after">
                 <field name="x_fuel_consumption"/>
             </xpath>

@@ -8,7 +8,7 @@
     'description': """
 Fleet Vehicle Fuel Log :
 -------------
-    * compute fuel cousumption base on mileage and litre
+    * compute fuel cousumption base on mileage and Liter
         """,
     'depends': ['fleet'],
     'summary': 'Fleet Vehicle Fuel Log',

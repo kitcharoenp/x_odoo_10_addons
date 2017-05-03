@@ -24,13 +24,19 @@ class FleetVehicleLogFuel(models.Model):
         ('cash', 'Cash')],
         string='Payment Type',
         help='Payment Type (Cash or Fleet Card)')
+    x_distance = fields.Float(
+        compute="_compute_fuel_consumption",
+        string="Distance",
+        group_operator="sum",
+        store="True")
 
     @api.multi
     @api.depends('liter', 'odometer', 'x_last_refuel_odometer')
     def _compute_fuel_consumption(self):
         for fuel_log in self:
-            distance = fuel_log.odometer - fuel_log.x_last_refuel_odometer
+            distance = abs(fuel_log.odometer - fuel_log.x_last_refuel_odometer)
             if fuel_log.liter > 0:
+                fuel_log.x_distance = distance
                 fuel_log.x_fuel_consumption = distance / fuel_log.liter
 
     @api.onchange('vehicle_id')

@@ -7,7 +7,10 @@
             <pivot string="Vehicles Fuel Log">
                 <field name="vehicle_id" type="row"/>
                 <field name="date" interval="month" type="col"/>
+                <field name="x_distance" type="measure"/>
+                <field name="liter" type="measure"/>
                 <field name="x_fuel_consumption" type="measure"/>
+                <field name="amount" type="measure"/>
             </pivot>
         </field>
     </record>

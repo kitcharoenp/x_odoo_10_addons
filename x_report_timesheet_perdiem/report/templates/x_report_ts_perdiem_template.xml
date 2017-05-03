@@ -45,7 +45,7 @@
                         <u><i><t t-esc="emp['month']"/></i></u>
                     </span>
                     <span class="col-xs-2 employee_info">
-                        ปี ค.ศ.
+                        ปี
                         <u><i><t t-esc="emp['year']"/></i></u>
                     </span>
                 </div>
@@ -180,7 +180,7 @@
                     <table class="table table-bordered" style="table-layout:auto">
                         <thead>
                             <tr class="text-center" style="background-color: #a6a6a6;">
-                                <th class="text-center">ปี เดือน วัน</th>
+                                <th class="text-center">วัน เดือน ปี</th>
                                 <th class="text-center">สถานที่ปฎิบัติงาน / ชื่อลูกค้า </th>
                                 <th class="text-center">ชื่อโครงการ / จังหวัด</th>
                                 <th class="text-center">ใช้รถทะเบียน</th>
@@ -190,7 +190,7 @@
                         <tbody>
                             <t t-foreach="emp['display']" t-as="details">
                                 <tr t-if="details['description']">
-                                    <td class="col-xs-1"><t t-esc="details['date']"/></td>
+                                    <td class="col-xs-1"><t t-esc="details['date'].strftime('%d-%m-%Y')"/></td>
                                     <td class="col-xs-6"><t t-esc="details['description']"/></td>
                                     <td class="col-xs-2"><t t-esc="details['province']"/></td>
                                     <td class="col-xs-1"><t t-esc="details['vehicle']"/></td>

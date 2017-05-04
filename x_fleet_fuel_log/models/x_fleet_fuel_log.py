@@ -30,6 +30,15 @@ class FleetVehicleLogFuel(models.Model):
         group_operator="sum",
         store="True")
 
+    # Overide original method
+    @api.onchange('liter', 'price_per_liter', 'amount')
+    def _onchange_liter_price_amount(self):
+        liter = float(self.liter)
+        price_per_liter = float(self.price_per_liter)
+        amount = float(self.amount)
+        if amount > 0 and price_per_liter > 0 and round(amount / price_per_liter, 2) != liter:
+            self.liter = round(amount / price_per_liter, 2)
+
     @api.multi
     @api.depends('liter', 'odometer', 'x_last_refuel_odometer')
     def _compute_fuel_consumption(self):

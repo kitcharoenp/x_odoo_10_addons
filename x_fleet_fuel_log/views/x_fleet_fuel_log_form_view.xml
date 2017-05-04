@@ -14,22 +14,27 @@
                 </div>
             </xpath>
 
-            <xpath expr="//field[@name='amount']" position="after">
-                <field name="x_payment_type"/>
+            <xpath expr="//form/sheet/group[1]/group[2]" position="replace">
+                <group string="Refueling Details">
+                    <field name="x_payment_type" required="1"/>
+                    <field name="amount" required="1"/>
+                    <field name="price_per_liter" required="1"/>
+                    <field name="liter"/>
+                </group>
             </xpath>
 
             <!-- add last refuel odometer -->
             <xpath expr="//form/sheet/group[2]/group[1]" position="replace">
                 <group string="Odometer Details">
 
-                    <label for="x_last_refuel_odometer"/>
+                    <label string="Last Refueling"/>
                     <div class="o_row">
-                        <field name="x_last_refuel_odometer"/><span>Kilometers</span>
+                        <field name="x_last_refuel_odometer" required="1"/><span>Kilometers</span>
                     </div>
 
-                    <label for="odometer"/>
+                    <label string="Current Value"/>
                     <div class="o_row">
-                        <field name="odometer"/>
+                        <field name="odometer" required="1"/>
                         <field name="odometer_unit"/>
                     </div>
 

@@ -104,7 +104,8 @@ class Holidays(models.Model):
                 raise UserError(_('Only an HR Officer or Manager can \
                     approve leave requests.'))
         res = super(Holidays, self).action_validate()
-        self._create_ts_analytic_line()
+        if holiday.type == 'remove':
+            self._create_ts_analytic_line()
         return res
 
     @api.multi

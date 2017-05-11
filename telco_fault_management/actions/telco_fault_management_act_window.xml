@@ -2,7 +2,6 @@
 <odoo>
     <record id="telco_fault_management_act_window" model="ir.actions.act_window">
         <field name="name">Telco Fault Management</field>
-        <field name="type">ir.actions.act_window</field>
         <field name="res_model">telco.fault.management</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>

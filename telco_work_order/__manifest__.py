@@ -9,9 +9,8 @@
     'description': """
         Work Order for Telecommunication""",
     'depends': [
-        'base',
-        'mail',
         'telco_fault_management',
+        'cmis_web_alf',
     ],
     'summary': """
         Work Order for Telecommunication
@@ -27,6 +26,7 @@
         # Views
         'views/telco_work_order_tree_view.xml',
         'views/telco_work_order_form_view.xml',
+        'views/telco_work_order_cmis_form_view.xml',
         # Sequence
         'data/telco_work_order_sequence_data.xml',
         # Reports

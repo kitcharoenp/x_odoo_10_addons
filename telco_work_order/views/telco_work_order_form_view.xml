@@ -34,10 +34,12 @@
                             </div>
                         </group>
                     </group>
-                    <group string="Description">
-                        <field name='description' nolabel="1"
-                            placeholder="Description of Work Order ......."/>
-                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name='description' nolabel="1"
+                                placeholder="Description of Work Order ......."/>
+                        </page>
+                    </notebook>
                 </sheet>
 
                 <div class="oe_chatter">

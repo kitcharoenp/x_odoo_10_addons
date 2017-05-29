@@ -4,7 +4,7 @@
         <field name="name">Telco Fault Management</field>
         <field name="res_model">telco.fault.management</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 Click to create a fault management.

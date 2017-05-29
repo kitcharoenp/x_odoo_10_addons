@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='telco_fault_management_graph_view' model='ir.ui.view'>
+        <field name="name">Telco fault management graph</field>
+        <field name="model">telco.fault.management</field>
+        <field name="arch" type="xml">
+            <graph string="Telco Fault Management" type="bar" stacked="True">
+                <field name="start_datetime" type="row"/>
+                <field name="state_id" type="row"/>
+                <field name="duration" type="measure"/>
+            </graph>
+        </field>
+    </record>
+</odoo>

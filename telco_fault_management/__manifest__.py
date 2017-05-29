@@ -27,6 +27,8 @@
         # Views
         'views/telco_fault_management_form_view.xml',
         'views/telco_fault_management_tree_view.xml',
+        'views/telco_fault_management_pivot_view.xml',
+        'views/telco_fault_management_graph_view.xml',
         # Sequence
         'data/telco_fault_management_sequence_data.xml',
         # Reports

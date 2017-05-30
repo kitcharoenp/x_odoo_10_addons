@@ -25,11 +25,17 @@ class HrTimesheetSheet(models.Model):
                 [('user_id', '=', self.env.uid)], limit=1)
         return employee.parent_id
 
-    # get a Second Manager from Manager of present User
+    # get a Second Manager
     def _default_manager2_get(self):
         employee = self.env['hr.employee'].search(
                 [('user_id', '=', self.env.uid)], limit=1)
-        return employee.parent_id.parent_id
+        if employee.manager:
+            default_manager2 = employee.parent_id.parent_id
+        elif employee.department_id.manager_id:
+            default_manager2 = employee.department_id.manager_id
+        else:
+            default_manager2 = employee.parent_id.parent_id
+        return default_manager2
 
     state = fields.Selection([
                 ('new', 'New'),
@@ -219,7 +225,11 @@ class HrTimesheetSheet(models.Model):
 
     @api.onchange('manager_id1')
     def _onchange_manager_id1(self):
-        if self.manager_id1:
+        if self.manager_id1 and self.employee_id.manager:
+            self.manager_id2 = self.manager_id1.parent_id
+        elif self.employee_id.department_id.manager_id:
+            self.manager_id2 = self.employee_id.department_id.manager_id
+        else:
             self.manager_id2 = self.manager_id1.parent_id
 
     @api.multi

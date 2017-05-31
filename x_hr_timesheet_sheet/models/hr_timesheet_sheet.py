@@ -30,7 +30,10 @@ class HrTimesheetSheet(models.Model):
         employee = self.env['hr.employee'].search(
                 [('user_id', '=', self.env.uid)], limit=1)
         if employee.manager:
-            default_manager2 = employee.parent_id.parent_id
+            if employee.parent_id.parent_id:
+                default_manager2 = employee.parent_id.parent_id
+            else:
+                default_manager2 = employee.parent_id
         elif employee.department_id.manager_id:
             default_manager2 = employee.department_id.manager_id
         else:
@@ -226,7 +229,10 @@ class HrTimesheetSheet(models.Model):
     @api.onchange('manager_id1')
     def _onchange_manager_id1(self):
         if self.manager_id1 and self.employee_id.manager:
-            self.manager_id2 = self.manager_id1.parent_id
+            if self.manager_id1.parent_id:
+                self.manager_id2 = self.manager_id1.parent_id
+            else:
+                self.manager_id2 = self.manager_id1
         elif self.employee_id.department_id.manager_id:
             self.manager_id2 = self.employee_id.department_id.manager_id
         else:

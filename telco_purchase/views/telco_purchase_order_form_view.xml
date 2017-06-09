@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="telco_purchase_order_form_view" model="ir.ui.view">
+      <field name="name">telco purchase order form</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id"
+          ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
+
+        <!-- invisible name in Products tab -->
+        <xpath expr="//notebook/page[1]/field/tree/field[@name='name']"
+            position="replace">
+            <field name="name" invisible="1"/>
+        </xpath>
+
+        <!-- invisible date_planned in Products tab -->
+        <xpath expr="//notebook/page[1]/field/tree/field[@name='date_planned']"
+            position="replace">
+            <field name="date_planned" invisible="1"/>
+        </xpath>
+
+      </field>
+  </record>
+
+</odoo>

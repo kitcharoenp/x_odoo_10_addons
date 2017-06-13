@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-
 {
     'name': 'Enhancement - HR Holidays',
     'license': 'AGPL-3',
     'category': 'Human Resources',
+    "author": "kicharoenp@gmail.com",
     'version': '1.0',
     'sequence': 125,
     'description': """

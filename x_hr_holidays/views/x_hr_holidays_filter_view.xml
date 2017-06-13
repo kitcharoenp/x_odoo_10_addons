@@ -11,12 +11,15 @@
                 <!-- filter a validate user according to manager and state -->
                 <filter name="approve"
                     string="To Approve"
-                    domain="['|',
+                    domain="['|', '|',
                         '&amp;',
-                        ('state','=','confirm'),
+                        ('state','in',('confirm','validate1')),
+                        ('department_id.manager_id.user_id', '=', uid),
+                        '&amp;',
+                        ('state','in',('confirm','validate1')),
                         ('manager_id.user_id', '=', uid),
                         '&amp;',
-                        ('state','=','validate1'),
+                        ('state','in',('confirm','validate1')),
                         ('manager_id2.user_id', '=', uid)]"
                 />
             </filter>

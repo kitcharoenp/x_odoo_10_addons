@@ -15,6 +15,7 @@ Show a Employee image on Leave
     'summary': 'Show a Employee image on Leave',
     'data': [
         # Views
+        'views/x_hr_holidays_emp_image_form_view.xml',
     ],
 
     'installable': True,

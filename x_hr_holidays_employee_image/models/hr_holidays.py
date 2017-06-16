@@ -17,8 +17,8 @@ class Holidays(models.Model):
         string="Employee Image (medium)")
 
     @api.onchange('employee_id')
-    def onchange_employee_id(self):
-        super(Holidays, self).onchange_employee_id()
+    def _onchange_employee(self):
+        super(Holidays, self)._onchange_employee()
         if self.employee_id:
             self.image_medium = self.employee_id.image
         else:

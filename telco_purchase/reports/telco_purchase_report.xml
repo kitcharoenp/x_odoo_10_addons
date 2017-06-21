@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--
+    QWeb Reports see parameter description at
+    https://www.odoo.com/documentation/10.0/reference/reports.html
+-->
+
+    <!-- paper format -->
+    <record id="telco_purchase_paperformat" model="report.paperformat">
+        <field name="name">Telco Purchase</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False" />
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- make button to print report -->
+    <report id="telco_purchase_pdf_report"
+            model="purchase.order"
+            string="Payment Report by PO"
+            report_type="qweb-html"
+            name="telco_purchase.payment_report_by_po_templates"
+            file="telco_purchase.payment_report_by_po_templates"
+            paperformat="telco_purchase.telco_purchase_paperformat"
+    />
+</odoo>

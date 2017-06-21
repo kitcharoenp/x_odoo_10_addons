@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="payment_report_by_po_document">
+    <t t-call="report.external_layout">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+        <div class="page">
+            <div class="oe_structure"/>
+            <div class="row">
+                <div class="col-xs-6">
+                    <strong>Shipping address:</strong>
+                    <div t-if="o.dest_address_id">
+                        <div t-field="o.dest_address_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True, "phone_icons": True}'/>
+                    </div>
+
+                    <div t-if="not o.dest_address_id and o.picking_type_id and o.picking_type_id.warehouse_id">
+                        <span t-field="o.picking_type_id.warehouse_id.name"/>
+                        <div t-field="o.picking_type_id.warehouse_id.partner_id"
+                            t-options='{"widget": "contact", "fields": ["address", "phone", "fax"], "no_marker": True, "phone_icons": True}'/>
+                    </div>
+                </div>
+                <div class="col-xs-5 col-xs-offset-1">
+                    <div t-field="o.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True, "phone_icons": True}'/>
+                        <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
+                </div>
+            </div>
+            <!-- sequence number -->
+            <h2><span t-field="o.name"/></h2>
+
+            <div class="row mt32 mb32">
+                <div t-if="o.origin" class="col-xs-3">
+                    <strong>Source Document:</strong>
+                    <p t-field="o.origin"/>
+                </div>
+                <div t-if="o.partner_ref" class="col-xs-3">
+                    <strong>Your Order Reference</strong>
+                    <p t-field="o.partner_ref"/>
+                </div>
+                <div t-if="o.date_order" class="col-xs-3">
+                    <strong>Order Date:</strong>
+                    <p t-field="o.date_order"/>
+                </div>
+            </div>
+
+            <!-- sort the related invoice by number asc -->
+            <t  t-set="invoice_ids_sorted"
+                t-value="o.invoice_ids.sorted(key=lambda r: r.number)"
+            />
+
+            <table class="table table-condensed">
+              <!-- table head  -->
+                <thead>
+                    <tr>
+                        <th><strong>Description</strong></th>
+                        <th class="text-right"><strong>Amount</strong></th>
+
+                        <!-- list invoices related to this purchase order  -->
+                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                          <th class="text-right">
+                            <strong>
+                              <span t-field="invoice_id.number"/>
+                            </strong>
+                          </th>
+                        </t>
+
+                        <th class="text-right"><strong>Total</strong></th>
+                        <th class="text-right"><strong>Amount Due</strong></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr t-foreach="o.order_line" t-as="line">
+                        <td class="text-left">
+                            <span t-field="line.name"/>
+                        </td>
+                        <td class="text-right">
+                          <span t-field="line.price_subtotal"
+                              t-options='{"widget": "False"}'/>
+                        </td>
+
+                        <!-- list invoices line related to this po line -->
+                        <t t-set="total" t-value="0"/>
+                        <!-- loop each invoice and then make column -->
+                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
+                              <td class="text-right">
+                                <!-- find invoice_line in each invoice_id -->
+                                <t t-foreach="line.invoice_lines" t-as="invoice_line">
+                                    <t t-if="invoice_id_sorted.number == invoice_line.invoice_id.number">
+                                      <span t-esc="invoice_line.quantity * invoice_line.price_unit"
+                                        t-options='{"widget": "False"}'/>
+                                      <!-- sum purchase invoice line total -->
+                                      <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                    </t>
+                                </t>
+                              </td>
+                        </t>
+
+                        <td class="text-right">
+                            <span t-esc="total"
+                                t-options='{"widget": "False"}'/>
+                        </td>
+                        <td class="text-right">
+                          <span t-esc="line.price_subtotal-total"
+                              t-options='{"widget": "False"}'/>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <t t-set="tax_lines_all" t-value="[]"/>
+                <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                  <t t-foreach="invoice_id.tax_line_ids" t-as="tax_line_id">
+                    <t t-set="tax_lines_all" t-value="tax_lines_all + [tax_line_id]"/>
+                  </t>
+                </t>
+
+                <!-- table foot  -->
+                <tfoot>
+
+                    <tr>
+                        <th><strong>Sum</strong></th>
+                        <th class="text-right">
+                          <strong>
+                            <span t-field="o.amount_untaxed"
+                              t-options='{"widget": "False"}'/>
+                          </strong>
+                        </th>
+
+                        <!-- list invoices related to this purchase order  -->
+                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                          <th class="text-right">
+                            <strong>
+                              <span t-field="invoice_id.amount_untaxed"
+                                  t-options='{"widget": "False"}'/>
+                            </strong>
+                          </th>
+                        </t>
+
+                        <th class="text-right"><strong>Total</strong></th>
+                        <th class="text-right"><strong>Amount Due</strong></th>
+                    </tr>
+
+                    <!-- tax  -->
+                    <tr t-foreach="tax_lines_all" t-as="tax_line">
+                        <td class="text-left" colspan="2">
+                            <span t-field="tax_line.name"/>
+                        </td>
+                        <!-- -->
+                        <t t-set="total" t-value="0"/>
+                        <!-- -->
+                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
+                              <td class="text-right">
+                                <!--  -->
+                                <t t-foreach="invoice_id_sorted.tax_line_ids" t-as="invoice_tax_line">
+                                    <t t-if="invoice_tax_line.name == tax_line.name">
+                                      <span t-field="invoice_tax_line.amount"
+                                        t-options='{"widget": "False"}'/>
+                                      <!--  -->
+                                      <t t-set="total" t-value="total+invoice_tax_line.amount"/>
+                                    </t>
+                                </t>
+                              </td>
+                        </t>
+
+                        <td class="text-right">
+                            <span t-esc="total"/>
+                        </td>
+                        <td class="text-right">
+                          Amount Due
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><strong>Paid</strong></th>
+                        <th class="text-right"><strong>Null</strong></th>
+
+                        <!-- list invoices related to this purchase order  -->
+                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                          <th class="text-right">
+                            <strong>
+                              <span t-field="invoice_id.amount_total"
+                                  t-options='{"widget": "False"}'/>
+                            </strong>
+                          </th>
+                        </t>
+
+                        <th class="text-right"><strong>Total</strong></th>
+                        <th class="text-right"><strong>Amount Due</strong></th>
+                    </tr>
+                </tfoot>
+            </table>
+
+
+            <div class="row">
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>Total Without Taxes</strong></td>
+                            <td class="text-right">
+                                <span t-field="o.amount_untaxed"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Taxes</td>
+                            <td class="text-right">
+                                <span t-field="o.amount_tax"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                        <tr class="border-black">
+                            <td><strong>Total</strong></td>
+                            <td class="text-right">
+                                <span t-field="o.amount_total"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <p t-field="o.notes"/>
+            <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+
+<template id="payment_report_by_po_templates">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t  t-call="telco_purchase.payment_report_by_po_document"
+                t-lang="o.partner_id.lang"
+            />
+        </t>
+    </t>
+</template>
+
+</odoo>

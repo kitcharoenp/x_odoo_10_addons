@@ -1,82 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+  <template id="payment_report_by_po_layout" inherit_id="report.external_layout" primary="True">
+      <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+          <attribute name="t-call">telco_purchase.payment_report_by_po_header</attribute>
+      </xpath>
+      <xpath expr="//t[@t-call='report.external_layout_footer']" position="attributes">
+          <attribute name="t-call">telco_purchase.payment_report_by_po_footer</attribute>
+      </xpath>
+  </template>
+
+  <template id="payment_report_by_po_header" inherit_id="report.external_layout_header" primary="True">
+      <xpath expr="//div[@name='company_address']" position="replace">
+          <div>
+              <style>
+                  body {
+                      font-family:freeserif;
+                  }
+              </style>
+              <br/>
+              <div class="row">
+                  <div class="col-xs-7 col-xs-offset-2 text-center" >
+                      <span style="font-size:23px;">
+                          <b>Payment / Purchase Summary</b>
+                      </span>
+                  </div>
+                  <div class="col-xs-3 text-right" >
+                      <span style="font-size:13px;">
+                          <span t-field="o.name"/>
+                      </span>
+                  </div>
+              </div>
+          </div>
+      </xpath>
+  </template>
+
+  <template id="payment_report_by_po_footer" inherit_id="report.external_layout_footer" primary="True">
+      <xpath expr="//div[@class='text-center']" position="before">
+          <div class="text-center"
+              style=" color: black; font-weight: bold; font-size:11px;">
+              <!-- include CSS  -->
+              <style>
+                      body {
+                          font-family:freeserif;
+                      }
+              </style>
+              <div class="row zero_min_height">
+                      <div class="col-xs-12">
+                          <div style="border-bottom: 1px solid black;"></div>
+                      </div><!-- /.col-xs-12 -->
+                      <br/>
+              </div><!-- /.row zero_min_height -->
+                  <!-- Signature -->
+              <div class="row">
+                  <div class="col-xs-3 text-center" >
+                      <ul style="list-style-type: none; font-size:11px;">
+
+                          <li><br/><br/><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li>ผู้จัดทำ และตรวจสอบ</li>
+                          <li>Administrator</li>
+                      </ul>
+                  </div>
+
+                  <div class="col-xs-3 text-center" >
+                      <ul style="list-style-type: none; font-size:11px;">
+
+                          <li><br/><br/><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li>วินัย ไพบูลย์กุลวงศ์</li>
+                          <li>Deputy Network Operation Director</li>
+                      </ul>
+                  </div>
+                  <div class="col-xs-3 text-center" >
+                      <ul style="list-style-type: none; font-size:11px;">
+
+                          <li><br/><br/><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li>ดาริกา แตงตรง</li>
+                          <li>Accounting Director</li>
+                      </ul>
+                  </div>
+                  <div class="col-xs-3 text-center" >
+                      <ul style="list-style-type: none; font-size:11px;">
+
+                          <li><br/><br/><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li>ณัฐนัย อนันตรัมพร</li>
+                          <li>Managing Director</li>
+                      </ul>
+                  </div>
+              </div><!-- /.row -->
+          </div>
+      </xpath>
+  </template>
+
 <template id="payment_report_by_po_document">
-    <t t-call="report.external_layout">
+    <t t-call="telco_purchase.payment_report_by_po_layout">
         <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
         <div class="page">
+          <!-- include CSS  -->
+          <style>
+              /* --- Generic Restyling and Resets --- */
+              body {
+                  font-family:freeserif;
+              }
+              table, th, td {
+                  font-size: 11px;
+                  border: 1px solid #ababab !important;
+                  margin-bottom: 0px !important;
+                  border-collapse: collapse !important;
+                  vertical-align: middle !important;
+              }
+              td {
+                  padding: 3px !important;
+              }
+          </style>
             <div class="oe_structure"/>
-            <div class="row">
-                <div class="col-xs-6">
-                    <strong>Shipping address:</strong>
-                    <div t-if="o.dest_address_id">
-                        <div t-field="o.dest_address_id"
-                            t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True, "phone_icons": True}'/>
-                    </div>
 
-                    <div t-if="not o.dest_address_id and o.picking_type_id and o.picking_type_id.warehouse_id">
-                        <span t-field="o.picking_type_id.warehouse_id.name"/>
-                        <div t-field="o.picking_type_id.warehouse_id.partner_id"
-                            t-options='{"widget": "contact", "fields": ["address", "phone", "fax"], "no_marker": True, "phone_icons": True}'/>
-                    </div>
-                </div>
-                <div class="col-xs-5 col-xs-offset-1">
-                    <div t-field="o.partner_id"
-                        t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True, "phone_icons": True}'/>
-                        <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
-                </div>
-            </div>
-            <!-- sequence number -->
-            <h2><span t-field="o.name"/></h2>
+            <!-- invoice -->
+              <table class="table table-bordered" style="table-layout:auto">
+                <tr>
+                  <th class="col-xs-2"><strong>Project</strong></th>
+                  <td colspan="3"><span t-field="o.company_id.name"/></td>
+                </tr>
+                <tr>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Source doc.</strong></th>
+                  <td class="col-xs-4"><span t-field="o.origin"/></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Other ref.</strong></th>
+                  <td class="col-xs-4"><span t-field="o.name"/></td>
+                </tr>
+                <tr>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Vendor</strong></th>
+                  <td class="col-xs-4"><span t-field="o.partner_id.name"/></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Amount</strong></th>
+                  <td class="col-xs-4"><span t-field="o.amount_total"/></td>
+                </tr>
 
-            <div class="row mt32 mb32">
-                <div t-if="o.origin" class="col-xs-3">
-                    <strong>Source Document:</strong>
-                    <p t-field="o.origin"/>
-                </div>
-                <div t-if="o.partner_ref" class="col-xs-3">
-                    <strong>Your Order Reference</strong>
-                    <p t-field="o.partner_ref"/>
-                </div>
-                <div t-if="o.date_order" class="col-xs-3">
-                    <strong>Order Date:</strong>
-                    <p t-field="o.date_order"/>
-                </div>
-            </div>
+              </table>
 
+
+            <h4>Items Information</h4>
             <!-- sort the related invoice by number asc -->
             <t  t-set="invoice_ids_sorted"
                 t-value="o.invoice_ids.sorted(key=lambda r: r.number)"
             />
 
+            <!-- invoice line -->
             <table class="table table-condensed">
               <!-- table head  -->
                 <thead>
-                    <tr>
-                        <th><strong>Description</strong></th>
-                        <th class="text-right"><strong>Amount</strong></th>
+                    <tr class="text-center" style="background-color: #a6a6a6;">
+                        <th class="text-left"><strong>No.</strong></th>
+                        <th class="text-center col-xs-5"><strong>Description</strong></th>
+                        <th class="text-center"><strong>Amount</strong></th>
 
                         <!-- list invoices related to this purchase order  -->
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
-                          <th class="text-right">
+                          <th class="text-center">
                             <strong>
                               <span t-field="invoice_id.number"/>
                             </strong>
                           </th>
                         </t>
 
-                        <th class="text-right"><strong>Total</strong></th>
-                        <th class="text-right"><strong>Amount Due</strong></th>
+                        <th class="text-center"><strong>Total</strong></th>
+                        <th class="text-center"><strong>Amount Due</strong></th>
                     </tr>
                 </thead>
 
                 <tbody>
+                    <t t-set="no" t-value="0"/>
                     <tr t-foreach="o.order_line" t-as="line">
+                        <t t-set="no" t-value="no+1"/>
                         <td class="text-left">
+                            <span t-esc="no"/>.
+                        </td>
+                        <td class="text-left col-xs-5" style="font-size: 9px;">
                             <span t-field="line.name"/>
                         </td>
-                        <td class="text-right">
-                          <span t-field="line.price_subtotal"
+                        <td class="text-right" style="background-color: #DEDEDE;">
+                          <span t-esc="'%.2f'% line.price_subtotal"
                               t-options='{"widget": "False"}'/>
                         </td>
 
@@ -88,7 +196,7 @@
                                 <!-- find invoice_line in each invoice_id -->
                                 <t t-foreach="line.invoice_lines" t-as="invoice_line">
                                     <t t-if="invoice_id_sorted.number == invoice_line.invoice_id.number">
-                                      <span t-esc="invoice_line.quantity * invoice_line.price_unit"
+                                      <span t-esc="'%.2f'% (invoice_line.quantity * invoice_line.price_unit)"
                                         t-options='{"widget": "False"}'/>
                                       <!-- sum purchase invoice line total -->
                                       <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
@@ -98,11 +206,11 @@
                         </t>
 
                         <td class="text-right">
-                            <span t-esc="total"
+                            <span t-esc="'%.2f'% total"
                                 t-options='{"widget": "False"}'/>
                         </td>
                         <td class="text-right">
-                          <span t-esc="line.price_subtotal-total"
+                          <span t-esc="'%.2f'% (line.price_subtotal-total)"
                               t-options='{"widget": "False"}'/>
                         </td>
                     </tr>
@@ -118,34 +226,36 @@
                 <!-- table foot  -->
                 <tfoot>
 
-                    <tr>
-                        <th><strong>Sum</strong></th>
+                    <tr style="background-color: #a6a6a6;">
+                        <th colspan="2"><strong>Sum</strong></th>
                         <th class="text-right">
-                          <strong>
-                            <span t-field="o.amount_untaxed"
+                          <strong><u>
+                            <span t-esc="'%.2f'% o.amount_untaxed"
                               t-options='{"widget": "False"}'/>
-                          </strong>
+                          </u></strong>
                         </th>
 
                         <!-- list invoices related to this purchase order  -->
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <th class="text-right">
                             <strong>
-                              <span t-field="invoice_id.amount_untaxed"
+                              <span t-esc="'%.2f'% invoice_id.amount_untaxed"
                                   t-options='{"widget": "False"}'/>
                             </strong>
                           </th>
                         </t>
 
-                        <th class="text-right"><strong>Total</strong></th>
-                        <th class="text-right"><strong>Amount Due</strong></th>
+                        <th class="text-right"><strong><u>Total</u></strong></th>
+                        <th class="text-right"><strong></strong></th>
                     </tr>
 
                     <!-- tax  -->
                     <tr t-foreach="tax_lines_all" t-as="tax_line">
-                        <td class="text-left" colspan="2">
+                        <td>-</td>
+                        <td class="text-left">
                             <span t-field="tax_line.name"/>
                         </td>
+                        <td class="text-left"><strong></strong></td>
                         <!-- -->
                         <t t-set="total" t-value="0"/>
                         <!-- -->
@@ -154,7 +264,7 @@
                                 <!--  -->
                                 <t t-foreach="invoice_id_sorted.tax_line_ids" t-as="invoice_tax_line">
                                     <t t-if="invoice_tax_line.name == tax_line.name">
-                                      <span t-field="invoice_tax_line.amount"
+                                      <span t-esc="'%.2f'% invoice_tax_line.amount"
                                         t-options='{"widget": "False"}'/>
                                       <!--  -->
                                       <t t-set="total" t-value="total+invoice_tax_line.amount"/>
@@ -164,63 +274,31 @@
                         </t>
 
                         <td class="text-right">
-                            <span t-esc="total"/>
+                            <span t-esc="'%.2f'% total"/>
                         </td>
-                        <td class="text-right">
-                          Amount Due
-                        </td>
+                        <td class="text-right"></td>
                     </tr>
 
-                    <tr>
-                        <th><strong>Paid</strong></th>
-                        <th class="text-right"><strong>Null</strong></th>
+                    <tr style="background-color: #a6a6a6;">
+                        <th colspan="2"><strong>Paid</strong></th>
+                        <th class="text-right"><strong></strong></th>
 
                         <!-- list invoices related to this purchase order  -->
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <th class="text-right">
                             <strong>
-                              <span t-field="invoice_id.amount_total"
+                              <span t-esc="'%.2f'% invoice_id.amount_total"
                                   t-options='{"widget": "False"}'/>
                             </strong>
                           </th>
                         </t>
 
-                        <th class="text-right"><strong>Total</strong></th>
-                        <th class="text-right"><strong>Amount Due</strong></th>
+                        <th class="text-right"><strong></strong></th>
+                        <th class="text-right"><strong></strong></th>
                     </tr>
                 </tfoot>
             </table>
 
-
-            <div class="row">
-                <div class="col-xs-4 pull-right">
-                    <table class="table table-condensed">
-                        <tr class="border-black">
-                            <td><strong>Total Without Taxes</strong></td>
-                            <td class="text-right">
-                                <span t-field="o.amount_untaxed"
-                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Taxes</td>
-                            <td class="text-right">
-                                <span t-field="o.amount_tax"
-                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                            </td>
-                        </tr>
-                        <tr class="border-black">
-                            <td><strong>Total</strong></td>
-                            <td class="text-right">
-                                <span t-field="o.amount_total"
-                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <p t-field="o.notes"/>
             <div class="oe_structure"/>
         </div>
     </t>

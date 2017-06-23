@@ -46,6 +46,9 @@
                       }
               </style>
               <div class="row zero_min_height">
+                <div class="col-xs-4 pull-right text-right" style="font-size:8px;">
+                      printed @ <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
+                </div>
                       <div class="col-xs-12">
                           <div style="border-bottom: 1px solid black;"></div>
                       </div><!-- /.col-xs-12 -->
@@ -60,9 +63,9 @@
 
                           <li><br/><br/><br/></li>
                           <li>________________</li>
-                          <li>______/_____/_____</li>
-                          <li>ผู้จัดทำ และตรวจสอบ</li>
-                          <li>Administrator</li>
+                          <li><span t-esc="datetime.datetime.now().strftime('%d / %m / %Y')"/></li>
+                          <li><span t-field="user.employee_ids[0].name"/></li>
+                          <li><span t-field="user.employee_ids[0].job_id.name"/></li>
                       </ul>
                   </div>
                   <!-- department manager -->
@@ -177,8 +180,11 @@
                     </tr>
                 </thead>
 
+                <t t-set="no" t-value="0"/>
+                <t t-set="total_untaxed" t-value="0"/>
+                <t t-set="total_due" t-value="0"/>
+
                 <tbody>
-                    <t t-set="no" t-value="0"/>
                     <tr t-foreach="o.order_line" t-as="line">
                         <t t-set="no" t-value="no+1"/>
                         <td class="text-left">
@@ -217,6 +223,8 @@
                           <span t-esc="'%.2f'% (line.price_subtotal-total)"
                               t-options='{"widget": "False"}'/>
                         </td>
+                        <t t-set="total_untaxed" t-value="total_untaxed+total"/>
+                        <t t-set="total_due" t-value="total_due+(line.price_subtotal-total)"/>
                     </tr>
                 </tbody>
 
@@ -231,7 +239,7 @@
                 <tfoot>
 
                     <tr style="background-color: #a6a6a6;">
-                        <th colspan="2"><strong>Sum</strong></th>
+                        <th colspan="2"><strong>Sum (Untaxed)</strong></th>
                         <th class="text-right">
                           <strong><u>
                             <span t-esc="'%.2f'% o.amount_untaxed"
@@ -249,8 +257,18 @@
                           </th>
                         </t>
 
-                        <th class="text-right"><strong><u>Total</u></strong></th>
-                        <th class="text-right"><strong></strong></th>
+                        <th class="text-right">
+                          <strong>
+                            <u><span t-esc="'%.2f'% total_untaxed"
+                                t-options='{"widget": "False"}'/></u>
+                          </strong>
+                        </th>
+                        <th class="text-right">
+                          <strong>
+                            <u><span t-esc="'%.2f'% total_due"
+                                t-options='{"widget": "False"}'/></u>
+                          </strong>
+                        </th>
                     </tr>
 
                     <!-- tax  -->

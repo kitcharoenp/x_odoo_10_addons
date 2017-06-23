@@ -8,8 +8,10 @@
     'version': '0.01',
     'category': 'Purchases',
     "author": "kicharoenp@gmail.com",
-    'summary': 'Purchase Orders for TeleCom Company',
+    'summary': 'Purchase Orders for TeleComunication Company',
     'description': """
+        1. Payment report per a purchase Order
+        2. New Managing , Accounting Director fields in ResCompany Model
     """,
     'depends': ['purchase'],
     'data': [
@@ -17,6 +19,7 @@
         # Views
         'views/telco_purchase_order_tree_view.xml',
         'views/telco_purchase_order_form_view.xml',
+        'views/telco_purchase_rescompany_form_view.xml',
         # Reports and Templates
         'reports/telco_purchase_report.xml',
         'reports/templates/payment_report_by_po_templates.xml',

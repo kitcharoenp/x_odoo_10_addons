@@ -22,7 +22,7 @@
     <!-- make button to print report -->
     <report id="telco_purchase_pdf_report"
             model="purchase.order"
-            string="Payment Report by PO"
+            string="Payment Report"
             report_type="qweb-html"
             name="telco_purchase.payment_report_by_po_templates"
             file="telco_purchase.payment_report_by_po_templates"

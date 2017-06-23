@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- Company -->
+  <record id="telco_purchase_rescompany_form_view" model="ir.ui.view">
+      <field name="name">Telco Purchase Company Form</field>
+      <field name="model">res.company</field>
+      <field name="inherit_id" ref="base.view_company_form"/>
+      <field name="arch" type="xml">
+        <!-- append  managing_director_id, accounting_director_id field
+          after website field -->
+          <xpath expr="//field[@name='website']" position="after">
+              <field name="x_managing_director_id"/>
+              <field name="x_accounting_director_id"/>
+          </xpath>
+
+      </field>
+  </record>
+
+</odoo>

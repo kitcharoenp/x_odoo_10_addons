@@ -51,7 +51,7 @@
                       </div><!-- /.col-xs-12 -->
                       <br/>
               </div><!-- /.row zero_min_height -->
-              
+
                   <!-- Signature -->
               <div class="row">
                 <!-- prepare employee -->
@@ -72,8 +72,8 @@
                           <li><br/><br/><br/></li>
                           <li>________________</li>
                           <li>______/_____/_____</li>
-                          <li>วินัย ไพบูลย์กุลวงศ์</li>
-                          <li>Deputy Network Operation Director</li>
+                          <li><span t-field="o.x_manager_id.name"/></li>
+                          <li><span t-field="o.x_manager_id.job_id.name"/></li>
                       </ul>
                   </div>
                   <!-- company accounting director -->
@@ -130,13 +130,13 @@
               <table class="table table-bordered" style="table-layout:auto">
                 <tr>
                   <th class="col-xs-2"><strong>Project</strong></th>
-                  <td colspan="3"><span t-field="o.company_id.name"/></td>
+                  <td colspan="3"><span t-field="o.x_account_analytic_id.name"/></td>
                 </tr>
                 <tr>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Other ref.</strong></th>
+                  <td class="col-xs-4"><span t-field="o.x_other_ref"/></td>
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Source doc.</strong></th>
                   <td class="col-xs-4"><span t-field="o.origin"/></td>
-                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Other ref.</strong></th>
-                  <td class="col-xs-4"><span t-field="o.name"/></td>
                 </tr>
                 <tr>
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Vendor</strong></th>

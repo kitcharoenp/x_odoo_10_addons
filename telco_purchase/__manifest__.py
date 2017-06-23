@@ -8,10 +8,11 @@
     'version': '0.01',
     'category': 'Purchases',
     "author": "kicharoenp@gmail.com",
-    'summary': 'Purchase Orders for TeleComunication Company',
+    'summary': 'Purchase Orders for Telecommunications Company',
     'description': """
         1. Payment report per a purchase Order
         2. New Managing , Accounting Director fields in ResCompany Model
+        3. New Project, Requestor, Manager, Other ref fields in PurchaseOrder Model
     """,
     'depends': ['purchase'],
     'data': [

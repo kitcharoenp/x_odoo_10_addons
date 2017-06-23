@@ -13,11 +13,30 @@
             position="replace">
             <field name="name" invisible="1"/>
         </xpath>
-
+        
         <!-- invisible date_planned in Products tab -->
         <xpath expr="//notebook/page[1]/field/tree/field[@name='date_planned']"
             position="replace">
             <field name="date_planned" invisible="1"/>
+        </xpath>
+
+        <!-- append Telco to Product tab -->
+        <xpath expr="//form/sheet/notebook/page[1]" position="after">
+          <page string="Telco">
+            <group>
+              <group>
+                <field name="x_account_analytic_id" string="Project"/>
+                <field name="x_other_ref"/>
+              </group>
+              <group>
+                <field name="x_manager_id"/>
+                <field name="x_requestor_id"/>
+              </group>
+              <group>
+
+              </group>
+            </group>
+          </page>
         </xpath>
 
       </field>

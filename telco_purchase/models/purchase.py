@@ -3,7 +3,7 @@
 # @copyright Copyright (C) 2017
 # @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
 
-from odoo import fields, models
+from odoo import api, fields, models, _
 
 
 class PurchaseOrder(models.Model):

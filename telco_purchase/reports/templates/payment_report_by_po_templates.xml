@@ -47,7 +47,7 @@
               </style>
               <div class="row zero_min_height">
                 <div class="col-xs-4 pull-right text-right" style="font-size:8px;">
-                      printed @ <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
+                      printed @ <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
                 </div>
                       <div class="col-xs-12">
                           <div style="border-bottom: 1px solid black;"></div>

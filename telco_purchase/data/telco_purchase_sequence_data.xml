@@ -4,7 +4,7 @@
   <record id="purchase.seq_purchase_order" model="ir.sequence">
       <field name="name">Purchase Order</field>
       <field name="code">purchase.order</field>
-      <field name="prefix">POT-%(range_year)s%(month)s-</field>
+      <field name="prefix">PT-%(range_year)s%(month)s-</field>
       <field name="padding">5</field>
       <field name="use_date_range" eval="True"/>
       <field name="company_id" eval="False"/>

@@ -205,7 +205,7 @@
                               <td class="text-right">
                                 <!-- find invoice_line in each invoice_id -->
                                 <t t-foreach="line.invoice_lines" t-as="invoice_line">
-                                    <t t-if="invoice_id_sorted.number == invoice_line.invoice_id.number">
+                                    <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id">
                                       <span t-esc="'%.2f'% (invoice_line.quantity * invoice_line.price_unit)"
                                         t-options='{"widget": "False"}'/>
                                       <!-- sum purchase invoice line total -->
@@ -228,10 +228,17 @@
                     </tr>
                 </tbody>
 
-                <t t-set="tax_lines_all" t-value="[]"/>
+                <t t-set="account_invoice_taxs" t-value="[]"/>
                 <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                   <t t-foreach="invoice_id.tax_line_ids" t-as="tax_line_id">
-                    <t t-set="tax_lines_all" t-value="tax_lines_all + [tax_line_id]"/>
+                    <t t-set="account_invoice_taxs" t-value="account_invoice_taxs + [tax_line_id]"/>
+                  </t>
+                </t>
+
+                <t t-set="account_taxs" t-value="[]"/>
+                <t t-foreach="account_invoice_taxs" t-as="account_invoice_tax">
+                    <t t-if="account_invoice_tax.tax_id not in account_taxs">
+                      <t t-set="account_taxs" t-value="account_taxs + [account_invoice_tax.tax_id]"/>
                   </t>
                 </t>
 
@@ -271,11 +278,11 @@
                         </th>
                     </tr>
 
-                    <!-- tax  -->
-                    <tr t-foreach="tax_lines_all" t-as="tax_line">
+                    <!-- tax line -->
+                    <tr t-foreach="account_taxs" t-as="tax">
                         <td>-</td>
                         <td class="text-left">
-                            <span t-field="tax_line.name"/>
+                            <span t-field="tax.name"/>
                         </td>
                         <td class="text-left"><strong></strong></td>
                         <!-- -->
@@ -285,7 +292,7 @@
                               <td class="text-right">
                                 <!--  -->
                                 <t t-foreach="invoice_id_sorted.tax_line_ids" t-as="invoice_tax_line">
-                                    <t t-if="invoice_tax_line.name == tax_line.name">
+                                    <t t-if="invoice_tax_line.name == tax.name">
                                       <span t-esc="'%.2f'% invoice_tax_line.amount"
                                         t-options='{"widget": "False"}'/>
                                       <!--  -->
@@ -301,17 +308,37 @@
                         <td class="text-right"></td>
                     </tr>
 
+                    <!-- sum tax -->
                     <tr style="background-color: #a6a6a6;">
-                        <th colspan="2"><strong>Paid</strong></th>
+                        <th colspan="2"><strong>Tax</strong></th>
                         <th class="text-right"><strong></strong></th>
 
                         <!-- list invoices related to this purchase order  -->
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <th class="text-right">
                             <strong>
-                              <span t-esc="'%.2f'% invoice_id.amount_total"
+                              <span t-esc="'%.2f'% invoice_id.amount_tax"
                                   t-options='{"widget": "False"}'/>
                             </strong>
+                          </th>
+                        </t>
+
+                        <th class="text-right"><strong></strong></th>
+                        <th class="text-right"><strong></strong></th>
+                    </tr>
+
+                    <!-- paid -->
+                    <tr>
+                        <th colspan="2"><strong>Paid</strong></th>
+                        <th class="text-right"><strong></strong></th>
+
+                        <!-- list invoices related to this purchase order  -->
+                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                          <th class="text-right">
+                            <u><strong>
+                              <span t-esc="'%.2f'% invoice_id.amount_total"
+                                  t-options='{"widget": "False"}'/>
+                            </strong></u>
                           </th>
                         </t>
 

@@ -136,7 +136,7 @@
                   <td colspan="3"><span t-field="o.x_account_analytic_id.name"/></td>
                 </tr>
                 <tr>
-                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Other ref.</strong></th>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>PO ref.</strong></th>
                   <td class="col-xs-4"><span t-field="o.x_other_ref"/></td>
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Source doc.</strong></th>
                   <td class="col-xs-4"><span t-field="o.origin"/></td>
@@ -168,9 +168,12 @@
 
                         <!-- list invoices related to this purchase order  -->
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
-                          <th class="text-center">
+                          <th class="text-center" style="font-size: 9px;">
                             <strong>
                               <span t-field="invoice_id.number"/>
+                              b@<span t-field="invoice_id.date_invoice"/>
+                              <span t-field="invoice_id.reference"/>
+                              p@<span t-field="invoice_id.date_due"/>
                             </strong>
                           </th>
                         </t>
@@ -292,7 +295,7 @@
                               <td class="text-right">
                                 <!--  -->
                                 <t t-foreach="invoice_id_sorted.tax_line_ids" t-as="invoice_tax_line">
-                                    <t t-if="invoice_tax_line.name == tax.name">
+                                    <t t-if="invoice_tax_line.tax_id.id == tax.id">
                                       <span t-esc="'%.2f'% invoice_tax_line.amount"
                                         t-options='{"widget": "False"}'/>
                                       <!--  -->

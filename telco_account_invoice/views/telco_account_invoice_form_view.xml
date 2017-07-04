@@ -55,4 +55,19 @@
       </field>
   </record>
 
+
+  <!-- invisible purchase_id field in account invoice form in purchase module -->
+  <record id="telco_account_invoice_supplier_purchase_form_view" model="ir.ui.view">
+      <field name="name">telco account invoice supplier purchase form</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id"
+          ref="purchase.view_invoice_supplier_purchase_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='purchase_id']"
+            position="attributes">
+            <attribute name='invisible'>1</attribute>
+        </xpath>
+      </field>
+  </record>
+
 </odoo>

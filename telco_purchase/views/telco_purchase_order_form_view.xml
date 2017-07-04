@@ -20,17 +20,43 @@
             <field name="date_planned" invisible="1"/>
         </xpath>
 
+        <!-- replace date order  by project  -->
+        <xpath expr="//field[@name='date_order']"
+            position="replace">
+            <field name="x_account_analytic_id" string="Project" options="{'no_create': True}"/>
+        </xpath>
+
+        <!-- replace partner reference by po ref  -->
+        <xpath expr="//field[@name='partner_ref']"
+            position="replace">
+            <field name="x_other_ref" string="PO ref."/>
+        </xpath>
+
+        <!-- replace partner reference by po ref  -->
+        <xpath expr="//field[@name='origin']"
+            position="replace">
+            <field name="date_order"/>
+        </xpath>
+
         <!-- append Telco to Product tab -->
         <xpath expr="//form/sheet/notebook/page[1]" position="after">
           <page string="Telco">
             <group>
               <group>
-                <field name="x_account_analytic_id" string="Project"/>
-                <field name="x_other_ref" string="PO ref."/>
+                <field name="partner_ref"/>
+                <field name="origin"/>
+                <field name="x_work_order_id"
+                        options="{'no_create': True}"
+                        invisible="1"/>
+                <field name="x_fault_id"
+                        options="{'no_create': True}"
+                        invisible="1"/>
               </group>
               <group>
-                <field name="x_manager_id"/>
-                <field name="x_requestor_id"/>
+                <field name="x_invoice_receipt_by" options="{'no_create': True}"/>
+                <field name="x_invoice_receipt_date"/>
+                <field name="x_manager_id" options="{'no_create': True}"/>
+                <field name="x_requestor_id" options="{'no_create': True}"/>
               </group>
               <group>
 

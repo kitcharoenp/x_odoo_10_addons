@@ -10,11 +10,15 @@
     "author": "kicharoenp@gmail.com",
     'summary': 'Purchase Orders for Telecommunications Company',
     'description': """
-        1. Payment report per a purchase Order
-        2. New Managing , Accounting Director fields in ResCompany Model
-        3. New Project, Requestor, Manager, Other ref fields in PurchaseOrder Model
+        1. Payment Report per a purchase Order
+        2. New managing , accounting director fields in ResCompany model
+        3. New project, requestor, manager, other ref fields
+        4. New work order, fault id, receipt by, invoice receipt date fields
     """,
-    'depends': ['purchase'],
+    'depends': ['purchase',
+                'telco_work_order',
+                'telco_fault_management',
+                ],
     'data': [
         'data/telco_purchase_sequence_data.xml',
         # Views

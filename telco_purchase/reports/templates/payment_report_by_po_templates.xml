@@ -138,8 +138,8 @@
                 <tr>
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>PO ref.</strong></th>
                   <td class="col-xs-4"><span t-field="o.x_other_ref"/></td>
-                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Source doc.</strong></th>
-                  <td class="col-xs-4"><span t-field="o.origin"/></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Order date</strong></th>
+                  <td class="col-xs-4"><span t-field="o.date_order" t-options='{"format": "dd-MM-YYYY"}'/></td>
                 </tr>
                 <tr>
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Vendor</strong></th>
@@ -167,13 +167,24 @@
                         <th class="text-center"><strong>Amount</strong></th>
 
                         <!-- list invoices related to this purchase order  -->
+                        <t t-set="lot" t-value="0"/>
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                          <t t-set="lot" t-value="lot+1"/>
                           <th class="text-center" style="font-size: 9px;">
                             <strong>
-                              <span t-field="invoice_id.number"/>
-                              b@<span t-field="invoice_id.date_invoice"/>
-                              <span t-field="invoice_id.reference"/>
-                              p@<span t-field="invoice_id.date_due"/>
+                              #<span t-esc="lot"/><br/>
+                              <t t-if="invoice_id.number">
+                                <u t-field="invoice_id.number"/><br/>
+                              </t>
+                              <t t-if="invoice_id.date_invoice">
+                                b@<span t-field="invoice_id.date_invoice"/><br/>
+                              </t>
+                              <t t-if="invoice_id.reference">
+                                <span t-field="invoice_id.reference"/><br/>
+                              </t>
+                              <t t-if="invoice_id.date_due">
+                                p@<u t-field="invoice_id.date_due"/><br/>
+                              </t>
                             </strong>
                           </th>
                         </t>

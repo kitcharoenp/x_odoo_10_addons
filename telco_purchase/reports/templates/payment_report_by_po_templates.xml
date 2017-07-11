@@ -173,9 +173,11 @@
                           <th class="text-center" style="font-size: 9px;">
                             <strong>
                               #<span t-esc="lot"/><br/>
+                            <!--
                               <t t-if="invoice_id.number">
                                 <u t-field="invoice_id.number"/><br/>
                               </t>
+                            -->
                               <t t-if="invoice_id.date_invoice">
                                 b@<span t-field="invoice_id.date_invoice"/><br/>
                               </t>
@@ -294,7 +296,7 @@
 
                     <!-- tax line -->
                     <tr t-foreach="account_taxs" t-as="tax">
-                        <td>-</td>
+                        <td></td>
                         <td class="text-left">
                             <span t-field="tax.name"/>
                         </td>
@@ -322,18 +324,25 @@
                         <td class="text-right"></td>
                     </tr>
 
-                    <!-- sum tax -->
-                    <tr style="background-color: #a6a6a6;">
-                        <th colspan="2"><strong>Tax</strong></th>
+                    <!-- total / tax -->
+                    <tr style="font-size:8px; background-color: #e8e8e8;">
+                        <th colspan="2"><strong></strong></th>
                         <th class="text-right"><strong></strong></th>
 
-                        <!-- list invoices related to this purchase order  -->
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <th class="text-right">
+                            <!--
                             <strong>
                               <span t-esc="'%.2f'% invoice_id.amount_tax"
                                   t-options='{"widget": "False"}'/>
+
                             </strong>
+                            -->
+                              <!-- bill amount_total -->
+                              <strong>
+                                <span style="font-size:8px;" t-esc="'%.2f'% invoice_id.amount_total"
+                                  t-options='{"widget": "False"}'/>
+                              </strong>
                           </th>
                         </t>
 
@@ -341,24 +350,50 @@
                         <th class="text-right"><strong></strong></th>
                     </tr>
 
-                    <!-- paid -->
-                    <tr>
-                        <th colspan="2"><strong>Paid</strong></th>
+                    <!-- payment -->
+                    <tr style="background-color: #98fb98;">
+                        <th colspan="2"><strong>Payment</strong></th>
                         <th class="text-right"><strong></strong></th>
 
-                        <!-- list invoices related to this purchase order  -->
+                        <!-- payment row -->
+                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                          <td class="text-right" style="font-size:8px;">
+                              <span t-foreach="invoice_id.payment_ids" t-as="payment_id">
+                                <p>
+                                  Paid on
+                                  <span t-field="payment_id.payment_date" t-options='{"format": "dd-MM-YYYY"}'/>
+                                  <u><strong>
+                                  <span style="font-size:13px; background-color: #98fb98;"
+                                    t-esc="'%.2f'% payment_id.amount"
+                                     t-options='{"widget": "False"}'/>
+                                  </strong></u>
+                                </p>
+                              </span>
+                          </td>
+                        </t>
+
+                        <th class="text-right"><strong></strong></th>
+                        <th class="text-right"><strong></strong></th>
+                    </tr>
+
+                    <!-- residual -->
+                    <tr style="background-color: #e8e8e8;">
+                        <th colspan="2"><strong>Amount Due</strong></th>
+                        <th class="text-right"><strong></strong></th>
+
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <th class="text-right">
-                            <u><strong>
-                              <span t-esc="'%.2f'% invoice_id.amount_total"
+                              <strong t-if="invoice_id.residual">
+                                <span style="font-size:8px;" t-esc="'%.2f'% invoice_id.residual"
                                   t-options='{"widget": "False"}'/>
-                            </strong></u>
+                              </strong>
                           </th>
                         </t>
 
                         <th class="text-right"><strong></strong></th>
                         <th class="text-right"><strong></strong></th>
                     </tr>
+
                 </tfoot>
             </table>
 

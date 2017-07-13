@@ -27,7 +27,7 @@ It is important to make sure that you and the business are clear
 about all the details. Ask for written confirmation
 that includes all of the information above.
     """,
-    'depends': ['purchase', 'sale'],
+    'depends': ['purchase'],
     'data': [
         # Actions
         'actions/telco_purchase_advance_payment_act_window.xml',

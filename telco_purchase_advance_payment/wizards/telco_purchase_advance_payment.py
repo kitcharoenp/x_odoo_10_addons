@@ -26,9 +26,12 @@ class TelcoPurchaseAdvancePayment(models.TransientModel):
             purchase_obj = self.env['purchase.order']
             purchase_order = purchase_obj.browse(
                 self._context.get('active_ids'))[0]
+            # fix invoice_policy on sale
+            """
             if all([line.product_id.invoice_policy == 'order'
                     for line in purchase_order.order_line]) or purchase_order.invoice_count:
                 return 'all'
+            """
         return 'delivered'
 
     # Deposit Product
@@ -190,12 +193,15 @@ class TelcoPurchaseAdvancePayment(models.TransientModel):
                     amount = order.amount_untaxed * self.amount / 100
                 else:
                     amount = self.amount
+                # fix invoice_policy on sale    
+                """
                 if self.product_id.invoice_policy != 'order':
                     raise UserError(_(
                         'The product used to invoice a down payment \
                         should have an invoice policy set to \
                         "Ordered quantities". Please update your deposit \
                         product to be able to create a deposit invoice.'))
+                """
                 if self.product_id.type != 'service':
                     raise UserError(_("The product used to invoice \
                     a down payment should be of type 'Service'. \
@@ -233,7 +239,8 @@ class TelcoPurchaseAdvancePayment(models.TransientModel):
         return {
             'name': 'Down payment',
             'type': 'service',
-            'invoice_policy': 'order',
+            # fix invoice_policy on sale
+            # 'invoice_policy': 'order',
             'property_account_expense_id': self.deposit_account_id.id,
             'supplier_taxes_id': [(6, 0, self.deposit_taxes_id.ids)],
         }

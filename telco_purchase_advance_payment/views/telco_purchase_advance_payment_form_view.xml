@@ -17,7 +17,9 @@
                       attrs="{'invisible': [('count','&gt;',1)]}"/>
                 <!-- product -->
                   <field name="product_id"
-                      context="{'search_default_services': 1, 'default_type': 'service', 'default_invoice_policy': 'order'}" class="oe_inline"
+                      context="{'search_default_services': 1,
+                                'default_type': 'service'}"
+                      class="oe_inline"
                       attrs="{'invisible': 1}"/>
                 <!-- amount -->
                   <label for="amount" attrs="{'invisible': [('advance_payment_method', 'not in', ('fixed','percentage'))]}"/>
@@ -42,7 +44,7 @@
               <!--
                   <button name="create_invoices" string="Create Invoices" type="object"
                       class="btn-primary"/>
-              -->        
+              -->
                   <button string="Cancel" class="btn-default" special="cancel"/>
               </footer>
           </form>

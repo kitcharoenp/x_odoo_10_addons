@@ -27,8 +27,7 @@ class TelcoPurchaseAdvancePayment(models.TransientModel):
             purchase_order = purchase_obj.browse(
                 self._context.get('active_ids'))[0]
             if all([line.product_id.invoice_policy == 'order'
-                    for line in purchase_order.order_line]) \
-                    or purchase_order.invoice_count:
+                    for line in purchase_order.order_line]) or purchase_order.invoice_count:
                 return 'all'
         return 'delivered'
 

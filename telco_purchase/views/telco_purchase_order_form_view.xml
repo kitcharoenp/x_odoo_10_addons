@@ -8,10 +8,22 @@
           ref="purchase.purchase_order_form"/>
       <field name="arch" type="xml">
 
-        <!-- invisible name in Products tab -->
-        <xpath expr="//notebook/page[1]/field/tree/field[@name='name']"
-            position="replace">
-            <field name="name" invisible="1"/>
+        <!-- change online editable to popup -->
+        <xpath expr="//notebook/page[1]/field/tree"
+            position="attributes">
+            <attribute name='editable'></attribute>
+        </xpath>
+
+        <!-- invisible product_id in Products tab -->
+        <xpath expr="//notebook/page[1]/field/tree/field[@name='product_id']"
+            position="attributes">
+            <attribute name='invisible'>1</attribute>
+        </xpath>
+
+        <!-- invisible company_id field -->
+        <xpath expr="//notebook/page[1]/field/tree/field[@name='company_id']"
+            position="attributes">
+            <attribute name='invisible'>1</attribute>
         </xpath>
 
         <!-- invisible date_planned in Products tab -->

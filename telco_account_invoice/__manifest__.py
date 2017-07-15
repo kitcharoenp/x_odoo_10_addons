@@ -10,6 +10,8 @@
     "author": "kicharoenp@gmail.com",
     'summary': 'Account Invoice for Telecommunications Company',
     'description': """
+        1. Pop-up editable the invoice license
+        2. Show a description insteade of product
     """,
     'depends': ['account', 'account_asset'],
     'data': [

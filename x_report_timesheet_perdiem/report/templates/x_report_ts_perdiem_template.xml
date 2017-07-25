@@ -54,7 +54,7 @@
                         ชื่อ-สกุล  <u><i><t t-esc="emp['emp']"/></i></u>
                     </span>
                     <span class="col-xs-4 employee_info">
-                        หน่วยงาน <u><i><t t-esc="emp['emp_department']"/></i></u>
+                        หน่วยงาน <u><i><t t-esc="emp['emp_department']['name']"/></i></u>
                     </span>
                     <span class="col-xs-4 employee_info">
                         ประจำจังหวัด
@@ -110,10 +110,15 @@
                     <div class="col-xs-3 text-center" >
                         <ul style="list-style-type: none; font-size:11px;">
                             <li>หัวหน้างาน</li>
-                            <li><br/><br/><br/></li>
-                            <li>________________</li>
+                            <li>
+                                <img t-if="emp['emp_department']['manager_id']['x_signature_img']"
+                                    t-att-src="'data:image/png;base64,%s' % (emp['emp_department']['manager_id']['x_signature_img'],)"
+                                    style="max-height:40pt;max-width:90%"/>
+                            </li>
                             <li>______/_____/_____</li>
-                            <li>วินัย ไพบูลย์กุลวงศ์</li>
+                            <li><t t-esc="emp['emp_department']['manager_id']['name']"/></li>
+                            <li><t t-esc="emp['emp_department']['manager_id']['job_id']['name']"/></li>
+                            <li><t t-esc="emp['emp_department']['manager_id']['mobile_phone']"/></li>
                         </ul>
                     </div>
                     <div class="col-xs-3 text-center" >

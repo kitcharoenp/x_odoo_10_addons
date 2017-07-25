@@ -161,7 +161,7 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                     res[len(res)-1]['data'].append({
                         'emp': emp.name,
                         'emp_job': emp.job_id.name,
-                        'emp_department': emp.department_id.name,
+                        'emp_department': emp.department_id,
                         'emp_mobile_phone': emp.mobile_phone,
                         'emp_barcode': emp.barcode,
                         'emp_signature': emp.x_signature_img,

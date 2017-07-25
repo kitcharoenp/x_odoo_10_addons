@@ -9,7 +9,7 @@
         <field name="margin_left">8</field>
         <field name="margin_right">8</field>
         <field name="margin_top">40</field>
-        <field name="margin_bottom">70</field>
+        <field name="margin_bottom">75</field>
         <field name="dpi">90</field>
     </record>
 

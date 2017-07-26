@@ -95,6 +95,9 @@
                                             <span>รายละเอียดของาน</span>
                                         </th>
                                         <th class="col-xs-1 text-center" >
+                                            <span>จังหวัด</span>
+                                        </th>
+                                        <th class="col-xs-1 text-center" >
                                             <span>ใช้รถทะเบียน</span>
                                         </th>
                                         <th class="col-xs-1 text-center" >
@@ -163,6 +166,10 @@
                                             </t>
                                             -->
                                         </td>
+                                        <!-- province -->
+                                        <td class="col-xs-1 text-center" >
+                                            <span t-field="l.x_state_id.name"/>
+                                        </td>
                                         <!-- vehicle plate -->
                                         <td class="col-xs-1 text-center" >
                                             <span t-field="l.x_vehicle_id.license_plate"/>
@@ -218,11 +225,11 @@
                 </table>
                 </div><!-- /.row -->
                 <div class="row">
-                    <div class="col-xs-9 text-right">รวมจำนวนชั่วโมง</div>
+                    <div class="col-xs-10 text-right">รวมจำนวนชั่วโมง</div>
                     <div class="col-xs-1 text-right">
                         <span t-esc="'%02d:%02d' % (int(str(x_over_time_total).split('.')[0]), int(float(str('%.2f' % x_over_time_total).split('.')[1])/100*60))" />
                     </div>
-                    <div class="col-xs-2">ชั่วโมง</div>
+                    <div class="col-xs-1">ชั่วโมง</div>
                 </div>
 
             </div> <!-- /.page -->

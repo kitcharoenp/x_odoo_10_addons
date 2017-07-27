@@ -104,13 +104,31 @@ class Holidays(models.Model):
                 raise UserError(_('Only an HR Officer or Manager can \
                     approve leave requests.'))
         res = super(Holidays, self).action_validate()
-        if holiday.type == 'remove':
-            self._create_ts_analytic_line()
+        return res
+
+    @api.multi
+    def action_confirm(self):
+        """ create a timesheet line when user confirm leave
+        """
+        res = super(Holidays, self).action_confirm()
+        for holiday in self:
+            if holiday.type == 'remove':
+                self._create_ts_analytic_line()
         return res
 
     @api.multi
     def action_refuse(self):
+        """ delete a timesheet line when take action refuse
+        """
         res = super(Holidays, self).action_refuse()
+        self._remove_ts_analytic_line()
+        return res
+
+    @api.multi
+    def action_draft(self):
+        """ delete a timesheet line when take action draft
+        """
+        res = super(Holidays, self).action_draft()
         self._remove_ts_analytic_line()
         return res
 

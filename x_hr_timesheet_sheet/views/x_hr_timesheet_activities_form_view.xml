@@ -35,7 +35,7 @@
                             widget="float_time"
                             string="Hours"
                             sum="Hours"/>
-                        <field name="user_id" invisible="1"/>
+                        <field name="user_id" invisible="0"/>
                         <field name="is_overtime"/>
                         <field name="x_is_per_diem"/>
                     </tree>
@@ -60,7 +60,7 @@
                                 <field name="unit_amount"
                                         widget="float_time"
                                         string="Hours"/>
-                                <field name="user_id" invisible="1"/>
+                                <field name="user_id" invisible="0"/>
                                 <field name="is_overtime"/>
                                 <field name="x_state_id"
                                     attrs="{'required': ['|',
@@ -173,7 +173,7 @@
                                 <field name="unit_amount"
                                         widget="float_time"
                                         string="Hours"/>
-                                <field name="user_id" invisible="1"/>
+                                <field name="user_id" invisible="0"/>
                                 <field name="is_overtime"/>
                                 <field name="x_state_id"
                                     string="Province"

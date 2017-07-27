@@ -9,9 +9,10 @@
     'description': """
 Enhancement HR Holidays :
 -------------
-    * created a related timesheet line when leave is approved
-    * deleted a related timesheet line when refuse the leave
+    * created a related timesheet line when leave is confirm
+    * deleted a related timesheet line when refuse or reset to draft
     * computed can approve leave base on first/second approval
+    * action mass approve in tree view
         """,
     'depends': ['hr_holidays', 'x_hr_timesheet_sheet'],
     'summary': 'HR Holidays',
@@ -21,7 +22,9 @@ Enhancement HR Holidays :
         'views/x_hr_holidays_form_views.xml',
         'views/x_hr_holidays_filter_view.xml',
         # 'views/x_web_calendar_templates.xml',
+        # Actions
         'actions/x_leave_request_to_approve_act_window.xml',
+        'actions/x_hr_holidays_mass_approve_act_server.xml',
     ],
     'demo': [],
     'installable': True,

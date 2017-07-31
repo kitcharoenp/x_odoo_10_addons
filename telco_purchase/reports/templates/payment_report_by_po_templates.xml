@@ -184,9 +184,11 @@
                               <t t-if="invoice_id.reference">
                                 <span t-field="invoice_id.reference"/><br/>
                               </t>
+                              <!--
                               <t t-if="invoice_id.date_due">
                                 p@<u t-field="invoice_id.date_due"/><br/>
                               </t>
+                              -->
                             </strong>
                           </th>
                         </t>
@@ -353,13 +355,26 @@
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <td class="text-right" style="font-size:8px;">
                                 <p>
-                                  Paid on
-                                  <span t-field="invoice_id.date_due" t-options='{"format": "dd-MM-YYYY"}'/>
-                                  <u><br/><strong>
-                                  <span style="font-size:13px; background-color: #98fb98;"
-                                    t-esc="'%.2f'% invoice_id.amount_total"
-                                     t-options='{"widget": "False"}'/>
-                                  </strong></u>
+                                  <!-- payment due date -->
+                                  <t t-if='invoice_id.date_due'>
+                                    Paid on
+                                    <br/>
+                                    <span t-field="invoice_id.date_due" t-options='{"format": "dd-MM-YYYY"}'/>
+                                    <br/>
+                                  </t>
+
+                                  <u>
+                                    <strong>
+                                      <span style="font-size:13px; background-color: #98fb98;"
+                                            t-esc="'%.2f'% invoice_id.amount_total"
+                                            t-options='{"widget": "False"}'/>
+                                  </strong>
+                                  </u>
+                                <!-- payment method -->
+                                  <t t-if="invoice_id.x_account_payment_method">
+                                    <br/>
+                                    (<span t-field="invoice_id.x_account_payment_method"/>)
+                                  </t>
                                 </p>
                           </td>
                         </t>

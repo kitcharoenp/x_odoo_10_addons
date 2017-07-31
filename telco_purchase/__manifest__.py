@@ -18,6 +18,7 @@
     'depends': ['purchase',
                 'telco_work_order',
                 'telco_fault_management',
+                'telco_account_invoice',
                 ],
     'data': [
         'data/telco_purchase_sequence_data.xml',

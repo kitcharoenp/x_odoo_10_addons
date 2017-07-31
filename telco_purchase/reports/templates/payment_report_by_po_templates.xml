@@ -331,18 +331,12 @@
 
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <th class="text-right">
-                            <!--
+                            <!-- bill amount_tax -->
                             <strong>
                               <span t-esc="'%.2f'% invoice_id.amount_tax"
                                   t-options='{"widget": "False"}'/>
 
                             </strong>
-                            -->
-                              <!-- bill amount_total -->
-                              <strong>
-                                <span style="font-size:8px;" t-esc="'%.2f'% invoice_id.amount_total"
-                                  t-options='{"widget": "False"}'/>
-                              </strong>
                           </th>
                         </t>
 
@@ -356,6 +350,29 @@
                         <th class="text-right"><strong></strong></th>
 
                         <!-- payment row -->
+                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                          <td class="text-right" style="font-size:8px;">
+                                <p>
+                                  Paid on
+                                  <span t-field="invoice_id.date_due" t-options='{"format": "dd-MM-YYYY"}'/>
+                                  <u><br/><strong>
+                                  <span style="font-size:13px; background-color: #98fb98;"
+                                    t-esc="'%.2f'% invoice_id.amount_total"
+                                     t-options='{"widget": "False"}'/>
+                                  </strong></u>
+                                </p>
+                          </td>
+                        </t>
+
+                        <th class="text-right"><strong></strong></th>
+                        <th class="text-right"><strong></strong></th>
+                    </tr>
+
+                    <!-- account payment (invoice confirm payment)
+                    <tr style="background-color: #98fb98;">
+                        <th colspan="2"><strong>Payment</strong></th>
+                        <th class="text-right"><strong></strong></th>
+
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <td class="text-right" style="font-size:8px;">
                               <span t-foreach="invoice_id.payment_ids" t-as="payment_id">
@@ -375,8 +392,9 @@
                         <th class="text-right"><strong></strong></th>
                         <th class="text-right"><strong></strong></th>
                     </tr>
+                    -->
 
-                    <!-- residual -->
+                    <!-- residual
                     <tr style="background-color: #e8e8e8;">
                         <th colspan="2"><strong>Amount Due</strong></th>
                         <th class="text-right"><strong></strong></th>
@@ -393,7 +411,7 @@
                         <th class="text-right"><strong></strong></th>
                         <th class="text-right"><strong></strong></th>
                     </tr>
-
+                    -->
                 </tfoot>
             </table>
 

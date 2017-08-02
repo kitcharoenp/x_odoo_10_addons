@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="telco_optical_network_tree_view" model="ir.ui.view">
+        <field name="name">Telco Optical Network Tree</field>
+        <field name="model">telco.optical.network</field>
+        <field name="arch" type="xml">
+            <tree string="Telco Optical Network" >
+                <field name="name" />
+                <field name="ownership_id" />
+                <field name="government_agency_id" />
+            </tree>
+        </field>
+    </record>
+</odoo>

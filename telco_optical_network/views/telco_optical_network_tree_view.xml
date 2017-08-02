@@ -6,8 +6,10 @@
         <field name="arch" type="xml">
             <tree string="Telco Optical Network" >
                 <field name="name" />
-                <field name="ownership_id" />
-                <field name="government_agency_id" />
+                <field name="government_agency_id"/>
+                <field name="authority_id"/>
+                <field name="product_id" />
+                <field name="distance" />
             </tree>
         </field>
     </record>

@@ -7,9 +7,9 @@
             <form string="Telco Optical Network">
                <sheet string="Telco Optical Network">
                    <div>
-                        <h1>
+                        <h3>
                             <field name="name" nolabel="1"/>
-                        </h1>
+                        </h3>
                     </div>
                     <group col="2">
                         <group string="Authority Permission">
@@ -19,11 +19,22 @@
                             <field name="government_agency_id"
                                 context="{'search_default_customer':1}"
                                 options="{'always_reload': True, 'no_create': True}"/>
-                            <field name="electricity_auth_id"
+                            <field name="authority_id"
                                 context="{'search_default_customer':1, 'show_address': 1}"
                                 options="{'always_reload': True, 'no_create': True}"/>
                         </group>
-                        <group string="">
+                        <group string="Optical Fibre information">
+                          <field name="product_id"
+                            options="{'no_create': True}"/>
+                          <label for="distance"/>
+                          <div class="o_row">
+                              <field name="distance" /><span>km</span>
+                          </div>
+                          <label for="diameter"/>
+                          <div class="o_row">
+                              <field name="diameter"/><span>mm</span>
+                          </div>
+                          <field name="pole" />
                         </group>
                     </group>
                     <notebook>

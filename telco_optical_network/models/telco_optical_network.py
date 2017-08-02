@@ -4,6 +4,7 @@
 # @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
 
 from odoo import api, fields, models, _
+import odoo.addons.decimal_precision as dp
 
 
 class TelcoOpticalNetwork(models.Model):
@@ -26,15 +27,31 @@ class TelcoOpticalNetwork(models.Model):
                 readonly=True,
                 copy=False,
                 default='draft')
+
+    # Ownership and Authority
     ownership_id = fields.Many2one(
         'res.partner',
         string='Ownership',
-        required=True,)
-    electricity_auth_id = fields.Many2one(
-        'res.partner',
-        string='Electricity Authority',
         required=True,)
     government_agency_id = fields.Many2one(
         'res.partner',
         string='Government Agency',
         required=True,)
+    authority_id = fields.Many2one(
+        'res.partner',
+        string='Authority',
+        required=True,)
+
+    # Optical fibre information
+    product_id = fields.Many2one(
+        'product.product',
+        string='Optical Fibre Type',
+        domain=[('purchase_ok', '=', True)],
+        change_default=True,
+        required=True)
+    distance = fields.Float(
+        string="Distance",
+        digits=dp.get_precision('Product Unit of Measure'),
+        group_operator="sum")
+    diameter = fields.Float()
+    pole = fields.Integer()

@@ -26,9 +26,11 @@
                       </span>
                   </div>
                   <div class="col-xs-3 text-right" >
-                      <span style="font-size:13px;">
-                          <span t-field="o.name"/>
-                      </span>
+                      <span style="font-size:13px;" t-field="o.name"/>
+                      <br/>
+                      <span style="font-size:8px;"
+                        t-field="o.x_invoice_receipt_date"
+                        t-options='{"format": "dd-MM-YYYY"}'/>
                   </div>
               </div>
           </div>
@@ -436,8 +438,14 @@
               <p t-if="latest_invoice.x_account_payment_method.code == 'TRF'" style="font-size:13px;">
                 <br/>
                 <span t-field="latest_invoice.x_account_payment_method"/>
-                Bank : <b><u><span t-field="latest_invoice.partner_bank_id.bank_id"/></u></b>
-                Account Number : <b><u><span t-field="latest_invoice.partner_bank_id.acc_number"/></u></b>
+
+                <t t-if="latest_invoice.partner_bank_id.bank_id">
+                  Bank : <b><u><span t-field="latest_invoice.partner_bank_id.bank_id"/></u></b>
+                </t>
+                <t t-if="latest_invoice.partner_bank_id.acc_number">
+                  Account Number : <b><u><span t-field="latest_invoice.partner_bank_id.acc_number"/></u></b>
+                </t>
+
               </p>
             </t>
             <div class="oe_structure"/>

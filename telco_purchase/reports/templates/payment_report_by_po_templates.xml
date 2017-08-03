@@ -152,9 +152,9 @@
 
 
             <h4>Items Information</h4>
-            <!-- sort the related invoice by number asc -->
+            <!-- sort the related invoice by id (number) asc -->
             <t  t-set="invoice_ids_sorted"
-                t-value="o.invoice_ids.sorted(key=lambda r: r.number)"
+                t-value="o.invoice_ids.sorted(key=lambda r: r.id)"
             />
 
             <!-- invoice line -->
@@ -429,6 +429,15 @@
                     -->
                 </tfoot>
             </table>
+
+            <!-- show bank account name / number if payment method is TRF -->
+            <t  t-set="latest_invoice" t-value="invoice_ids_sorted[-1]"/>
+            <p t-if="latest_invoice.x_account_payment_method.code == 'TRF'" style="font-size:13px;">
+              <br/>
+              <span t-field="latest_invoice.x_account_payment_method"/>
+              Bank : <b><u><span t-field="latest_invoice.partner_bank_id.bank_id"/></u></b>
+              Account Number : <b><u><span t-field="latest_invoice.partner_bank_id.acc_number"/></u></b>
+            </p>
 
             <div class="oe_structure"/>
         </div>

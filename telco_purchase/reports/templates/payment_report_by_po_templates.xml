@@ -431,14 +431,15 @@
             </table>
 
             <!-- show bank account name / number if payment method is TRF -->
-            <t  t-set="latest_invoice" t-value="invoice_ids_sorted[-1]"/>
-            <p t-if="latest_invoice.x_account_payment_method.code == 'TRF'" style="font-size:13px;">
-              <br/>
-              <span t-field="latest_invoice.x_account_payment_method"/>
-              Bank : <b><u><span t-field="latest_invoice.partner_bank_id.bank_id"/></u></b>
-              Account Number : <b><u><span t-field="latest_invoice.partner_bank_id.acc_number"/></u></b>
-            </p>
-
+            <t t-if="len(invoice_ids_sorted) > 0" >
+              <t  t-set="latest_invoice" t-value="invoice_ids_sorted[-1]"/>
+              <p t-if="latest_invoice.x_account_payment_method.code == 'TRF'" style="font-size:13px;">
+                <br/>
+                <span t-field="latest_invoice.x_account_payment_method"/>
+                Bank : <b><u><span t-field="latest_invoice.partner_bank_id.bank_id"/></u></b>
+                Account Number : <b><u><span t-field="latest_invoice.partner_bank_id.acc_number"/></u></b>
+              </p>
+            </t>
             <div class="oe_structure"/>
         </div>
     </t>

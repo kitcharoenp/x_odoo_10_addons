@@ -10,7 +10,7 @@
     'summary': 'Linked a purchase order to Alfresco cmis',
     'description': """
     """,
-    'depends': ['purchase', 'cmis_web_alf',],
+    'depends': ['purchase', 'cmis_web_alf', ],
     'data': [
         # Views
         'views/telco_purchase_cmis_form_view.xml',

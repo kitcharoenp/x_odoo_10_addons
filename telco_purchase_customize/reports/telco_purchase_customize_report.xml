@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- make button to print report -->
+    <report id="telco_purchase_customize_report"
+            model="purchase.order"
+            string="Purchase Requisition"
+            report_type="qweb-html"
+            name="telco_purchase_customize.telco_purchase_customize_templates"
+            file="telco_purchase_customize.telco_purchase_customize_templates"
+            paperformat="telco_purchase.telco_purchase_paperformat"
+    />
+</odoo>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="telco_purchase_customize_layout" inherit_id="report.external_layout" primary="True">
+      <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+          <attribute name="t-call">telco_purchase_customize.telco_purchase_customize_header</attribute>
+      </xpath>
+      <xpath expr="//t[@t-call='report.external_layout_footer']" position="attributes">
+          <attribute name="t-call">telco_purchase_customize.telco_purchase_customize_footer</attribute>
+      </xpath>
+  </template>
+
+  <template id="telco_purchase_customize_header" inherit_id="report.external_layout_header" primary="True">
+      <xpath expr="//div[@name='company_address']" position="replace">
+          <div>
+              <style>
+                  body {
+                      font-family:freeserif;
+                  }
+              </style>
+              <br/>
+              <div class="row">
+                  <div class="col-xs-7 col-xs-offset-2 text-center" >
+                      <span style="font-size:23px;">
+                          <b>Purchase Requisition</b><br/>
+                          <b t-field="o.name" />
+                      </span>
+                  </div>
+                  <div class="col-xs-3 text-right" >
+                      <!-- <span style="font-size:13px;" t-field="o.name"/> -->
+                      <span style="font-size:7px;">
+                      FM-231/บช. <br/>
+                      แก้ไขครั้งที่ 1 <br/>
+                      วันที่แก้ไข - 02/06/58
+                      </span>
+                  </div>
+              </div>
+          </div>
+      </xpath>
+  </template>
+
+  <template id="telco_purchase_customize_footer" inherit_id="report.external_layout_footer" primary="True">
+      <xpath expr="//div[@class='text-center']" position="before">
+          <div class="text-center"
+              style=" color: black; font-weight: bold; font-size:11px;">
+              <!-- include CSS  -->
+              <style>
+                      body {
+                          font-family:freeserif;
+                      }
+              </style>
+              <div class="row zero_min_height">
+                <div class="col-xs-4 pull-right text-right" style="font-size:8px;">
+                      printed @ <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
+                </div>
+                      <div class="col-xs-12">
+                          <div style="border-bottom: 1px solid black;"></div>
+                      </div><!-- /.col-xs-12 -->
+                      <br/>
+              </div><!-- /.row zero_min_height -->
+
+                  <!-- Signature -->
+              <div class="row">
+                <!-- prepare employee -->
+                  <div class="col-xs-3 text-center" >
+                      <ul style="list-style-type: none; font-size:11px;">
+                          <li><br/>ผู้จัดทำ</li>
+                          <li><br/><br/></li>
+                          <li>________________</li>
+                          <li><span t-esc="datetime.datetime.now().strftime('%d / %m / %Y')"/></li>
+                          <li><span t-field="user.employee_ids[0].name"/></li>
+                          <li><span t-field="user.employee_ids[0].job_id.name"/></li>
+                      </ul>
+                  </div>
+                  <!-- requestor -->
+                  <div class="col-xs-3 text-center" >
+                      <ul style="list-style-type: none; font-size:11px;">
+
+                          <li><br/>ผู้ขออนุมัติ</li>
+                          <li><br/><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li><span t-field="o.x_requestor_id.name"/></li>
+                          <li><span t-field="o.x_requestor_id.job_id.name"/></li>
+                      </ul>
+                  </div>
+                  <!-- project manager -->
+                  <div class="col-xs-3 text-center" >
+                      <ul style="list-style-type: none; font-size:11px;">
+                          <li><br/>ตรวจสอบและพิจารณา</li>
+                          <li><br/><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li><span t-field="o.x_manager_id.name"/></li>
+                          <li><span t-field="o.x_manager_id.job_id.name"/></li>
+                      </ul>
+                  </div>
+                  <!-- company managing director -->
+                  <div class="col-xs-3 text-center" >
+                      <ul style="list-style-type: none; font-size:11px;">
+                          <li><br/>อนุมัติ</li>
+                          <li><br/><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li><span t-field="o.company_id.x_managing_director_id.name"/></li>
+                          <li><span t-field="o.company_id.x_managing_director_id.job_id.name"/></li>
+                      </ul>
+                  </div>
+              </div><!-- /.row -->
+          </div>
+      </xpath>
+  </template>
+
+<template id="telco_purchase_customize_document">
+    <t t-call="telco_purchase_customize.telco_purchase_customize_layout">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+        <div class="page">
+          <!-- include CSS  -->
+          <style>
+              /* --- Generic Restyling and Resets --- */
+              body {
+                  font-family:freeserif;
+              }
+              table, th, td {
+                  font-size: 11px;
+                  border: 1px solid #ababab !important;
+                  margin-bottom: 0px !important;
+                  border-collapse: collapse !important;
+                  vertical-align: middle !important;
+              }
+              td {
+                  padding: 3px !important;
+              }
+          </style>
+            <div class="oe_structure"/>
+
+            <!-- Purchase header -->
+              <table class="table table-bordered" style="table-layout:auto">
+                <tr>
+                  <th class="col-xs-2"><strong>Project</strong></th>
+                  <td colspan="3"><span t-field="o.x_account_analytic_id.name"/></td>
+                </tr>
+                <tr>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Requestor</strong></th>
+                  <td class="col-xs-4"><span t-field="o.x_requestor_id"/></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Order date</strong></th>
+                  <td class="col-xs-4"><span t-field="o.date_order" t-options='{"format": "dd-MM-YYYY"}'/></td>
+                </tr>
+
+                <tr>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Vendor</strong></th>
+                  <td class="col-xs-4"><span t-field="o.partner_id.name"/></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Total</strong></th>
+                  <td class="col-xs-4"><span t-field="o.amount_total"/></td>
+                </tr>
+
+                <tr>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Scheduled Date</strong></th>
+                  <td class="col-xs-4"><span t-field="o.date_order" t-options='{"format": "dd-MM-YYYY"}'/></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Deliver To</strong></th>
+                  <td class="col-xs-4"><span t-field="o.picking_type_id.warehouse_id"/></td>
+                </tr>
+
+              </table>
+
+            <h4><u>Items Information</u></h4>
+
+            <!-- Purchase line -->
+            <table class="table table-condensed">
+              <!-- table head  -->
+                <thead>
+                    <tr class="text-center" style="background-color: #a6a6a6;">
+                        <th class="text-left"><strong>No.</strong></th>
+                        <th class="text-center col-xs-5"><strong>Description</strong></th>
+                        <th class="text-right"><strong>Qty</strong></th>
+                        <th class="text-right"><strong>Unit Price</strong></th>
+                        <th class="text-right"><strong>Taxes</strong></th>
+                        <th class="text-right"><strong>Subtotal</strong></th>
+                    </tr>
+                </thead>
+                <t t-set="no" t-value="0"/>
+                <tbody>
+                    <tr t-foreach="o.order_line" t-as="line">
+                        <t t-set="no" t-value="no+1"/>
+                        <td class="text-left">
+                            <span t-esc="no"/>.
+                        </td>
+                        <td class="text-left col-xs-5" style="font-size: 9px;">
+                            <span t-field="line.name"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.product_qty"/>
+                            <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.price_unit"/>
+                        </td>
+                        <td>
+                            <span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/>
+                        </td>
+                        <td class="text-right" style="background-color: #DEDEDE;">
+                            <span t-field="line.price_subtotal"
+                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <div class="row">
+                <div class="col-xs-7 pull-left">
+                  <h4><u>Other Information</u></h4>
+                  <p style="font-size:11px;" t-field="o.notes"/>
+                </div>
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>Total Without Taxes</strong></td>
+                            <td class="text-right">
+                                <span t-field="o.amount_untaxed"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Taxes</td>
+                            <td class="text-right">
+                                <span t-field="o.amount_tax"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                        <tr class="border-black" style="background-color: #98fb98;">
+                            <td><strong>Total</strong></td>
+                            <td class="text-right">
+                                <u t-field="o.amount_total"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+
+<template id="telco_purchase_customize_templates">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t  t-call="telco_purchase_customize.telco_purchase_customize_document"
+                t-lang="o.partner_id.lang"
+            />
+        </t>
+    </t>
+</template>
+
+</odoo>

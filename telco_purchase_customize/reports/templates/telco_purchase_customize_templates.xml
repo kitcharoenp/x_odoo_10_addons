@@ -11,6 +11,33 @@
   </template>
 
   <template id="telco_purchase_customize_header" inherit_id="report.external_layout_header" primary="True">
+
+      <xpath expr="//div[1]/div[1]" position="replace">
+        <div class="row">
+            <div class="col-xs-7">
+                <img
+                  t-if="company.logo"
+                  t-att-src="'data:image/png;base64,%s' % company.logo"
+                  style="max-height: 90px;"/>
+            </div>
+
+            <div class="col-xs-5 pull-right">
+              <div class="row col-xs-12 text-right" >
+                  <span style="font-size:7px;">
+                    FM-231/บช. <br/>
+                    แก้ไขครั้งที่ 1 <br/>
+                    วันที่แก้ไข - 02/06/58
+                  </span>
+            </div>
+            <div
+            class="row col-xs-12 text-right"
+            style="margin-top:20px; font-size:27px; font-weight: bold;"
+            t-field="o.name"/>
+
+            </div>
+        </div> <!--./row -->
+      </xpath>
+
       <xpath expr="//div[@name='company_address']" position="replace">
           <div>
               <style>
@@ -18,20 +45,10 @@
                       font-family:freeserif;
                   }
               </style>
-              <br/>
               <div class="row">
-                  <div class="col-xs-7 col-xs-offset-2 text-center" >
-                      <span style="font-size:23px;">
-                          <b>Purchase Requisition</b><br/>
-                          <b t-field="o.name" />
-                      </span>
-                  </div>
-                  <div class="col-xs-3 text-right" >
-                      <!-- <span style="font-size:13px;" t-field="o.name"/> -->
-                      <span style="font-size:7px;">
-                      FM-231/บช. <br/>
-                      แก้ไขครั้งที่ 1 <br/>
-                      วันที่แก้ไข - 02/06/58
+                  <div class="col-xs-12 text-center" >
+                      <span style="font-size:33px;">
+                          <b>Purchase Requisition</b>
                       </span>
                   </div>
               </div>
@@ -122,7 +139,7 @@
                   font-family:freeserif;
               }
               table, th, td {
-                  font-size: 11px;
+                  font-size: 14px;
                   border: 1px solid #ababab !important;
                   margin-bottom: 0px !important;
                   border-collapse: collapse !important;
@@ -133,12 +150,12 @@
               }
           </style>
             <div class="oe_structure"/>
-
+            <br/>
             <!-- Purchase header -->
               <table class="table table-bordered" style="table-layout:auto">
                 <tr>
-                  <th class="col-xs-2"><strong>Project</strong></th>
-                  <td colspan="3"><span t-field="o.x_account_analytic_id.name"/></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Project</strong></th>
+                  <td colspan="3"><strong><u><span t-field="o.x_account_analytic_id.name"/></u></strong></td>
                 </tr>
                 <tr>
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Requestor</strong></th>
@@ -149,16 +166,16 @@
 
                 <tr>
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Vendor</strong></th>
-                  <td class="col-xs-4"><span t-field="o.partner_id.name"/></td>
-                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Total</strong></th>
-                  <td class="col-xs-4"><span t-field="o.amount_total"/></td>
+                  <td class="col-xs-4"><strong><u><span t-field="o.partner_id.name"/></u></strong></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Deliver To</strong></th>
+                  <td class="col-xs-4"><strong><u><span t-field="o.picking_type_id.warehouse_id"/></u></strong></td>
                 </tr>
 
                 <tr>
-                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Scheduled Date</strong></th>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Vendor Ref</strong></th>
+                  <td class="col-xs-4"><span t-field="o.partner_ref"/></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Deliver date</strong></th>
                   <td class="col-xs-4"><span t-field="o.date_order" t-options='{"format": "dd-MM-YYYY"}'/></td>
-                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Deliver To</strong></th>
-                  <td class="col-xs-4"><span t-field="o.picking_type_id.warehouse_id"/></td>
                 </tr>
 
               </table>
@@ -174,7 +191,6 @@
                         <th class="text-center col-xs-5"><strong>Description</strong></th>
                         <th class="text-right"><strong>Qty</strong></th>
                         <th class="text-right"><strong>Unit Price</strong></th>
-                        <th class="text-right"><strong>Taxes</strong></th>
                         <th class="text-right"><strong>Subtotal</strong></th>
                     </tr>
                 </thead>
@@ -195,9 +211,6 @@
                         <td class="text-right">
                             <span t-field="line.price_unit"/>
                         </td>
-                        <td>
-                            <span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/>
-                        </td>
                         <td class="text-right" style="background-color: #DEDEDE;">
                             <span t-field="line.price_subtotal"
                                 t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
@@ -212,7 +225,7 @@
                   <h4><u>Other Information</u></h4>
                   <p style="font-size:11px;" t-field="o.notes"/>
                 </div>
-                <div class="col-xs-4 pull-right">
+                <div class="col-xs-5 pull-right">
                     <table class="table table-condensed">
                         <tr class="border-black">
                             <td><strong>Total Without Taxes</strong></td>

@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+  <record id="telco_purchase_customize_paperformat" model="report.paperformat">
+      <field name="name">Telco Purchase Requisition</field>
+      <field name="default" eval="True" />
+      <field name="format">A4</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">40</field>
+      <field name="margin_bottom">65</field>
+      <field name="margin_left">8</field>
+      <field name="margin_right">8</field>
+      <field name="header_line" eval="False" />
+      <field name="dpi">90</field>
+  </record>
     <!-- make button to print report -->
     <report id="telco_purchase_customize_report"
             model="purchase.order"
@@ -7,6 +19,6 @@
             report_type="qweb-html"
             name="telco_purchase_customize.telco_purchase_customize_templates"
             file="telco_purchase_customize.telco_purchase_customize_templates"
-            paperformat="telco_purchase.telco_purchase_paperformat"
+            paperformat="telco_purchase_customize.telco_purchase_customize_paperformat"
     />
 </odoo>

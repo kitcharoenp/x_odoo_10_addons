@@ -84,7 +84,7 @@
               <div class="row">
                 <!-- prepare employee -->
                   <div class="col-xs-3 text-center" >
-                      <ul style="list-style-type: none; font-size:11px;">
+                      <ul style="list-style-type: none; font-size:12px;">
                           <li><br/>ผู้จัดทำ</li>
                           <li><br/><br/></li>
                           <li>________________</li>
@@ -95,7 +95,7 @@
                   </div>
                   <!-- requestor -->
                   <div class="col-xs-3 text-center" >
-                      <ul style="list-style-type: none; font-size:11px;">
+                      <ul style="list-style-type: none; font-size:12px;">
 
                           <li><br/>ผู้ขออนุมัติ</li>
                           <li><br/><br/></li>
@@ -107,7 +107,7 @@
                   </div>
                   <!-- project manager -->
                   <div class="col-xs-3 text-center" >
-                      <ul style="list-style-type: none; font-size:11px;">
+                      <ul style="list-style-type: none; font-size:12px;">
                           <li><br/>ตรวจสอบและพิจารณา</li>
                           <li><br/><br/></li>
                           <li>________________</li>
@@ -118,7 +118,7 @@
                   </div>
                   <!-- company managing director -->
                   <div class="col-xs-3 text-center" >
-                      <ul style="list-style-type: none; font-size:11px;">
+                      <ul style="list-style-type: none; font-size:12px;">
                           <li><br/>อนุมัติ</li>
                           <li><br/><br/></li>
                           <li>________________</li>
@@ -207,7 +207,7 @@
                         <td class="text-left">
                             <span t-esc="no"/>.
                         </td>
-                        <td class="text-left col-xs-5" style="font-size: 9px;">
+                        <td class="text-left col-xs-5" style="font-size: 12px;">
                             <span t-field="line.name"/>
                         </td>
                         <td class="text-right">
@@ -229,7 +229,7 @@
             <div class="row">
                 <div class="col-xs-7 pull-left">
                   <h4><u>Other Information</u></h4>
-                  <p style="font-size:11px;" t-field="o.notes"/>
+                  <p style="font-size:12px;" t-field="o.notes"/>
                 </div>
                 <div class="col-xs-5 pull-right">
                     <table class="table table-condensed">

@@ -47,7 +47,7 @@
               </style>
               <div class="row">
                   <div class="col-xs-12 text-center" >
-                      <span style="font-size:19px;">
+                      <span style="font-size:27px;">
                           <b t-field="company.partner_id" />
                           <br/>
                           <b>ใบขอซื้อ/จัดจ้าง/จัดทำงานโครงการ (Project)</b>

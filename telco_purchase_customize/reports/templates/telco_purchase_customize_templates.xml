@@ -47,8 +47,12 @@
               </style>
               <div class="row">
                   <div class="col-xs-12 text-center" >
-                      <span style="font-size:33px;">
-                          <b>Purchase Requisition</b>
+                      <span style="font-size:19px;">
+                          <b t-field="company.partner_id" />
+                          <br/>
+                          <b>ใบขอซื้อ/จัดจ้าง/จัดทำงานโครงการ (Project)</b>
+                          <br/>
+                          <b>Purchase Requisition (PR)</b>
                       </span>
                   </div>
               </div>
@@ -150,6 +154,8 @@
               }
           </style>
             <div class="oe_structure"/>
+            <br/>
+            <br/>
             <br/>
             <!-- Purchase header -->
               <table class="table table-bordered" style="table-layout:auto">

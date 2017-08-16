@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="telco_expense_qweb_by_date_act_window" model="ir.actions.act_window">
+        <field name="name">Expense by Date Report</field>
+        <field name="res_model">telco.expense.qweb.by.date</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="telco_expense_qweb_by_date_form_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

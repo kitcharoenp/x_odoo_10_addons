@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="telco_expense_qweb_by_date_external_layout" inherit_id="report.external_layout" primary="True">
+        <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+            <attribute name="t-call">telco_expense_qweb.telco_expense_qweb_by_date_external_layout_header</attribute>
+        </xpath>
+    </template>
+
+    <template id="telco_expense_qweb_by_date_external_layout_header" inherit_id="report.external_layout_header" primary="True">
+        <xpath expr="//div[@name='company_address']" position="replace">
+            <div></div>
+        </xpath>
+    </template>
+
+<template id="telco_expense_qweb_by_date_template">
+    <t t-call="report.html_container">
+        <t t-call="telco_expense_qweb.telco_expense_qweb_by_date_external_layout">
+            <div class="page">
+                <!-- include CSS  -->
+                <style>
+                    /* --- Generic Restyling and Resets --- */
+                    body {
+                        font-family:freeserif;
+                    }
+                    table, th, td {
+                        font-size: 11px;
+                        border: 1px solid #ababab !important;
+                        margin-bottom: 0px !important;
+                        border-collapse: collapse !important;
+                        vertical-align: middle !important;
+                    }
+                    td {
+                        padding: 3px !important;
+                    }
+                </style>
+                <h3 class="text-center">เอกสารชี้แจ้งใบเสร็จค่าใช้จ่าย</h3>
+            <div class="row">
+            </div><!--/.row -->
+
+        </div><!--/.page -->
+        </t>
+    </t>
+</template>
+
+</odoo>

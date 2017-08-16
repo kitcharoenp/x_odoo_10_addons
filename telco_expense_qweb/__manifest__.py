@@ -1,0 +1,28 @@
+# -*- coding: utf-8 -*-
+# @author Kitcharoen Poolperm <kitcharoenp@gmail.com>
+# @copyright Copyright (C) 2017
+# @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
+{
+    'name': 'Telco Expense',
+    'version': '0.01',
+    'category': 'Expense',
+    "author": "kicharoenp@gmail.com",
+    'summary': 'Telco Expense',
+    'description': """
+    * Expense Report by Date
+    """,
+    'depends': ['hr_expense', ],
+    'data': [
+        # Views
+        'views/telco_expense_qweb_menu_view.xml',
+        'views/telco_expense_qweb_by_date_form_view.xml',
+        # Actions
+        'actions/telco_expense_qweb_by_date_act_window.xml',
+        # Reports and Templates
+        'report/telco_expense_qweb_by_date_report.xml',
+        'report/templates/telco_expense_qweb_by_date_template.xml',
+
+    ],
+    'installable': True,
+    'auto_install': False,
+}

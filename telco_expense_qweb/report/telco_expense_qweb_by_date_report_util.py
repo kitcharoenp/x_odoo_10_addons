@@ -22,35 +22,32 @@ class TelcoExpenseQwebByDateReportUtil(models.AbstractModel):
             'end_date': fields.Date.to_string(en_date),
             }
 
-    def _get_day(self, start_date, end_date):
-        res = []
-        start_date = fields.Date.from_string(start_date)
-        end_date = fields.Date.from_string(end_date)
-        delta = end_date - start_date
-        for x in range(delta.days + 1):
-            color = '#ababab' if start_date.strftime('%a') == 'Sat' or start_date.strftime('%a') == 'Sun' else ''
-            res.append({'day_str': start_date.strftime('%a'), 'day': start_date.day , 'color': color})
-            start_date = start_date + relativedelta(days=1)
-        return res
-
     def _get_data_for_report(self, data):
         res = []
+        st_date = fields.Date.from_string(data['date_from'])
+        en_date = fields.Date.from_string(data['date_to'])
         Expense = self.env['hr.expense']
         if 'project_ids' in data:
             for project in self.env['project.project'].browse(
                     data['project_ids']):
                 res.append({
                     'project_name': project.name,
-                    'data': [],
-                    'color': self._get_day(
-                        data['date_from'], data['date_to'])})
-                for exp in Expense.search(
-                        [('analytic_account_id', '=', project.analytic_account_id.id)],
-                        order="id asc"):
+                    'data': []})
+                for exp in Expense.search([
+                    ('analytic_account_id', '=', project.analytic_account_id.id),
+                    ('date', '<=', str(en_date)),
+                    ('date', '>=', str(st_date)), ],
+                        order="analytic_account_id asc, \
+                            date asc, \
+                            reference asc"):
                     res[len(res)-1]['data'].append({
-                        'exp_name': exp.name,
-                        'exp_date': exp.date,
-                        'exp_reference': exp.reference,
+                        'name': exp.name,
+                        'date': exp.date,
+                        'reference': exp.reference,
+                        'description': exp.description,
+                        'total_amount': exp.total_amount,
+                        'code': exp.product_id.default_code,
+                        'job_task': exp.product_id.description_purchase,
                     })
         return res
 

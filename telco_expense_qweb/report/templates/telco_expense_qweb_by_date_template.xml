@@ -3,25 +3,123 @@
 
     <template id="telco_expense_qweb_by_date_external_layout" inherit_id="report.external_layout" primary="True">
         <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
-            <attribute name="t-call">telco_expense_qweb.telco_expense_qweb_by_date_external_layout_header</attribute>
+            <attribute name="t-call">telco_expense_qweb.telco_expense_qweb_by_date_header</attribute>
+        </xpath>
+        <xpath expr="//t[@t-call='report.external_layout_footer']" position="attributes">
+            <attribute name="t-call">telco_expense_qweb.telco_expense_qweb_by_date_footer</attribute>
         </xpath>
     </template>
 
-    <template id="telco_expense_qweb_by_date_external_layout_header" inherit_id="report.external_layout_header" primary="True">
+    <template id="telco_expense_qweb_by_date_header" inherit_id="report.external_layout_header" primary="True">
         <xpath expr="//div[@name='company_address']" position="replace">
-            <div></div>
+          <div class="row">
+              <style>
+                  body {
+                      font-family:freeserif;
+                  }
+              </style>
+              <div class="row">
+                  <div class="col-xs-12 text-center" >
+                      <span style="font-size:27px;">
+                          <b t-field="res_company.partner_id" />
+                          <br/>
+                          <b>เอกสารชี้แจ้งใบเสร็จค่าใช้จ่าย</b>
+                      </span>
+                  </div>
+              </div>
+          </div> <!--./row -->
+        </xpath>
+    </template>
+
+    <template id="telco_expense_qweb_by_date_footer" inherit_id="report.external_layout_footer" primary="True">
+        <xpath expr="//div[@class='text-center']" position="before">
+            <div class="text-center"
+                style=" color: black; font-weight: bold; font-size:11px;">
+                <!-- include CSS  -->
+                <style>
+                        body {
+                            font-family:freeserif;
+                        }
+                </style>
+                <div class="row zero_min_height">
+                  <div class="col-xs-4 pull-right text-right" style="font-size:8px;">
+                        printed @ <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
+                  </div>
+                        <div class="col-xs-12">
+                            <div style="border-bottom: 1px solid black;"></div>
+                        </div><!-- /.col-xs-12 -->
+                        <br/>
+                </div><!-- /.row zero_min_height -->
+
+                    <!-- Signature -->
+                <div class="row">
+                  <div class="col-xs-3 text-center" >
+                    <!-- accountant receipt -->
+                      <ul style="list-style-type: none; font-size:9px;">
+                          <li><br/>ช่วงเช้า 08:00-12:00 น.</li>
+                          <li>ช่วงบ่าย 13:00-17:00 น.</li>
+                          <li><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li>เซ็นต์รับเอกสารฝ่ายบัญชี</li>
+                      </ul>
+                  </div>
+                  <!-- prepare employee -->
+                    <div class="col-xs-2 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+                            <li><br/>ผู้จัดทำ</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li><span t-esc="datetime.datetime.now().strftime('%d / %m / %Y')"/></li>
+                            <li><span t-field="user.employee_ids[0].name"/></li>
+                            <li><span t-field="user.employee_ids[0].job_id.name"/></li>
+                        </ul>
+                    </div>
+
+                    <!-- requestor -->
+                    <div class="col-xs-2 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+
+                            <li><br/>ผู้ขออนุมัติ</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li><span t-field="user.employee_ids[0].parent_id.name"/></li>
+                            <li><span t-field="user.employee_ids[0].parent_id.job_id.name"/></li>
+                        </ul>
+                    </div>
+
+                    <!-- project manager -->
+                    <div class="col-xs-3 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+                            <li><br/>ตรวจสอบและพิจารณา</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li><span t-field="user.employee_ids[0].parent_id.parent_id.name"/></li>
+                            <li><span t-field="user.employee_ids[0].parent_id.parent_id.job_id.name"/></li>
+                        </ul>
+                    </div>
+
+                    <!-- company managing director -->
+                    <div class="col-xs-2 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+                            <li><br/>อนุมัติ</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li><span t-field="res_company.x_managing_director_id.name"/></li>
+                            <li><span t-field="res_company.x_managing_director_id.job_id.name"/></li>
+                        </ul>
+                    </div>
+                </div><!-- /.row -->
+            </div>
         </xpath>
     </template>
 
 <template id="telco_expense_qweb_by_date_template">
 
     <t t-call="report.html_container">
-      <t t-set="info" t-value="get_header_info"/>
-      <h5 class="text-center">
-          From
-          <u><b><t t-esc="info['start_date']"/></b></u> To
-          <u><b><t t-esc="info['end_date']"/></b></u>
-      </h5>
         <t t-call="telco_expense_qweb.telco_expense_qweb_by_date_external_layout">
             <div class="page">
                 <!-- include CSS  -->
@@ -41,42 +139,43 @@
                         padding: 3px !important;
                     }
                 </style>
-                <h3 class="text-center">เอกสารชี้แจ้งใบเสร็จค่าใช้จ่าย</h3>
+            <t t-foreach="get_data_for_report" t-as="obj">
             <div class="row">
-
+                <h3 t-if="obj['project_name']"><t t-esc="obj['project_name']"/></h3>
               <table class="table table-bordered" style="table-layout:auto">
                   <thead>
+                    <tr>
+                      <th>ลำดับ</th>
+                      <th>วัน-เดือน-ปี</th>
+                      <th>เลขที่เอกสาร</th>
+                      <th>รายการ</th>
+                      <th>จำนวนเงิน (บาท)</th>
+                      <th>CODE (ZI)</th>
+                      <th>JOB TASK</th>
+                    </tr>
                   </thead>
                   <tbody>
-
-                      <t t-foreach="get_data_for_report" t-as="obj">
-
-                          <tr t-if="'project_name' in obj">
-                              <td  class="col-xs-4" style="background-color:#bebebe">
-                                  <strong><t t-esc="obj['project_name']"/></strong>
-                              </td>
-                              <td class="col-xs-4" style="background-color:#bebebe">
-                                  <strong>Description</strong>
-                              </td>
+                      <t t-foreach="obj['data']" t-as="exp">
+                          <tr>
+                            <td></td>
+                            <td><t t-esc="exp['date']"/></td>
+                            <td><t t-esc="exp['reference']"/></td>
+                            <td><t t-esc="exp['description']"/></td>
+                            <td><t t-esc="exp['total_amount']"/></td>
+                            <td><t t-esc="exp['code']"/></td>
+                            <td><t t-esc="exp['job_task']"/></td>
                           </tr>
-
-                          <t t-foreach="obj['data']" t-as="exp">
-                              <tr>
-                                  <td class="col-xs-2"><t t-esc="exp['exp_date']"/></td>
-                                  <td class="col-xs-2"><t t-esc="exp['exp_reference']"/></td>
-                                  <td class="col-xs-2"><t t-esc="exp['exp_name']"/></td>
-                              </tr>
-                          </t>
                       </t>
-
                   </tbody>
               </table>
 
             </div><!--/.row -->
+            </t>
 
         </div><!--/.page -->
         </t>
     </t>
 </template>
+
 
 </odoo>

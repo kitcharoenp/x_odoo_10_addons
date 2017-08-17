@@ -20,12 +20,12 @@
               </style>
               <div class="row">
                   <div class="col-xs-12 text-center" >
-                      <span style="font-size:27px;">
-                          <b t-field="res_company.partner_id" />
+                      <span style="font-size:23px;">
                           <br/>
                           <b>เอกสารชี้แจ้งใบเสร็จค่าใช้จ่าย</b>
                       </span>
                   </div>
+                  <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
               </div>
           </div> <!--./row -->
         </xpath>
@@ -43,7 +43,7 @@
                 </style>
                 <div class="row zero_min_height">
                   <div class="col-xs-4 pull-right text-right" style="font-size:8px;">
-                        printed @ <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
+                        printed @ <span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/>
                   </div>
                         <div class="col-xs-12">
                             <div style="border-bottom: 1px solid black;"></div>
@@ -141,27 +141,29 @@
                 </style>
             <t t-foreach="get_data_for_report" t-as="obj">
             <div class="row">
-                <h3 t-if="obj['project_name']"><t t-esc="obj['project_name']"/></h3>
+                <h5 t-if="obj['project_name']" class='text-center'>
+                  <t t-esc="obj['project_name']"/>
+                </h5>
               <table class="table table-bordered" style="table-layout:auto">
                   <thead>
-                    <tr>
-                      <th>ลำดับ</th>
-                      <th>วัน-เดือน-ปี</th>
-                      <th>เลขที่เอกสาร</th>
-                      <th>รายการ</th>
-                      <th>จำนวนเงิน (บาท)</th>
-                      <th>CODE (ZI)</th>
-                      <th>JOB TASK</th>
+                    <tr class='text-center' style="background-color: #A6A6A6;">
+                      <th class="text-left"><strong>No.</strong></th>
+                      <th class="text-center">วัน-เดือน-ปี</th>
+                      <th class='text-center'>เลขที่เอกสาร</th>
+                      <th class='text-center'>Description</th>
+                      <th class='text-center'>จำนวนเงิน (บาท)</th>
+                      <th class='text-center'>CODE (ZI)</th>
+                      <th class='text-center'>JOB TASK</th>
                     </tr>
                   </thead>
                   <tbody>
                       <t t-foreach="obj['data']" t-as="exp">
                           <tr>
-                            <td></td>
-                            <td><t t-esc="exp['date']"/></td>
+                            <td class="text-left"><t t-esc="i"/></td>
+                            <td class="text-left"><t t-esc="exp['date']"/></td>
                             <td><t t-esc="exp['reference']"/></td>
                             <td><t t-esc="exp['description']"/></td>
-                            <td><t t-esc="exp['total_amount']"/></td>
+                            <td class="text-right" style="background-color: #DEDEDE;"><t t-esc="exp['total_amount']"/></td>
                             <td><t t-esc="exp['code']"/></td>
                             <td><t t-esc="exp['job_task']"/></td>
                           </tr>

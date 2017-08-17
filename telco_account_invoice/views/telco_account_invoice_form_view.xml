@@ -50,7 +50,7 @@
             <attribute name='invisible'>1</attribute>
         </xpath>
 
-        <!-- invisible discount field -->
+        <!-- visible discount field -->
         <xpath expr="//notebook/page[2]/group/group[1]/field[@name='partner_bank_id']"
             position="attributes">
             <attribute name='invisible'>0</attribute>
@@ -83,7 +83,7 @@
       <field name="arch" type="xml">
         <xpath expr="//field[@name='purchase_id']"
             position="attributes">
-            <attribute name='invisible'>1</attribute>
+            <attribute name='invisible'>0</attribute>
         </xpath>
       </field>
   </record>

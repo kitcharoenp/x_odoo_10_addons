@@ -14,7 +14,14 @@
     </template>
 
 <template id="telco_expense_qweb_by_date_template">
+
     <t t-call="report.html_container">
+      <t t-set="info" t-value="get_header_info"/>
+      <h5 class="text-center">
+          From
+          <u><b><t t-esc="info['start_date']"/></b></u> To
+          <u><b><t t-esc="info['end_date']"/></b></u>
+      </h5>
         <t t-call="telco_expense_qweb.telco_expense_qweb_by_date_external_layout">
             <div class="page">
                 <!-- include CSS  -->
@@ -36,6 +43,35 @@
                 </style>
                 <h3 class="text-center">เอกสารชี้แจ้งใบเสร็จค่าใช้จ่าย</h3>
             <div class="row">
+
+              <table class="table table-bordered" style="table-layout:auto">
+                  <thead>
+                  </thead>
+                  <tbody>
+
+                      <t t-foreach="get_data_for_report" t-as="obj">
+
+                          <tr t-if="'project_name' in obj">
+                              <td  class="col-xs-4" style="background-color:#bebebe">
+                                  <strong><t t-esc="obj['project_name']"/></strong>
+                              </td>
+                              <td class="col-xs-4" style="background-color:#bebebe">
+                                  <strong>Description</strong>
+                              </td>
+                          </tr>
+
+                          <t t-foreach="obj['data']" t-as="exp">
+                              <tr>
+                                  <td class="col-xs-2"><t t-esc="exp['exp_date']"/></td>
+                                  <td class="col-xs-2"><t t-esc="exp['exp_reference']"/></td>
+                                  <td class="col-xs-2"><t t-esc="exp['exp_name']"/></td>
+                              </tr>
+                          </t>
+                      </t>
+
+                  </tbody>
+              </table>
+
             </div><!--/.row -->
 
         </div><!--/.page -->

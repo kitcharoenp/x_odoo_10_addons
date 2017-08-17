@@ -16,8 +16,7 @@ class TelcoExpenseReportByDate(models.TransientModel):
     _description = 'Telco Expense Qweb Report by Date'
 
     def _default_date_from(self):
-        user = self.env['res.users'].browse(self.env.uid)
-        r = user.company_id and user.company_id.timesheet_range or 'month'
+        r = 'month'
         if r == 'month':
             return time.strftime('%Y-%m-01')
         elif r == 'week':
@@ -28,8 +27,7 @@ class TelcoExpenseReportByDate(models.TransientModel):
         return fields.date.context_today(self)
 
     def _default_date_to(self):
-        user = self.env['res.users'].browse(self.env.uid)
-        r = user.company_id and user.company_id.timesheet_range or 'month'
+        r = 'month'
         if r == 'month':
             return (datetime.today() + relativedelta(
                     months=+1, day=1, days=-1)).strftime('%Y-%m-%d')
@@ -48,26 +46,29 @@ class TelcoExpenseReportByDate(models.TransientModel):
         string='To',
         required=True,
         default=_default_date_to)
-    analytic_account_ids = fields.Many2many(
-        'account.analytic.account',
-        string='Analytic Account')
+    project_ids = fields.Many2many(
+        'project.project',
+        string='Project',
+        domain=[('active', '=', True)])
 
     @api.multi
     def print_report(self):
         self.ensure_one()
         [data] = self.read()
-        if not data.get('analytic_account_ids'):
+        """
+        if not data.get('project_ids'):
             raise UserError(_(
-                'You have to select at least one Analytic Account. \
+                'You have to select at least one Project. \
                 And try again.'))
-        analytic_accounts = self.env['account.analytic.account'].browse(
-                            data['analytic_account_ids'])
+        """
+        projects = self.env['project.project'].browse(
+                            data['project_ids'])
         datas = {
             'ids': [],
-            'model': 'account.analytic.account',
+            'model': 'project.project',
             'form': data
         }
         return self.env['report'].get_action(
-            analytic_accounts,
+            projects,
             'telco_expense_qweb.telco_expense_qweb_by_date_template',
             data=datas)

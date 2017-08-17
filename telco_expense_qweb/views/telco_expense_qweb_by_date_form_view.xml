@@ -14,7 +14,7 @@
                     </group>
                 </group>
                 <group>
-                    <field name="analytic_account_ids"/>
+                    <field name="project_ids"/>
                 </group>
                 <footer>
                     <button name="print_report" string="Print" type="object" class="btn-primary"/>

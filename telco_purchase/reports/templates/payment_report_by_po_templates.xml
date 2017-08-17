@@ -146,8 +146,8 @@
                 <tr>
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Vendor</strong></th>
                   <td class="col-xs-4"><span t-field="o.partner_id.name"/></td>
-                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Amount</strong></th>
-                  <td class="col-xs-4"><span t-field="o.amount_total"/></td>
+                  <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Requestor</strong></th>
+                  <td class="col-xs-4"><span t-field="o.x_requestor_id.name"/></td>
                 </tr>
 
               </table>
@@ -201,6 +201,7 @@
                 </thead>
 
                 <t t-set="no" t-value="0"/>
+                <t t-set="amount_untaxed" t-value="0"/>
                 <t t-set="total_untaxed" t-value="0"/>
                 <t t-set="total_due" t-value="0"/>
 
@@ -216,6 +217,7 @@
                         <td class="text-right" style="background-color: #DEDEDE;">
                           <span t-esc="'%.2f'% line.price_subtotal"
                               t-options='{"widget": "False"}'/>
+                          <t t-set="amount_untaxed" t-value="amount_untaxed + line.price_subtotal"/>
                         </td>
 
                         <!-- list invoices line related to this po line -->
@@ -246,6 +248,58 @@
                         <t t-set="total_untaxed" t-value="total_untaxed+total"/>
                         <t t-set="total_due" t-value="total_due+(line.price_subtotal-total)"/>
                     </tr>
+
+                    <!-- invoice line from another purchase order -->
+                    <t  t-set="inv_line_from_other_po" t-value="[]"/>
+                    <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
+                      <t t-foreach="invoice_id_sorted.invoice_line_ids" t-as="inv_line">
+                        <t t-if="inv_line.purchase_id.id != o.id">
+                          <t  t-set="inv_line_from_other_po" t-value="inv_line_from_other_po + [inv_line]"/>
+                        </t>
+                      </t>
+                    </t>
+
+                    <!-- create table rows -->
+                    <t t-set="seq" t-value="no"/>
+                    <tr t-foreach="inv_line_from_other_po" t-as="line_other_po">
+                      <t t-set="seq" t-value="seq+1"/>
+                      <td class="text-left">
+                          <span t-esc="seq"/>.
+                      </td>
+                      <td class="text-left col-xs-5" style="font-size: 9px;">
+                          <span t-field="line_other_po.purchase_line_id.name"/>
+                      </td>
+                      <td class="text-right" style="background-color: #DEDEDE;">
+                        <span t-esc="'%.2f'% line_other_po.purchase_line_id.price_subtotal"
+                            t-options='{"widget": "False"}'/>
+                        <t t-set="amount_untaxed" t-value="amount_untaxed + line_other_po.purchase_line_id.price_subtotal"/>
+                      </td>
+                      <!-- list invoices line related to this po line -->
+                      <t t-set="total" t-value="0"/>
+                      <!-- loop each invoice and then make column -->
+                      <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
+                            <td class="text-right">
+                              <!-- find invoice_line in each invoice_id -->
+                                  <t t-if="invoice_id_sorted.id == line_other_po.invoice_id.id">
+                                    <span t-esc="'%.2f'% (line_other_po.quantity * line_other_po.price_unit)"
+                                      t-options='{"widget": "False"}'/>
+                                    <!-- sum purchase invoice line total -->
+                                    <t t-set="total" t-value="total+(line_other_po.quantity * line_other_po.price_unit)"/>
+                              </t>
+                            </td>
+                      </t>
+                      <td class="text-right">
+                          <span t-esc="'%.2f'% total"
+                              t-options='{"widget": "False"}'/>
+                      </td>
+                      <td class="text-right">
+                        <span t-esc="'%.2f'% (line_other_po.purchase_line_id.price_subtotal-total)"
+                            t-options='{"widget": "False"}'/>
+                      </td>
+                      <t t-set="total_untaxed" t-value="total_untaxed+total"/>
+                      <t t-set="total_due" t-value="total_due+(line_other_po.purchase_line_id.price_subtotal-total)"/>
+                    </tr>
+
                 </tbody>
 
                 <t t-set="account_invoice_taxs" t-value="[]"/>
@@ -269,7 +323,7 @@
                         <th colspan="2"><strong>Sum (Untaxed)</strong></th>
                         <th class="text-right">
                           <strong><u>
-                            <span t-esc="'%.2f'% o.amount_untaxed"
+                            <span t-esc="'%.2f'% amount_untaxed"
                               t-options='{"widget": "False"}'/>
                           </u></strong>
                         </th>

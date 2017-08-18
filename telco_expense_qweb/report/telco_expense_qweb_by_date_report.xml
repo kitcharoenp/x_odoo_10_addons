@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- paper format -->
+    <record id="telco_expense_qweb_by_date_paperformat" model="report.paperformat">
+      <field name="name">Telco Expense by Date</field>
+      <field name="default" eval="True" />
+      <field name="format">A4</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">40</field>
+      <field name="margin_bottom">60</field>
+      <field name="margin_left">10</field>
+      <field name="margin_right">10</field>
+      <field name="header_line" eval="False" />
+      <field name="dpi">90</field>
+    </record>
+
+    <report
+        id="telco_expense_qweb_by_date_report"
+        string="Telco Expense by Date Report"
+        model="hr.expense"
+        report_type="qweb-html"
+        name="telco_expense_qweb.telco_expense_qweb_by_date_template"
+        file="telco_expense_qweb.telco_expense_qweb_by_date_template"
+        menu="False"
+        paperformat="telco_expense_qweb.telco_expense_qweb_by_date_paperformat"
+    />
+</odoo>

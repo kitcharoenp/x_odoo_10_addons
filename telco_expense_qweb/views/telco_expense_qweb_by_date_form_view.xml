@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="telco_expense_qweb_by_date_form_view" model="ir.ui.view">
+            <field name="name">Expense by Date Report</field>
+            <field name="model">telco.expense.qweb.by.date</field>
+            <field name="arch" type="xml">
+            <form string="Expense by Date Report">
+                <group>
+                    <group>
+                      <field name="date_from" />
+                    </group>
+                    <group>
+                      <field name="date_to" />
+                    </group>
+                </group>
+                <group>
+                    <field name="project_ids"/>
+                    <field name="description"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+</odoo>

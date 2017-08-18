@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem
+        id="telco_expense_qweb_menu_view"
+        name="Expense by Date"
+        parent="hr_expense.menu_hr_expense_reports"
+        action="telco_expense_qweb_by_date_act_window"
+        groups="hr_expense.group_hr_expense_manager"
+        sequence="180"
+    />
+
+    <record id="hr_expense.menu_hr_expense_reports"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
+</odoo>

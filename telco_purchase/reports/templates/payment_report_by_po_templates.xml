@@ -165,7 +165,7 @@
                 <thead>
                     <tr class="text-center" style="background-color: #a6a6a6;">
                         <th class="text-left"><strong>No.</strong></th>
-                        <th class="text-center col-xs-5"><strong>Description</strong></th>
+                        <th class="text-center col-xs-6"><strong>Description</strong></th>
                         <th class="text-center"><strong>Amount</strong></th>
 
                         <!-- list invoices related to this purchase order  -->
@@ -196,7 +196,7 @@
                         </t>
 
                         <th class="text-center"><strong>Total</strong></th>
-                        <th class="text-center"><strong>Amount Due</strong></th>
+                        <th class="text-center" style="font-size: 9px;"><strong>Amount Due</strong></th>
                     </tr>
                 </thead>
 
@@ -211,7 +211,7 @@
                         <td class="text-left">
                             <span t-esc="no"/>.
                         </td>
-                        <td class="text-left col-xs-5" style="font-size: 11px;">
+                        <td class="text-left col-xs-6" style="font-size: 11px;">
                             <span t-field="line.name"/>
                         </td>
                         <td class="text-right" style="background-color: #DEDEDE;">
@@ -266,7 +266,7 @@
                       <td class="text-left">
                           <span t-esc="seq"/>.
                       </td>
-                      <td class="text-left col-xs-5" style="font-size: 11px;">
+                      <td class="text-left col-xs-6" style="font-size: 11px;">
                           <span t-field="line_other_po.purchase_line_id.name"/>
                       </td>
                       <td class="text-right" style="background-color: #DEDEDE;">

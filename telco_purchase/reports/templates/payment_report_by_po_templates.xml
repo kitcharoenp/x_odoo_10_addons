@@ -215,7 +215,8 @@
                             <span t-field="line.name"/>
                         </td>
                         <td class="text-right" style="background-color: #DEDEDE;">
-                          <span t-esc="'%.2f'% line.price_subtotal"
+                          <span
+                              t-esc="'{0:,.2f}'.format(float(line.price_subtotal))"
                               t-options='{"widget": "False"}'/>
                           <t t-set="amount_untaxed" t-value="amount_untaxed + line.price_subtotal"/>
                         </td>
@@ -228,7 +229,8 @@
                                 <!-- find invoice_line in each invoice_id -->
                                 <t t-foreach="line.invoice_lines" t-as="invoice_line">
                                     <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id">
-                                      <span t-esc="'%.2f'% (invoice_line.quantity * invoice_line.price_unit)"
+                                      <span
+                                        t-esc="'{0:,.2f}'.format(float(invoice_line.quantity * invoice_line.price_unit))"
                                         t-options='{"widget": "False"}'/>
                                       <!-- sum purchase invoice line total -->
                                       <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
@@ -238,11 +240,13 @@
                         </t>
 
                         <td class="text-right">
-                            <span t-esc="'%.2f'% total"
+                            <span
+                              t-esc="'{0:,.2f}'.format(float(total))"
                                 t-options='{"widget": "False"}'/>
                         </td>
                         <td class="text-right">
-                          <span t-esc="'%.2f'% (line.price_subtotal-total)"
+                          <span
+                            t-esc="'{0:,.2f}'.format(float(line.price_subtotal-total))"
                               t-options='{"widget": "False"}'/>
                         </td>
                         <t t-set="total_untaxed" t-value="total_untaxed+total"/>
@@ -270,7 +274,8 @@
                           <span t-field="line_other_po.purchase_line_id.name"/>
                       </td>
                       <td class="text-right" style="background-color: #DEDEDE;">
-                        <span t-esc="'%.2f'% line_other_po.purchase_line_id.price_subtotal"
+                        <span
+                          t-esc="'{0:,.2f}'.format(float(line_other_po.purchase_line_id.price_subtotal))"
                             t-options='{"widget": "False"}'/>
                         <t t-set="amount_untaxed" t-value="amount_untaxed + line_other_po.purchase_line_id.price_subtotal"/>
                       </td>
@@ -281,7 +286,8 @@
                             <td class="text-right">
                               <!-- find invoice_line in each invoice_id -->
                                   <t t-if="invoice_id_sorted.id == line_other_po.invoice_id.id">
-                                    <span t-esc="'%.2f'% (line_other_po.quantity * line_other_po.price_unit)"
+                                    <span
+                                      t-esc="'{0:,.2f}'.format(float(line_other_po.quantity * line_other_po.price_unit))"
                                       t-options='{"widget": "False"}'/>
                                     <!-- sum purchase invoice line total -->
                                     <t t-set="total" t-value="total+(line_other_po.quantity * line_other_po.price_unit)"/>
@@ -289,11 +295,13 @@
                             </td>
                       </t>
                       <td class="text-right">
-                          <span t-esc="'%.2f'% total"
+                          <span
+                            t-esc="'{0:,.2f}'.format(float(total))"
                               t-options='{"widget": "False"}'/>
                       </td>
                       <td class="text-right">
-                        <span t-esc="'%.2f'% (line_other_po.purchase_line_id.price_subtotal-total)"
+                        <span
+                          t-esc="'{0:,.2f}'.format(float(line_other_po.purchase_line_id.price_subtotal-total))"
                             t-options='{"widget": "False"}'/>
                       </td>
                       <t t-set="total_untaxed" t-value="total_untaxed+total"/>
@@ -323,7 +331,8 @@
                         <th colspan="2"><strong>Sum (Untaxed)</strong></th>
                         <th class="text-right">
                           <strong><u>
-                            <span t-esc="'%.2f'% amount_untaxed"
+                            <span
+                              t-esc="'{0:,.2f}'.format(float(amount_untaxed))"
                               t-options='{"widget": "False"}'/>
                           </u></strong>
                         </th>
@@ -332,7 +341,8 @@
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <th class="text-right">
                             <strong>
-                              <span t-esc="'%.2f'% invoice_id.amount_untaxed"
+                              <span
+                                t-esc="'{0:,.2f}'.format(float(invoice_id.amount_untaxed))"
                                   t-options='{"widget": "False"}'/>
                             </strong>
                           </th>
@@ -340,13 +350,15 @@
 
                         <th class="text-right">
                           <strong>
-                            <u><span t-esc="'%.2f'% total_untaxed"
+                            <u><span
+                              t-esc="'{0:,.2f}'.format(float(total_untaxed))"
                                 t-options='{"widget": "False"}'/></u>
                           </strong>
                         </th>
                         <th class="text-right">
                           <strong>
-                            <u><span t-esc="'%.2f'% total_due"
+                            <u><span
+                              t-esc="'{0:,.2f}'.format(float(total_due))"
                                 t-options='{"widget": "False"}'/></u>
                           </strong>
                         </th>
@@ -367,7 +379,8 @@
                                 <!--  -->
                                 <t t-foreach="invoice_id_sorted.tax_line_ids" t-as="invoice_tax_line">
                                     <t t-if="invoice_tax_line.tax_id.id == tax.id">
-                                      <span t-esc="'%.2f'% invoice_tax_line.amount"
+                                      <span
+                                        t-esc="'{0:,.2f}'.format(float(invoice_tax_line.amount))"
                                         t-options='{"widget": "False"}'/>
                                       <!--  -->
                                       <t t-set="total" t-value="total+invoice_tax_line.amount"/>
@@ -377,7 +390,9 @@
                         </t>
 
                         <td class="text-right">
-                            <span t-esc="'%.2f'% total"/>
+                            <span
+                              t-esc="'{0:,.2f}'.format(float(total))"
+                              />
                         </td>
                         <td class="text-right"></td>
                     </tr>
@@ -391,7 +406,8 @@
                           <th class="text-right">
                             <!-- bill amount_tax -->
                             <strong>
-                              <span t-esc="'%.2f'% invoice_id.amount_tax"
+                              <span
+                                t-esc="'{0:,.2f}'.format(float(invoice_id.amount_tax))"
                                   t-options='{"widget": "False"}'/>
 
                             </strong>
@@ -425,7 +441,7 @@
                                   <u>
                                     <strong>
                                       <span style="font-size:13px; background-color: #98fb98;"
-                                            t-esc="'%.2f'% invoice_id.amount_total"
+                                            t-esc="'{0:,.2f}'.format(float(invoice_id.amount_total))"
                                             t-options='{"widget": "False"}'/>
                                   </strong>
                                   </u>

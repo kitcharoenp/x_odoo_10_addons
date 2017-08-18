@@ -211,7 +211,7 @@
                         <td class="text-left">
                             <span t-esc="no"/>.
                         </td>
-                        <td class="text-left col-xs-6" style="font-size: 11px;">
+                        <td class="text-left col-xs-6" style="font-size: 13px;">
                             <span t-field="line.name"/>
                         </td>
                         <td class="text-right" style="background-color: #DEDEDE;">
@@ -266,7 +266,7 @@
                       <td class="text-left">
                           <span t-esc="seq"/>.
                       </td>
-                      <td class="text-left col-xs-6" style="font-size: 11px;">
+                      <td class="text-left col-xs-6" style="font-size: 13px;">
                           <span t-field="line_other_po.purchase_line_id.name"/>
                       </td>
                       <td class="text-right" style="background-color: #DEDEDE;">
@@ -413,9 +413,12 @@
                                 <p>
                                   <!-- payment due date -->
                                   <t t-if='invoice_id.date_due'>
-                                    Paid on
+                                    <strong>Paid on</strong>
                                     <br/>
-                                    <span t-field="invoice_id.date_due" t-options='{"format": "dd-MM-YYYY"}'/>
+                                    <strong>
+                                      <span t-field="invoice_id.date_due"
+                                        t-options='{"format": "dd-MM-YYYY"}'/>
+                                    </strong>
                                     <br/>
                                   </t>
 

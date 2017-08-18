@@ -181,7 +181,7 @@
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Vendor Ref</strong></th>
                   <td class="col-xs-4"><span t-field="o.partner_ref"/></td>
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Deliver date</strong></th>
-                  <td class="col-xs-4"><span t-field="o.date_order" t-options='{"format": "dd-MM-YYYY"}'/></td>
+                  <td class="col-xs-4"><span t-field="o.date_planned" t-options='{"format": "dd-MM-YYYY"}'/></td>
                 </tr>
 
               </table>

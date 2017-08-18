@@ -18,15 +18,20 @@
                       font-family:freeserif;
                   }
               </style>
-              <div class="row">
-                  <div class="col-xs-12 text-center" >
-                      <span style="font-size:23px;">
-                          <br/>
-                          <b>เอกสารชี้แจ้งใบเสร็จค่าใช้จ่าย</b>
-                      </span>
-                  </div>
-                  <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
+
+              <div class="col-xs-12 text-center" >
+                  <span style="font-size:21px;">
+                          <u><b>เอกสารชี้แจ้งใบเสร็จค่าใช้จ่าย</b></u>
+                  </span>
               </div>
+
+              <div class="col-xs-12 text-center" >
+                  <span style="font-size:11px;">
+                      <br/>
+                      <t t-esc="description"/>
+                  </span>
+              </div>
+
           </div> <!--./row -->
         </xpath>
     </template>
@@ -61,13 +66,13 @@
                           <li><br/></li>
                           <li>________________</li>
                           <li>______/_____/_____</li>
-                          <li>เซ็นต์รับเอกสารฝ่ายบัญชี</li>
+                          <li>(เซ็นต์รับเอกสารฝ่ายบัญชี)</li>
                       </ul>
                   </div>
                   <!-- prepare employee -->
                     <div class="col-xs-2 text-center" >
                         <ul style="list-style-type: none; font-size:9px;">
-                            <li><br/>ผู้จัดทำ</li>
+                            <li><br/>Prepare</li>
                             <li><br/><br/></li>
                             <li>________________</li>
                             <li><span t-esc="datetime.datetime.now().strftime('%d / %m / %Y')"/></li>
@@ -129,7 +134,7 @@
                         font-family:freeserif;
                     }
                     table, th, td {
-                        font-size: 11px;
+                        font-size: 9px;
                         border: 1px solid #ababab !important;
                         margin-bottom: 0px !important;
                         border-collapse: collapse !important;
@@ -142,32 +147,51 @@
             <t t-foreach="get_data_for_report" t-as="obj">
             <div class="row">
                 <h5 t-if="obj['project_name']" class='text-center'>
-                  <t t-esc="obj['project_name']"/>
+                  Project : <t t-esc="obj['project_name']"/>
                 </h5>
               <table class="table table-bordered" style="table-layout:auto">
                   <thead>
                     <tr class='text-center' style="background-color: #A6A6A6;">
                       <th class="text-left"><strong>No.</strong></th>
-                      <th class="text-center">วัน-เดือน-ปี</th>
-                      <th class='text-center'>เลขที่เอกสาร</th>
+                      <th class="text-center" style="font-size:8px;">Date</th>
+                      <th class='text-center'>Reference</th>
                       <th class='text-center'>Description</th>
-                      <th class='text-center'>จำนวนเงิน (บาท)</th>
-                      <th class='text-center'>CODE (ZI)</th>
-                      <th class='text-center'>JOB TASK</th>
+                      <th class='text-center'>Employee</th>
+                      <th class='text-center'>Amount</th>
+                      <th class='text-center'>Code (ZI)</th>
+                      <th class='text-center'>Job Task</th>
                     </tr>
                   </thead>
+                  <!-- initial variable -->
+                  <t t-set="i" t-value="1" />
+                  <t t-set="total" t-value="0" />
                   <tbody>
                       <t t-foreach="obj['data']" t-as="exp">
-                          <tr>
+                          <tr style="font-size:8px;">
                             <td class="text-left"><t t-esc="i"/></td>
-                            <td class="text-left"><t t-esc="exp['date']"/></td>
-                            <td><t t-esc="exp['reference']"/></td>
-                            <td><t t-esc="exp['description']"/></td>
-                            <td class="text-right" style="background-color: #DEDEDE;"><t t-esc="exp['total_amount']"/></td>
-                            <td><t t-esc="exp['code']"/></td>
-                            <td><t t-esc="exp['job_task']"/></td>
+                            <td class="text-left"><t t-esc="exp['date'].strftime('%d-%m-%Y')"/></td>
+                            <td style="font-size:8px;"><t t-esc="exp['reference']"/></td>
+                            <td style="font-size:8px;"><t t-esc="exp['description']"/></td>
+                            <td style="font-size:8px;"><t t-esc="exp['employee']"/></td>
+                            <td class="text-right" style="background-color: #DEDEDE;">
+                              <t t-esc="'{0:,.2f}'.format(float(exp['total_amount']))"/>
+                            </td>
+                            <td class='text-center'><t t-esc="exp['code']"/></td>
+                            <td class='text-center'><t t-esc="exp['job_task']"/></td>
                           </tr>
+                          <t t-set="i" t-value="i+1" />
+                          <t t-set="total" t-value="float(total)+float(exp['total_amount'])" />
                       </t>
+                      <tr style="background-color: #98fb98; font-size:10px;">
+                        <td colspan="3" class='text-center'>รวมทั้งหมด</td>
+                        <td colspan="2" class="text-right">
+                          <u><strong><t t-esc="compute_amount_in_letter(total)"/></strong></u>
+                        </td>
+                        <td class="text-right" style="font-size:13px;">
+                          <u><strong><t t-esc="'{0:,.2f}'.format(float(total))"/></strong></u>
+                        </td>
+                        <td colspan="2"></td>
+                      </tr>
                   </tbody>
               </table>
 

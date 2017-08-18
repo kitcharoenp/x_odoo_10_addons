@@ -50,6 +50,7 @@ class TelcoExpenseReportByDate(models.TransientModel):
         'project.project',
         string='Project',
         domain=[('active', '=', True)])
+    description = fields.Text()
 
     @api.multi
     def print_report(self):

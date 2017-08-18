@@ -7,14 +7,15 @@
             <form string="Expense by Date Report">
                 <group>
                     <group>
-                        <field name="date_from" />
-                        <field name="date_to" />
+                      <field name="date_from" />
                     </group>
                     <group>
+                      <field name="date_to" />
                     </group>
                 </group>
                 <group>
                     <field name="project_ids"/>
+                    <field name="description"/>
                 </group>
                 <footer>
                     <button name="print_report" string="Print" type="object" class="btn-primary"/>

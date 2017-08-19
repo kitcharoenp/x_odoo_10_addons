@@ -153,10 +153,7 @@
                   padding: 3px !important;
               }
           </style>
-            <div class="oe_structure"/>
-            <br/>
-            <br/>
-            <br/>
+            <div class="row">
             <!-- Purchase header -->
               <table class="table table-bordered" style="table-layout:auto">
                 <tr>
@@ -185,16 +182,18 @@
                 </tr>
 
               </table>
+            </div>
+          <h4><u>Items Information</u></h4>
 
-            <h4><u>Items Information</u></h4>
 
-            <!-- Purchase line -->
+          <div class="row">  <!-- Purchase line -->
             <table class="table table-condensed">
               <!-- table head  -->
                 <thead>
                     <tr class="text-center" style="background-color: #a6a6a6;">
                         <th class="text-left"><strong>No.</strong></th>
-                        <th class="text-center col-xs-5"><strong>Description</strong></th>
+                        <th class="text-left"><strong>Code</strong></th>
+                        <th class="text-center col-xs-6"><strong>Description</strong></th>
                         <th class="text-right"><strong>Qty</strong></th>
                         <th class="text-right"><strong>Unit Price</strong></th>
                         <th class="text-right"><strong>Subtotal</strong></th>
@@ -207,7 +206,10 @@
                         <td class="text-left">
                             <span t-esc="no"/>.
                         </td>
-                        <td class="text-left col-xs-5" style="font-size: 12px;">
+                        <td class="text-left">
+                            <span t-field="line.product_id.default_code"/>
+                        </td>
+                        <td class="text-left col-xs-6" style="font-size: 12px;">
                             <span t-field="line.name"/>
                         </td>
                         <td class="text-right">
@@ -225,13 +227,15 @@
                     </tr>
                 </tbody>
             </table>
-            <br/>
+          </div>
+
             <div class="row">
-                <div class="col-xs-7 pull-left">
+                <div class="col-xs-7">
                   <h4><u>Other Information</u></h4>
                   <p style="font-size:12px;" t-field="o.notes"/>
                 </div>
-                <div class="col-xs-5 pull-right">
+                <div class="col-xs-5">
+                  <h4><u> </u></h4>
                     <table class="table table-condensed">
                         <tr class="border-black">
                             <td><strong>Total Without Taxes</strong></td>

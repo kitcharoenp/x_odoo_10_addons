@@ -150,7 +150,7 @@
                   vertical-align: middle !important;
               }
               td {
-                  padding: 3px !important;
+                  padding: 2px !important;
               }
           </style>
             <div class="row">
@@ -213,7 +213,9 @@
                             <span t-field="line.name"/>
                         </td>
                         <td class="text-right">
-                            <span t-field="line.product_qty"/>
+                            <span
+                              t-esc="'{0:,.2f}'.format(float(line.product_qty))"
+                              t-options='{"widget": "False"}'/>
                             <span t-field="line.product_uom.name" groups="product.group_uom"/>
                         </td>
                         <td class="text-right">

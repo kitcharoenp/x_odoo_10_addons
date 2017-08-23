@@ -13,8 +13,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def create(self, vals):
-        # When creating an product on the fly, you don't expect to
-        # have taxes on it
-        if vals.get('for_withhoding_tax_doc', False):
+        res = super(ProductTemplate, self).create(vals)
+        if vals.get('for_withhoding_tax_doc', True):
             vals.update({'supplier_taxes_id': False})
-        return super(ProductTemplate, self).create(vals)
+        return res

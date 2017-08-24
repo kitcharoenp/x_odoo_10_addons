@@ -18,6 +18,7 @@
         'actions/telco_expense_qweb_by_date_act_window.xml',
         # Views
         'views/telco_expense_qweb_menu_view.xml',
+        'views/hr_expense_form_view.xml',
         # Reports and Templates
         'report/telco_expense_qweb_by_date_report.xml',
         'report/templates/telco_expense_qweb_by_date_template.xml',

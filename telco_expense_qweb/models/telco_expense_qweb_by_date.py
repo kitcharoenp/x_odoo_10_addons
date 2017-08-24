@@ -51,6 +51,13 @@ class TelcoExpenseReportByDate(models.TransientModel):
         string='Project',
         domain=[('active', '=', True)])
     description = fields.Text()
+    state = fields.Selection([
+        ('draft', 'To Submit'),
+        ('reported', 'Reported'),
+        ('done', 'Posted'),
+        ('refused', 'Refused')], 
+        string='Status',
+        help="Status of the expense.")
 
     @api.multi
     def print_report(self):

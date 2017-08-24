@@ -12,6 +12,9 @@
                     <group>
                       <field name="date_to" />
                     </group>
+                    <group>
+                        <field name="state" />
+                    </group>
                 </group>
                 <group>
                     <field name="project_ids"/>

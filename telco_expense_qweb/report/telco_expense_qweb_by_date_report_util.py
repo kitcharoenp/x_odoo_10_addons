@@ -77,7 +77,7 @@ class TelcoExpenseQwebByDateReportUtil(models.AbstractModel):
                     ('date', '<=', str(en_date)),
                     ('date', '>=', str(st_date)),
                     ('state', '=', state), ],
-                        order="analytic_account_id asc, \
+                        order="employee_id asc, \
                             date asc, \
                             reference asc"):
                     res[len(res)-1]['data'].append({

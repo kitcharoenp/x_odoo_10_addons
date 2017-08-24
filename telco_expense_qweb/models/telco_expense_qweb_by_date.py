@@ -55,7 +55,7 @@ class TelcoExpenseReportByDate(models.TransientModel):
         ('draft', 'To Submit'),
         ('reported', 'Reported'),
         ('done', 'Posted'),
-        ('refused', 'Refused')], 
+        ('refused', 'Refused')],
         string='Status',
         help="Status of the expense.")
 

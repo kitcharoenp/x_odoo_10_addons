@@ -61,8 +61,8 @@
                   <div class="col-xs-3 text-center" >
                     <!-- accountant receipt -->
                       <ul style="list-style-type: none; font-size:9px;">
-                          <li class="text-right"><br/>&#9634; ช่วงเช้า 08:00-12:00 น.</li>
-                          <li class="text-right">&#9634; ช่วงบ่าย 13:00-17:00 น.</li>
+                          <li><br/>&#9634; ช่วงเช้า 08:00-12:00 น.</li>
+                          <li>&#9634; ช่วงบ่าย 13:00-17:00 น.</li>
                           <li><br/></li>
                           <li>________________</li>
                           <li>______/_____/_____</li>

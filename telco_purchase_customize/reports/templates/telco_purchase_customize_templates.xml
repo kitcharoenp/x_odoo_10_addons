@@ -240,7 +240,7 @@
                   <h4><u> </u></h4>
                     <table class="table table-condensed">
                         <tr class="border-black">
-                            <td><strong>Total Without Taxes</strong></td>
+                            <td><strong>Total</strong></td>
                             <td class="text-right">
                                 <span t-field="o.amount_untaxed"
                                     t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
@@ -254,7 +254,7 @@
                             </td>
                         </tr>
                         <tr class="border-black" style="background-color: #98fb98;">
-                            <td><strong>Total</strong></td>
+                            <td><strong>Grand Total</strong></td>
                             <td class="text-right">
                                 <u t-field="o.amount_total"
                                     t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>

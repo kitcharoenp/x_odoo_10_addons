@@ -37,7 +37,7 @@
                   <!-- Signature -->
               <div class="row">
                 <!-- prepare employee -->
-                  <div class="col-xs-3 text-center" >
+                  <div class="col-xs-4 text-center" >
                       <ul style="list-style-type: none; font-size:12px;">
                           <li><br/>Prepare</li>
                           <li><br/><br/></li>
@@ -47,24 +47,12 @@
                           <li><span t-field="user.employee_ids[0].job_id.name"/></li>
                       </ul>
                   </div>
-                  <!-- requestor -->
-                  <div class="col-xs-3 text-center" >
-                      <ul style="list-style-type: none; font-size:12px;">
-
-                          <li><br/>Requestor</li>
-                          <li><br/><br/></li>
-                          <li>________________</li>
-                          <li><span t-esc="datetime.datetime.now().strftime('%d / %m / %Y')"/></li>
-                          <li><span t-field="user.employee_ids[0].name"/></li>
-                          <li><span t-field="user.employee_ids[0].job_id.name"/></li>
-                      </ul>
-                  </div>
                   <!-- project manager -->
-                  <div class="col-xs-3 text-center" >
+                  <div class="col-xs-4 text-center" >
                       <ul style="list-style-type: none; font-size:12px;">
                           <li><br/>Warehouse Controller</li>
                           <li><span t-field="o.picking_type_id.warehouse_id.name"/></li>
-                          <li><br/><br/></li>
+                          <li><br/></li>
                           <li>________________</li>
                           <li>______/_____/_____</li>
                           <li><span t-field="o.location_id.partner_id.name"/></li>
@@ -72,14 +60,14 @@
                       </ul>
                   </div>
                   <!-- company managing director -->
-                  <div class="col-xs-3 text-center" >
+                  <div class="col-xs-4 text-center" >
                       <ul style="list-style-type: none; font-size:12px;">
                           <li><br/>Vendor/Partner</li>
-                          <li><br/><br/></li>
+                          <li><br/></li>
+                          <li><br/></li>
                           <li>________________</li>
                           <li>______/_____/_____</li>
-                          <li><span t-field="o.partner_id.name"/></li>
-                          <li></li>
+                          <li><span t-field="o.partner_id.name" style="font-size:9px;"/></li>
                       </ul>
                   </div>
               </div><!-- /.row -->
@@ -90,9 +78,43 @@
 
   <template id="telco_delivery_slip_document"
     inherit_id="stock.report_delivery_document">
+
     <xpath expr="//t[@t-call='report.external_layout']" position="attributes">
       <attribute name="t-call">telco_delivery_slip_report.telco_delivery_slip_layout</attribute>
     </xpath>
+
+    <xpath expr="//div[@name='customer_address']" position="replace">
+      <div class="row" name="customer_address">
+          <div class="col-xs-5 pull-right">
+              <div>
+                  <span><strong>Customer / Vendor</strong></span>
+              </div>
+              <!-- deliver slop had line item -->
+              <div t-if="o.move_lines and o.move_lines[0].partner_id"
+                style="font-size:11px;"
+                name="partner_header">
+                  <div t-field="o.move_lines[0].partner_id"
+                     t-options='{
+                     "widget": "contact",
+                     "fields": ["address", "name", "phone", "fax"],
+                     "no_marker": True}'/>
+              </div>
+
+              <!-- not had line item -->
+              <div t-if="not (o.move_lines and o.move_lines[0].partner_id) and o.partner_id"
+                style="font-size:11px;"
+                name="partner_header">
+                  <div t-field="o.partner_id"
+                     t-options='{
+                      "widget": "contact",
+                      "fields": ["address", "name", "phone", "fax"],
+                      "no_marker": True}'/>
+              </div>
+
+          </div>
+      </div>
+    </xpath>
+
   </template>
 
 </odoo>

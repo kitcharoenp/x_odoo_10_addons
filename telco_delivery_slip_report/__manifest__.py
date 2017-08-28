@@ -14,7 +14,8 @@
     'data': [
         # Views
         # Reports and Templates
-        'report/templates/telco_report_deliveryslip_template.xml',
+        'report/telco_delivery_slip_report.xml',
+        'report/templates/telco_report_delivery_slip_template.xml',
     ],
     'installable': True,
     'auto_install': False,

@@ -62,7 +62,7 @@
                   <!-- company managing director -->
                   <div class="col-xs-4 text-center" >
                       <ul style="list-style-type: none; font-size:12px;">
-                          <li><br/>Vendor/Partner</li>
+                          <li><br/>Customer / Vendor</li>
                           <li><br/></li>
                           <li><br/></li>
                           <li>________________</li>
@@ -91,7 +91,7 @@
               </div>
               <!-- deliver slop had line item -->
               <div t-if="o.move_lines and o.move_lines[0].partner_id"
-                style="font-size:11px;"
+                style="font-size:13px;"
                 name="partner_header">
                   <div t-field="o.move_lines[0].partner_id"
                      t-options='{
@@ -102,7 +102,7 @@
 
               <!-- not had line item -->
               <div t-if="not (o.move_lines and o.move_lines[0].partner_id) and o.partner_id"
-                style="font-size:11px;"
+                style="font-size:13px;"
                 name="partner_header">
                   <div t-field="o.partner_id"
                      t-options='{

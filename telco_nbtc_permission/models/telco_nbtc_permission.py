@@ -18,13 +18,16 @@ class TelcoNbtcPermission(models.Model):
         index=True,
         copy=False,
         default=lambda self: _('New'))
+    date = fields.Date(
+        default=fields.Date.context_today,
+        string="Date")
     date_text = fields.Char(
         string='Date Text',
         copy=False, )
     description_attachment = fields.Text('Description Attachment')
     description_route = fields.Text('Description Route')
     description_other = fields.Text('Description Other')
-    optical_route_line = fields.One2many(
+    optical_route_lines = fields.One2many(
         'telco.optical.network',
         'nbtc_permission_id',
         string='Optical Route Lines', )
@@ -34,6 +37,10 @@ class TelcoNbtcPermission(models.Model):
         required=True,
         default=lambda self: self.env['hr.employee'].search([
             ('user_id', '=', self.env.uid)], limit=1))
+    manager_id = fields.Many2one(
+        'hr.employee',
+        string="Manager",
+        required=True, )
 
     @api.model
     def create(self, vals):

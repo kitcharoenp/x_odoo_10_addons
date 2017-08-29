@@ -13,16 +13,20 @@
                     </div>
                     <group>
                       <group>
+                        <field name="date"/>
                         <field name="date_text"/>
                       </group>
                       <group>
                         <field name="employee_id"/>
+                        <field name="manager_id"/>
                       </group>
                     </group>
 
                     <group string="Routes">
-                        <field name="optical_route_line" nolabel="1">
-                            <tree string="Optical Routes" editable="bottom">
+                        <field name="optical_route_lines" nolabel="1" widget="many2many" options="{'not_delete': True}">
+                            <tree>
+                              <field name="name"/>
+                              <field name="distance"/>
                             </tree>
                         </field>
                     </group>

@@ -11,4 +11,5 @@ class TelcoOpticalNetwork(models.Model):
 
     nbtc_permission_id = fields.Many2one(
         'telco.nbtc.permission',
-        string='NBTC Permission', )
+        string='NBTC Permission',
+        readonly=True, copy=False)

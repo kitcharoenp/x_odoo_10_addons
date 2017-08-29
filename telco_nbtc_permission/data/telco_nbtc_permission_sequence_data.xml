@@ -4,7 +4,7 @@
         <record id="telco_nbtc_permission_sequence_data" model="ir.sequence">
             <field name="name">Telco NBTC Permission</field>
             <field name="code">telco.nbtc.permission</field>
-            <field name="prefix">nbtc-%(range_year)s%(month)s-</field>
+            <field name="prefix">PNTBC-%(range_year)s%(month)s-</field>
             <field eval="1" name="number_next"/>
             <field eval="1" name="number_increment"/>
             <field name="padding">4</field>

@@ -17,10 +17,6 @@ class PurchaseOrder(models.Model):
                             string="Requestor")
     x_other_ref = fields.Char(string='Other Reference')
 
-    x_work_order_id = fields.Many2one('telco.work.order',
-                            string="Work Order")
-    x_fault_id = fields.Many2one('telco.fault.management',
-                            string="Fault Reference")
     x_invoice_receipt_date = fields.Datetime(string= 'Invoice Receipt',
                             default=fields.Datetime.now)
     x_invoice_receipt_by = fields.Many2one(

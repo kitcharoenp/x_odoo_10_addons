@@ -13,11 +13,9 @@
         1. Payment Report per a purchase Order
         2. New managing , accounting director fields in ResCompany model
         3. New project, requestor, manager, other ref fields
-        4. New work order, fault id, receipt by, invoice receipt date fields
+        4. New receipt by, invoice receipt date fields
     """,
     'depends': ['purchase',
-                'telco_work_order',
-                'telco_fault_management',
                 'telco_account_invoice',
                 ],
     'data': [

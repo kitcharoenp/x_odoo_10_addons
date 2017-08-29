@@ -8,10 +8,7 @@
     "author": "kicharoenp@gmail.com",
     'description': """
         Fault Management for Telecommunication""",
-    'depends': [
-        'base',
-        'mail',
-    ],
+    'depends': ['base', 'report', ],
     'summary': """
         Fault Management is the set of functions that detect, isolate,
         and correct malfunctions in a telecommunications network

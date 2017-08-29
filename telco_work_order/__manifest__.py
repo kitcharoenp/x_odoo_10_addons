@@ -9,7 +9,6 @@
     'description': """
         Work Order for Telecommunication""",
     'depends': [
-        'telco_fault_management',
         'cmis_web_alf',
     ],
     'summary': """

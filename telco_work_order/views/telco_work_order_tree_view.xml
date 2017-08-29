@@ -6,7 +6,6 @@
         <field name="arch" type="xml">
             <tree string="Telco Work Order" >
                 <field name="name" />
-                <field name="telco_fault_id" />
                 <field name="partner_id" />
                 <field name="state_id" />
                 <field name="submit_date" />

@@ -16,9 +16,6 @@ class TelcoWorkOrder(models.Model):
         index=True,
         copy=False,
         default=lambda self: _('New'))
-    telco_fault_id = fields.Many2one(
-        'telco.fault.management',
-        string='Reference Fault')
     partner_id = fields.Many2one(
         'res.partner',
         string='Customer')

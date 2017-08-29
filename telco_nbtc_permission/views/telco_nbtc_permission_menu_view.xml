@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- sub-menu-->
+    <menuitem
+        id="telco_nbtc_permission_menu_view"
+        name="NBTC Permission"
+        parent="telco_optical_network.telco_optical_network_sub_menu"
+        action="telco_nbtc_permission_act_window"
+        groups="base.group_user"
+        sequence="324"
+    />
+
+    <record id="telco_nbtc_permission_menu_view"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
+</odoo>

@@ -2,23 +2,26 @@
 <odoo>
     <!-- main top menu -->
     <menuitem
-        id="telco_optical_network_menu_view"
-        action="telco_optical_network_act_window"
+        id="telco_optical_network_root_menu"
         groups="base.group_user"
         name="Optical Network"
         sequence="313"
         web_icon="telco_optical_network,static/description/icon.png"
     />
     <!-- sub-menu-->
+    <menuitem id="telco_optical_network_sub_menu" name="Optical Network"
+        parent="telco_optical_network_root_menu" sequence="1" />
+
     <menuitem
         id="telco_optical_network_title_menu"
-        name="Optical Network"
+        name="Optical Route"
         groups="base.group_user"
-        parent="telco_optical_network_menu_view"
+        parent="telco_optical_network_sub_menu"
+        action="telco_optical_network_act_window"
         sequence="314"
     />
 
-    <record id="telco_optical_network_menu_view"
+    <record id="telco_optical_network_root_menu"
             model="ir.ui.menu">
         <field name="load_xmlid" eval="True"/>
     </record>

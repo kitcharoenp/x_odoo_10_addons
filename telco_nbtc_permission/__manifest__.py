@@ -4,24 +4,25 @@
 # @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
 
 {
-    'name': 'Telco Optical Network',
+    'name': 'Telco NBTC Permission',
     'version': '0.01',
     'category': 'Telecommunication',
     "author": "kicharoenp@gmail.com",
-    'summary': 'Optical Network',
+    'summary': 'Telco NBTC Permission',
     'description': """
 
     """,
-    'depends': ['base_setup', ],
+    'depends': ['telco_optical_network', 'cmis_web_alf', ],
     'data': [
+        # Sequence
+        'data/telco_nbtc_permission_sequence_data.xml',
         # Security
         # Menu and Action
-        'actions/telco_optical_network_act_window.xml',
-        'views/telco_optical_network_menu_view.xml',
+        'actions/telco_nbtc_permission_act_window.xml',
+        'views/telco_nbtc_permission_menu_view.xml',
         # Views
-        'views/telco_optical_network_form_view.xml',
-        'views/telco_optical_network_tree_view.xml',
-        'views/telco_optical_network_cmis_form_view.xml',
+        'views/telco_nbtc_permission_tree_view.xml',
+        'views/telco_nbtc_permission_form_view.xml',
         # Reports and Templates
     ],
     'installable': True,

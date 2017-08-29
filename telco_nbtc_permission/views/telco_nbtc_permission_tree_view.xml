@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="telco_nbtc_permission_tree_view" model="ir.ui.view">
+        <field name="name">Telco NBTC Permission Tree</field>
+        <field name="model">telco.nbtc.permission</field>
+        <field name="arch" type="xml">
+            <tree string="Telco NBTC Permission" >
+                <field name="name" />
+                <field name="description_other" />
+            </tree>
+        </field>
+    </record>
+</odoo>

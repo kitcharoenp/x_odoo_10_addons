@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="telco_nbtc_permission_act_window" model="ir.actions.act_window">
+        <field name="name">Telco NBTC Permission</field>
+        <field name="res_model">telco.nbtc.permission</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a NBTC Permission.
+            </p><p>
+                In a NBTC Permission, you can
+            </p>
+        </field>
+    </record>
+</odoo>

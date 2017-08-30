@@ -26,12 +26,13 @@ class TelcoOpticalNetwork(models.Model):
                 required=True,
                 readonly=True,
                 copy=False,
-                default='draft')
+                default='exists')
 
     # Ownership and Authority
     ownership_id = fields.Many2one(
         'res.partner',
-        string='Ownership',)
+        string='Ownership',
+        default=lambda self: self.env.user.company_id.partner_id)
     government_agency_id = fields.Many2one(
         'res.partner',
         string='Government Agency',)

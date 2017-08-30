@@ -31,27 +31,24 @@ class TelcoOpticalNetwork(models.Model):
     # Ownership and Authority
     ownership_id = fields.Many2one(
         'res.partner',
-        string='Ownership',
-        required=True,)
+        string='Ownership',)
     government_agency_id = fields.Many2one(
         'res.partner',
-        string='Government Agency',
-        required=True,)
+        string='Government Agency',)
     authority_id = fields.Many2one(
         'res.partner',
-        string='Authority',
-        required=True,)
+        string='Authority',)
 
     # Optical fibre information
     product_id = fields.Many2one(
         'product.product',
         string='Optical Fibre Type',
         domain=[('purchase_ok', '=', True)],
-        change_default=True,
-        required=True)
+        change_default=True,)
     distance = fields.Float(
         string="Distance",
         digits=dp.get_precision('Product Unit of Measure'),
-        group_operator="sum")
+        group_operator="sum",
+        required=True)
     diameter = fields.Float()
     pole = fields.Integer()

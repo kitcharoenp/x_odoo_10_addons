@@ -21,7 +21,7 @@
         # Views
         'views/telco_optical_network_form_view.xml',
         'views/telco_optical_network_tree_view.xml',
-        'views/telco_optical_network_cmis_form_view.xml',
+        # 'views/telco_optical_network_cmis_form_view.xml',
         # Reports and Templates
     ],
     'installable': True,

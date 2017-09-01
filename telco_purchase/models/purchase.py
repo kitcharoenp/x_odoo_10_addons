@@ -32,3 +32,10 @@ class PurchaseOrder(models.Model):
             name = po.name
             result.append((po.id, name))
         return result
+
+    # update order_line taxes with default purchase vendor taxs
+    @api.multi
+    def action_default_purchase_line_taxs(self):
+        for order in self:
+            order.order_line.update({
+                'taxes_id': order.partner_id.x_purchase_taxes_id})

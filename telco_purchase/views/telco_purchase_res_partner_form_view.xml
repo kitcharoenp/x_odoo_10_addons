@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="telco_purchase_res_partner_form_view" model="ir.ui.view">
+    <field name="name">Inherit res_partner form iew </field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form" />
+    <field name="priority" eval="20"/>
+    <field name="groups_id" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+    <field name="arch" type="xml">
+      <group name="purchase" position="inside">
+          <field name="x_purchase_taxes_id"
+            widget="many2many_tags"
+            domain="[('type_tax_use','=','purchase')]"
+            context="{'default_type_tax_use': 'purchase'}"/>
+      </group>
+    </field>
+  </record>
+
+</odoo>

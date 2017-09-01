@@ -14,6 +14,7 @@
         2. New managing , accounting director fields in ResCompany model
         3. New project, requestor, manager, other ref fields
         4. New receipt by, invoice receipt date fields
+        5. Default purchase tax vendor 
     """,
     'depends': ['purchase',
                 'telco_account_invoice',
@@ -24,6 +25,7 @@
         'views/telco_purchase_order_tree_view.xml',
         'views/telco_purchase_order_form_view.xml',
         'views/telco_purchase_rescompany_form_view.xml',
+        'views/telco_purchase_res_partner_form_view.xml',
         # Search
         'views/telco_purchase_order_search_view.xml',
         # Reports and Templates

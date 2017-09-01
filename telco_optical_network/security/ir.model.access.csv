@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_telco_optical_network_user,telco.optical.network.user,model_telco_optical_network,group_telco_optical_network_user,1,,,
+access_telco_optical_network_officer,telco.optical.network.officer,model_telco_optical_network,group_telco_optical_network_officer,1,1,1,
+access_telco_optical_network_manager,telco.optical.network.manager,model_telco_optical_network,group_telco_optical_network_manager,1,1,1,1

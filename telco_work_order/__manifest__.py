@@ -8,9 +8,7 @@
     "author": "kicharoenp@gmail.com",
     'description': """
         Work Order for Telecommunication""",
-    'depends': [
-        'cmis_web_alf',
-    ],
+    'depends': ['base_setup', 'cmis_web_alf', ],
     'summary': """
         Work Order for Telecommunication
         """,

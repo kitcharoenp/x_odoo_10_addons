@@ -15,6 +15,9 @@
     'depends': ['base_setup', ],
     'data': [
         # Security
+        'security/telco_optical_network_groups.xml',
+        'security/ir_rule.xml',
+        'security/ir.model.access.csv',
         # Menu and Action
         'actions/telco_optical_network_act_window.xml',
         'views/telco_optical_network_menu_view.xml',
@@ -26,4 +29,5 @@
     ],
     'installable': True,
     'auto_install': False,
+    'application': True,
 }

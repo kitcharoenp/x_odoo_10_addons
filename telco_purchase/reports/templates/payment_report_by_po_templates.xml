@@ -162,6 +162,20 @@
             <t  t-set="invoice_ids_sorted"
                 t-value="o.invoice_ids.sorted(key=lambda r: r.id)"
             />
+            <t t-if="len(invoice_ids_sorted) > 3">
+              <t  t-set="invoices_show"
+                  t-value="invoice_ids_sorted[-3:]"/>
+
+              <t  t-set="archived"
+                  t-value="invoice_ids_sorted[:len(invoice_ids_sorted)-3]"/>
+
+              <t t-set="lot" t-value="len(invoice_ids_sorted)-3"/>
+            </t>
+            <t t-else="">
+              <t  t-set="invoices_show"
+                  t-value="invoice_ids_sorted"/>
+              <t t-set="lot" t-value="0"/>
+            </t>
 
             <!-- invoice line -->
             <table class="table table-condensed">
@@ -173,12 +187,18 @@
                         <th class="text-center"><strong>Amount</strong></th>
 
                         <!-- list invoices related to this purchase order  -->
-                        <t t-set="lot" t-value="0"/>
-                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                        <th t-if="len(invoice_ids_sorted) > 3" class="text-center" style="font-size: 9px;">
+                          <strong>
+                            #1 - <span t-esc="lot"/>
+                          </strong>
+                        </th>
+
+                        <t t-foreach="invoices_show" t-as="invoice_id">
                           <t t-set="lot" t-value="lot+1"/>
                           <th class="text-center" style="font-size: 9px;">
                             <strong>
-                              #<span t-esc="lot"/><br/>
+                              #<span t-esc="lot"/>
+                              <br/>
                             <!--
                               <t t-if="invoice_id.number">
                                 <u t-field="invoice_id.number"/><br/>
@@ -227,8 +247,27 @@
 
                         <!-- list invoices line related to this po line -->
                         <t t-set="total" t-value="0"/>
-                        <!-- loop each invoice and then make column -->
-                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
+                        <t t-set="total_archived" t-value="0"/>
+                        <!-- archived colomn -->
+
+                          <t t-foreach="archived" t-as="invoice_id_sorted">
+                                  <!-- find invoice_line in each invoice_id -->
+                                  <t t-foreach="line.invoice_lines" t-as="invoice_line">
+                                      <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id">
+                                        <t t-set="total_archived" t-value="total_archived+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                        <!-- sum purchase invoice line total -->
+                                        <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                      </t>
+                                  </t>
+                          </t>
+                        <td t-if="len(invoice_ids_sorted) > 3" class="text-right">
+                          <span
+                            t-esc="'{0:,.2f}'.format(float(total_archived))"
+                            t-options='{"widget": "False"}'/>
+                        </td>
+
+                        <!--loop each invoice and then make column (last 3 column) -->
+                        <t t-foreach="invoices_show" t-as="invoice_id_sorted">
                               <td class="text-right">
                                 <!-- find invoice_line in each invoice_id -->
                                 <t t-foreach="line.invoice_lines" t-as="invoice_line">
@@ -259,7 +298,7 @@
 
                     <!-- invoice line from another purchase order -->
                     <t  t-set="inv_line_from_other_po" t-value="[]"/>
-                    <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
+                    <t t-foreach="invoices_show" t-as="invoice_id_sorted">
                       <t t-foreach="invoice_id_sorted.invoice_line_ids" t-as="inv_line">
                         <t t-if="inv_line.purchase_id.id != o.id">
                           <t  t-set="inv_line_from_other_po" t-value="inv_line_from_other_po + [inv_line]"/>
@@ -286,7 +325,7 @@
                       <!-- list invoices line related to this po line -->
                       <t t-set="total" t-value="0"/>
                       <!-- loop each invoice and then make column -->
-                      <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
+                      <t t-foreach="invoices_show" t-as="invoice_id_sorted">
                             <td class="text-right">
                               <!-- find invoice_line in each invoice_id -->
                                   <t t-if="invoice_id_sorted.id == line_other_po.invoice_id.id">
@@ -315,7 +354,7 @@
                 </tbody>
 
                 <t t-set="account_invoice_taxs" t-value="[]"/>
-                <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                <t t-foreach="invoices_show" t-as="invoice_id">
                   <t t-foreach="invoice_id.tax_line_ids" t-as="tax_line_id">
                     <t t-set="account_invoice_taxs" t-value="account_invoice_taxs + [tax_line_id]"/>
                   </t>
@@ -341,8 +380,14 @@
                           </u></strong>
                         </th>
 
+                        <th t-if="len(invoice_ids_sorted) > 3" class="text-right">
+                          <span
+                            t-esc="'{0:,.2f}'.format(float(1.00))"
+                            t-options='{"widget": "False"}'/>
+                        </th>
+
                         <!-- list invoices related to this purchase order  -->
-                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                        <t t-foreach="invoices_show" t-as="invoice_id">
                           <th class="text-right">
                             <strong>
                               <span
@@ -378,7 +423,14 @@
                         <!-- -->
                         <t t-set="total" t-value="0"/>
                         <!-- -->
-                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
+
+                        <td t-if="len(invoice_ids_sorted) > 3" class="text-right">
+                          <span
+                            t-esc="'{0:,.2f}'.format(float(1.00))"
+                            t-options='{"widget": "False"}'/>
+                        </td>
+
+                        <t t-foreach="invoices_show" t-as="invoice_id_sorted">
                               <td class="text-right">
                                 <!--  -->
                                 <t t-foreach="invoice_id_sorted.tax_line_ids" t-as="invoice_tax_line">
@@ -407,7 +459,7 @@
                         <th colspan="2"><strong></strong></th>
                         <th class="text-right"><strong></strong></th>
 
-                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                        <t t-foreach="invoices_show" t-as="invoice_id">
                           <th class="text-right">
                             <strong>
                               <span
@@ -428,8 +480,13 @@
                         <th colspan="2"><strong>Payment</strong></th>
                         <th class="text-right"><strong></strong></th>
 
+                        <td t-if="len(invoice_ids_sorted) > 3" class="text-right" style="font-size:11px;">
+                          <span
+                            t-esc="'{0:,.2f}'.format(float(1.00))"
+                            t-options='{"widget": "False"}'/>
+                        </td>
                         <!-- payment row -->
-                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                        <t t-foreach="invoices_show" t-as="invoice_id">
                           <td class="text-right" style="font-size:11px;">
                                 <p>
                                   <!-- payment due date -->
@@ -468,7 +525,7 @@
                         <th colspan="2"><strong>Payment</strong></th>
                         <th class="text-right"><strong></strong></th>
 
-                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                        <t t-foreach="invoices_show" t-as="invoice_id">
                           <td class="text-right" style="font-size:8px;">
                               <span t-foreach="invoice_id.payment_ids" t-as="payment_id">
                                 <p>
@@ -494,7 +551,7 @@
                         <th colspan="2"><strong>Amount Due</strong></th>
                         <th class="text-right"><strong></strong></th>
 
-                        <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
+                        <t t-foreach="invoices_show" t-as="invoice_id">
                           <th class="text-right">
                               <strong t-if="invoice_id.residual">
                                 <span style="font-size:8px;" t-esc="'%.2f'% invoice_id.residual"
@@ -511,8 +568,8 @@
             </table>
 
             <!-- show bank account name / number if payment method is TRF -->
-            <t t-if="len(invoice_ids_sorted) > 0" >
-              <t  t-set="latest_invoice" t-value="invoice_ids_sorted[-1]"/>
+            <t t-if="len(invoices_show) > 0" >
+              <t  t-set="latest_invoice" t-value="invoices_show[-1]"/>
               <p t-if="latest_invoice.x_account_payment_method.code == 'TRF'" style="font-size:13px;">
                 <br/>
                 <span t-field="latest_invoice.x_account_payment_method"/>

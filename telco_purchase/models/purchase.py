@@ -9,22 +9,25 @@ from odoo import api, fields, models, _
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    x_account_analytic_id = fields.Many2one('account.analytic.account',
-                            string='Analytic Account')
-    x_manager_id = fields.Many2one('hr.employee',
-                            string="Manager")
-    x_requestor_id = fields.Many2one('hr.employee',
-                            string="Requestor")
+    x_account_analytic_id = fields.Many2one(
+        'account.analytic.account',
+        string='Analytic Account')
+    x_manager_id = fields.Many2one(
+        'hr.employee',
+        string="Manager")
+    x_requestor_id = fields.Many2one(
+        'hr.employee',
+        string="Requestor")
     x_other_ref = fields.Char(string='Other Reference')
 
-    x_invoice_receipt_date = fields.Datetime(string= 'Invoice Receipt',
-                            default=fields.Datetime.now)
+    x_invoice_receipt_date = fields.Datetime(
+        string='Invoice Receipt',
+        default=fields.Datetime.now)
     x_invoice_receipt_by = fields.Many2one(
-                            'hr.employee',
-                            string="Receipt By",)
+        'hr.employee',
+        string="Receipt By",)
     x_description = fields.Text(string='Description')
     x_issue_date = fields.Date(string='Issue Date')
-
 
     @api.multi
     @api.depends('name', 'partner_ref')

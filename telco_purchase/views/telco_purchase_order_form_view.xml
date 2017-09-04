@@ -66,6 +66,7 @@
           <page string="Telco">
             <group>
               <group>
+                <field name="x_issue_date"/>
                 <field name="partner_ref"/>
                 <field name="origin"/>
               </group>
@@ -75,8 +76,8 @@
                 <field name="x_manager_id" options="{'no_create': True}"/>
                 <field name="x_requestor_id" options="{'no_create': True}"/>
               </group>
-              <group>
-
+              <group colspan="2">
+                  <field name="x_description"/>
               </group>
             </group>
           </page>

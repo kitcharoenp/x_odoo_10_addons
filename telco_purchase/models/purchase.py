@@ -22,6 +22,9 @@ class PurchaseOrder(models.Model):
     x_invoice_receipt_by = fields.Many2one(
                             'hr.employee',
                             string="Receipt By",)
+    x_description = fields.Text(string='Description')
+    x_issue_date = fields.Date(string='Issue Date')
+
 
     @api.multi
     @api.depends('name', 'partner_ref')

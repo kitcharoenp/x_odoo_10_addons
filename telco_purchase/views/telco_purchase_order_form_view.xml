@@ -46,13 +46,18 @@
         <!-- replace date order  by project  -->
         <xpath expr="//field[@name='date_order']"
             position="replace">
-            <field name="x_account_analytic_id" string="Project" options="{'no_create': True}"/>
+            <field name="x_account_analytic_id"
+              string="Project"
+              options="{'no_create': True}"
+              attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
         </xpath>
 
         <!-- replace partner reference by po ref  -->
         <xpath expr="//field[@name='partner_ref']"
             position="replace">
-            <field name="x_other_ref" string="PO ref."/>
+            <field name="x_other_ref"
+              string="PO ref."
+              attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
         </xpath>
 
         <!-- replace partner reference by po ref  -->
@@ -66,18 +71,30 @@
           <page string="Telco">
             <group>
               <group>
-                <field name="x_issue_date"/>
-                <field name="partner_ref"/>
-                <field name="origin"/>
+                <field name="x_issue_date"
+                  attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
+                <field name="partner_ref"
+                  attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
+                <field name="origin"
+                  attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
               </group>
               <group>
-                <field name="x_invoice_receipt_by" options="{'no_create': True}"/>
-                <field name="x_invoice_receipt_date" string="Receipt Date"/>
-                <field name="x_manager_id" options="{'no_create': True}"/>
-                <field name="x_requestor_id" options="{'no_create': True}"/>
+                <field name="x_invoice_receipt_by"
+                  options="{'no_create': True}"
+                  attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
+                <field name="x_invoice_receipt_date"
+                  string="Receipt Date"
+                  attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
+                <field name="x_manager_id"
+                  options="{'no_create': True}"
+                  attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
+                <field name="x_requestor_id"
+                  options="{'no_create': True}"
+                  attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
               </group>
               <group colspan="2">
-                  <field name="x_description"/>
+                  <field name="x_description"
+                    attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
               </group>
             </group>
           </page>

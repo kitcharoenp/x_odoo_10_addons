@@ -150,7 +150,7 @@
                   <td class="col-xs-4"><span t-field="o.x_requestor_id.name"/></td>
                 </tr>
                 <tr>
-                  <th class="col-xs-2"><strong>Subject</strong></th>
+                  <th class="col-xs-2"><strong>Route</strong></th>
                   <td colspan="3"><span t-field="o.x_description"/></td>
                 </tr>
 

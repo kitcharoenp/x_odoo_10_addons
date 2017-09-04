@@ -149,6 +149,10 @@
                   <th class="col-xs-2" style="background-color: #DEDEDE;"><strong>Requestor</strong></th>
                   <td class="col-xs-4"><span t-field="o.x_requestor_id.name"/></td>
                 </tr>
+                <tr>
+                  <th class="col-xs-2"><strong>Description</strong></th>
+                  <td colspan="3"><span t-field="o.x_description"/></td>
+                </tr>
 
               </table>
 
@@ -397,14 +401,14 @@
                         <td class="text-right"></td>
                     </tr>
 
-                    <!-- total / tax -->
+                    <!--
+                    total / tax
                     <tr style="font-size:8px; background-color: #e8e8e8;">
                         <th colspan="2"><strong></strong></th>
                         <th class="text-right"><strong></strong></th>
 
                         <t t-foreach="invoice_ids_sorted" t-as="invoice_id">
                           <th class="text-right">
-                            <!-- bill amount_tax -->
                             <strong>
                               <span
                                 t-esc="'{0:,.2f}'.format(float(invoice_id.amount_tax))"
@@ -417,6 +421,7 @@
                         <th class="text-right"><strong></strong></th>
                         <th class="text-right"><strong></strong></th>
                     </tr>
+                    -->
 
                     <!-- payment -->
                     <tr style="background-color: #98fb98;">

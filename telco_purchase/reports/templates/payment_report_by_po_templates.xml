@@ -507,6 +507,7 @@
                         </t>
 
                         <td t-if="len(invoice_ids_sorted) > 3" class="text-right" style="font-size:11px;">
+                          <p>
                             <u>
                               <strong>
                                 <span style="font-size:13px; background-color: #98fb98;"
@@ -514,6 +515,7 @@
                                       t-options='{"widget": "False"}'/>
                             </strong>
                             </u>
+                          </p>
                         </td>
                         <!-- payment row -->
                         <t t-foreach="invoices_show" t-as="invoice_id">
@@ -609,6 +611,9 @@
                 </t>
                 <t t-if="latest_invoice.partner_bank_id.acc_number">
                   Account Number : <b><u><span t-field="latest_invoice.partner_bank_id.acc_number"/></u></b>
+                </t>
+                <t t-if="latest_invoice.partner_bank_id.partner_id">
+                  Account Holder : <b><u><span t-field="latest_invoice.partner_bank_id.partner_id.name"/></u></b>
                 </t>
 
               </p>

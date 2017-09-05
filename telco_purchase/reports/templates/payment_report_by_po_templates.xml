@@ -380,9 +380,16 @@
                           </u></strong>
                         </th>
 
+                        <t t-set="archived_amount_untaxed" t-value="0" />
+                        <!-- calculate sum archived amount_untaxed-->
+                        <t t-foreach="archived" t-as="invoice_id">
+                          <t t-set="archived_amount_untaxed"
+                            t-value="archived_amount_untaxed+invoice_id.amount_untaxed" />
+                        </t>
+
                         <th t-if="len(invoice_ids_sorted) > 3" class="text-right">
                           <span
-                            t-esc="'{0:,.2f}'.format(float(1.00))"
+                            t-esc="'{0:,.2f}'.format(float(archived_amount_untaxed))"
                             t-options='{"widget": "False"}'/>
                         </th>
 
@@ -424,9 +431,21 @@
                         <t t-set="total" t-value="0"/>
                         <!-- -->
 
+                        <t t-set="archived_invoice_tax_line" t-value="0" />
+                        <!-- calculate archived tax line -->
+                        <t t-foreach="archived" t-as="invoice_id_sorted">
+                                <t t-foreach="invoice_id_sorted.tax_line_ids" t-as="invoice_tax_line">
+                                    <t t-if="invoice_tax_line.tax_id.id == tax.id">
+                                      <t t-set="archived_invoice_tax_line"
+                                        t-value="archived_invoice_tax_line + invoice_tax_line.amount" />
+                                      <t t-set="total" t-value="total+invoice_tax_line.amount"/>
+                                    </t>
+                                </t>
+                        </t>
+
                         <td t-if="len(invoice_ids_sorted) > 3" class="text-right">
                           <span
-                            t-esc="'{0:,.2f}'.format(float(1.00))"
+                            t-esc="'{0:,.2f}'.format(float(archived_invoice_tax_line))"
                             t-options='{"widget": "False"}'/>
                         </td>
 
@@ -480,10 +499,21 @@
                         <th colspan="2"><strong>Payment</strong></th>
                         <th class="text-right"><strong></strong></th>
 
+                        <t t-set="archived_amount_total" t-value="0" />
+                        <!-- calculate archived amount total-->
+                        <t t-foreach="archived" t-as="invoice_id">
+                            <t t-set="archived_amount_total"
+                              t-value="archived_amount_total + invoice_id.amount_total" />
+                        </t>
+
                         <td t-if="len(invoice_ids_sorted) > 3" class="text-right" style="font-size:11px;">
-                          <span
-                            t-esc="'{0:,.2f}'.format(float(1.00))"
-                            t-options='{"widget": "False"}'/>
+                            <u>
+                              <strong>
+                                <span style="font-size:13px; background-color: #98fb98;"
+                                      t-esc="'{0:,.2f}'.format(float(archived_amount_total))"
+                                      t-options='{"widget": "False"}'/>
+                            </strong>
+                            </u>
                         </td>
                         <!-- payment row -->
                         <t t-foreach="invoices_show" t-as="invoice_id">

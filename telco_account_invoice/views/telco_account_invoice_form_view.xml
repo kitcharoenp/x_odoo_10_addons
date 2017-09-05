@@ -16,7 +16,7 @@
 
         <!-- Payment Method -->
         <xpath expr="//field[@name='reference']"
-            position="after">
+            position="before">
             <field name="x_account_payment_method"/>
         </xpath>
 

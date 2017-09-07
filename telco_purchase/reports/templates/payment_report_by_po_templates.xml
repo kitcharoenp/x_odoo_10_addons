@@ -228,10 +228,14 @@
                 <t t-set="amount_untaxed" t-value="0"/>
                 <t t-set="total_untaxed" t-value="0"/>
                 <t t-set="total_due" t-value="0"/>
+                <t t-set="had_negative" t-value="0"/>
 
                 <tbody>
                     <!-- for positive amount line -->
                   <t t-foreach="o.order_line" t-as="line">
+                    <t t-if="not line.price_subtotal > 0">
+                        <t t-set="had_negative" t-value="had_negative+1"/>
+                    </t>
                     <tr t-if="line.price_subtotal > 0" >
                         <t t-set="no" t-value="no+1"/>
                         <td class="text-left">
@@ -300,8 +304,10 @@
                   </t>
 
                   <!-- for  amount line less than zero -->
+                <t t-if="had_negative > 0">
                   <t t-set="separator" t-value="1"/>
                   <t t-set="cols" t-value="5+len(invoice_ids_sorted)"/>
+
                   <t t-foreach="o.order_line" t-as="line">
                     <tr t-if="separator == 1" style="background-color: #a6a6a6;">
                       <td t-if="separator == 1" t-att-colspan="cols">/</td>
@@ -374,7 +380,8 @@
                     </tr>
 
                   </t>
-
+                </t><!-- end line less than zero -->
+                
                     <!-- invoice line from another purchase order -->
                     <t  t-set="inv_line_from_other_po" t-value="[]"/>
                     <t t-foreach="invoices_show" t-as="invoice_id_sorted">

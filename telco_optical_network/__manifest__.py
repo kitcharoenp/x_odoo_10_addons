@@ -12,7 +12,7 @@
     'description': """
 
     """,
-    'depends': ['base_setup', ],
+    'depends': ['base_setup', 'cmis_web_alf', ],
     'data': [
         # Security
         'security/telco_optical_network_groups.xml',

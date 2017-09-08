@@ -191,6 +191,15 @@
                           <strong>
                             #1 <t t-if="lot > 1"> - <span t-esc="lot"/></t>
                           </strong>
+                          <br/>
+                        <t t-foreach="archived" t-as="arch">
+                            <t t-if="arch.reference">
+                              <strong>
+                                <span t-field="arch.reference"/>,
+                              </strong><br/>
+                            </t>
+                        </t>
+
                         </th>
 
                         <t t-foreach="invoices_show" t-as="invoice_id">
@@ -198,6 +207,7 @@
                           <th class="text-center" style="font-size: 9px;">
                             <strong>
                               #<span t-esc="lot"/>
+                            </strong>
                               <br/>
                             <!--
                               <t t-if="invoice_id.number">
@@ -205,17 +215,17 @@
                               </t>
                             -->
                               <t t-if="invoice_id.date_invoice">
-                                b@<span t-field="invoice_id.date_invoice"/><br/>
+                                <strong>b@<span t-field="invoice_id.date_invoice"/></strong> <br/>
                               </t>
                               <t t-if="invoice_id.reference">
-                                <span t-field="invoice_id.reference"/><br/>
+                                <strong><span t-field="invoice_id.reference"/></strong><br/>
                               </t>
                               <!--
                               <t t-if="invoice_id.date_due">
                                 p@<u t-field="invoice_id.date_due"/><br/>
                               </t>
                               -->
-                            </strong>
+
                           </th>
                         </t>
 

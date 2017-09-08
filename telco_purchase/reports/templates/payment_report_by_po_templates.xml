@@ -257,7 +257,7 @@
                         <t t-set="total_archived" t-value="0"/>
                         <!-- archived colomn -->
 
-                          <t t-foreach="archived" t-as="invoice_id_sorted">
+                        <t t-foreach="archived" t-as="invoice_id_sorted">
                                   <!-- find invoice_line in each invoice_id -->
                                   <t t-foreach="line.invoice_lines" t-as="invoice_line">
                                       <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id">
@@ -279,7 +279,7 @@
                                 <!-- find invoice_line in each invoice_id -->
                                 <t t-foreach="line.invoice_lines" t-as="invoice_line">
                                     <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id">
-                                      <span
+                                      <span t-if="invoice_line.quantity > 0"
                                         t-esc="'{0:,.2f}'.format(float(invoice_line.quantity * invoice_line.price_unit))"
                                         t-options='{"widget": "False"}'/>
                                       <!-- sum purchase invoice line total -->
@@ -383,10 +383,10 @@
                   </t>
                 </t><!-- end line less than zero -->
 
-                    <!-- invoice line from another purchase order -->
+    <!-- invoice line from another purchase order -->
                     <t  t-set="inv_line_from_other_po" t-value="[]"/>
 
-                    <t t-foreach="invoices_show" t-as="invoice_id_sorted">
+                    <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
                       <t t-foreach="invoice_id_sorted.invoice_line_ids" t-as="inv_line">
                         <t t-if="inv_line.purchase_id.id != o.id">
                           <t  t-set="inv_line_from_other_po" t-value="inv_line_from_other_po + [inv_line]"/>
@@ -437,7 +437,25 @@
 
                       <!-- list invoices line related to this po line -->
                       <t t-set="total" t-value="0"/>
+                      <t t-set="total_archived_other" t-value="0"/>
+                      <!-- archived colomn -->
 
+                      <t t-foreach="archived" t-as="invoice_id_sorted">
+                                <!-- find invoice_line in each invoice_id -->
+                                <t t-foreach="inv_line_from_other_po" t-as="invoice_line">
+                                    <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id and invoice_line.purchase_line_id.id == purchase_line_id.id">
+                                      <t t-set="total_archived_other" t-value="total_archived_other+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                      <!-- sum purchase invoice line total -->
+                                      <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                    </t>
+                                </t>
+                        </t>
+
+                      <td t-if="len(invoice_ids_sorted) > 3" class="text-right">
+                        <span
+                          t-esc="'{0:,.2f}'.format(float(total_archived_other))"
+                          t-options='{"widget": "False"}'/>
+                      </td>
 
                       <!-- loop each invoice and then make column -->
                       <t t-foreach="invoices_show" t-as="invoice_id_sorted">

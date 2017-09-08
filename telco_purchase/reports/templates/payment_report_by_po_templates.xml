@@ -189,7 +189,7 @@
                         <!-- list invoices related to this purchase order  -->
                         <th t-if="len(invoice_ids_sorted) > 3" class="text-center" style="font-size: 9px;">
                           <strong>
-                            #1 - <span t-esc="lot"/>
+                            #1 <t t-if="lot > 1"> - <span t-esc="lot"/></t>
                           </strong>
                         </th>
 
@@ -236,6 +236,7 @@
                     <t t-if="not line.price_subtotal > 0">
                         <t t-set="had_negative" t-value="had_negative+1"/>
                     </t>
+
                     <tr t-if="line.price_subtotal > 0" >
                         <t t-set="no" t-value="no+1"/>
                         <td class="text-left">
@@ -445,7 +446,7 @@
                               <!-- find invoice_line in each invoice_id -->
                           <t t-if="invoice_id_sorted.id == line_other_po.invoice_id.id and line_other_po.purchase_line_id.id == purchase_line_id.id">
 
-                                    <span
+                                    <span t-if="line_other_po.quantity > 0"
                                       t-esc="'{0:,.2f}'.format(float(line_other_po.quantity * line_other_po.price_unit))"
                                       t-options='{"widget": "False"}'/>
 

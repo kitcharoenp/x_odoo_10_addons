@@ -402,9 +402,6 @@
                         </t>
                     </t>
 
-                    <t t-foreach="purchase_line_id_from_other" t-as="b">
-                      <p t-esc="b"/>
-                    </t>
                     <!-- create table rows -->
                     <t t-set="seq" t-value="no"/>
 

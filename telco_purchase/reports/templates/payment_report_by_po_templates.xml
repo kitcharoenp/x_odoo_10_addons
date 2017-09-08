@@ -192,14 +192,12 @@
                             #1 <t t-if="lot > 1"> - <span t-esc="lot"/></t>
                           </strong>
                           <br/>
-                        <t t-foreach="archived" t-as="arch">
-                            <t t-if="arch.reference">
-                              <strong>
-                                <span t-field="arch.reference"/>,
-                              </strong><br/>
+                            <t t-if="len(invoice_ids_sorted) == 4 and  archived[0].date_invoice">
+                              <strong>b@<span t-field="archived[0].date_invoice"/></strong> <br/>
                             </t>
-                        </t>
-
+                            <t t-if="len(invoice_ids_sorted) == 4 and  archived[0].reference">
+                              <strong><span t-field="archived[0].reference"/></strong><br/>
+                            </t>
                         </th>
 
                         <t t-foreach="invoices_show" t-as="invoice_id">
@@ -666,6 +664,18 @@
 
                         <td t-if="len(invoice_ids_sorted) > 3" class="text-right" style="font-size:11px;">
                           <p>
+
+                            <!-- payment due date -->
+                            <t t-if='len(invoice_ids_sorted) == 4 and archived[0].date_due'>
+                              <strong>Paid on</strong>
+                              <br/>
+                              <strong>
+                                <span t-field="archived[0].date_due"
+                                  t-options='{"format": "dd-MM-YYYY"}'/>
+                              </strong>
+                              <br/>
+                            </t>
+
                             <u>
                               <strong>
                                 <span style="font-size:13px; background-color: #98fb98;"
@@ -673,6 +683,13 @@
                                       t-options='{"widget": "False"}'/>
                             </strong>
                             </u>
+
+                            <!-- payment method -->
+                              <t t-if="len(invoice_ids_sorted) == 4 and archived[0].x_account_payment_method">
+                                <br/>
+                                (<span t-field="archived[0].x_account_payment_method"/>)
+                              </t>
+
                           </p>
                         </td>
                         <!-- payment row -->

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem
+        id="telco_vendor_bills_report_menu_view"
+        name="Vendor Bills Report"
+        parent="purchase.menu_purchase_control"
+        action="telco_vendor_bills_report_act_window"
+        groups="hr_expense.group_hr_expense_manager"
+        sequence="190"
+    />
+
+    <record id="purchase.menu_purchase_control"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
+</odoo>

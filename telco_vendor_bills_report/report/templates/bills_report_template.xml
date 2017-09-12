@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="telco_vendor_bills_report_external_layout" inherit_id="report.external_layout" primary="True">
+        <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+            <attribute name="t-call">telco_vendor_bills_report.telco_vendor_bills_report_header</attribute>
+        </xpath>
+        <xpath expr="//t[@t-call='report.external_layout_footer']" position="attributes">
+            <attribute name="t-call">telco_vendor_bills_report.telco_vendor_bills_report_footer</attribute>
+        </xpath>
+    </template>
+
+    <template id="telco_vendor_bills_report_header" inherit_id="report.external_layout_header" primary="True">
+        <xpath expr="//div[@name='company_address']" position="replace">
+          <div class="row">
+              <style>
+                  body {
+                      font-family:freeserif;
+                  }
+              </style>
+
+              <div class="col-xs-12 text-center" >
+                  <span style="font-size:21px;">
+                          <u><b>เอกสารสรุปงวดงาน</b></u>
+                  </span>
+              </div>
+          </div> <!--./row -->
+        </xpath>
+    </template>
+
+    <template id="telco_vendor_bills_report_footer" inherit_id="report.external_layout_footer" primary="True">
+        <xpath expr="//div[@class='text-center']" position="before">
+            <div class="text-center"
+                style=" color: black; font-weight: bold; font-size:11px;">
+                <!-- include CSS  -->
+                <style>
+                        body {
+                            font-family:freeserif;
+                        }
+                </style>
+                <div class="row zero_min_height">
+                  <div class="col-xs-4 pull-right text-right" style="font-size:8px;">
+                        printed @ <span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/>
+                  </div>
+                        <div class="col-xs-12">
+                            <div style="border-bottom: 1px solid black;"></div>
+                        </div><!-- /.col-xs-12 -->
+                        <br/>
+                </div><!-- /.row zero_min_height -->
+
+                    <!-- Signature -->
+                <div class="row">
+                  <div class="col-xs-4 text-center" >
+                    <!-- accountant receipt -->
+                      <ul style="list-style-type: none; font-size:9px;">
+                          <li><br/>&#9634; morning 08:00-12:00 น.</li>
+                          <li>&#9634; afternoon 13:00-17:00 น.</li>
+                          <li><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li>(เซ็นต์รับเอกสารฝ่ายบัญชี)</li>
+                      </ul>
+                  </div>
+                  <!-- prepare employee -->
+                    <div class="col-xs-4 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+                            <li><br/>Prepare</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li><span t-esc="datetime.datetime.now().strftime('%d / %m / %Y')"/></li>
+                            <li><span t-field="user.employee_ids[0].name"/></li>
+                            <li><span t-field="user.employee_ids[0].job_id.name"/></li>
+                        </ul>
+                    </div>
+
+                    <!-- requestor -->
+                    <div class="col-xs-4 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+
+                            <li><br/>Verify</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li><span t-field="user.employee_ids[0].parent_id.name"/></li>
+                            <li><span t-field="user.employee_ids[0].parent_id.job_id.name"/></li>
+                        </ul>
+                    </div>
+
+                </div><!-- /.row -->
+            </div>
+        </xpath>
+    </template>
+
+<template id="bills_report_template">
+
+    <t t-call="report.html_container">
+        <t t-call="telco_vendor_bills_report.telco_vendor_bills_report_external_layout">
+            <div class="page">
+                <!-- include CSS  -->
+                <style>
+                    /* --- Generic Restyling and Resets --- */
+                    body {
+                        font-family:freeserif;
+                    }
+                    table, th, td {
+                        font-size: 9px;
+                        border: 1px solid #ababab !important;
+                        margin-bottom: 0px !important;
+                        border-collapse: collapse !important;
+                        vertical-align: middle !important;
+                    }
+                    td {
+                        padding: 3px !important;
+                    }
+                </style>
+            <t t-foreach="get_data_for_report" t-as="obj">
+            <div class="row">
+                <h5 t-if="obj['project_name']" class='text-center'>
+                  Project : <t t-esc="obj['project_name']"/>
+                </h5>
+              <table class="table table-bordered" style="table-layout:auto">
+                  <thead>
+                    <tr class='text-center' style="background-color: #A6A6A6;">
+                      <th class="text-left"><strong>No.</strong></th>
+                      <th class="text-center" style="font-size:8px;">PO Ref.</th>
+                      <th class='text-center'>Issue Date</th>
+                      <th class='text-center'>Purchase Req.</th>
+                      <th class='text-center'>Subject / Route</th>
+                      <th class='text-center'>Vendor</th>
+                      <th class='text-center'>Invoice</th>
+                      <th class='text-center'>Due Date</th>
+                      <th class='text-center'>Payments</th>
+                      <th class='text-center'>Grand Total</th>
+                    </tr>
+                  </thead>
+                  <!-- initial variable -->
+                  <t t-set="i" t-value="1" />
+                  <t t-set="total" t-value="0" />
+                  <tbody>
+                      <t t-foreach="obj['data']" t-as="vendor_bill">
+                          <tr style="font-size:8px;">
+                            <td class="text-left"><t t-esc="i"/></td>
+                            <td style="font-size:8px;"><t t-esc="vendor_bill['other_po_ref']"/></td>
+                            <td class="text-center"><t t-esc="vendor_bill['issue_date']"/></td>
+                            <td style="font-size:8px;"><t t-esc="vendor_bill['primary_po']"/></td>
+                            <td style="font-size:8px;"><t t-esc="vendor_bill['x_description']"/></td>
+                            <td style="font-size:8px;"><t t-esc="vendor_bill['vendor_name']"/></td>
+                            <td class='text-left'><t t-esc="vendor_bill['reference']"/></td>
+                            <td class="text-center"><t t-esc="vendor_bill['due_date'].strftime('%d-%m-%y')"/></td>
+                            <td class='text-center'><t t-esc="vendor_bill['payment_method']" /></td>
+                            <td class="text-right" style="background-color: #DEDEDE;">
+                              <t t-esc="'{0:,.2f}'.format(float(vendor_bill['amount_total']))"/>
+                            </td>
+                          </tr>
+                          <t t-set="i" t-value="i+1" />
+                          <t t-set="total" t-value="float(total)+float(vendor_bill['amount_total'])" />
+                      </t>
+                      <tr style="background-color: #98fb98; font-size:10px;">
+                        <td colspan="8" class='text-right'>รวมทั้งหมด</td>
+                        <td colspan="2" class="text-right" style="font-size:13px;">
+                          <u><strong><t t-esc="'{0:,.2f}'.format(float(total))"/></strong></u>
+                        </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+            </div><!--/.row -->
+            </t>
+
+        </div><!--/.page -->
+        </t>
+    </t>
+</template>
+
+
+</odoo>

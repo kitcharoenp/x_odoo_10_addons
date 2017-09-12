@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="telco_vendor_bills_report_form_view" model="ir.ui.view">
+            <field name="name">Telco Vendor Bills Report</field>
+            <field name="model">telco.vendor.bills.report</field>
+            <field name="arch" type="xml">
+            <form string="Telco Vendor Bills Report">
+                <group>
+                    <group>
+                      <field name="due_date" />
+                    </group>
+                    <group>
+                      <field name="issue_date" invisible="1"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="project_ids"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+</odoo>

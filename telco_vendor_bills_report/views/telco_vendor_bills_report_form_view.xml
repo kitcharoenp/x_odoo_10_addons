@@ -10,11 +10,11 @@
                       <field name="due_date" />
                     </group>
                     <group>
-                      <field name="issue_date" invisible="1"/>
+                      <field name="issue_date"/>
                     </group>
                 </group>
                 <group>
-                    <field name="project_ids"/>
+                    <field name="project_ids" invisible="1"/>
                 </group>
                 <footer>
                     <button name="print_report" string="Print" type="object" class="btn-primary"/>

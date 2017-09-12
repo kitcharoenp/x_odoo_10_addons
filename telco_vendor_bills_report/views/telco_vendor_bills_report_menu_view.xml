@@ -6,7 +6,7 @@
         name="Vendor Bills Report"
         parent="purchase.menu_purchase_control"
         action="telco_vendor_bills_report_act_window"
-        groups="hr_expense.group_hr_expense_manager"
+        groups="account.group_account_invoice"
         sequence="190"
     />
 

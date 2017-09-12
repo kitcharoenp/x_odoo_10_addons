@@ -60,15 +60,15 @@ class TelcoVendorBillsReport(models.TransientModel):
             raise UserError(_(
                 'You have to select at least one Project. \
                 And try again.'))
-        """
+
         projects = self.env['project.project'].browse(
                             data['project_ids'])
+        """
         datas = {
             'ids': [],
-            'model': 'project.project',
             'form': data
         }
         return self.env['report'].get_action(
-            projects,
-            'telco_vendor_bills_report.bills_report_template',
-            data=datas)
+                    self,
+                    'telco_vendor_bills_report.bills_report_template',
+                    data=datas)

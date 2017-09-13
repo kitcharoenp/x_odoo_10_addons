@@ -312,86 +312,7 @@
                     </tr>
                   </t>
 
-                  <!-- for  amount line less than zero -->
-                <t t-if="had_negative > 0">
-                  <t t-set="separator" t-value="1"/>
-                  <t t-set="cols" t-value="5+len(invoice_ids_sorted)"/>
-
-                  <t t-foreach="o.order_line" t-as="line">
-                    <tr t-if="separator == 1" style="background-color: #a6a6a6;">
-                      <td t-if="separator == 1" t-att-colspan="cols">/</td>
-                    </tr>
-                    <t t-set="separator" t-value="separator+1"/>
-                    <tr t-if="not line.price_subtotal > 0" >
-                        <t t-set="no" t-value="no+1"/>
-                        <td class="text-left">
-                            <span t-esc="no"/>.
-                        </td>
-                        <td class="text-left col-xs-6" style="font-size: 12px;">
-                            <span t-field="line.name"/>
-                        </td>
-                        <td class="text-right" style="background-color: #DEDEDE;">
-                          <span
-                              t-esc="'{0:,.2f}'.format(float(line.price_subtotal))"
-                              t-options='{"widget": "False"}'/>
-                          <t t-set="amount_untaxed" t-value="amount_untaxed + line.price_subtotal"/>
-                        </td>
-
-                        <!-- list invoices line related to this po line -->
-                        <t t-set="total" t-value="0"/>
-                        <t t-set="total_archived" t-value="0"/>
-                        <!-- archived colomn -->
-
-                          <t t-foreach="archived" t-as="invoice_id_sorted">
-                                  <!-- find invoice_line in each invoice_id -->
-                                  <t t-foreach="line.invoice_lines" t-as="invoice_line">
-                                      <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id">
-                                        <t t-set="total_archived" t-value="total_archived+(invoice_line.quantity * invoice_line.price_unit)"/>
-                                        <!-- sum purchase invoice line total -->
-                                        <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
-                                      </t>
-                                  </t>
-                          </t>
-                        <td t-if="len(invoice_ids_sorted) > 3" class="text-right">
-                          <span
-                            t-esc="'{0:,.2f}'.format(float(total_archived))"
-                            t-options='{"widget": "False"}'/>
-                        </td>
-
-                        <!--loop each invoice and then make column (last 3 column) -->
-                        <t t-foreach="invoices_show" t-as="invoice_id_sorted">
-                              <td class="text-right">
-                                <!-- find invoice_line in each invoice_id -->
-                                <t t-foreach="line.invoice_lines" t-as="invoice_line">
-                                    <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id">
-                                      <span
-                                        t-esc="'{0:,.2f}'.format(float(invoice_line.quantity * invoice_line.price_unit))"
-                                        t-options='{"widget": "False"}'/>
-                                      <!-- sum purchase invoice line total -->
-                                      <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
-                                    </t>
-                                </t>
-                              </td>
-                        </t>
-
-                        <td class="text-right">
-                            <span
-                              t-esc="'{0:,.2f}'.format(float(total))"
-                                t-options='{"widget": "False"}'/>
-                        </td>
-                        <td class="text-right">
-                          <span
-                            t-esc="'{0:,.2f}'.format(float(line.price_subtotal-total))"
-                              t-options='{"widget": "False"}'/>
-                        </td>
-                        <t t-set="total_untaxed" t-value="total_untaxed+total"/>
-                        <t t-set="total_due" t-value="total_due+(line.price_subtotal-total)"/>
-                    </tr>
-
-                  </t>
-                </t><!-- end line less than zero -->
-
-    <!-- invoice line from another purchase order -->
+                  <!-- invoice line positive from another purchase order -->
                     <t  t-set="inv_line_from_other_po" t-value="[]"/>
 
                     <t t-foreach="invoice_ids_sorted" t-as="invoice_id_sorted">
@@ -413,8 +334,8 @@
 
                     <!-- create table rows -->
                     <t t-set="seq" t-value="no"/>
-
-                    <tr t-foreach="purchase_line_id_from_other" t-as="purchase_line_id">
+                  <t t-foreach="purchase_line_id_from_other" t-as="purchase_line_id">
+                    <tr t-if="purchase_line_id.price_subtotal > 0">
                       <t t-set="seq" t-value="seq+1"/>
                       <td class="text-left">
                           <span t-esc="seq"/>.
@@ -506,6 +427,183 @@
                       </td>
 
                     </tr>
+                  </t>
+
+                    <!-- for  amount line less than zero -->
+                      <t t-if="had_negative > 0">
+                        <t t-set="separator" t-value="1"/>
+                        <t t-set="cols" t-value="5+len(invoice_ids_sorted)"/>
+
+                        <t t-foreach="o.order_line" t-as="line">
+                          <tr t-if="separator == 1" style="background-color: #a6a6a6;">
+                            <td t-if="separator == 1" t-att-colspan="cols">/</td>
+                          </tr>
+                          <t t-set="separator" t-value="separator+1"/>
+                          <tr t-if="not line.price_subtotal > 0" >
+                              <t t-set="no" t-value="seq+1"/>
+                              <td class="text-left">
+                                  <span t-esc="no"/>.
+                              </td>
+                              <td class="text-left col-xs-6" style="font-size: 12px;">
+                                  <span t-field="line.name"/>
+                              </td>
+                              <td class="text-right" style="background-color: #DEDEDE;">
+                                <span
+                                    t-esc="'{0:,.2f}'.format(float(line.price_subtotal))"
+                                    t-options='{"widget": "False"}'/>
+                                <t t-set="amount_untaxed" t-value="amount_untaxed + line.price_subtotal"/>
+                              </td>
+
+                              <!-- list invoices line related to this po line -->
+                              <t t-set="total" t-value="0"/>
+                              <t t-set="total_archived" t-value="0"/>
+                              <!-- archived colomn -->
+
+                                <t t-foreach="archived" t-as="invoice_id_sorted">
+                                        <!-- find invoice_line in each invoice_id -->
+                                        <t t-foreach="line.invoice_lines" t-as="invoice_line">
+                                            <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id">
+                                              <t t-set="total_archived" t-value="total_archived+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                              <!-- sum purchase invoice line total -->
+                                              <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                            </t>
+                                        </t>
+                                </t>
+                              <td t-if="len(invoice_ids_sorted) > 3" class="text-right">
+                                <span
+                                  t-esc="'{0:,.2f}'.format(float(total_archived))"
+                                  t-options='{"widget": "False"}'/>
+                              </td>
+
+                              <!--loop each invoice and then make column (last 3 column) -->
+                              <t t-foreach="invoices_show" t-as="invoice_id_sorted">
+                                    <td class="text-right">
+                                      <!-- find invoice_line in each invoice_id -->
+                                      <t t-foreach="line.invoice_lines" t-as="invoice_line">
+                                          <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id">
+                                            <span
+                                              t-esc="'{0:,.2f}'.format(float(invoice_line.quantity * invoice_line.price_unit))"
+                                              t-options='{"widget": "False"}'/>
+                                            <!-- sum purchase invoice line total -->
+                                            <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                          </t>
+                                      </t>
+                                    </td>
+                              </t>
+
+                              <td class="text-right">
+                                  <span
+                                    t-esc="'{0:,.2f}'.format(float(total))"
+                                      t-options='{"widget": "False"}'/>
+                              </td>
+                              <td class="text-right">
+                                <span
+                                  t-esc="'{0:,.2f}'.format(float(line.price_subtotal-total))"
+                                    t-options='{"widget": "False"}'/>
+                              </td>
+                              <t t-set="total_untaxed" t-value="total_untaxed+total"/>
+                              <t t-set="total_due" t-value="total_due+(line.price_subtotal-total)"/>
+                          </tr>
+
+                        </t>
+                      </t>
+                    <!-- end line less than zero -->
+
+                    <!-- for negative from anotner po-->
+                    <t t-foreach="purchase_line_id_from_other" t-as="purchase_line_id" >
+                      <tr t-if="not purchase_line_id.price_subtotal > 0" >
+                        <t t-set="seq" t-value="no+1"/>
+                        <td class="text-left">
+                            <span t-esc="seq"/>.
+                        </td>
+                        <td class="text-left col-xs-6" style="font-size: 12px;">
+                            <span t-if="purchase_line_id.name"
+                              t-field="purchase_line_id.name"/>
+                            <span t-else=""
+                              t-field="purchase_line_id.name"/>
+                        </td>
+                        <td class="text-right" style="background-color: #DEDEDE;">
+
+                          <t t-if="purchase_line_id.price_subtotal">
+                            <span
+                              t-esc="'{0:,.2f}'.format(float(purchase_line_id.price_subtotal))"
+                                t-options='{"widget": "False"}'/>
+                            <t t-set="amount_untaxed" t-value="amount_untaxed + purchase_line_id.price_subtotal"/>
+                          </t>
+
+                          <t t-else="">
+                          <span
+                            t-esc="'{0:,.2f}'.format(float(purchase_line_id.price_subtotal))"
+                              t-options='{"widget": "False"}'/>
+                              <t t-set="amount_untaxed" t-value="amount_untaxed + purchase_line_id.price_subtotal"/>
+                          </t>
+
+                        </td>
+
+                        <!-- list invoices line related to this po line -->
+                        <t t-set="total" t-value="0"/>
+                        <t t-set="total_archived_other" t-value="0"/>
+                        <!-- archived colomn -->
+
+                        <t t-foreach="archived" t-as="invoice_id_sorted">
+                                  <!-- find invoice_line in each invoice_id -->
+                                  <t t-foreach="inv_line_from_other_po" t-as="invoice_line">
+                                      <t t-if="invoice_id_sorted.id == invoice_line.invoice_id.id and invoice_line.purchase_line_id.id == purchase_line_id.id">
+                                        <t t-set="total_archived_other" t-value="total_archived_other+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                        <!-- sum purchase invoice line total -->
+                                        <t t-set="total" t-value="total+(invoice_line.quantity * invoice_line.price_unit)"/>
+                                      </t>
+                                  </t>
+                          </t>
+
+                        <td t-if="len(invoice_ids_sorted) > 3" class="text-right">
+                          <span
+                            t-esc="'{0:,.2f}'.format(float(total_archived_other))"
+                            t-options='{"widget": "False"}'/>
+                        </td>
+
+                        <!-- loop each invoice and then make column -->
+                        <t t-foreach="invoices_show" t-as="invoice_id_sorted">
+                          <td class="text-right">
+                          <t t-foreach="inv_line_from_other_po" t-as="line_other_po">
+                                <!-- find invoice_line in each invoice_id -->
+                            <t t-if="invoice_id_sorted.id == line_other_po.invoice_id.id and line_other_po.purchase_line_id.id == purchase_line_id.id">
+
+                                      <span t-if="line_other_po.quantity != 0"
+                                        t-esc="'{0:,.2f}'.format(float(line_other_po.quantity * line_other_po.price_unit))"
+                                        t-options='{"widget": "False"}'/>
+
+                                      <!-- sum purchase invoice line total -->
+                              <t t-set="total" t-value="total+(line_other_po.quantity * line_other_po.price_unit)"/>
+                            </t> <!-- t-if="invoice_id_sorted.id  -->
+                          </t> <!-- t-foreach="inv_line_from_other_po" -->
+                          </td>
+                        </t> <!-- t-foreach="invoices_show" -->
+                        <td class="text-right">
+                            <span
+                              t-esc="'{0:,.2f}'.format(float(total))"
+                                t-options='{"widget": "False"}'/>
+                        </td>
+
+                        <td class="text-right">
+                          <t t-if="purchase_line_id.price_subtotal">
+                            <span
+                              t-esc="'{0:,.2f}'.format(float(purchase_line_id.price_subtotal-total))"
+                                t-options='{"widget": "False"}'/>
+                            <t t-set="total_untaxed" t-value="total_untaxed+total"/>
+                            <t t-set="total_due" t-value="total_due+(purchase_line_id.price_subtotal-total)"/>
+                          </t>
+                          <t t-else="">
+                          <span
+                            t-esc="'{0:,.2f}'.format(float(purchase_line_id.price_subtotal-total))"
+                              t-options='{"widget": "False"}'/>
+                            <t t-set="total_untaxed" t-value="total_untaxed+total"/>
+                            <t t-set="total_due" t-value="total_due+(purchase_line_id.price_subtotal-total)"/>
+                          </t>
+                        </td>
+
+                      </tr>
+                    </t>
 
                 </tbody>
 

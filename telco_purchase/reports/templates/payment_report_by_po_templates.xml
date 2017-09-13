@@ -429,10 +429,12 @@
                     </tr>
                   </t>
 
-                    <!-- for  amount line less than zero -->
+                    <!-- for  negative line  -->
+                    <t t-set="seq1" t-value="seq"/>
                       <t t-if="had_negative > 0">
                         <t t-set="separator" t-value="1"/>
                         <t t-set="cols" t-value="5+len(invoice_ids_sorted)"/>
+
 
                         <t t-foreach="o.order_line" t-as="line">
                           <tr t-if="separator == 1" style="background-color: #a6a6a6;">
@@ -440,9 +442,9 @@
                           </tr>
                           <t t-set="separator" t-value="separator+1"/>
                           <tr t-if="not line.price_subtotal > 0" >
-                              <t t-set="no" t-value="seq+1"/>
+                              <t t-set="seq1" t-value="seq1+1"/>
                               <td class="text-left">
-                                  <span t-esc="no"/>.
+                                  <span t-esc="seq1"/>.
                               </td>
                               <td class="text-left col-xs-6" style="font-size: 12px;">
                                   <span t-field="line.name"/>
@@ -510,11 +512,12 @@
                     <!-- end line less than zero -->
 
                     <!-- for negative from anotner po-->
+                    <t t-set="seq2" t-value="seq1"/>
                     <t t-foreach="purchase_line_id_from_other" t-as="purchase_line_id" >
                       <tr t-if="not purchase_line_id.price_subtotal > 0" >
-                        <t t-set="seq" t-value="no+1"/>
+                        <t t-set="seq2" t-value="seq2+1"/>
                         <td class="text-left">
-                            <span t-esc="seq"/>.
+                            <span t-esc="seq2"/>.
                         </td>
                         <td class="text-left col-xs-6" style="font-size: 12px;">
                             <span t-if="purchase_line_id.name"

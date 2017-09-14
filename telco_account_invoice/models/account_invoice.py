@@ -12,3 +12,14 @@ class AccountInvoice(models.Model):
     x_account_payment_method = fields.Many2one(
                             'account.payment.method',
                             string='Payment Methods')
+
+    @api.onchange('invoice_line_ids')
+    def _onchange_origin(self):
+        res = super(AccountInvoice, self)._onchange_origin()
+        purchase_ids = self.invoice_line_ids.mapped('purchase_id')
+        if purchase_ids:
+            self.comment = ', '.join(
+                        str(v) for v in purchase_ids.mapped('x_description'))
+            self.reference = ', '.join(
+                        str(x) for x in purchase_ids.mapped('x_other_ref'))
+        return res

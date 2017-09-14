@@ -18,7 +18,7 @@ class PurchaseOrder(models.Model):
     x_requestor_id = fields.Many2one(
         'hr.employee',
         string="Requestor")
-    x_other_ref = fields.Char(string='Other Reference')
+    x_other_ref = fields.Char(string='External PO Ref')
 
     x_invoice_receipt_date = fields.Datetime(
         string='Invoice Receipt',

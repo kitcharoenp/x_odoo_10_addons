@@ -14,7 +14,7 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
     # report.module_name.template_id
     _name = 'report.telco_vendor_bills_report.bills_report_template'
 
-    def _get_data_for_report(self, data):
+    def _get_data_for_report1(self, data):
         res = []
         due_date = fields.Date.from_string(data['due_date'])
         VendorBills = self.env['account.invoice']
@@ -41,7 +41,7 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                             'other_po_ref': other_po_ref,
                             'primary_po': primary_po,
                             'issue_date': x_issue_date,
-                            'x_description': x_description,
+                            'x_description': vendor_bill.comment,
                             'vendor_name': vendor_bill.partner_id.name,
                             'reference': vendor_bill.reference,
                             'due_date': fields.Date.from_string(vendor_bill.date_due),
@@ -76,13 +76,20 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                     'other_po_ref': other_po_ref,
                     'primary_po': primary_po,
                     'issue_date': x_issue_date,
-                    'x_description': x_description,
+                    'x_description': vendor_bill.comment,
                     'vendor_name': vendor_bill.partner_id.name,
                     'reference': vendor_bill.reference,
                     'due_date': fields.Date.from_string(vendor_bill.date_due),
                     'amount_total': vendor_bill.amount_total,
                     'payment_method': vendor_bill.x_account_payment_method.name,
                 })
+        return res
+
+    def _get_data_for_report(self, data):
+        if len(data['project_ids']) > 0:
+            res = self._get_data_for_report1(data)
+        else:
+            res = self._get_data_for_report2(data)
         return res
 
     @api.model
@@ -96,7 +103,7 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
             'doc_ids': docids,
             'doc_model': vendor_bills_report.model,
             'docs': account_invoices,
-            'get_data_for_report': self._get_data_for_report2(data['form']),
+            'get_data_for_report': self._get_data_for_report(data['form']),
         }
         return Report.render(
             'telco_vendor_bills_report.bills_report_template',

@@ -27,7 +27,7 @@ class TelcoVendorBillsReport(models.TransientModel):
         return fields.date.context_today(self)
 
     def _default_issue_date(self):
-        r = 'month'
+        r = 'week'
         if r == 'month':
             return (datetime.today() + relativedelta(
                     months=+1, day=1, days=-1)).strftime('%Y-%m-%d')
@@ -44,7 +44,6 @@ class TelcoVendorBillsReport(models.TransientModel):
         default=_default_due_date)
     issue_date = fields.Date(
         string='Issue Date',
-        required=True,
         default=_default_issue_date)
     project_ids = fields.Many2many(
         'project.project',

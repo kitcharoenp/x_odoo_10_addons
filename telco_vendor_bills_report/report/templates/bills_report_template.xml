@@ -50,20 +50,9 @@
 
                     <!-- Signature -->
                 <div class="row">
-                  <div class="col-xs-4 text-center" >
-                    <!-- accountant receipt -->
-                      <ul style="list-style-type: none; font-size:9px;">
-                          <li><br/>&#9634; morning 08:00-12:00 น.</li>
-                          <li>&#9634; afternoon 13:00-17:00 น.</li>
-                          <li><br/></li>
-                          <li>________________</li>
-                          <li>______/_____/_____</li>
-                          <li>(เซ็นต์รับเอกสารฝ่ายบัญชี)</li>
-                      </ul>
-                  </div>
                   <!-- prepare employee -->
                     <div class="col-xs-4 text-center" >
-                        <ul style="list-style-type: none; font-size:9px;">
+                        <ul style="list-style-type: none; font-size:10px;">
                             <li><br/>Prepare</li>
                             <li><br/><br/></li>
                             <li>________________</li>
@@ -75,14 +64,25 @@
 
                     <!-- requestor -->
                     <div class="col-xs-4 text-center" >
-                        <ul style="list-style-type: none; font-size:9px;">
-
+                        <ul style="list-style-type: none; font-size:10px;">
                             <li><br/>Verify</li>
                             <li><br/><br/></li>
                             <li>________________</li>
                             <li>______/_____/_____</li>
                             <li><span t-field="user.employee_ids[0].parent_id.name"/></li>
                             <li><span t-field="user.employee_ids[0].parent_id.job_id.name"/></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-xs-4 text-center" >
+                      <!-- accountant receipt -->
+                        <ul style="list-style-type: none; font-size:10px;">
+                            <li><span class="text-right"><br/>&#9634; 08:00 - 12:00 AM</span></li>
+                            <li><span class="text-right">&#9634; 01:00 - 05:00 PM</span></li>
+                            <li><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li>(Accounting Department)</li>
                         </ul>
                     </div>
 

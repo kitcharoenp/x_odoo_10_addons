@@ -14,7 +14,7 @@
                     </group>
                 </group>
                 <group>
-                    <field name="project_ids" invisible="1"/>
+                    <field name="project_ids"/>
                 </group>
                 <footer>
                     <button name="print_report" string="Print" type="object" class="btn-primary"/>

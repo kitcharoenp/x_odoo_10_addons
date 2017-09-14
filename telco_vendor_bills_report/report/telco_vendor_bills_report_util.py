@@ -36,12 +36,17 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                         x_description = purchase_ids[0].x_description
                         analytic_id = purchase_ids[0].x_account_analytic_id.id
 
+                    if vendor_bill.comment:
+                        description = vendor_bill.comment
+                    else:
+                        description = x_description
+
                     if (project.analytic_account_id.id == analytic_id):
                         res[len(res)-1]['data'].append({
                             'other_po_ref': other_po_ref,
                             'primary_po': primary_po,
                             'issue_date': x_issue_date,
-                            'x_description': vendor_bill.comment,
+                            'x_description': description,
                             'vendor_name': vendor_bill.partner_id.name,
                             'reference': vendor_bill.reference,
                             'due_date': fields.Date.from_string(vendor_bill.date_due),
@@ -71,12 +76,17 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                 x_description = purchase_ids[0].x_description
                 analytic_id = purchase_ids[0].x_account_analytic_id.id
 
+            if vendor_bill.comment:
+                description = vendor_bill.comment
+            else:
+                description = x_description
+
             if (issue_date == x_issue_date):
                 res[len(res)-1]['data'].append({
                     'other_po_ref': other_po_ref,
                     'primary_po': primary_po,
                     'issue_date': x_issue_date,
-                    'x_description': vendor_bill.comment,
+                    'x_description': description,
                     'vendor_name': vendor_bill.partner_id.name,
                     'reference': vendor_bill.reference,
                     'due_date': fields.Date.from_string(vendor_bill.date_due),

@@ -247,7 +247,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Taxes</td>
+                            <td>VAT 7%</td>
                             <td class="text-right">
                                 <span t-field="o.amount_tax"
                                     t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>

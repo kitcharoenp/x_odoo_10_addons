@@ -624,8 +624,8 @@
                   </t>
                 </t>
 
-                <!-- table foot  -->
-                <tfoot>
+                <!-- table foot
+                <tfoot> -->
 
                     <tr style="background-color: #a6a6a6;">
                         <th colspan="2"><strong>Sum (Untaxed)</strong></th>
@@ -871,8 +871,9 @@
                         <th class="text-right"><strong></strong></th>
                         <th class="text-right"><strong></strong></th>
                     </tr>
-                    -->
+
                 </tfoot>
+              -->
             </table>
 
             <!-- show bank account name / number if payment method is TRF -->

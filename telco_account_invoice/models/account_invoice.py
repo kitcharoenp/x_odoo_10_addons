@@ -21,5 +21,5 @@ class AccountInvoice(models.Model):
             self.comment = ', '.join(
                         v for v in purchase_ids.mapped('x_description') if v)
             self.reference = ', '.join(
-                        x for x in purchase_ids.mapped('x_other_ref') if x)
+                        x for x in purchase_ids.mapped('partner_ref') if x)
         return res

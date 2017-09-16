@@ -27,34 +27,27 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                 for vendor_bill in VendorBills.search([
                     ('date_due', 'like', str(due_date)), ],
                         order="partner_id asc"):
-                    purchase_ids = vendor_bill.invoice_line_ids.mapped(
-                        'purchase_line_id.order_id')
 
                     # get only first po
                     purchase_ids = []
                     if vendor_bill.invoice_line_ids[0].purchase_line_id.order_id:
                         purchase_ids += vendor_bill.invoice_line_ids[0].purchase_line_id.order_id
-                        
+
                     if purchase_ids[0]:
-                        other_po_ref = purchase_ids[0].x_other_ref
+                        x_other_ref = purchase_ids[0].x_other_ref
                         primary_po = purchase_ids[0].name
                         x_issue_date = purchase_ids[0].x_issue_date
                         x_description = purchase_ids[0].x_description
-                        analytic_id = purchase_ids[0].x_account_analytic_id.id
+                        x_analytic_id = purchase_ids[0].x_account_analytic_id.id
 
                     if vendor_bill.comment:
                         description = vendor_bill.comment
                     else:
                         description = x_description
 
-                    if vendor_bill.reference:
-                        reference = vendor_bill.reference
-                    else:
-                        reference = other_po_ref
-
-                    if (project.analytic_account_id.id == analytic_id):
+                    if (project.analytic_account_id.id == x_analytic_id):
                         res[len(res)-1]['data'].append({
-                            'other_po_ref': reference,
+                            'x_other_ref': x_other_ref,
                             'primary_po': primary_po,
                             'issue_date': x_issue_date,
                             'x_description': description,
@@ -83,26 +76,21 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                 purchase_ids += vendor_bill.invoice_line_ids[0].purchase_line_id.order_id
 
             if purchase_ids[0]:
-                other_po_ref = purchase_ids[0].x_other_ref
+                x_other_ref = purchase_ids[0].x_other_ref
                 primary_po = purchase_ids[0].name
                 x_issue_date = fields.Date.from_string(
                                     purchase_ids[0].x_issue_date)
                 x_description = purchase_ids[0].x_description
-                analytic_id = purchase_ids[0].x_account_analytic_id.id
+                x_analytic_id = purchase_ids[0].x_account_analytic_id.id
 
             if vendor_bill.comment:
                 description = vendor_bill.comment
             else:
                 description = x_description
 
-            if vendor_bill.reference:
-                reference = vendor_bill.reference
-            else:
-                reference = other_po_ref
-
             if (issue_date == x_issue_date):
                 res[len(res)-1]['data'].append({
-                    'other_po_ref': reference,
+                    'x_other_ref': x_other_ref,
                     'primary_po': primary_po,
                     'issue_date': x_issue_date,
                     'x_description': description,

@@ -122,7 +122,7 @@
                   <thead>
                     <tr class='text-center' style="background-color: #A6A6A6;">
                       <th class="text-left"><strong>No.</strong></th>
-                      <th class="text-center" style="font-size:8px;">PO Ref.</th>
+                      <th class="text-center" style="font-size:8px;">External PO</th>
                       <th class='text-center'>Issue Date</th>
                       <th class='text-center'>Purchase Req.</th>
                       <th class='text-center'>Subject / Route</th>
@@ -140,7 +140,7 @@
                       <t t-foreach="obj['data']" t-as="vendor_bill">
                           <tr style="font-size:8px;">
                             <td class="text-left"><t t-esc="i"/></td>
-                            <td style="font-size:8px;"><t t-esc="vendor_bill['other_po_ref']"/></td>
+                            <td style="font-size:8px;"><t t-esc="vendor_bill['x_other_ref']"/></td>
                             <td class="text-center"><t t-esc="vendor_bill['issue_date']"/></td>
                             <td style="font-size:8px;"><t t-esc="vendor_bill['primary_po']"/></td>
                             <td style="font-size:8px;"><t t-esc="vendor_bill['x_description']"/></td>

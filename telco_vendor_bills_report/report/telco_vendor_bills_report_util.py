@@ -28,7 +28,7 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                     ('date_due', 'like', str(due_date)), ],
                         order="partner_id asc"):
                     purchase_ids = vendor_bill.invoice_line_ids.mapped('purchase_id')
-                    if purchase_ids:
+                    if purchase_ids[0]:
                         other_po_ref = purchase_ids[0].x_other_ref
                         primary_po = purchase_ids[0].name
                         x_issue_date = purchase_ids[0].x_issue_date
@@ -66,7 +66,7 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                     ('date_due', 'like', str(due_date)), ],
                         order="partner_id asc"):
             purchase_ids = vendor_bill.invoice_line_ids.mapped('purchase_id')
-            if purchase_ids:
+            if purchase_ids[0]:
                 other_po_ref = purchase_ids[0].x_other_ref
                 primary_po = purchase_ids[0].name
                 x_issue_date = fields.Date.from_string(

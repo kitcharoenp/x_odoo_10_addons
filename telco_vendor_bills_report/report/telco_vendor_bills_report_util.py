@@ -30,7 +30,11 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                     purchase_ids = vendor_bill.invoice_line_ids.mapped(
                         'purchase_line_id.order_id')
 
-                    purchase_ids = vendor_bill.invoice_line_ids.mapped('purchase_id')
+                    # get only first po
+                    purchase_ids = []
+                    if vendor_bill.invoice_line_ids[0].purchase_line_id.order_id:
+                        purchase_ids += vendor_bill.invoice_line_ids[0].purchase_line_id.order_id
+                        
                     if purchase_ids[0]:
                         other_po_ref = purchase_ids[0].x_other_ref
                         primary_po = purchase_ids[0].name
@@ -73,8 +77,11 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
         for vendor_bill in VendorBills.search([
                     ('date_due', 'like', str(due_date)), ],
                         order="partner_id asc"):
-            purchase_ids = vendor_bill.invoice_line_ids.mapped(
-                'purchase_line_id.order_id')
+            # get only first po
+            purchase_ids = []
+            if vendor_bill.invoice_line_ids[0].purchase_line_id.order_id:
+                purchase_ids += vendor_bill.invoice_line_ids[0].purchase_line_id.order_id
+
             if purchase_ids[0]:
                 other_po_ref = purchase_ids[0].x_other_ref
                 primary_po = purchase_ids[0].name

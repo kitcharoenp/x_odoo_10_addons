@@ -17,6 +17,7 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
     def _get_data_for_report1(self, data):
         res = []
         due_date = fields.Date.from_string(data['due_date'])
+        issue_date = fields.Date.from_string(data['issue_date'])
         VendorBills = self.env['account.invoice']
         if 'project_ids' in data:
             for project in self.env['project.project'].browse(
@@ -27,30 +28,40 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                 for vendor_bill in VendorBills.search([
                     ('date_due', 'like', str(due_date)), ],
                         order="partner_id asc"):
+                    purchase_ids = vendor_bill.invoice_line_ids.mapped(
+                        'purchase_line_id.order_id')
 
-                    # get only first po
-                    purchase_ids = []
-                    if vendor_bill.invoice_line_ids[0].purchase_line_id.order_id:
-                        purchase_ids += vendor_bill.invoice_line_ids[0].purchase_line_id.order_id
-
+                    purchase_ids = vendor_bill.invoice_line_ids.mapped('purchase_id')
                     if purchase_ids[0]:
-                        x_other_ref = purchase_ids[0].x_other_ref
-                        primary_po = purchase_ids[0].name
+                        x_other_po_ref = purchase_ids[0].x_other_ref
+                        pri_purchase_name = purchase_ids[0].name
                         x_issue_date = purchase_ids[0].x_issue_date
                         x_description = purchase_ids[0].x_description
-                        x_analytic_id = purchase_ids[0].x_account_analytic_id.id
+                        analytic_id = purchase_ids[0].x_account_analytic_id.id
 
                     if vendor_bill.comment:
-                        description = vendor_bill.comment
+                        x_description = vendor_bill.comment
                     else:
-                        description = x_description
+                        x_description = x_description
 
-                    if (project.analytic_account_id.id == x_analytic_id):
+                    if (project.analytic_account_id.id == analytic_id and str(issue_date) == str(x_issue_date)):
                         res[len(res)-1]['data'].append({
-                            'x_other_ref': x_other_ref,
-                            'primary_po': primary_po,
-                            'issue_date': x_issue_date,
-                            'x_description': description,
+                            'x_other_po_ref': x_other_po_ref,
+                            'x_issue_date': x_issue_date,
+                            'pri_purchase_name': pri_purchase_name,
+                            'x_description': x_description,
+                            'vendor_name': vendor_bill.partner_id.name,
+                            'reference': vendor_bill.reference,
+                            'due_date': fields.Date.from_string(vendor_bill.date_due),
+                            'amount_total': vendor_bill.amount_total,
+                            'payment_method': vendor_bill.x_account_payment_method.name,
+                            })
+                    if (project.analytic_account_id.id == analytic_id and not issue_date):
+                        res[len(res)-1]['data'].append({
+                            'x_other_po_ref': x_other_po_ref,
+                            'x_issue_date': x_issue_date,
+                            'pri_purchase_name': pri_purchase_name,
+                            'x_description': x_description,
                             'vendor_name': vendor_bill.partner_id.name,
                             'reference': vendor_bill.reference,
                             'due_date': fields.Date.from_string(vendor_bill.date_due),
@@ -70,30 +81,25 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
         for vendor_bill in VendorBills.search([
                     ('date_due', 'like', str(due_date)), ],
                         order="partner_id asc"):
-            # get only first po
-            purchase_ids = []
-            if vendor_bill.invoice_line_ids[0].purchase_line_id.order_id:
-                purchase_ids += vendor_bill.invoice_line_ids[0].purchase_line_id.order_id
-
+            purchase_ids = vendor_bill.invoice_line_ids.mapped('purchase_id')
             if purchase_ids[0]:
-                x_other_ref = purchase_ids[0].x_other_ref
-                primary_po = purchase_ids[0].name
-                x_issue_date = fields.Date.from_string(
-                                    purchase_ids[0].x_issue_date)
+                x_other_po_ref = purchase_ids[0].x_other_ref
+                pri_purchase_name = purchase_ids[0].name
+                x_issue_date = purchase_ids[0].x_issue_date
                 x_description = purchase_ids[0].x_description
-                x_analytic_id = purchase_ids[0].x_account_analytic_id.id
+                analytic_id = purchase_ids[0].x_account_analytic_id.id
 
             if vendor_bill.comment:
-                description = vendor_bill.comment
+                x_description = vendor_bill.comment
             else:
-                description = x_description
+                x_description = x_description
 
-            if (issue_date == x_issue_date):
+            if (str(issue_date) == str(x_issue_date)):
                 res[len(res)-1]['data'].append({
-                    'x_other_ref': x_other_ref,
-                    'primary_po': primary_po,
-                    'issue_date': x_issue_date,
-                    'x_description': description,
+                    'x_other_po_ref': x_other_po_ref,
+                    'x_issue_date': x_issue_date,
+                    'pri_purchase_name': pri_purchase_name,
+                    'x_description': x_description,
                     'vendor_name': vendor_bill.partner_id.name,
                     'reference': vendor_bill.reference,
                     'due_date': fields.Date.from_string(vendor_bill.date_due),

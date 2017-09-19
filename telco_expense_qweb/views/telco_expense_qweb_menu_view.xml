@@ -4,13 +4,13 @@
     <menuitem
         id="telco_expense_qweb_menu_view"
         name="Expense by Date"
-        parent="hr_expense.menu_hr_expense_reports"
+        parent="hr_expense.menu_hr_expense_my_expenses"
         action="telco_expense_qweb_by_date_act_window"
-        groups="hr_expense.group_hr_expense_manager"
+        groups="hr.group_hr_user"
         sequence="180"
     />
 
-    <record id="hr_expense.menu_hr_expense_reports"
+    <record id="hr_expense.menu_hr_expense_my_expenses"
             model="ir.ui.menu">
         <field name="load_xmlid" eval="True"/>
     </record>

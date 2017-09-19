@@ -10,7 +10,6 @@
             position="replace">
             <field
               name="analytic_account_id"
-              groups="analytic.group_analytic_accounting"
               domain="[('project_count', '>', 0), ('active', '=', True)]"
               options="{'no_create': True}"/>
         </xpath>

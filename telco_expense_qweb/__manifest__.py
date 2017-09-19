@@ -3,15 +3,15 @@
 # @copyright Copyright (C) 2017
 # @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
 {
-    'name': 'Telco Expense',
+    'name': 'Telco Expense QWeb Report',
     'version': '0.01',
     'category': 'Expense',
     "author": "kicharoenp@gmail.com",
-    'summary': 'Telco Expense',
+    'summary': 'Telco Expense QWeb Report',
     'description': """
-    * Expense Report by Date
+    * Expense QWeb Report by Date
     """,
-    'depends': ['hr_expense', ],
+    'depends': ['hr_expense', 'project', ],
     'data': [
         # Actions
         'views/telco_expense_qweb_by_date_form_view.xml',

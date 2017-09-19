@@ -12,13 +12,20 @@
                     <group>
                       <field name="date_to" />
                     </group>
-                    <group>
-                        <field name="state" />
-                    </group>
                 </group>
                 <group>
-                    <field name="project_ids"/>
+                    <field
+                      name="project_ids"
+                      widget="many2many_tags"
+                      options="{'no_create_edit': True}"/>
+                </group>
+                <group>
+                  <group>
+                    <field name="state" />
+                  </group>
+                  <group colspan="2" col="2">
                     <field name="description"/>
+                  </group>
                 </group>
                 <footer>
                     <button name="print_report" string="Print" type="object" class="btn-primary"/>

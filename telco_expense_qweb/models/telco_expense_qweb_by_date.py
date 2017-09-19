@@ -63,12 +63,10 @@ class TelcoExpenseReportByDate(models.TransientModel):
     def print_report(self):
         self.ensure_one()
         [data] = self.read()
-        """
         if not data.get('project_ids'):
             raise UserError(_(
                 'You have to select at least one Project. \
                 And try again.'))
-        """
         projects = self.env['project.project'].browse(
                             data['project_ids'])
         datas = {

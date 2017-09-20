@@ -65,7 +65,8 @@ class TelcoExpenseQwebByDateReportUtil(models.AbstractModel):
         st_date = fields.Date.from_string(data['date_from'])
         en_date = fields.Date.from_string(data['date_to'])
         state = str(data['state'])
-        employee_id = data['employee_id']
+        employee_id = self.env['hr.employee'].browse(
+                data['employee_id'])
         Expense = self.env['hr.expense']
         if 'project_ids' in data:
             for project in self.env['project.project'].browse(
@@ -87,7 +88,7 @@ class TelcoExpenseQwebByDateReportUtil(models.AbstractModel):
                     criteria += [(
                         'employee_id',
                         '=',
-                        employee_id.id)]
+                        employee_id[0].id)]
                 for exp in Expense.search(criteria, order="employee_id asc, \
                             date asc, \
                             reference asc"):

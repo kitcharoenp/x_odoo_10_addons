@@ -65,6 +65,7 @@ class TelcoExpenseQwebByDateReportUtil(models.AbstractModel):
         st_date = fields.Date.from_string(data['date_from'])
         en_date = fields.Date.from_string(data['date_to'])
         state = str(data['state'])
+        employee_id = data['employee_id']
         Expense = self.env['hr.expense']
         if 'project_ids' in data:
             for project in self.env['project.project'].browse(
@@ -81,8 +82,12 @@ class TelcoExpenseQwebByDateReportUtil(models.AbstractModel):
                         '=',
                         project.analytic_account_id.id)]
                 if state in ['draft', 'reported', 'done', 'refused']:
-                    criteria += [('state', '=', state)]        
-
+                    criteria += [('state', '=', state)]
+                if employee_id:
+                    criteria += [(
+                        'employee_id',
+                        '=',
+                        employee_id.id)]
                 for exp in Expense.search(criteria, order="employee_id asc, \
                             date asc, \
                             reference asc"):

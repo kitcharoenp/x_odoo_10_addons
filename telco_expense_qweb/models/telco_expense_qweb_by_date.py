@@ -50,7 +50,10 @@ class TelcoExpenseReportByDate(models.TransientModel):
         'project.project',
         string='Project',
         domain=[('active', '=', True)])
-    description = fields.Text()
+    description = fields.Text(
+        default="ในนาม คุณวินัย ไพบูลกุลย์วงศ์ และคุณสิริรัตน์ บริบูรณ์ \
+        และคุณเสฎฐวุฒิ เวชญากุล เคลียร์เงินสดย่อย บัญชี 807-2-08089-1 \
+        ธนาคารกสิกรไทย สาขารัชดา-ห้วยขวาง")
     state = fields.Selection([
         ('draft', 'To Submit'),
         ('reported', 'Reported'),
@@ -58,6 +61,9 @@ class TelcoExpenseReportByDate(models.TransientModel):
         ('refused', 'Refused')],
         string='Status',
         help="Status of the expense.")
+    employee_id = fields.Many2one(
+        'hr.employee',
+        string="Employee")
 
     @api.multi
     def print_report(self):

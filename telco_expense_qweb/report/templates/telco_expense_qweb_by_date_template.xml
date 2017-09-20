@@ -26,7 +26,7 @@
               </div>
 
               <div class="col-xs-12 text-center" >
-                  <span style="font-size:11px;">
+                  <span style="font-size:13px;">
                       <br/>
                       <t t-esc="description"/>
                   </span>
@@ -134,7 +134,7 @@
                         font-family:freeserif;
                     }
                     table, th, td {
-                        font-size: 9px;
+                        font-size: 12px;
                         border: 1px solid #ababab !important;
                         margin-bottom: 0px !important;
                         border-collapse: collapse !important;
@@ -153,7 +153,7 @@
                   <thead>
                     <tr class='text-center' style="background-color: #A6A6A6;">
                       <th class="text-left"><strong>No.</strong></th>
-                      <th class="text-center" style="font-size:8px;">Date</th>
+                      <th class='text-center'>Date</th>
                       <th class='text-center'>Reference</th>
                       <th class='text-center'>Description</th>
                       <th class='text-center'>Employee</th>
@@ -167,12 +167,12 @@
                   <t t-set="total" t-value="0" />
                   <tbody>
                       <t t-foreach="obj['data']" t-as="exp">
-                          <tr style="font-size:8px;">
+                          <tr style="font-size:11px;">
                             <td class="text-left"><t t-esc="i"/></td>
                             <td class="text-left"><t t-esc="exp['date'].strftime('%d-%m-%Y')"/></td>
-                            <td style="font-size:8px;"><t t-esc="exp['reference']"/></td>
-                            <td style="font-size:8px;"><t t-esc="exp['description']"/></td>
-                            <td style="font-size:8px;"><t t-esc="exp['employee']"/></td>
+                            <td style="font-size:10px;"><t t-esc="exp['reference']"/></td>
+                            <td style="font-size:11px;"><t t-esc="exp['description']"/></td>
+                            <td style="font-size:11px;"><t t-esc="exp['employee']"/></td>
                             <td class="text-right" style="background-color: #DEDEDE;">
                               <t t-esc="'{0:,.2f}'.format(float(exp['total_amount']))"/>
                             </td>
@@ -182,7 +182,7 @@
                           <t t-set="i" t-value="i+1" />
                           <t t-set="total" t-value="float(total)+float(exp['total_amount'])" />
                       </t>
-                      <tr style="background-color: #98fb98; font-size:10px;">
+                      <tr style="background-color: #98fb98; font-size:11px;">
                         <td colspan="3" class='text-center'>รวมทั้งหมด</td>
                         <td colspan="2" class="text-right">
                           <u><strong><t t-esc="compute_amount_in_letter(total)"/></strong></u>

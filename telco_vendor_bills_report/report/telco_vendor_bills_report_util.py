@@ -28,7 +28,7 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                     'data': []})
                 for vendor_bill in VendorBills.search([
                     ('date_due', 'like', str(due_date)), ],
-                        order="partner_id asc"):
+                        order="partner_id asc, reference asc"):
                     purchase_name = []
                     x_description = ''
                     x_issue_date = ''
@@ -86,7 +86,7 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                     'data': []})
         for vendor_bill in VendorBills.search([
                     ('date_due', 'like', str(due_date)), ],
-                        order="partner_id asc"):
+                        order="partner_id asc, reference asc"):
             purchase_name = []
             x_description = ''
             x_issue_date = ''

@@ -194,7 +194,7 @@ class TelcoPurchaseAdvancePayment(models.TransientModel):
                     name = ("Down payment of %s%%") % (self.amount,)
                 else:
                     amount = self.amount
-                    name = _('Down Payment: %s') % (time.strftime('%m %Y'),)
+                    name = _('Down payment (Fixed): %s') % (self.amount,)
                 # fix invoice_policy on sale
                 """
                 if self.product_id.invoice_policy != 'order':

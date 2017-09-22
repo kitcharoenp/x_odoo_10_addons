@@ -131,6 +131,7 @@
                       <th class='text-center'>Due Date</th>
                       <th class='text-center'>Payments</th>
                       <th class='text-center'>Grand Total</th>
+                      <th class='text-center'>Posted</th>
                     </tr>
                   </thead>
                   <!-- initial variable -->
@@ -151,6 +152,7 @@
                             <td class="text-right" style="background-color: #DEDEDE;">
                               <t t-esc="'{0:,.2f}'.format(float(vendor_bill['amount_total']))"/>
                             </td>
+                            <td class='text-center'></td>
                           </tr>
                           <t t-set="i" t-value="i+1" />
                           <t t-set="total" t-value="float(total)+float(vendor_bill['amount_total'])" />
@@ -160,6 +162,7 @@
                         <td colspan="2" class="text-right" style="font-size:13px;">
                           <u><strong><t t-esc="'{0:,.2f}'.format(float(total))"/></strong></u>
                         </td>
+                        <td class='text-center'></td>
                       </tr>
                   </tbody>
               </table>

@@ -19,6 +19,7 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
         due_date = fields.Date.from_string(data['due_date'])
         issue_date = fields.Date.from_string(data['issue_date'])
         VendorBills = self.env['account.invoice']
+        PurchaseOrders = self.env['purchase.order']
         if 'project_ids' in data:
             for project in self.env['project.project'].browse(
                     data['project_ids']):
@@ -28,8 +29,12 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                 for vendor_bill in VendorBills.search([
                     ('date_due', 'like', str(due_date)), ],
                         order="partner_id asc"):
-
-                    purchase_ids = vendor_bill.invoice_line_ids.mapped('purchase_id')
+                    purchase_name = []
+                    x_description = ''
+                    x_issue_date = ''
+                    purchase_name = vendor_bill.origin.strip().split(",")
+                    purchase_ids = PurchaseOrders.search([
+                        ('name', '=', purchase_name[0]), ], )
                     if purchase_ids[0]:
                         x_other_po_ref = purchase_ids[0].x_other_ref
                         pri_purchase_name = purchase_ids[0].name
@@ -50,7 +55,8 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                             'x_description': x_description,
                             'vendor_name': vendor_bill.partner_id.name,
                             'reference': vendor_bill.reference,
-                            'due_date': fields.Date.from_string(vendor_bill.date_due),
+                            'due_date': fields.Date.from_string(
+                                vendor_bill.date_due),
                             'amount_total': vendor_bill.amount_total,
                             'payment_method': vendor_bill.x_account_payment_method.name,
                             })
@@ -62,7 +68,8 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
                             'x_description': x_description,
                             'vendor_name': vendor_bill.partner_id.name,
                             'reference': vendor_bill.reference,
-                            'due_date': fields.Date.from_string(vendor_bill.date_due),
+                            'due_date': fields.Date.from_string(
+                                vendor_bill.date_due),
                             'amount_total': vendor_bill.amount_total,
                             'payment_method': vendor_bill.x_account_payment_method.name,
                             })
@@ -73,13 +80,19 @@ class TelcoVendorBillsReportUtil(models.AbstractModel):
         due_date = fields.Date.from_string(data['due_date'])
         issue_date = fields.Date.from_string(data['issue_date'])
         VendorBills = self.env['account.invoice']
+        PurchaseOrders = self.env['purchase.order']
         res.append({
                     'project_name': '',
                     'data': []})
         for vendor_bill in VendorBills.search([
                     ('date_due', 'like', str(due_date)), ],
                         order="partner_id asc"):
-            purchase_ids = vendor_bill.invoice_line_ids.mapped('purchase_id')
+            purchase_name = []
+            x_description = ''
+            x_issue_date = ''
+            purchase_name = vendor_bill.origin.strip().split(",")
+            purchase_ids = PurchaseOrders.search([
+                ('name', '=', purchase_name[0]), ],)
             if purchase_ids[0]:
                 x_other_po_ref = purchase_ids[0].x_other_ref
                 pri_purchase_name = purchase_ids[0].name

@@ -75,8 +75,8 @@ class TelcoExpenseQwebByDateReportUtil(models.AbstractModel):
                     'project_name': project.name,
                     'data': []})
                 criteria = [
-                    ('date', '<=', str(en_date)),
-                    ('date', '>=', str(st_date))]
+                    ('accounting_date', '<=', str(en_date)),
+                    ('accounting_date', '>=', str(st_date))]
                 if int(project.id) > 0:
                     criteria += [(
                         'analytic_account_id',

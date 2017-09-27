@@ -11,7 +11,7 @@
     'description': """
     * Expense QWeb Report by Date
     """,
-    'depends': ['hr_expense', 'project', ],
+    'depends': ['hr_expense', 'project', 'telco_expense', ],
     'data': [
         # Actions
         'views/telco_expense_qweb_by_date_form_view.xml',

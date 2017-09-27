@@ -14,3 +14,12 @@ class TelcoExpense(models.Model):
         readonly=True,
         states={'reported': [('readonly', False)],
                 'done': [('readonly', False)]})
+    # overide payment_mode set default to company_account
+    payment_mode = fields.Selection([
+        ("own_account", "Employee (to reimburse)"),
+        ("company_account", "Company")],
+        default='company_account',
+        states={
+            'done': [('readonly', True)],
+            'post': [('readonly', True)]},
+        string="Payment By")

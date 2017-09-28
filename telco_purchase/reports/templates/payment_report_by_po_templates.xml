@@ -48,8 +48,11 @@
                       }
               </style>
               <div class="row zero_min_height">
-                <div class="col-xs-4 pull-right text-right" style="font-size:8px;">
-                      printed @ <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
+                <div class="col-xs-6 pull-left text-left" style="font-size:8px;">
+                      issue date @ <span t-field="o.x_issue_date" t-options='{"format": "dd-MM-YYYY"}'/>
+                </div>
+                <div class="col-xs-6 pull-right text-right" style="font-size:8px;">
+                      printed @ <span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/>
                 </div>
                       <div class="col-xs-12">
                           <div style="border-bottom: 1px solid black;"></div>

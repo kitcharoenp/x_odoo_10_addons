@@ -10,16 +10,27 @@
 
         <!-- invisible date_order  -->
         <xpath expr="//field[@name='date_order']"
-            position="replace">
-            <field name="date_order"
-                invisible="1"/>
+          position="attributes">
+              <attribute name="invisible">1</attribute>
         </xpath>
 
         <!-- invisible date_planned  -->
         <xpath expr="//field[@name='date_planned']"
-            position="replace">
-            <field name="date_planned"
-                invisible="1"/>
+          position="attributes">
+              <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <!-- invisible company_id  -->
+        <xpath expr="//field[@name='company_id']"
+          position="attributes">
+              <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <!-- show x_account_analytic_id after   partner_id-->
+        <xpath expr="//field[@name='partner_id']"
+          position="after">
+          <field name="x_account_analytic_id"
+              options="{'no_create': True}"/>
         </xpath>
 
       </field>

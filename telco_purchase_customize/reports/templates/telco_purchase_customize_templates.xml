@@ -83,6 +83,7 @@
                   <!-- Signature -->
               <div class="row">
                 <!-- prepare employee -->
+
                   <div class="col-xs-3 text-center" >
                       <ul style="list-style-type: none; font-size:12px;">
                           <li><br/>ผู้จัดทำ</li>
@@ -94,7 +95,7 @@
                       </ul>
                   </div>
                   <!-- requestor -->
-                  <div class="col-xs-3 text-center" >
+                  <div class="col-xs-2 text-center" >
                       <ul style="list-style-type: none; font-size:12px;">
 
                           <li><br/>ผู้ขออนุมัติ</li>
@@ -105,10 +106,22 @@
                           <li><span t-field="o.x_requestor_id.job_id.name"/></li>
                       </ul>
                   </div>
-                  <!-- project manager -->
-                  <div class="col-xs-3 text-center" >
+                  <!-- verify by -->
+                  <div class="col-xs-2 text-center" >
                       <ul style="list-style-type: none; font-size:12px;">
+
                           <li><br/>ตรวจสอบและพิจารณา</li>
+                          <li><br/><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li><span t-field="o.x_verified_id.name"/></li>
+                          <li><span t-field="o.x_verified_id.job_id.name"/></li>
+                      </ul>
+                  </div>
+                  <!-- project manager -->
+                  <div class="col-xs-2 text-center" >
+                      <ul style="list-style-type: none; font-size:12px;">
+                          <li><br/>อนุมัติ</li>
                           <li><br/><br/></li>
                           <li>________________</li>
                           <li>______/_____/_____</li>
@@ -127,6 +140,7 @@
                           <li><span t-field="o.company_id.x_managing_director_id.job_id.name"/></li>
                       </ul>
                   </div>
+                  
               </div><!-- /.row -->
           </div>
       </xpath>

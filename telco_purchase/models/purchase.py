@@ -15,6 +15,9 @@ class PurchaseOrder(models.Model):
     x_manager_id = fields.Many2one(
         'hr.employee',
         string="Manager")
+    x_verified_id = fields.Many2one(
+        'hr.employee',
+        string="Verified By")
     x_requestor_id = fields.Many2one(
         'hr.employee',
         string="Requestor")

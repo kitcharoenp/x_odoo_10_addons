@@ -86,6 +86,8 @@
                   string="Receipt Date"/>
                 <field name="x_manager_id"
                   options="{'no_create': True}"/>
+                <field name="x_verified_id"
+                    options="{'no_create': True}"/>
                 <field name="x_requestor_id"
                   options="{'no_create': True}"/>
               </group>

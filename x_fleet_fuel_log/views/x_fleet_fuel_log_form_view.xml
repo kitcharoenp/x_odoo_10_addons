@@ -12,6 +12,7 @@
                 <div class="o_row">
                     <field name="x_fuel_consumption"/><span>Kilometers/Liter</span>
                 </div>
+                <field name="x_location"/>
             </xpath>
 
             <xpath expr="//form/sheet/group[1]/group[2]" position="replace">

@@ -29,6 +29,9 @@ class FleetVehicleLogFuel(models.Model):
         string="Distance",
         group_operator="sum",
         store="True")
+    x_location = fields.Char(
+        string="Location",
+        help='Location of the vehicle (garage, ...)')
 
     # Overide original method
     @api.onchange('liter', 'price_per_liter', 'amount')
@@ -59,3 +62,4 @@ class FleetVehicleLogFuel(models.Model):
                     order="id desc",
                     limit=1)
                 record.x_last_refuel_odometer = vehicle_cost.odometer_id.value
+                record.x_location = record.vehicle_id.location

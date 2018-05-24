@@ -10,6 +10,7 @@
             <xpath expr="//filter[@name='groupby_vehicle']" position="after">
                 <filter name="groupby_date" context="{'group_by': 'date:month'}" string="Month"/>
                 <filter name="groupby_year" context="{'group_by': 'date:year'}" string="Year"/>
+                <filter name="groupby_x_location" context="{'group_by': 'x_location'}" string="Location"/>
             </xpath>
 
         </field>

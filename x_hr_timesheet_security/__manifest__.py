@@ -14,8 +14,6 @@ Timesheet Records/Fields Security
     * Grant access write on employee holidays rule to base.group_user
         """,
     'depends': [
-        'hr',
-        'resource',
         'x_hr_timesheet_sheet',
         'hr_holidays',
     ],

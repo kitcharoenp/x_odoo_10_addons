@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_vehicle_odometer_filter_view" model="ir.ui.view">
+        <field name="name">Vehicle Odometer Filter</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="arch" type="xml">
+          <search string="Search Vehicle Odometer">
+            <field name="date"/>
+            <!-- add My Odometer filter -->
+            <filter name="my_odometer"
+              string="My Odometer"
+              domain="[('x_driver_id.user_id.id','=',uid)]"
+              help="My Odometer"/>
+          </search>
+        </field><!-- /arch -->
+    </record>
+</odoo>

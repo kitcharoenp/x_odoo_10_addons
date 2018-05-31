@@ -5,7 +5,8 @@
         <field name="res_model">fleet.vehicle.odometer</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,graph</field>
-        <field name="context">{"search_default_groupby_vehicle" : True}</field>
+        <field name="context">{"search_default_my_odometer" : 1}</field>
+        <field name="search_view_id" ref="x_vehicle_odometer_filter_view" />
         <field name="help" type="html">
           <p class="oe_view_nocontent_create">
             Click to create a new odometer log.

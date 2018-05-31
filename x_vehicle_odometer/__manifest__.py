@@ -19,8 +19,8 @@ Enhancement Vehicle Odometer :
         'actions/x_vehicle_odometer_act_window.xml',
         'views/x_vehicle_odometer_form_view.xml',
         'views/x_vehicle_odometer_tree_view.xml',
+        'views/x_vehicle_odometer_filter_view.xml',
         'security/x_vehicle_odometer_security.xml',
     ],
     'installable': True,
-    'auto-install': True,
 }

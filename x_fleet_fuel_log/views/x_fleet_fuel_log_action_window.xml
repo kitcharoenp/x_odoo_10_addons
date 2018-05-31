@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id='fleet.fleet_vehicle_log_fuel_action' model='ir.actions.act_window'>
+        <!-- override the fleet_vehicle_log_fuel_action in fleet_view.xml -->
         <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="context">{"search_default_my_fuel_logs" : 1}</field>
     </record>
 </odoo>

@@ -8,9 +8,20 @@
         <field name="arch" type="xml">
             <!-- -->
             <xpath expr="//filter[@name='groupby_vehicle']" position="after">
-                <filter name="groupby_date" context="{'group_by': 'date:month'}" string="Month"/>
-                <filter name="groupby_year" context="{'group_by': 'date:year'}" string="Year"/>
-                <filter name="groupby_x_location" context="{'group_by': 'x_location'}" string="Location"/>
+                <filter name="groupby_date"
+                  context="{'group_by': 'date:month'}"
+                  string="Month"/>
+                <filter name="groupby_year"
+                  context="{'group_by': 'date:year'}"
+                  string="Year"/>
+                <filter name="groupby_x_location"
+                  context="{'group_by': 'x_location'}"
+                  string="Location"/>
+                <!-- add My Log Fuel filter -->
+                <filter name="my_fuel_logs"
+                  string="My Fuel Logs"
+                  domain="[('create_uid.id','=',uid)]"
+                  help="My Fuel Logs"/>
             </xpath>
 
         </field>

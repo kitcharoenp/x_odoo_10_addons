@@ -29,10 +29,12 @@
                             </div>
                             <field name="x_driver_id"
                                 options="{'no_open': False, 'no_create': True}"/>
+                            <field name="x_state_id"
+                                options="{'no_open': False, 'no_create': True}"/>      
                         </group>
                     </group>
                 </sheet>
-                
+
             </xpath>
         </field>
     </record>

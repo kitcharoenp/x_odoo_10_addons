@@ -17,6 +17,7 @@
                     <field name="y_odometer" />
                     <field name="unit" />
                     <field name="x_driver_id" />
+                    <field name="x_state_id" />
                 </tree>
             </xpath>
         </field>

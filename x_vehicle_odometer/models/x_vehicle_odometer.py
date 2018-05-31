@@ -21,6 +21,9 @@ class FleetVehicleOdometer(models.Model):
     y_odometer = fields.Float(
         string='Odometer End',
         group_operator="max")
+    x_state_id = fields.Many2one(
+        "res.country.state",
+        string='State')    
 
     def _compute_vehicle_log_name(self):
         # super(FleetVehicleOdometer, self)._compute_vehicle_log_name()

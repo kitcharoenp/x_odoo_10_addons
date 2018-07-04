@@ -32,6 +32,9 @@ class PurchaseOrder(models.Model):
     x_description = fields.Text(string='Description')
     x_issue_date = fields.Date(string='Issue Date')
 
+    x_service_order = fields.Char(string='Service Order')
+    x_circuit_id = fields.Char(string='Circuit Id')
+
     @api.multi
     @api.depends('name', 'partner_ref')
     def name_get(self):

@@ -78,6 +78,8 @@
                 <field name="x_issue_date"/>
                 <field name="partner_ref"/>
                 <field name="origin"/>
+                <field name="x_service_order"/>
+                <field name="x_circuit_id"/>
               </group>
               <group>
                 <field name="x_invoice_receipt_by"

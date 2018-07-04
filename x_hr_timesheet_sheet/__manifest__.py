@@ -48,8 +48,8 @@ Enhancement Timesheet with following :
         # inherit - Timesheet Entries pdf templates
         'reports/templates/x_report_timesheet_templates.xml',
         # Security
-        #'security/ir.model.access.csv',
-        #'security/x_hr_timesheet_sheet_security.xml',
+        'security/ir.model.access.csv',
+        'security/x_hr_timesheet_sheet_security.xml',
     ],
 
     'demo': [],

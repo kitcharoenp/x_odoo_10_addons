@@ -56,6 +56,25 @@
             <attribute name='invisible'>0</attribute>
         </xpath>
 
+        <!-- append Telco to Bill tab -->
+        <xpath expr="//form/sheet/notebook/page[1]" position="after">
+          <page string="Telco">
+            <group>
+              <group>
+                <field name="x_service_order"/>
+                <field name="x_circuit_id"/>
+              </group>
+              <group>
+                <!-- column 2 -->
+                <field name="x_processing"/>
+              </group>
+              <group colspan="2">
+                  <field name="x_description"/>
+              </group>
+            </group>
+          </page>
+        </xpath>
+
       </field>
   </record>
 

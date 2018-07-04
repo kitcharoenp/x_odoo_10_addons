@@ -12,6 +12,17 @@ class AccountInvoice(models.Model):
     x_account_payment_method = fields.Many2one(
                             'account.payment.method',
                             string='Payment Methods')
+    x_service_order = fields.Char(string='Service Order')
+    x_circuit_id = fields.Char(string='Circuit Id')
+    x_description = fields.Text(string='Description')
+    x_processing = fields.Selection([
+                ('draft', 'Draft'),
+                ('in_progress', 'In Progress'),
+                ('clearing', 'Clearing'),
+                ('paid', 'Paid')],
+                string='Processing',
+                copy=False,
+                default='draft')
 
     @api.onchange('invoice_line_ids')
     def _onchange_origin(self):

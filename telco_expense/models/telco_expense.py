@@ -23,3 +23,7 @@ class TelcoExpense(models.Model):
             'done': [('readonly', True)],
             'post': [('readonly', True)]},
         string="Payment By")
+
+    x_partner_id = fields.Many2one(
+        'res.partner',
+        string='Vendor')

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="telco_vehicles_fuel_log_form_view" model="ir.ui.view">
+            <field name="name">Telco Vehicles Fuel Log</field>
+            <field name="model">telco.vehicles.fuel.log</field>
+            <field name="arch" type="xml">
+            <form string=" Vehicles Fuel Log Report">
+                <group>
+                    <group>
+                      <field name="start_date" />
+                    </group>
+                    <group>
+                      <field name="end_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-default"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+</odoo>

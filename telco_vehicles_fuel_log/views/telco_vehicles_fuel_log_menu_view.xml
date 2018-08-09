@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem
+        id="telco_vehicles_fuel_log_menu_view"
+        name="Vehicles Fuel Log Report"
+        parent="fleet.menu_fleet_reporting"
+        action="telco_vehicles_fuel_log_act_window"
+        sequence="190"
+    />
+
+    <record id="fleet.menu_fleet_reporting"
+            model="ir.ui.menu">
+        <field name="load_xmlid" eval="True"/>
+    </record>
+
+</odoo>

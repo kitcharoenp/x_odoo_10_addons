@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="telco_vehicles_fuel_log_act_window" model="ir.actions.act_window">
+        <field name="name">Fuel Log Report</field>
+        <field name="res_model">telco.vehicles.fuel.log</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="telco_vehicles_fuel_log_form_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- paper format -->
+    <record id="telco_vehicles_fuel_log_report_paperformat" model="report.paperformat">
+      <field name="name">Vehicles Fuel Log Report</field>
+      <field name="default" eval="True" />
+      <field name="format">A4</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">40</field>
+      <field name="margin_bottom">60</field>
+      <field name="margin_left">10</field>
+      <field name="margin_right">10</field>
+      <field name="header_line" eval="False" />
+      <field name="dpi">90</field>
+    </record>
+
+    <report
+        id="telco_vehicles_fuel_log_qweb_report"
+        string=" Vehicles Fuel Log Report"
+        model="account.invoice"
+        report_type="qweb-html"
+        name="telco_vehicles_fuel_log.fuel_log_report_template"
+        file="telco_vehicles_fuel_log.fuel_log_report_template"
+        menu="False"
+        paperformat="telco_vehicles_fuel_log.telco_vehicles_fuel_log_report_paperformat"
+    />
+</odoo>

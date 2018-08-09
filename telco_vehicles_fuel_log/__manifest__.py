@@ -12,6 +12,7 @@
 Vehicle, Fuel
 ==================================
 With this module, It helps you managing all your vehicles fuel log
+
 Main Features
 -------------
 * Analysis graph for costs with BoxPlot
@@ -24,8 +25,9 @@ Main Features
         'actions/telco_vehicles_fuel_log_act_window.xml',
         # Views
         'views/telco_vehicles_fuel_log_menu_view.xml',
-
         # Reports and Templates
+        'report/telco_vehicles_fuel_log_qweb_report.xml',
+        'report/templates/fuel_log_report_template.xml',
 
     ],
     'installable': True,

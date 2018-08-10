@@ -119,15 +119,15 @@
                     <tr class='text-center' style="background-color: #A6A6A6;">
                       <th class="text-left"><strong>No.</strong></th>
                       <th class="text-center" style="font-size:8px;">Vehicle</th>
-                      <th class='text-center'>Issue Date</th>
-                      <th class='text-center'>Purchase Req.</th>
-                      <th class='text-center'>Subject / Route</th>
-                      <th class='text-center'>Vendor</th>
-                      <th class='text-center'>Invoice</th>
-                      <th class='text-center'>Due Date</th>
-                      <th class='text-center'>Payments</th>
-                      <th class='text-center'>Grand Total</th>
-                      <th class='text-center'>Posted</th>
+                      <th class='text-center'>Count</th>
+                      <th class='text-center'>Mean</th>
+                      <th class='text-center'>Std</th>
+                      <th class='text-center'>Min</th>
+                      <th class='text-center'>25%</th>
+                      <th class='text-center'>50%</th>
+                      <th class='text-center'>75%</th>
+                      <th class='text-center'>Max</th>
+                      <th class='text-center'>amount</th>
                     </tr>
                   </thead>
                   <!-- initial variable -->
@@ -138,15 +138,15 @@
                         <tr style="font-size:8px;">
                           <td class="text-left"><t t-esc="i"/></td>
                           <td style="font-size:8px;"><t t-esc="obj['vehicle_name']"/></td>
+                          <td class='text-center'><t t-esc="obj['count']"/></td>
+                          <td class='text-center'><t t-esc="obj['mean']"/></td>
+                          <td class='text-center'><t t-esc="obj['std']"/></td>
+                          <td class='text-center'><t t-esc="obj['min']"/></td>
+                          <td class='text-center'><t t-esc="obj['25%']"/></td>
+                          <td class='text-center'><t t-esc="obj['50%']"/></td>
+                          <td class='text-center'><t t-esc="obj['75%']"/></td>
+                          <td class='text-center'><t t-esc="obj['max']"/></td>
                           <td class='text-center'><t t-esc="obj['amount']"/></td>
-                          <td class='text-center'><t t-esc="obj['x_distance']"/></td>
-                          <td class='text-center'><t t-esc="obj['liter']"/></td>
-                          <td class='text-center'></td>
-                          <td class='text-center'></td>
-                          <td class='text-center'></td>
-                          <td class='text-center'></td>
-                          <td class='text-center'></td>
-                          <td class='text-center'></td>
                         </tr>
                         <t t-set="i" t-value="i+1" />
                     </t>

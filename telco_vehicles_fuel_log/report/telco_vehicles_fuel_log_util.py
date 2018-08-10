@@ -7,16 +7,16 @@
 from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
+"""
+import numpy as np
+import matplotlib as mpl
 
+## agg backend is used to create plot as a .png file
+mpl.use('agg')
+
+import matplotlib.pyplot as plt
 """
-for fuel_log in LogFuels.search_read(
-                [['&', ['date', '>=', '01-01-2018'], ['date', '<=', '01-31-2018'],]],
-                ['date', 'vehicle_id',  'purchaser_id', 'liter',
-                    'amount', 'price_per_liter', 'odometer',
-                    'x_last_refuel_odometer', 'x_fuel_consumption',
-                    'x_distance'],
-                order="vehicle_id asc, date asc"):
-"""
+import pandas as pd
 
 class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
     # _name is format:
@@ -30,20 +30,31 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         LogFuels = self.env['fleet.vehicle.log.fuel']
 
         for vehicle in self.env['fleet.vehicle'].search([('active', '=', True)]):
-            amount = 0
+            amount = []
             x_distance = 0
             liter = 0
-            for fuel_log in LogFuels.search(
-                #[('date', '<=', end_date), ('date', '>=', start_date),('vehicle_id', '=', vehicle.id)], limit=1):
-                [('date', '<=', '2018-05-10'), ('date', '>=', '2018-05-01'),('vehicle_id', '=', vehicle.id)]):
-                amount = fuel_log.amount
-                x_distance = fuel_log.x_distance
-                liter = fuel_log.liter
+            # Find fuel log where date and between end_date and start_date vehicle id
+            fuel_logs =  LogFuels.search([('date', '<=', end_date),
+                                ('date', '>=', start_date),
+                                ('vehicle_id', '=', vehicle.id)])
+
+            for fuel_log in fuel_logs:
+                amount +=  [fuel_log.amount]
+
+            df = pd.Series(amount)
+            stat = df.describe()
+
             res.append({
                 'vehicle_name': vehicle.name,
                 'amount': amount,
-                'x_distance': x_distance,
-                'liter': liter,
+                'count':  stat['count'],
+                'mean':   stat['mean'],
+                'std':    stat['std'],
+                'min':    stat['min'],
+                '25%':    stat['25%'],
+                '50%':    stat['50%'],
+                '75%':    stat['75%'],
+                'max':    stat['max'],
             })
 
         return res

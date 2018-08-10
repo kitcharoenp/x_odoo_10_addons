@@ -137,7 +137,7 @@
                     <t t-foreach="_get_data" t-as="obj">
                         <tr style="font-size:8px;">
                           <td class="text-left"><t t-esc="i"/></td>
-                          <td style="font-size:8px;"><t t-esc="obj['vehicle_name']"/></td>
+                          <td style="font-size:8px;"><t t-esc="obj['license_plate']"/></td>
                           <td class='text-center'><t t-esc="obj['count']"/></td>
                           <td class='text-center'><t t-esc="obj['mean']"/></td>
                           <td class='text-center'><t t-esc="obj['std']"/></td>

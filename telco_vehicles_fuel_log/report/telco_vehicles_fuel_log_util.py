@@ -7,7 +7,7 @@
 from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
-"""
+
 import numpy as np
 import matplotlib as mpl
 
@@ -15,7 +15,7 @@ import matplotlib as mpl
 mpl.use('agg')
 
 import matplotlib.pyplot as plt
-"""
+
 import pandas as pd
 
 class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
@@ -28,11 +28,15 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         start_date = fields.Date.from_string(data['start_date'])
         end_date = fields.Date.from_string(data['end_date'])
         LogFuels = self.env['fleet.vehicle.log.fuel']
-
+        data = {
+            'date':      [],
+            'license_plate':  [],
+            'location':  [],
+            'value':     []
+        }
+        i = 0
         for vehicle in self.env['fleet.vehicle'].search([('active', '=', True)]):
             amount = []
-            x_distance = 0
-            liter = 0
             # Find fuel log where date and between end_date and start_date vehicle id
             fuel_logs =  LogFuels.search([('date', '<=', end_date),
                                 ('date', '>=', start_date),
@@ -40,13 +44,17 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
 
             for fuel_log in fuel_logs:
                 amount +=  [fuel_log.amount]
+                data['date'] +=  [fuel_log.date]
+                data['license_plate'] +=  [fuel_log.vehicle_id.license_plate]
+                data['location'] +=  [fuel_log.vehicle_id.location]
+                data['value'] +=  [fuel_log.amount]
 
             df = pd.Series(amount)
             stat = df.describe()
 
             res.append({
-                'vehicle_name': vehicle.name,
-                'amount': amount,
+                'license_plate': vehicle.license_plate,
+                'amount': '',
                 'count':  stat['count'],
                 'mean':   stat['mean'],
                 'std':    stat['std'],
@@ -56,7 +64,6 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
                 '75%':    stat['75%'],
                 'max':    stat['max'],
             })
-
         return res
 
     def _get_data(self, data):

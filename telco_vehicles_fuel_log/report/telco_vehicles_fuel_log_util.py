@@ -8,6 +8,8 @@ from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 import io
+import base64
+import cStringIO
 
 import pandas as pd
 import numpy as np
@@ -63,29 +65,49 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         p_box = sns.boxplot(x='month', y='amount', data=grouper_reindex, palette="hls", linewidth=3)
         ax = plt.gca()
         ax.set_title("Fuel Log : Group by Month")
-        # output file name
-        plot_file_name="/opt/x_odoo_10_addons/telco_vehicles_fuel_log/static/img/all_groupby_month.png"
-        # save as jpeg
-        p_box.figure.savefig(plot_file_name,
-                    format='png',
-                    dpi=100)
+        return p_box.figure
 
     def _make_box_plot(self, logs_fuel):
         df = self._make_pandas_data_frame(logs_fuel)
-        self._make_boxplot_group_by_month(df)
+        figure = self._make_boxplot_group_by_month(df)
+        return figure
+
+    def _get_figure_for_report(self, data):
+        result = []
+        res = {}
+        start_date = fields.Date.from_string(data['start_date'])
+        end_date = fields.Date.from_string(data['end_date'])
+        LogFuels = self.env['fleet.vehicle.log.fuel']
+        # create the boxplot images
+        logs_fuel =  LogFuels.search([
+            ('date', '<=', end_date),
+            ('date', '>=', start_date),
+        ])
+        figure = self._make_box_plot(logs_fuel)
+        out = cStringIO.StringIO()
+        figure.savefig(out, format='png')
+        figure.clear()
+        figure_out = out.getvalue().encode('base64')
+        out.truncate(0)
+
+        res['group_by_month'] = figure_out
+        res['test_text'] = '_get_figure_for_report_test_text'
+        result.append(res)
+        return result
+
 
     def _get_data_for_report(self, data):
         res = []
         start_date = fields.Date.from_string(data['start_date'])
         end_date = fields.Date.from_string(data['end_date'])
         LogFuels = self.env['fleet.vehicle.log.fuel']
+
+        i = 0
         data = {
             'date':      [],
             'license_plate':  [],
             'location':  [],
             'value':     []}
-
-        i = 0
         for vehicle in self.env['fleet.vehicle'].search([('active', '=', True)]):
             amount = []
             # Find fuel log where date and between end_date and start_date vehicle id
@@ -102,10 +124,8 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
 
             df = pd.Series(amount)
             stat = df.describe()
-
             res.append({
                 'license_plate': vehicle.license_plate,
-                'amount': '',
                 'count':  stat['count'],
                 'mean':   stat['mean'],
                 'std':    stat['std'],
@@ -115,12 +135,7 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
                 '75%':    stat['75%'],
                 'max':    stat['max'],
             })
-        # create the boxplot images
-        logs_fuel =  LogFuels.search([
-            ('date', '<=', end_date),
-            ('date', '>=', start_date),
-        ])
-        self._make_box_plot(logs_fuel)
+
         return res
 
     def _get_data(self, data):
@@ -138,7 +153,8 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             'doc_ids': docids,
             'doc_model': vehicles_fuel_log_report.model,
             'docs': LogFuel,
-            '_get_data': self._get_data(data['form']),
+            'get_data': self._get_data(data['form']),
+            'get_figure': self._get_figure_for_report(data['form']),
         }
         return Report.render(
             'telco_vehicles_fuel_log.fuel_log_report_template',

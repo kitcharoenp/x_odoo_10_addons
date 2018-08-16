@@ -98,7 +98,18 @@
                   <t t-set="i" t-value="1" />
                   <t t-set="total" t-value="0" />
                   <tbody>
-                    <t t-foreach="_get_data" t-as="obj">
+
+                    <h3>Display Matplotlib Image</h3>
+
+                    <t t-foreach="get_figure" t-as="figure">
+                      <h3><t t-esc="figure['test_text']"/></h3>
+                      <img t-att-src="'data:image/png;base64,%s' % figure['group_by_month']"/>
+                      <img t-att-src="figure['group_by_month']"/>
+                    </t>
+
+
+                    <!--
+                    <t t-foreach="_get_data['data']" t-as="obj">
                         <tr style="font-size:8px;">
                           <td class="text-left"><t t-esc="i"/></td>
                           <td style="font-size:8px;"><t t-esc="obj['license_plate']"/></td>
@@ -110,11 +121,12 @@
                           <td class='text-center'><t t-esc="obj['50%']"/></td>
                           <td class='text-center'><t t-esc="obj['75%']"/></td>
                           <td class='text-center'><t t-esc="obj['max']"/></td>
-                          <td class='text-center'><t t-esc="obj['amount']"/></td>
+                          <td class='text-center'></td>
                         </tr>
                         <t t-set="i" t-value="i+1" />
                     </t>
-                      <img  t-att-src="'/telco_vehicles_fuel_log/static/img/all_groupby_month.png'"/>
+                    -->
+
                   </tbody>
               </table>
 

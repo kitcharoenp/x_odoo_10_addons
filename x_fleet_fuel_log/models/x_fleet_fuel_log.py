@@ -32,6 +32,9 @@ class FleetVehicleLogFuel(models.Model):
     x_location = fields.Char(
         string="Location",
         help='Location of the vehicle (garage, ...)')
+    x_vin_sn = fields.Char(
+        string='Label Sticker',
+        help='Unique number written on the vehicle motor (VIN/SN number)',)
 
     # Overide original method
     @api.onchange('liter', 'price_per_liter', 'amount')
@@ -63,3 +66,22 @@ class FleetVehicleLogFuel(models.Model):
                     limit=1)
                 record.x_last_refuel_odometer = vehicle_cost.odometer_id.value
                 record.x_location = record.vehicle_id.location
+                record.x_vin_sn = record.vehicle_id.vin_sn
+
+    @api.multi
+    def write(self, vals):
+        if vals.get('vehicle_id'):
+            vehicle = self.env['fleet.vehicle'].browse(vals.get('vehicle_id'))
+            vals['x_location'] =vehicle.location
+            vals['x_vin_sn'] = vehicle.vin_sn
+        res = super(FleetVehicleLogFuel, self).write(vals)
+        return res
+
+    @api.model
+    def create(self, vals):
+         if vals.get('vehicle_id'):
+             vehicle = self.env['fleet.vehicle'].browse(vals.get('vehicle_id'))
+             vals['x_location'] = vehicle.location
+             vals['x_vin_sn'] = vehicle.vin_sn
+         res = super(FleetVehicleLogFuel, self).create(vals)
+         return res

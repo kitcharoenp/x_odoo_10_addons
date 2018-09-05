@@ -17,6 +17,9 @@
                 <filter name="groupby_x_location"
                   context="{'group_by': 'x_location'}"
                   string="Location"/>
+                <filter name="groupby_x_vin_sn"
+                    context="{'group_by': 'x_vin_sn'}"
+                    string="Label Sticker"/>
                 <!-- add My Log Fuel filter -->
                 <filter name="my_fuel_logs"
                   string="My Fuel Logs"

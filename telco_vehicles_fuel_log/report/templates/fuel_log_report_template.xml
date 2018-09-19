@@ -103,8 +103,7 @@
 
                     <t t-foreach="get_figure" t-as="figure">
                       <h3><t t-esc="figure['test_text']"/></h3>
-                      <img t-att-src="'data:image/png;base64,%s' % figure['group_by_month']"/>
-                      <img t-att-src="figure['group_by_month']"/>
+                      <img t-att-src="'data:image/png;base64,%s' % figure['figure_out']"/>
                     </t>
 
 

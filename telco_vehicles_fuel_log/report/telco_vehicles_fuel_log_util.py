@@ -30,13 +30,19 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             'date':      [],
             'license_plate':  [],
             'location':  [],
-            'amount':     []
+            'amount':     [],
+            'liter':     [],
+            'x_distance':     [],
+            'x_fuel_consumption':     []
         }
         for log in logs_fuel:
             param['date'] +=  [log.date]
             param['license_plate'] +=  [log.vehicle_id.license_plate]
             param['location'] +=  [log.vehicle_id.location]
             param['amount'] +=  [log.amount]
+            param['liter'] +=  [log.liter]
+            param['x_distance'] +=  [log.x_distance]
+            param['x_fuel_consumption'] +=  [log.x_fuel_consumption]
 
         # make pandas dataframe
         df = pd.DataFrame(param)
@@ -46,7 +52,7 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         df.set_index('date', inplace=True)
         return df
 
-    def _make_boxplot_group_by_month(self, df):
+    def _make_boxplot_group_by_month(self, df, y_column):
         # group data by vehicle and index mounth
         grouper = df.groupby([pd.Grouper(freq="M"), 'license_plate'])
         # re-index
@@ -56,21 +62,26 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         p = sns.stripplot(
             data=grouper_reindex,
             x='month',
-            y='amount',
+            y=str(y_column),
             size=16,
             jitter=0.15,
             palette="hls",
             linewidth=1,
             alpha=.2)
-        p_box = sns.boxplot(x='month', y='amount', data=grouper_reindex, palette="hls", linewidth=3)
+        p_box = sns.boxplot(x='month', y=str(y_column), data=grouper_reindex, palette="hls", linewidth=3)
         ax = plt.gca()
-        ax.set_title("Fuel Log : Group by Month")
+        ax.set_title(str(y_column).upper() + " Group by Month ")
         return p_box.figure
 
-    def _make_box_plot(self, logs_fuel):
+    def _make_box_plot(self, logs_fuel, y_column):
         df = self._make_pandas_data_frame(logs_fuel)
-        figure = self._make_boxplot_group_by_month(df)
-        return figure
+        figure = self._make_boxplot_group_by_month(df, y_column)
+        out = cStringIO.StringIO()
+        figure.savefig(out, format='png')
+        figure.clear()
+        figure_out = out.getvalue().encode('base64')
+        out.truncate(0)
+        return figure_out
 
     def _get_figure_for_report(self, data):
         result = []
@@ -83,16 +94,14 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             ('date', '<=', end_date),
             ('date', '>=', start_date),
         ])
-        figure = self._make_box_plot(logs_fuel)
-        out = cStringIO.StringIO()
-        figure.savefig(out, format='png')
-        figure.clear()
-        figure_out = out.getvalue().encode('base64')
-        out.truncate(0)
+        column_list = ['amount', 'liter', 'x_distance', 'x_fuel_consumption']
+        for column in column_list:
+            res = {}
+            figure_out = self._make_box_plot(logs_fuel, column)
+            res['figure_out'] = figure_out
+            res['test_text'] = str(column).upper()
+            result.append(res)
 
-        res['group_by_month'] = figure_out
-        res['test_text'] = '_get_figure_for_report_test_text'
-        result.append(res)
         return result
 
 

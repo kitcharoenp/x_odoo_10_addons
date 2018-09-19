@@ -77,13 +77,26 @@
             <div class="row">
                 <h1 class='text-center'>All Zones and Vehicles</h1>
 
-              <table class="table table-bordered" style="table-layout:auto">
-
                     <t t-foreach="get_figure" t-as="figure">
-                      <img t-att-src="'data:image/png;base64,%s' % figure['figure_out']"/>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <img t-att-src="'data:image/png;base64,%s' % figure['FIG_amount']"/>
+                            </div>
+                            <div class="col-xs-6">
+                                <img t-att-src="'data:image/png;base64,%s' % figure['FIG_x_distance']"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <img t-att-src="'data:image/png;base64,%s' % figure['FIG_liter']"/>
+                            </div>
+                            <div class="col-xs-10">
+                                <img t-att-src="'data:image/png;base64,%s' % figure['FIG_x_fuel_consumption']"/>
+                            </div>
+                        </div>
                     </t>
 
-              </table>
             </div><!--/.row -->
 
             <t t-foreach="get_figure_by_location" t-as="obj">
@@ -92,17 +105,19 @@
                 </h1>
                 <t t-foreach="obj['data']" t-as="z_data">
                     <div class="row">
-                        <div class="col">
+                        <div class="col-xs-10">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_amount']"/>
                         </div>
-                        <div class="col">
+                        <div class="col-xs-10">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_distance']"/>
                         </div>
-                        <div class="w-100"></div>
-                        <div class="col">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-10">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_liter']"/>
                         </div>
-                        <div class="col">
+                        <div class="col-xs-10">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_fuel_consumption']"/>
                         </div>
                     </div>

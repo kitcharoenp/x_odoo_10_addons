@@ -92,18 +92,17 @@
                 </h1>
                 <t t-foreach="obj['data']" t-as="z_data">
                     <div class="row">
-                        <div class="col-xs-auto">
+                        <div class="col">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_amount']"/>
                         </div>
-                        <div class="col-xs-auto">
+                        <div class="col">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_distance']"/>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6">
+                        <div class="w-100"></div>
+                        <div class="col">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_liter']"/>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_fuel_consumption']"/>
                         </div>
                     </div>

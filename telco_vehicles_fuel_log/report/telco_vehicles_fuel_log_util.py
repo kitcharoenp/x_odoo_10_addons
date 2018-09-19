@@ -64,13 +64,13 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             x='month',
             y=str(y_column),
             #size=16,
-            jitter=True,
+            jitter=0.15,
             palette="hls",
             linewidth=1,
             alpha=.2)
         p_box = sns.boxplot(x='month', y=str(y_column), data=grouper_reindex, palette="hls", linewidth=3)
         ax = plt.gca()
-        ax.set_title(str(y_column).upper())
+        ax.set_title(str(y_column).upper() + " Group by Month ")
         return p_box.figure
 
     def _make_boxplot_group_by_zone(self, df, y_column):
@@ -84,13 +84,13 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             data=grouper_reindex,
             x='month',
             y=str(y_column),
-            jitter=0.05,
-            size=11,
+            jitter=0.15,
+            size=16,
             palette="hls",
             hue="license_plate",
             linewidth=1,
             alpha=.7)
-        p_box = sns.boxplot(x='month', y=str(y_column), data=grouper_reindex, palette="hls", linewidth=1)
+        p_box = sns.boxplot(x='month', y=str(y_column), data=grouper_reindex, palette="hls", linewidth=3)
         ax = plt.gca()
         ax.set_title(str(y_column).upper())
         return p_box.figure

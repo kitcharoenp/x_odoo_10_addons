@@ -92,8 +92,8 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             palette="hls",
             hue="license_plate",
             linewidth=1,
-            size=16,
-            alpha=.8)
+            size=13,
+            alpha=.9)
         pz_box = sns.boxplot(
             x='month',
             y=str(y_column),

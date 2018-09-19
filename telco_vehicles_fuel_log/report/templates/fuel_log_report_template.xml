@@ -79,19 +79,16 @@
 
                     <t t-foreach="get_figure" t-as="figure">
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-12">
                                 <img t-att-src="'data:image/png;base64,%s' % figure['FIG_amount']"/>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-12">
                                 <img t-att-src="'data:image/png;base64,%s' % figure['FIG_x_distance']"/>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-10">
+                            <div class="col-xs-12">
                                 <img t-att-src="'data:image/png;base64,%s' % figure['FIG_liter']"/>
                             </div>
-                            <div class="col-xs-10">
+                            <div class="col-xs-12">
                                 <img t-att-src="'data:image/png;base64,%s' % figure['FIG_x_fuel_consumption']"/>
                             </div>
                         </div>
@@ -105,19 +102,16 @@
                 </h1>
                 <t t-foreach="obj['data']" t-as="z_data">
                     <div class="row">
-                        <div class="col-xs-10">
+                        <div class="col-xs-12">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_amount']"/>
                         </div>
-                        <div class="col-xs-10">
+                        <div class="col-xs-12">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_distance']"/>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-10">
+                        <div class="col-xs-12">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_liter']"/>
                         </div>
-                        <div class="col-xs-10">
+                        <div class="col-xs-12">
                             <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_fuel_consumption']"/>
                         </div>
                     </div>

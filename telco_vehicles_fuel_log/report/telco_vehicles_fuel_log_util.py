@@ -63,18 +63,49 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             data=grouper_reindex,
             x='month',
             y=str(y_column),
-            size=16,
-            jitter=0.15,
+            #size=16,
+            jitter=True,
             palette="hls",
             linewidth=1,
             alpha=.2)
         p_box = sns.boxplot(x='month', y=str(y_column), data=grouper_reindex, palette="hls", linewidth=3)
         ax = plt.gca()
-        ax.set_title(str(y_column).upper() + " Group by Month ")
+        ax.set_title(str(y_column).upper())
+        return p_box.figure
+
+    def _make_boxplot_group_by_zone(self, df, y_column):
+        # group data by vehicle and index mounth
+        grouper = df.groupby([pd.Grouper(freq="M"), 'license_plate'])
+        # re-index
+        grouper_reindex = grouper.sum().reset_index()
+        # Convert pandas datetime month to string representation
+        grouper_reindex['month'] = grouper_reindex['date'].dt.strftime('%b')
+        p = sns.stripplot(
+            data=grouper_reindex,
+            x='month',
+            y=str(y_column),
+            jitter=0.05,
+            size=11,
+            palette="hls",
+            hue="license_plate",
+            linewidth=1,
+            alpha=.7)
+        p_box = sns.boxplot(x='month', y=str(y_column), data=grouper_reindex, palette="hls", linewidth=1)
+        ax = plt.gca()
+        ax.set_title(str(y_column).upper())
         return p_box.figure
 
     def _make_box_plot(self, df, y_column):
         figure = self._make_boxplot_group_by_month(df, y_column)
+        out = cStringIO.StringIO()
+        figure.savefig(out, format='png')
+        figure.clear()
+        figure_out = out.getvalue().encode('base64')
+        out.truncate(0)
+        return figure_out
+
+    def _make_box_plot_zone(self, df, y_column):
+        figure = self._make_boxplot_group_by_zone(df, y_column)
         out = cStringIO.StringIO()
         figure.savefig(out, format='png')
         figure.clear()
@@ -128,11 +159,10 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             column_list = ['amount', 'liter', 'x_distance', 'x_fuel_consumption']
             zone_data = {}
             for column in column_list:
-                figure_out = self._make_box_plot(df_loc, column)
+                figure_out = self._make_box_plot_zone(df_loc, column)
                 zone_data['FIG_'+column] = figure_out
             result[len(result)-1]['data'].append(zone_data)
         return result
-
 
     def _get_data_for_report(self, data):
         res = []

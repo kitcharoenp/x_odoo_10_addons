@@ -75,77 +75,40 @@
                 </style>
 
             <div class="row">
-                <h5  class='text-center'>
-                  Vehicle Fuel Log Report
-                </h5>
-              <table class="table table-bordered" style="table-layout:auto">
-                  <!-- initial variable -->
-                  <t t-set="i" t-value="1" />
-                  <t t-set="total" t-value="0" />
-                  <tbody>
+                <h1 class='text-center'>All Zones and Vehicles</h1>
 
-                    <h3>Display Matplotlib Image</h3>
+              <table class="table table-bordered" style="table-layout:auto">
 
                     <t t-foreach="get_figure" t-as="figure">
-                      <h3><t t-esc="figure['test_text']"/></h3>
                       <img t-att-src="'data:image/png;base64,%s' % figure['figure_out']"/>
                     </t>
 
-
-                    <h3>Fuel Log Report by Zone</h3>
-
-                    <t t-foreach="get_figure_by_location" t-as="obj">
-                        <h3 t-if="obj['zone_name']" class='text-center'>
-                            ZONE : <t t-esc="obj['zone_name']"/>
-                        </h3>
-
-                        <t t-foreach="obj['data']" t-as="z_data">
-                            <table class="table table-bordered" style="table-layout:auto">
-                                <tr class='text-center'>
-                                    <td class='text-center'>
-                                        <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_amount']"/>
-                                    </td>
-                                    <td class='text-center'>
-                                        <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_distance']"/>
-                                    </td>
-                                </tr>
-                                <tr class='text-center'>
-                                    <td class='text-center'>
-                                        <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_liter']"/>
-                                    </td>
-                                    <td class='text-center'>
-                                        <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_fuel_consumption']"/>
-                                    </td>
-                                </tr>
-                            </table>
-                        </t>
-
-                    </t>
-
-
-                    <!--
-                    <t t-foreach="_get_data['data']" t-as="obj">
-                        <tr style="font-size:8px;">
-                          <td class="text-left"><t t-esc="i"/></td>
-                          <td style="font-size:8px;"><t t-esc="obj['license_plate']"/></td>
-                          <td class='text-center'><t t-esc="obj['count']"/></td>
-                          <td class='text-center'><t t-esc="obj['mean']"/></td>
-                          <td class='text-center'><t t-esc="obj['std']"/></td>
-                          <td class='text-center'><t t-esc="obj['min']"/></td>
-                          <td class='text-center'><t t-esc="obj['25%']"/></td>
-                          <td class='text-center'><t t-esc="obj['50%']"/></td>
-                          <td class='text-center'><t t-esc="obj['75%']"/></td>
-                          <td class='text-center'><t t-esc="obj['max']"/></td>
-                          <td class='text-center'></td>
-                        </tr>
-                        <t t-set="i" t-value="i+1" />
-                    </t>
-                    -->
-
-                  </tbody>
               </table>
-
             </div><!--/.row -->
+
+            <t t-foreach="get_figure_by_location" t-as="obj">
+                <h1 t-if="obj['zone_name']" class='text-center'>
+                    ZONE : <t t-esc="obj['zone_name']"/>
+                </h1>
+                <t t-foreach="obj['data']" t-as="z_data">
+                    <div class="row">
+                        <div class="col-xs-auto">
+                            <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_amount']"/>
+                        </div>
+                        <div class="col-xs-auto">
+                            <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_distance']"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_liter']"/>
+                        </div>
+                        <div class="col-xs-6">
+                            <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_fuel_consumption']"/>
+                        </div>
+                    </div>
+                </t> <!--/obj['data'] -->
+            </t> <!--/get_figure_by_location -->
 
 
         </div><!--/.page -->

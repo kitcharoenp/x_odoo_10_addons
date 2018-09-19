@@ -73,8 +73,7 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         ax.set_title(str(y_column).upper() + " Group by Month ")
         return p_box.figure
 
-    def _make_box_plot(self, logs_fuel, y_column):
-        df = self._make_pandas_data_frame(logs_fuel)
+    def _make_box_plot(self, df, y_column):
         figure = self._make_boxplot_group_by_month(df, y_column)
         out = cStringIO.StringIO()
         figure.savefig(out, format='png')
@@ -94,14 +93,44 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             ('date', '<=', end_date),
             ('date', '>=', start_date),
         ])
+        df = self._make_pandas_data_frame(logs_fuel)
         column_list = ['amount', 'liter', 'x_distance', 'x_fuel_consumption']
         for column in column_list:
             res = {}
-            figure_out = self._make_box_plot(logs_fuel, column)
+            figure_out = self._make_box_plot(df, column)
             res['figure_out'] = figure_out
             res['test_text'] = str(column).upper()
             result.append(res)
 
+        return result
+
+    def _get_figure_by_location(self, data):
+        result = []
+        start_date = fields.Date.from_string(data['start_date'])
+        end_date = fields.Date.from_string(data['end_date'])
+        LogFuels = self.env['fleet.vehicle.log.fuel']
+
+        # create the boxplot images
+        logs_fuel =  LogFuels.search([
+            ('date', '<=', end_date),
+            ('date', '>=', start_date),
+        ])
+        df = self._make_pandas_data_frame(logs_fuel)
+        location_list = df.location.unique()
+
+        for loc in location_list:
+            result.append({
+                'zone_name': loc,
+                'data': []
+            })
+            # make the dataframe
+            df_loc = df.loc[df['location'] == loc]
+            column_list = ['amount', 'liter', 'x_distance', 'x_fuel_consumption']
+            zone_data = {}
+            for column in column_list:
+                figure_out = self._make_box_plot(df_loc, column)
+                zone_data['FIG_'+column] = figure_out
+            result[len(result)-1]['data'].append(zone_data)
         return result
 
 
@@ -164,6 +193,7 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             'docs': LogFuel,
             'get_data': self._get_data(data['form']),
             'get_figure': self._get_figure_for_report(data['form']),
+            'get_figure_by_location': self._get_figure_by_location(data['form']),
         }
         return Report.render(
             'telco_vehicles_fuel_log.fuel_log_report_template',

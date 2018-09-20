@@ -44,51 +44,33 @@
 
     <t t-call="report.html_container">
 
-            <div class="page">
-                <!-- include CSS  -->
-                <style>
-                    /* --- Generic Restyling and Resets --- */
-                    body {
-                        font-family:freeserif;
-                    }
-                </style>
+        <div class="page">
+            <!-- include CSS  -->
+            <style>
+                /* --- Generic Restyling and Resets --- */
+                body {
+                font-family:freeserif;
+                }
+            </style>
 
-                <t t-foreach="get_figure" t-as="figure">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <img t-att-src="'data:image/png;base64,%s' % figure['figure_out']"/>
-                        </div>
-                    </div>
-                </t>
-
-            <!--
-            <t t-foreach="get_figure_by_location" t-as="obj">
-                <h1 t-if="obj['zone_name']" class='text-center'>
-                    ZONE : <t t-esc="obj['zone_name']"/>
-                </h1>
-                <t t-foreach="obj['data']" t-as="z_data">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_amount']"/>
-                        </div>
-                        <div class="col-xs-12">
-                            <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_distance']"/>
-                        </div>
-                        <div class="col-xs-12">
-                            <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_liter']"/>
-                        </div>
-                        <div class="col-xs-12">
-                            <img t-att-src="'data:image/png;base64,%s' % z_data['FIG_x_fuel_consumption']"/>
-                        </div>
-                    </div>
-                </t>
+            <t t-foreach="get_figure" t-as="figure">
+                <div class="col-xs-12">
+                    <img t-att-src="'data:image/png;base64,%s' % figure['figure_out']"/>
+                </div>
             </t>
-            -->
 
+            <t t-foreach="get_figure_by_location" t-as="obj">
+                <h2 t-if="obj['zone_name']" class='text-center'>
+                    ZONE : <t t-esc="obj['zone_name']"/>
+                </h2>
+                <div class="col">
+                    <img t-att-src="'data:image/png;base64,%s' % obj['figure_out']"/>
+                </div>
+            </t>
 
         </div><!--/.page -->
 
-    </t>
+    </t> <!--/.html_container -->
 </template>
 
 

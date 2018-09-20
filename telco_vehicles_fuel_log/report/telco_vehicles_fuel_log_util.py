@@ -155,35 +155,89 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         result.append(res)
         return result
 
-    def _make_boxplot_group_by_zone(self, df, y_column):
+    def _make_boxplot_group_by_zone(self, df):
         # group data by vehicle and index mounth
         grouper = df.groupby([pd.Grouper(freq="M"), 'license_plate'])
         # re-index
         grouper_reindex = grouper.sum().reset_index()
         # Convert pandas datetime month to string representation
         grouper_reindex['month'] = grouper_reindex['date'].dt.strftime('%b')
-        p = sns.stripplot(
+        plt.figure(figsize=(16.69,11.25))
+        plt.subplot(221)
+        pz = sns.stripplot(
             data=grouper_reindex,
             x='month',
-            y=str(y_column),
-            jitter=0.01,
-            palette="hls",
+            y='amount',
             hue="license_plate",
+            jitter=0.15,
+            size=14,
+            palette="hls",
             linewidth=1,
-            size=13,
-            alpha=.9)
+            alpha=.8)
         pz_box = sns.boxplot(
             x='month',
-            y=str(y_column),
+            y='amount',
             data=grouper_reindex,
+            palette="Set2",
+            linewidth=3)
+
+        plt.subplot(222)
+        pz = sns.stripplot(
+            data=grouper_reindex,
+            x='month',
+            y='liter',
+            hue="license_plate",
+            jitter=0.15,
+            size=14,
             palette="hls",
-            linewidth=2)
-        ax = plt.gca()
-        ax.set_title(str(y_column).upper())
+            linewidth=1,
+            alpha=.8)
+        pz_box = sns.boxplot(
+            x='month',
+            y='liter',
+            data=grouper_reindex,
+            palette="Set2",
+            linewidth=3)
+
+        plt.subplot(223)
+        pz = sns.stripplot(
+            data=grouper_reindex,
+            x='month',
+            y='x_distance',
+            hue="license_plate",
+            jitter=0.1,
+            palette="hls",
+            linewidth=1,
+            alpha=.8)
+        pz_box = sns.boxplot(
+            x='month',
+            y='x_distance',
+            data=grouper_reindex,
+            palette="Set2",
+            linewidth=3)
+
+        plt.subplot(224)
+        pz = sns.stripplot(
+            data=grouper_reindex,
+            x='month',
+            y='x_fuel_consumption',
+            hue="license_plate",
+            jitter=0.1,
+            palette="hls",
+            linewidth=1,
+            alpha=.8)
+        pz_box = sns.boxplot(
+            x='month',
+            y='x_fuel_consumption',
+            data=grouper_reindex,
+            palette="Set2",
+            linewidth=3)
+        #ax = plt.gca()
+        #ax.set_title(str(y_column).upper())
         return pz_box.figure
 
-    def _make_box_plot_zone(self, df, y_column):
-        figure = self._make_boxplot_group_by_zone(df, y_column)
+    def _make_box_plot_zone(self, df):
+        figure = self._make_boxplot_group_by_zone(df)
         out = cStringIO.StringIO()
         figure.savefig(out, format='png')
         figure.clear()
@@ -206,18 +260,14 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         location_list = df.location.unique()
 
         for loc in location_list:
-            result.append({
-                'zone_name': loc,
-                'data': []
-            })
             # make the dataframe
             df_loc = df.loc[df['location'] == loc]
-            column_list = ['amount', 'liter', 'x_distance', 'x_fuel_consumption']
-            zone_data = {}
-            for column in column_list:
-                figure_out = self._make_box_plot_zone(df_loc, column)
-                zone_data['FIG_'+column] = figure_out
-            result[len(result)-1]['data'].append(zone_data)
+            figure_out = self._make_box_plot_zone(df_loc)
+
+            result.append({
+                'zone_name': loc,
+                'figure_out': figure_out
+            })
         return result
 
     def _get_data_for_report(self, data):
@@ -280,7 +330,7 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             'docs': LogFuel,
             'get_data': self._get_data(data['form']),
             'get_figure': self._get_figure_for_report(data['form']),
-            #'get_figure_by_location': self._get_figure_by_location(data['form']),
+            'get_figure_by_location': self._get_figure_by_location(data['form']),
         }
         return Report.render(
             'telco_vehicles_fuel_log.fuel_log_report_template',

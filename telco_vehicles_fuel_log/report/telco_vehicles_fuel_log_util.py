@@ -162,7 +162,7 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         grouper_reindex = grouper.sum().reset_index()
         # Convert pandas datetime month to string representation
         grouper_reindex['month'] = grouper_reindex['date'].dt.strftime('%b')
-        plt.figure(figsize=(16.69,11.25))
+        plt.figure(figsize=(16.69,11.65))
         plt.subplot(221)
         pz = sns.stripplot(
             data=grouper_reindex,
@@ -205,7 +205,8 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             x='month',
             y='x_distance',
             hue="license_plate",
-            jitter=0.1,
+            jitter=0.15,
+            size=14,
             palette="hls",
             linewidth=1,
             alpha=.8)
@@ -222,7 +223,8 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
             x='month',
             y='x_fuel_consumption',
             hue="license_plate",
-            jitter=0.1,
+            jitter=0.15,
+            size=14,
             palette="hls",
             linewidth=1,
             alpha=.8)

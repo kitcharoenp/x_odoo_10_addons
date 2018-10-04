@@ -14,6 +14,8 @@
                             <field name="vehicle_id"
                                 options="{'no_open': False, 'no_create': True}"/>
                             <field name="date" />
+                            <field name="x_project_id"
+                                options="{'no_open': False, 'no_create': True}"/>
                             <field name="x_description"/>
                         </group>
                         <group>
@@ -30,7 +32,7 @@
                             <field name="x_driver_id"
                                 options="{'no_open': False, 'no_create': True}"/>
                             <field name="x_state_id"
-                                options="{'no_open': False, 'no_create': True}"/>      
+                                options="{'no_open': False, 'no_create': True}"/>
                         </group>
                     </group>
                 </sheet>

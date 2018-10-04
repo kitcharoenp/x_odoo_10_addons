@@ -23,7 +23,11 @@ class FleetVehicleOdometer(models.Model):
         group_operator="max")
     x_state_id = fields.Many2one(
         "res.country.state",
-        string='State')    
+        string='State')
+    x_project_id = fields.Many2one(
+        'project.project',
+        string='Project',
+        domain=['|', ('active', '=', True), ('name', 'like', 'I0')])
 
     def _compute_vehicle_log_name(self):
         # super(FleetVehicleOdometer, self)._compute_vehicle_log_name()

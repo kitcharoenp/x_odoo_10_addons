@@ -245,6 +245,7 @@ class TelcoVehiclesFuelLogReportUtil(models.AbstractModel):
         figure.clear()
         figure_out = out.getvalue().encode('base64')
         out.truncate(0)
+        plt.clf()
         return figure_out
 
     def _get_figure_by_location(self, data):

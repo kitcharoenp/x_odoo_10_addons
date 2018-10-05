@@ -38,3 +38,9 @@ class FleetVehicleOdometer(models.Model):
             elif record.date:
                 name += ' / ' + record.date
             record.name = name
+
+    @api.onchange('vehicle_id')
+    def _onchange_vehicle(self):
+        super(FleetVehicleOdometer, self)._onchange_vehicle()
+        if self.vehicle_id:
+            self.value = self.vehicle_id.odometer        

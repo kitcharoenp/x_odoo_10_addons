@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+    <!-- append x_description field after state field in account invoice tree -->
+    <record id="telco_account_invoice_tree_view" model="ir.ui.view">
+        <field name="name">telco account invoice tree view</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id"
+            ref="account.invoice_supplier_tree"/>
+        <field name="arch" type="xml">
+          <xpath expr="//field[@name='state']"
+              position="after">
+              <field name="x_description"/>
+          </xpath>
+        </field>
+    </record>
+
   <record id="telco_account_invoice_form_view" model="ir.ui.view">
       <field name="name">telco account invoice form</field>
       <field name="model">account.invoice</field>

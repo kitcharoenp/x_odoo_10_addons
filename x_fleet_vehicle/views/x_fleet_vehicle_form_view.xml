@@ -16,6 +16,10 @@
         <xpath expr="//field[@name='car_value']" position="after">
             <field name="x_administrator_id" />
         </xpath>
+        <xpath expr="//field[@name='color']" position="after">
+            <field name="x_fleet_card_no" />
+            <field name="x_fleet_card_password" />
+        </xpath>
     </field>
 </record>
 </odoo>

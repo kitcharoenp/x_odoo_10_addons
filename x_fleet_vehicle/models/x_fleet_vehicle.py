@@ -31,5 +31,9 @@ class FleetVehicle(models.Model):
             vehicle_odometer = FleetVehicalOdometer.search([('vehicle_id', '=', record.id)], limit=1, order='value desc')
             if vehicle_odometer:
                 record.odometer = vehicle_odometer.y_odometer
+
+                if(vehicle_odometer.y_odometer <= 0):
+                    record.odometer = vehicle_odometer.value
+
             else:
                 record.odometer = 0

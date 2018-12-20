@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="telco_hr_employee_form_view" model="ir.ui.view">
+        <field name="name">Telco HR Employee Form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id"
+            ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <!-- append the Analytic Account after  `work_phone` field -->
+            <xpath expr="//field[@name='work_phone']" position="after">
+                <field name="x_analytic_account_id"
+                    options="{'no_open': True, 'no_create': True}"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

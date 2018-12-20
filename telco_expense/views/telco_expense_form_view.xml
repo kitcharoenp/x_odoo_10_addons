@@ -7,12 +7,32 @@
       <field name="inherit_id"
           ref="hr_expense.hr_expense_form_view"/>
       <field name="arch" type="xml">
+
         <xpath expr="//field[@name='tax_ids']"
             position="after">
             <field name="accounting_date"/>
             <field name="x_partner_id"
               options="{'no_create': True}"/>
         </xpath>
+
+        <field name="account_id" position="attributes">
+            <attribute name="options">{'no_open': True, 'no_create': True}</attribute>
+        </field>
+        <field name="employee_id" position="attributes">
+            <attribute name="options">{'no_open': True, 'no_create': True}</attribute>
+        </field>
+        <field name="currency_id" position="attributes">
+            <attribute name="attrs">{'readonly': 1}</attribute>
+            <attribute name="options">{'no_open': True, 'no_create': True}</attribute>
+        </field>
+        <field name="analytic_account_id" position="attributes">
+            <attribute name="options">{'no_open': True, 'no_create': True}</attribute>
+        </field>
+        <field name="company_id" position="attributes">
+            <attribute name="options">{'no_open': True, 'no_create': True}</attribute>
+            <attribute name="attrs">{'readonly': 1}</attribute>
+        </field>
+
       </field>
   </record>
 

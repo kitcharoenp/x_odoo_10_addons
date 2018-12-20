@@ -8,10 +8,14 @@
     'category': 'Expense',
     "author": "kicharoenp@gmail.com",
     'summary': 'Telco Expense',
+
+    # Description in Apps page
     'description': """
-    * A new accounting date field
+    * A new accounting date, payment_mode, Vendor field
+    * Change the analytic_account onchange the employee field
     """,
-    'depends': ['hr_expense', 'project', ],
+
+    'depends': ['hr_expense', 'project', 'telco_hr_employee',],
     'data': [
         # Actions
         # Views

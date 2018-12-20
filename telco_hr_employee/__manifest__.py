@@ -8,7 +8,7 @@
     'version': '0.1',
     'license': 'AGPL-3',
     'category': 'Human Resources',
-    
+
     'description':"""
 Enhancement the `hr_employee` module  :
 -------------
@@ -18,7 +18,7 @@ Enhancement the `hr_employee` module  :
     'depends': ['hr'],
     'summary': 'Enhancement the `hr_employee` module',
     'data': [
-        # Form
+        # Views
         'views/telco_hr_employee_form_view.xml',
     ],
     'installable': True,

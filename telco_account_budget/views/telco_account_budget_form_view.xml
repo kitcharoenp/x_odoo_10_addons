@@ -12,6 +12,10 @@
                 <field name="x_internal_reference"/>
             </xpath>
 
+            <xpath expr="//notebook/page/field/form/group/group[1]/field[@name='analytic_account_id']" position="after">
+                <field name="x_internal_reference"/>
+            </xpath>
+
         </field>
     </record>
 

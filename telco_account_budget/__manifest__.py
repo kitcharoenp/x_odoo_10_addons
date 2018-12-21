@@ -20,6 +20,9 @@ Enhancement the `account_budget` module  :
     'data': [
         # Views
         'views/telco_account_budget_form_view.xml',
+        'views/telco_account_budget_pivot_view.xml',
+        # Action
+        'views/telco_account_budget_act_crossovered_budget_lines_view.xml',
     ],
     'installable': True,
     'auto-install': False,

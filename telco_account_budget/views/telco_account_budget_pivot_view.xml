@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='telco_account_budget_pivot_view' model='ir.ui.view'>
+        <field name="name">Telco Account Budget Pivot</field>
+        <field name="model">crossovered.budget.lines</field>
+        <field name="arch" type="xml">
+            <pivot string="Budget">
+                <field name="analytic_account_id" type="row"/>
+                <field name="date_to" interval="month" type="col"/>
+                <field name="planned_amount" type="measure"/>
+                <field name="practical_amount" type="measure"/>
+                <field name="percentage" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+</odoo>

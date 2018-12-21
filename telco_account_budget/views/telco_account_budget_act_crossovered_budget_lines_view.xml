@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- override the act_crossovered_budget_view in account_budget_views.xml -->
+    <record model="ir.actions.act_window" id="account_budget.act_crossovered_budget_lines_view">
+        <field name="name">Budgets</field>
+        <field name="res_model">crossovered.budget.lines</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <field name="view_id" ref="account_budget.view_crossovered_budget_line_tree"/>
+    </record>
+
+</odoo>

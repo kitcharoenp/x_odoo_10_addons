@@ -9,8 +9,10 @@
         sequence="190"
     />
 
+
     <record id="fleet.menu_fleet_reporting"
             model="ir.ui.menu">
+        <field name="groups">fleet.fleet_group_manager, fleet.fleet_group_user</field>
         <field name="load_xmlid" eval="True"/>
     </record>
 

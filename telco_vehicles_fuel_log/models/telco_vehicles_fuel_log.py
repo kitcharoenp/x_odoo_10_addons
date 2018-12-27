@@ -19,7 +19,7 @@ class TelcoVehiclesFuelLog(models.TransientModel):
         r = 'month'
         if r == 'month':
             return (datetime.today() + relativedelta(
-                    months=-6, day=1, days=-1)).strftime('%Y-%m-%d')
+                    months=-1, day=1, days=0)).strftime('%Y-%m-%d')
         return fields.date.context_today(self)
 
     def _default_end_date(self):

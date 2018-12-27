@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id='telco_account_budget_tree_view' model='ir.ui.view'>
+        <field name="name">Account Budget Line Tree View</field>
+        <field name="model">crossovered.budget.lines</field>
+        <field
+            name="inherit_id"
+            ref="account_budget.view_crossovered_budget_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree string="Budget Lines">
+                    <field name="crossovered_budget_id" invisible="1"/>
+                    <field name="general_budget_id"/>
+                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="paid_date" groups="base.group_no_one"/>
+                    <field name="planned_amount" widget="monetary"/>
+                    <field name="practical_amount" widget="monetary"/>
+                    <field name="available_amount" widget="monetary"/>
+                    <field name="theoritical_amount" widget="monetary"/>
+                    <field name="percentage"/>
+                </tree>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

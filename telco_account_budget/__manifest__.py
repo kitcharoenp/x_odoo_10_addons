@@ -13,6 +13,8 @@
 Enhancement the `account_budget` module  :
 -------------
     * New a Internal Reference Field
+    * New a Available Amount Field
+    * Pivot View
     """,
 
     'depends': ['account_budget',],
@@ -21,6 +23,7 @@ Enhancement the `account_budget` module  :
         # Views
         'views/telco_account_budget_form_view.xml',
         'views/telco_account_budget_pivot_view.xml',
+        'views/telco_account_budget_tree_view.xml',
         # Action
         'views/telco_account_budget_act_crossovered_budget_lines_view.xml',
     ],

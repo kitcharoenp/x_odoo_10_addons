@@ -95,7 +95,8 @@ class AccountAnalyticLine(models.Model):
                 if ts_line.x_end_date < ts_line.x_start_date:
                     raise ValidationError(_(
                         '"Start" time cannot be earlier than "End" time.'))
-
+                """
+                # disable due to raise error on expense post        
                 domain = [
                     ('x_start_date', '<', ts_line.x_end_date),
                     ('x_end_date', '>', ts_line.x_start_date),
@@ -103,9 +104,11 @@ class AccountAnalyticLine(models.Model):
                     ('id', '!=', ts_line.id),
                 ]
                 n_timesheet_lines = self.search_count(domain)
+
                 if n_timesheet_lines:
                     raise ValidationError(_('You can not have 2 timesheet line that \
                         overlaps on same day!'))
+                """
 
     @api.onchange('unit_amount')
     def _onchange_unit_amount(self):

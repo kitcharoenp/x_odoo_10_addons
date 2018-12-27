@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- fleet/user group see all fuel log -->
+    <record id="x_vehicle_fuel_log_user_read_rule" model="ir.rule">
+        <field name="name">User can see all vehicle's fuel log</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_log_fuel"/>
+        <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- user only can read/write own record -->
+    <record id="x_vehicle_fuel_log_owner_rule" model="ir.rule">
+        <field name="name">Owner can see/write his/her vehicle's fuel log</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_log_fuel"/>
+        <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+    </record>
+
+    <!-- fleet/user group see all vehicle cost -->
+    <record id="x_vehicle_cost_user_read_rule" model="ir.rule">
+        <field name="name">User can see all vehicle's cost</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_cost"/>
+        <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- user only can read/write own vehicle cost record -->
+    <record id="x_vehicle_cost_owner_rule" model="ir.rule">
+        <field name="name">Owner can see/write his/her vehicle's cost</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_cost"/>
+        <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+    </record>
+
+
+</odoo>

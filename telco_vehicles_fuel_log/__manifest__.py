@@ -28,6 +28,8 @@ Main Features
         # Reports and Templates
         'report/telco_vehicles_fuel_log_qweb_report.xml',
         'report/templates/fuel_log_report_template.xml',
+        # Security
+        'security/x_vehicle_fuel_log_security.xml',
 
     ],
     'installable': True,

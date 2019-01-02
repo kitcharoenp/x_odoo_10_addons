@@ -10,9 +10,11 @@
 
         <xpath expr="//field[@name='tax_ids']"
             position="after">
+            <field name="x_project_id"
+              options="{'no_create': True, 'no_open': True}"/>
             <field name="accounting_date"/>
             <field name="x_partner_id"
-              options="{'no_create': True}"/>
+              options="{'no_create': True, 'no_open': True}"/>
         </xpath>
 
         <field name="account_id" position="attributes">

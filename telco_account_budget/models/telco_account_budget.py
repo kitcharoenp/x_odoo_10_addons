@@ -10,23 +10,10 @@ class CrossoveredBudgetLines(models.Model):
     _inherit = 'crossovered.budget.lines'
 
     x_internal_reference = fields.Char('Internal Reference',)
-    practical_amount = fields.Float(
-        compute='_compute_practical_amount',
-        string='Practical Amount',
-        digits=0,
-        group_operator="sum",
-        store="True")
-    theoritical_amount = fields.Float(
-        compute='_compute_theoritical_amount',
-        string='Theoretical Amount',
-        digits=0,
-        group_operator="sum",
-        store="True")
     percentage = fields.Float(
         compute='_compute_percentage',
         string='Achievement',
-        group_operator="avg",
-        store="True")
+        group_operator="avg",)
     available_amount = fields.Float(
         compute='_compute_available_amount',
         string='Available Amount',

@@ -30,7 +30,8 @@ class TelcoExpense(models.Model):
 
     x_project_id = fields.Many2one(
         'project.project',
-        'Project')
+        'Project',
+        domain=[('active', '=', True)])
 
     # onchange employee_id set the analytic_account_id is employee_id.x_analytic_account_id
     @api.onchange('employee_id')

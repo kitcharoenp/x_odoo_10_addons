@@ -79,9 +79,9 @@ class TelcoExpenseQwebByDateReportUtil(models.AbstractModel):
                     ('accounting_date', '>=', str(st_date))]
                 if int(project.id) > 0:
                     criteria += [(
-                        'analytic_account_id',
+                        'x_project_id',
                         '=',
-                        project.analytic_account_id.id)]
+                        project.id)]
                 if state in ['draft', 'reported', 'done', 'refused']:
                     criteria += [('state', '=', state)]
                 if employee_id:

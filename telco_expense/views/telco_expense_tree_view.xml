@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="telco_expense_tree_view" model="ir.ui.view">
+      <field name="name">telco expense tree</field>
+      <field name="model">hr.expense</field>
+      <field name="inherit_id"
+          ref="hr_expense.view_expenses_tree"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='analytic_account_id']"
+            position="after">
+            <field name="accounting_date"/>
+            <field name="x_project_id"/>
+        </xpath>
+
+      </field>
+  </record>
+
+</odoo>

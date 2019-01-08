@@ -20,6 +20,8 @@
         # Actions
         # Views
         'views/telco_expense_form_view.xml',
+        'views/telco_expense_tree_view.xml',
+        'views/telco_expense_sheet_form_view.xml',
         # Reports and Templates
     ],
     'installable': True,

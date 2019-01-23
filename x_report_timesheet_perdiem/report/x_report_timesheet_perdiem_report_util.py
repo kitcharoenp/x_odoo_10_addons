@@ -160,6 +160,7 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                         order="work_location asc, barcode asc"):
                     res[len(res)-1]['data'].append({
                         'emp': emp.name,
+                        'emp_barcode': emp.barcode,
                         'emp_job': emp.job_id.name,
                         'emp_department': emp.department_id,
                         'emp_mobile_phone': emp.mobile_phone,

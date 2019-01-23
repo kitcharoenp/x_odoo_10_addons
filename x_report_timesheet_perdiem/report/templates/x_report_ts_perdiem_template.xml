@@ -51,7 +51,7 @@
                 </div>
                 <div class="row text-center">
                     <span class="col-xs-4 employee_info">
-                        ชื่อ-สกุล  <u><i><t t-esc="emp['emp']"/></i></u>
+                        ชื่อ-สกุล  <u><i><t t-esc="emp['emp']"/> (<t t-esc="emp['emp_barcode']"/>)</i></u>
                     </span>
                     <span class="col-xs-4 employee_info">
                         หน่วยงาน <u><i><t t-esc="emp['emp_department']['name']"/></i></u>

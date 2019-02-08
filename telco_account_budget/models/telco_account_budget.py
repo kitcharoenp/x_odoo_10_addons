@@ -25,7 +25,7 @@ class CrossoveredBudgetLines(models.Model):
         store="True",
         string='Practical Amount', digits=0)
     x_percentage = fields.Float(
-        compute='_compute_percentage',
+        compute='_compute_x_percentage',
         group_operator="avg",
         store="True",
         string='Achievement')
@@ -40,6 +40,8 @@ class CrossoveredBudgetLines(models.Model):
                 line.available_amount = 0.00
 
     @api.multi
+    #@api.depends('general_budget_id', 'analytic_account_id', 'date_from', 'date_to')
+    @api.depends('practical_amount',)
     def _compute_practical_amount(self):
         super(CrossoveredBudgetLines, self)._compute_practical_amount()
         for line in self:
@@ -47,8 +49,10 @@ class CrossoveredBudgetLines(models.Model):
                 line.x_practical_amount = line.practical_amount
 
     @api.multi
-    def _compute_percentage(self):
-        super(CrossoveredBudgetLines, self)._compute_percentage()
+    @api.depends('practical_amount', 'theoritical_amount')
+    def _compute_x_percentage(self):
         for line in self:
-            if line.percentage:
-                line.x_percentage = line.percentage
+            if line.theoritical_amount != 0.00:
+                line.x_percentage = float((line.practical_amount or 0.0) / line.theoritical_amount) * 100
+            else:
+                line.x_percentage = 0.00

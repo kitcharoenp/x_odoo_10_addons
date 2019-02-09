@@ -20,6 +20,7 @@
                     <field name="x_practical_amount" widget="monetary"/>
                     <field name="x_available_amount" widget="monetary"/>
                     <field name="x_percentage"/>
+                    <field name="percentage"/>
                 </tree>
             </xpath>
         </field>

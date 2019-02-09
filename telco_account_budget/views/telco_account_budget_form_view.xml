@@ -6,11 +6,11 @@
         <field name="inherit_id"
             ref="account_budget.crossovered_budget_view_form"/>
         <field name="arch" type="xml">
-            <!--
+
             <xpath expr="//field[@name='theoritical_amount']" position="replace">
                 <field name="x_available_amount"/>
             </xpath>
-            -->
+
             <!-- replace the `percentage` field with x_internal_reference -->
             <xpath expr="//field[@name='percentage']" position="replace">
                 <field name="x_internal_reference"/>
@@ -29,11 +29,7 @@
         <field name="inherit_id"
             ref="account_budget.view_crossovered_budget_line_tree"/>
         <field name="arch" type="xml">
-            <!--
-            <xpath expr="//field[@name='theoritical_amount']" position="replace">
-                <field name="x_available_amount"/>
-            </xpath>
-            -->
+
             <!-- replace the `percentage` field with x_internal_reference -->
             <xpath expr="//field[@name='percentage']" position="replace">
                 <field name="x_internal_reference"/>
@@ -48,11 +44,11 @@
         <field name="inherit_id"
             ref="account_budget.view_crossovered_budget_line_form"/>
         <field name="arch" type="xml">
-            <!--
+
             <xpath expr="//field[@name='theoritical_amount']" position="replace">
                 <field name="x_available_amount"/>
             </xpath>
-            -->
+
             <!-- replace the `percentage` field with x_internal_reference -->
             <xpath expr="//field[@name='percentage']" position="replace">
                 <field name="x_internal_reference"/>

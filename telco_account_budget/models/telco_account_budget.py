@@ -57,7 +57,8 @@ class CrossoveredBudgetLines(models.Model):
     def _compute_x_available_amount(self):
         for line in self:
             if line.planned_amount != 0.00:
-                line.x_available_amount = float((line.planned_amount or 0.0) - line.x_practical_amount)
+                # x_practical_amount return with minus sign
+                line.x_available_amount = float((line.planned_amount or 0.0) + line.x_practical_amount)
             else:
                 line.x_available_amount = 0.00
 

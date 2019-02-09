@@ -9,7 +9,7 @@
                 <field name="date_to" interval="month" type="col"/>
                 <field name="planned_amount" type="measure"/>
                 <field name="x_practical_amount" type="measure"/>
-                <field name="available_amount" type="measure"/>
+                <field name="x_available_amount" type="measure"/>
                 <field name="x_percentage" type="measure"/>
             </pivot>
         </field>

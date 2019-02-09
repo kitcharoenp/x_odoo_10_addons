@@ -17,10 +17,9 @@
                     <field name="date_to"/>
                     <field name="paid_date" groups="base.group_no_one"/>
                     <field name="planned_amount" widget="monetary"/>
-                    <field name="practical_amount" widget="monetary"/>
-                    <field name="available_amount" widget="monetary"/>
-                    <field name="theoritical_amount" widget="monetary"/>
-                    <field name="percentage"/>
+                    <field name="x_practical_amount" widget="monetary"/>
+                    <field name="x_available_amount" widget="monetary"/>
+                    <field name="x_percentage"/>
                 </tree>
             </xpath>
         </field>

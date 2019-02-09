@@ -10,7 +10,7 @@
             <xpath expr="//field[@name='theoritical_amount']" position="replace">
                 <field name="x_available_amount"/>
             </xpath>
-
+            -->
             <!-- replace the `percentage` field with x_internal_reference -->
             <xpath expr="//field[@name='percentage']" position="replace">
                 <field name="x_internal_reference"/>
@@ -33,7 +33,7 @@
             <xpath expr="//field[@name='theoritical_amount']" position="replace">
                 <field name="x_available_amount"/>
             </xpath>
-
+            -->
             <!-- replace the `percentage` field with x_internal_reference -->
             <xpath expr="//field[@name='percentage']" position="replace">
                 <field name="x_internal_reference"/>
@@ -52,7 +52,7 @@
             <xpath expr="//field[@name='theoritical_amount']" position="replace">
                 <field name="x_available_amount"/>
             </xpath>
-
+            -->
             <!-- replace the `percentage` field with x_internal_reference -->
             <xpath expr="//field[@name='percentage']" position="replace">
                 <field name="x_internal_reference"/>

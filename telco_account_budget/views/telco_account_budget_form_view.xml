@@ -6,7 +6,7 @@
         <field name="inherit_id"
             ref="account_budget.crossovered_budget_view_form"/>
         <field name="arch" type="xml">
-
+            <!--
             <xpath expr="//field[@name='theoritical_amount']" position="replace">
                 <field name="x_available_amount"/>
             </xpath>
@@ -29,7 +29,7 @@
         <field name="inherit_id"
             ref="account_budget.view_crossovered_budget_line_tree"/>
         <field name="arch" type="xml">
-
+            <!--
             <xpath expr="//field[@name='theoritical_amount']" position="replace">
                 <field name="x_available_amount"/>
             </xpath>
@@ -48,7 +48,7 @@
         <field name="inherit_id"
             ref="account_budget.view_crossovered_budget_line_form"/>
         <field name="arch" type="xml">
-
+            <!--
             <xpath expr="//field[@name='theoritical_amount']" position="replace">
                 <field name="x_available_amount"/>
             </xpath>

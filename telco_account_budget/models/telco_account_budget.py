@@ -32,7 +32,7 @@ class CrossoveredBudgetLines(models.Model):
         string='Availability %')
 
     @api.multi
-    @api.depends('general_budget_id', 'date_to', 'date_from', 'analytic_account_id')
+    @api.depends('general_budget_id', 'date_to', 'date_from', 'analytic_account_id', 'practical_amount')
     def _compute_x_practical_amount(self):
         for line in self:
             result = 0.0
@@ -50,7 +50,10 @@ class CrossoveredBudgetLines(models.Model):
                         AND general_account_id=ANY(%s)""",
                 (line.analytic_account_id.id, date_from, date_to, acc_ids,))
                 result = self.env.cr.fetchone()[0] or 0.0
-            line.x_practical_amount = result
+            if(result!=0.0):
+                line.x_practical_amount = result
+            else:
+                line.x_practical_amount = ine.practical_amount
 
     @api.multi
     @api.depends('planned_amount', 'x_practical_amount')

@@ -53,7 +53,7 @@ class CrossoveredBudgetLines(models.Model):
             if(result!=0.0):
                 line.x_practical_amount = result
             else:
-                line.x_practical_amount = ine.practical_amount
+                line.x_practical_amount = line.practical_amount
 
     @api.multi
     @api.depends('planned_amount', 'x_practical_amount')

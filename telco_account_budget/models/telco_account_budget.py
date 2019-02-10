@@ -59,7 +59,7 @@ class CrossoveredBudgetLines(models.Model):
     @api.depends('planned_amount', 'x_practical_amount')
     def _compute_x_available_amount(self):
         for line in self:
-            if line.planned_amount != 0.00:
+            if line.x_practical_amount != 0.00:
                 # x_practical_amount return with minus sign
                 line.x_available_amount = float((line.planned_amount or 0.0) + line.x_practical_amount)
             else:
@@ -69,7 +69,7 @@ class CrossoveredBudgetLines(models.Model):
     @api.depends('planned_amount', 'x_available_amount')
     def _compute_x_percentage(self):
         for line in self:
-            if line.planned_amount != 0.00:
+            if line.x_available_amount != 0.00:
                 line.x_percentage = float((line.x_available_amount or 0.0) / line.planned_amount) * 100
             else:
                 line.x_percentage = 0.00

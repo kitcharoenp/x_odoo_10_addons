@@ -34,6 +34,7 @@ class PurchaseOrder(models.Model):
 
     x_service_order = fields.Char(string='Service Order')
     x_circuit_id = fields.Char(string='Circuit Id')
+    x_sap_network = fields.Char(string='Sap Network')
 
     @api.multi
     @api.depends('name', 'partner_ref')

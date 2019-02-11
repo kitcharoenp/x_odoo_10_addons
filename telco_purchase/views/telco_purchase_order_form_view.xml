@@ -80,6 +80,7 @@
                 <field name="origin"/>
                 <field name="x_service_order"/>
                 <field name="x_circuit_id"/>
+                <field name="x_sap_network"/>
               </group>
               <group>
                 <field name="x_invoice_receipt_by"

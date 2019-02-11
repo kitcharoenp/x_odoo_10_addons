@@ -23,6 +23,7 @@ class AccountInvoice(models.Model):
                 string='Processing',
                 copy=False,
                 default='draft')
+    x_sap_network = fields.Char(string='Sap Network')
 
     @api.onchange('invoice_line_ids')
     def _onchange_origin(self):

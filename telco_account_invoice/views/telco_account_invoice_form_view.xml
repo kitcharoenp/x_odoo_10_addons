@@ -10,6 +10,7 @@
         <field name="arch" type="xml">
           <xpath expr="//field[@name='state']"
               position="after">
+              <field name="x_sap_network"/>
               <field name="x_description"/>
           </xpath>
         </field>
@@ -77,6 +78,7 @@
               <group>
                 <field name="x_service_order"/>
                 <field name="x_circuit_id"/>
+                <field name="x_sap_network"/>
               </group>
               <group>
                 <!-- column 2 -->

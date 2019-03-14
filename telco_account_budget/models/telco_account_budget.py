@@ -9,6 +9,31 @@ from odoo import api, fields, models, tools
 class CrossoveredBudgetLines(models.Model):
     _inherit = 'crossovered.budget.lines'
 
+
+    @api.multi
+    @api.depends('general_budget_id', 'date_to', 'date_from', 'analytic_account_id.line_ids', 'practical_amount')
+    def _compute_x_practical_amount(self):
+        for line in self:
+            result = 0.0
+            acc_ids = line.general_budget_id.account_ids.ids
+            if not acc_ids:
+                raise UserError(_("The Budget '%s' has no accounts!") % ustr(line.general_budget_id.name))
+            date_to = self.env.context.get('wizard_date_to') or line.date_to
+            date_from = self.env.context.get('wizard_date_from') or line.date_from
+            if line.analytic_account_id.id:
+                self.env.cr.execute("""
+                    SELECT SUM(amount)
+                    FROM account_analytic_line
+                    WHERE account_id=%s
+                        AND (date between to_date(%s,'yyyy-mm-dd') AND to_date(%s,'yyyy-mm-dd'))
+                        AND general_account_id=ANY(%s)""",
+                (line.analytic_account_id.id, date_from, date_to, acc_ids,))
+                result = self.env.cr.fetchone()[0] or 0.0
+            if(result != line.practical_amount):
+                line.x_practical_amount = line.practical_amount
+            else:
+                line.x_practical_amount = result
+
     x_internal_reference = fields.Char('Internal Reference',)
     x_practical_amount = fields.Float(
         compute='_compute_x_practical_amount',
@@ -30,30 +55,6 @@ class CrossoveredBudgetLines(models.Model):
         group_operator="avg",
         store="True",
         string='Availability %')
-
-    @api.multi
-    @api.depends('general_budget_id', 'date_to', 'date_from', 'analytic_account_id', 'practical_amount')
-    def _compute_x_practical_amount(self):
-        for line in self:
-            result = 0.0
-            acc_ids = line.general_budget_id.account_ids.ids
-            if not acc_ids:
-                raise UserError(_("The Budget '%s' has no accounts!") % ustr(line.general_budget_id.name))
-            date_to = self.env.context.get('wizard_date_to') or line.date_to
-            date_from = self.env.context.get('wizard_date_from') or line.date_from
-            if line.analytic_account_id.id:
-                self.env.cr.execute("""
-                    SELECT SUM(amount)
-                    FROM account_analytic_line
-                    WHERE account_id=%s
-                        AND (date between to_date(%s,'yyyy-mm-dd') AND to_date(%s,'yyyy-mm-dd'))
-                        AND general_account_id=ANY(%s)""",
-                (line.analytic_account_id.id, date_from, date_to, acc_ids,))
-                result = self.env.cr.fetchone()[0] or 0.0
-            if(result!=0.0):
-                line.x_practical_amount = result
-            else:
-                line.x_practical_amount = line.practical_amount
 
     @api.multi
     @api.depends('planned_amount', 'x_practical_amount')

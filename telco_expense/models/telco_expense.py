@@ -33,6 +33,34 @@ class TelcoExpense(models.Model):
         'Project',
         domain=[('active', '=', True)])
 
+    # verbose available_amount of budget
+    @api.multi
+    def submit_expenses(self):
+        # verbose null  analytic_account_id
+        if not self.analytic_account_id:
+            raise UserError(_("You cannot report expenses for NULL Analytic Account!"))
+
+        if not self.account_id:
+            raise UserError(_("You cannot report expenses for NULL Account!"))
+
+        # get Budgetary Position
+        general_budget_id = self.env['account.budget.post'].sudo().search(
+            [('account_ids', 'in', [self.account_id]),
+             ],limit=1)
+
+        # get Budget Line
+        crossovered_budget_line = self.env['crossovered.budget.lines'].search(
+            [('analytic_account_id', '=', self.analytic_account_id),
+             ('date_to', '>', self.date),
+             ('general_budget_id', '=', general_budget_id),
+             ],limit=1)
+
+        if (crossovered_budget_line):
+            if(crossovered_budget_line.planned_amount > 0 and crossovered_budget_line.available_amount < 0)
+                raise UserError(_("You cannot report expenses for Negative available Budget!"))
+
+        return super(HrExpense, self).submit_expenses()
+
     # onchange employee_id set the analytic_account_id is employee_id.x_analytic_account_id
     @api.onchange('employee_id')
     def _onchange_employee_id(self):

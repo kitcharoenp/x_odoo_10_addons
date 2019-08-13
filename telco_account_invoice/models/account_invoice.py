@@ -24,14 +24,3 @@ class AccountInvoice(models.Model):
                 copy=False,
                 default='draft')
     x_sap_network = fields.Char(string='Sap Network')
-
-    @api.onchange('invoice_line_ids')
-    def _onchange_origin(self):
-        res = super(AccountInvoice, self)._onchange_origin()
-        purchase_ids = self.invoice_line_ids.mapped('purchase_id')
-        if purchase_ids:
-            self.comment = ', '.join(
-                        v for v in purchase_ids.mapped('x_description') if v)
-            self.reference = ', '.join(
-                        x for x in purchase_ids.mapped('partner_ref') if x)
-        return res

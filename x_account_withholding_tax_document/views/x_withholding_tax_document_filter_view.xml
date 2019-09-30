@@ -6,11 +6,13 @@
           <field name="arch" type="xml">
               <search string="Search Withholding Tax Documents">
                   <field name="name" string="Withholding Tax Documents"/>
+                  <field name="partner_id"/>
                   <field name="date"/>
                   <field name="employee_id"/>
                   <field name="product_id"/>
-                  <filter name="my_withholding_tax" string="My Withholding Tax" domain="[
-                        ('employee_id.user_id.id', '=', uid)]" />
+                  <filter name="my_withholding_tax"
+                      string="My Withholding Tax"
+                      domain="[('employee_id.user_id.id', '=', uid)]" />
               </search>
           </field>
     </record>

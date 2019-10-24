@@ -33,6 +33,7 @@ class TelcoExpense(models.Model):
         'Project',
         domain=[('active', '=', True)])
 
+    """
     # verbose available_amount of budget
     @api.multi
     def submit_expenses(self):
@@ -60,7 +61,8 @@ class TelcoExpense(models.Model):
                 raise UserError(_("You cannot report expenses for Negative available Budget!"))
 
         return super(HrExpense, self).submit_expenses()
-
+    """
+        
     # onchange employee_id set the analytic_account_id is employee_id.x_analytic_account_id
     @api.onchange('employee_id')
     def _onchange_employee_id(self):

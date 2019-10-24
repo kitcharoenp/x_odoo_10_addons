@@ -25,7 +25,7 @@ class AccountInvoice(models.Model):
                 default='draft')
     x_sap_network = fields.Char(string='Sap Network')
 
-
+    '''
     def _prepare_invoice_line_from_po_line(self, line):
         res = super(AccountInvoice, self)._prepare_invoice_line_from_po_line(line)
 
@@ -36,7 +36,7 @@ class AccountInvoice(models.Model):
         else:
             qty = line.qty_received - line.qty_invoiced
 
-        # FIXME: this cause invoice line quantity is equal zero     
+        # FIXME: this cause invoice line quantity is equal zero
         #if float_compare(qty, 0.0, precision_rounding=line.product_uom.rounding) <= 0:
         #    qty = 0.0
 
@@ -61,7 +61,8 @@ class AccountInvoice(models.Model):
         if account:
             data['account_id'] = account.id
         return data
-
+    '''
+        
     @api.onchange('invoice_line_ids')
     def _onchange_origin(self):
         res = super(AccountInvoice, self)._onchange_origin()

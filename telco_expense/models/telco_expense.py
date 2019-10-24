@@ -62,7 +62,7 @@ class TelcoExpense(models.Model):
 
         return super(HrExpense, self).submit_expenses()
     """
-        
+
     # onchange employee_id set the analytic_account_id is employee_id.x_analytic_account_id
     @api.onchange('employee_id')
     def _onchange_employee_id(self):

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--##########################################################-->
+<!--###                 Disclaimer                         ###-->
+<!--##########################################################-->
+<!--### Lately, I started to get very busy after I         ###-->
+<!--### started my new position and I couldn't keep up     ###-->
+<!--### with clients demands & requests for customizations ###-->
+<!--### & upgrades, so I decided to publish this module    ###-->
+<!--### for community free of charge. Building on that,    ###-->
+<!--### I expect respect from whoever gets his/her hands   ###-->
+<!--### on my code, not to copy nor rebrand the module &   ###-->
+<!--### sell it under their names.                         ###-->
+<!--##########################################################-->
+
+<odoo>
+
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <!-- Temporary fix: preload all needed JS file instead of loading it by widget component -->
+            <script type="text/javascript" src="/web_diagram/static/lib/js/raphael.js"></script>
+            <script type="text/javascript" src="/web/static/lib/ace/ace.odoo-custom.js"></script>
+            <script type="text/javascript" src="/web/static/lib/ace/mode-python.js"></script>
+            <script type="text/javascript" src="/web/static/lib/ace/mode-xml.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

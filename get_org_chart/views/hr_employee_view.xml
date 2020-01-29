@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Employee -->
+    <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+        
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button class="oe_stat_button org-chart" special="cancel"
+                    icon="fa-list-ul" >
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Hierarchy</span>
+                    </div>
+                </button>
+            
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

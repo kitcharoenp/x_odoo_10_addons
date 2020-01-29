@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--##########################################################-->
+<!--###                 Disclaimer                         ###-->
+<!--##########################################################-->
+<!--### Lately, I started to get very busy after I         ###-->
+<!--### started my new position and I couldn't keep up     ###-->
+<!--### with clients demands & requests for customizations ###-->
+<!--### & upgrades, so I decided to publish this module    ###-->
+<!--### for community free of charge. Building on that,    ###-->
+<!--### I expect respect from whoever gets his/her hands   ###-->
+<!--### on my code, not to copy nor rebrand the module &   ###-->
+<!--### sell it under their names.                         ###-->
+<!--##########################################################-->
+
+<odoo>
+    <data>
+
+        <!--
+            Server Logging Menu
+        -->
+        <menuitem id="ir_logging_all_menu"
+                  action="base.ir_logging_all_act"
+                  parent="menu_odoo_workflow_root"
+                  name="Server Logging"
+                  sequence="30"/>
+
+        <!--
+            Server Actions
+        -->
+        <record id="view_form_ir_actions_server" model="ir.ui.view">
+            <field name="name">ir.actions.server.form</field>
+            <field name="model">ir.actions.server</field>
+            <field name="inherit_id" ref="base.view_server_action_form"/>
+            <field name="arch" type="xml">
+                <div class="oe_title" position="after">
+                    <field name="is_workflow"/>
+                    <label for="is_workflow"/>
+                </div>
+            </field>
+        </record>
+        <record id="action_ir_actions_server" model="ir.actions.act_window">
+            <field name="name">Server Actions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.actions.server</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_workflow','=',True)]</field>
+            <field name="context">{'key':'server_action','default_is_workflow':'1'}</field>
+        </record>
+        <menuitem id="menu_ir_actions_server"
+                  action="action_ir_actions_server"
+                  parent="menu_odoo_workflow_root"
+                  name="Server Actions"
+                  sequence="20"/>
+
+    </data>
+</odoo>

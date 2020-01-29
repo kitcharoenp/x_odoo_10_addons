@@ -35,6 +35,10 @@ class FleetVehicleLogFuel(models.Model):
     x_vin_sn = fields.Char(
         string='Label Sticker',
         help='Unique number written on the vehicle motor (VIN/SN number)',)
+    x_project_id = fields.Many2one(
+        'project.project',
+        'Project',
+        domain=[('active', '=', True)])       
 
     # Overide original method
     @api.onchange('liter', 'price_per_liter', 'amount')

@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--##########################################################-->
+<!--###                 Disclaimer                         ###-->
+<!--##########################################################-->
+<!--### Lately, I started to get very busy after I         ###-->
+<!--### started my new position and I couldn't keep up     ###-->
+<!--### with clients demands & requests for customizations ###-->
+<!--### & upgrades, so I decided to publish this module    ###-->
+<!--### for community free of charge. Building on that,    ###-->
+<!--### I expect respect from whoever gets his/her hands   ###-->
+<!--### on my code, not to copy nor rebrand the module &   ###-->
+<!--### sell it under their names.                         ###-->
+<!--##########################################################-->
+
+<odoo>
+    <data>
+
+        <!--
+            Workflow
+        -->
+        <record id="view_form_odoo_workflow" model="ir.ui.view">
+            <field name="name">odoo.workflow.form</field>
+            <field name="model">odoo.workflow</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="btn_reload_workflow"
+                                string="Update" type="object"
+                                class="oe_highlight" icon="fa-refresh"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="btn_nodes" type="object" class="oe_stat_button" icon="fa-codepen">
+                                <span>Nodes</span>
+                            </button>
+                            <button name="btn_links" type="object" class="oe_stat_button" icon="fa-code-fork">
+                                <span>Links</span>
+                            </button>
+                            <button name="btn_buttons" type="object" class="oe_stat_button" icon="fa-flickr">
+                                <span>Buttons</span>
+                            </button>
+                        </div>
+                        <div class="alert alert-danger oe_edit_only" role="alert">
+                            <strong>Note:</strong> Workflow engine can only alter normal models like
+                            crm.*, sale.*, hr.*, etc... (not transient like wizards nor abstract like reports)
+                            also resource (res.*) &amp; interface (ir.*) models are excluded from workflow engine.
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="model_id" required="1"/>
+                            </group>
+                            <div>
+                                <div>
+                                    <label for="remove_default_attrs_mod"/>
+                                    <field name="remove_default_attrs_mod" class="oe_inline"/>
+                                </div>
+                                <br/>
+                                <div>
+                                    <label for="mail_thread_add"/>
+                                    <field name="mail_thread_add" class="oe_inline"/>
+                                </div>
+                                <br/>
+                                <div attrs="{'invisible':[('mail_thread_add','=',False)]}">
+                                    <label for="followers_add"/>
+                                    <field name="followers_add" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </group>
+                        <notebook>
+                            <page string="Nodes">
+                                <field name="node_ids" context="{'default_workflow_id':id}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_tree_odoo_workflow" model="ir.ui.view">
+            <field name="name">odoo.workflow.tree</field>
+            <field name="model">odoo.workflow</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="model_id"/>
+                    <field name="remove_default_attrs_mod"/>
+                    <field name="mail_thread_add"/>
+                    <field name="followers_add"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_diagram_odoo_workflow" model="ir.ui.view">
+            <field name="name">odoo.workflow.diagram</field>
+            <field name="model">odoo.workflow</field>
+            <field name="arch" type="xml">
+                <diagram string="Workflow Editor">
+                    <node object="odoo.workflow.node"
+                          bgcolor="gray:flow_start==True;grey:flow_end==True">
+                        <field name="name" required="1"/>
+                        <field name="is_visible"/>
+                        <field name="flow_start"/>
+                        <field name="flow_end"/>
+                    </node>
+                    <arrow object="odoo.workflow.link"
+                           source="node_from"
+                           destination="node_to"
+                           label="['name']">
+                        <field name="name"/>
+                        <field name="node_from" required="1"/>
+                        <field name="node_to" required="1"/>
+                    </arrow>
+                    <label string="Dynamic Workflow Designer."/>
+                    <label string="Notes: You can only have one start node and multiple end nodes."/>
+                </diagram>
+            </field>
+        </record>
+        <record id="action_odoo_workflow" model="ir.actions.act_window">
+            <field name="name">Workflow</field>
+            <field name="res_model">odoo.workflow</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,diagram</field>
+        </record>
+        <menuitem id="menu_odoo_workflow"
+                  action="action_odoo_workflow"
+                  parent="menu_odoo_workflow_root"
+                  name="Workflow"
+                  sequence="10"/>
+
+        <!--
+            Workflow Nodes
+        -->
+        <record id="view_form_odoo_workflow_node" model="ir.ui.view">
+            <field name="name">odoo.workflow.node.form</field>
+            <field name="model">odoo.workflow.node</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="workflow_id" invisible="1"/>
+                        <field name="model_id" invisible="1"/>
+                        <group>
+                            <group>
+                                <field name="name"
+                                       placeholder="ex. 'Draft' or 'Direct Manager'"
+                                       required="1"/>
+                                <field name="node_name"
+                                       placeholder="ex. 'draft' or 'direct_manager'"
+                                       required="1"/>
+                            </group>
+                            <group>
+                                <field name="sequence" required="1"/>
+                                <field name="is_visible"/>
+                            </group>
+                            <group>
+                                <field name="flow_start"/>
+                                <field name="flow_end"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Buttons">
+                                <field name="button_ids"
+                                       context="{'default_node_id':id}"/>
+                            </page>
+                            <page string="Fields">
+                                <button name="btn_load_fields"
+                                        string="Load Model Fields"
+                                        type="object"
+                                        class="oe_highlight"/>
+                                <field name="field_ids"
+                                       context="{'default_model_id':model_id}"/>
+                            </page>
+                            <page string="Links">
+                                <separator string="Outgoing Links"/>
+                                <field name="out_link_ids"/>
+                                <separator string="Ingoing Links"/>
+                                <field name="in_link_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_tree_odoo_workflow_node" model="ir.ui.view">
+            <field name="name">odoo.workflow.node.tree</field>
+            <field name="model">odoo.workflow.node</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="is_visible"/>
+                    <field name="flow_start"/>
+                    <field name="flow_end"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--
+            Workflow Nodes Fields
+        -->
+        <record id="view_form_odoo_workflow_node_field" model="ir.ui.view">
+            <field name="name">odoo.workflow.node.field.form</field>
+            <field name="model">odoo.workflow.node.field</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Main Information">
+                                <field name="model_id" invisible="1"/>
+                                <field name="name" required="1" domain="[('model_id','=',model_id)]"/>
+                            </group>
+                            <group string="Attributes">
+                                <field name="readonly"/>
+                                <field name="required"/>
+                                <field name="invisible"/>
+                            </group>
+                        </group>
+                        <group string="Groups">
+                            <field name="group_ids" nolabel="1"/>
+                        </group>
+                        <group string="Users">
+                            <field name="user_ids" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_tree_odoo_workflow_node_field" model="ir.ui.view">
+            <field name="name">odoo.workflow.node.field.tree</field>
+            <field name="model">odoo.workflow.node.field</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="model_id" invisible="1"/>
+                    <field name="name" required="1" domain="[('model_id','=',model_id)]"/>
+                    <field name="readonly"/>
+                    <field name="required"/>
+                    <field name="invisible"/>
+                    <field name="group_ids" widget="many2many_tags"/>
+                    <field name="user_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--
+            Workflow Links
+        -->
+        <record id="view_form_odoo_workflow_link" model="ir.ui.view">
+            <field name="name">odoo.workflow.link.form</field>
+            <field name="model">odoo.workflow.link</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Main Information">
+                                <field name="name" required="1"/>
+                            </group>
+                            <group string="Nodes">
+                                <field name="node_from" required="1"/>
+                                <field name="node_to" required="1"/>
+                            </group>
+                            <group colspan="4">
+                                <field name="condition_code" required="1"
+                                       widget="ace" options="{'mode': 'python'}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_tree_odoo_workflow_link" model="ir.ui.view">
+            <field name="name">odoo.workflow.link.tree</field>
+            <field name="model">odoo.workflow.link</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" required="1"/>
+                    <field name="node_from" required="1"/>
+                    <field name="node_to" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--
+            Workflow Node Buttons
+        -->
+        <record id="view_form_odoo_workflow_node_button" model="ir.ui.view">
+            <field name="name">odoo.workflow.node.button.form</field>
+            <field name="model">odoo.workflow.node.button</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="workflow_id" invisible="1"/>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="sequence" required="1"/>
+                                <field name="name" required="1"/>
+                                <field name="is_highlight"/>
+                            </group>
+                            <group>
+                                <field name="node_id"
+                                       domain="[('workflow_id','=',workflow_id)]"/>
+                                <field name="has_icon"/>
+                                <field name="icon"
+                                       attrs="{'invisible':[('has_icon','=',False)],'required':[('has_icon','=',True)]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Condition">
+                                <group>
+                                    <field name="btn_hide"/>
+                                </group>
+                                <label string="In this case you can't use 'obj' variable because the code will be populated on whole view."
+                                       style="color: red;"
+                                       attrs="{'invisible':[('btn_hide','=',False)]}"/>
+                                <group>
+                                    <field name="condition_code" required="1"
+                                           widget="ace" options="{'mode': 'python'}"/>
+                                </group>
+                            </page>
+                            <page string="Actions">
+                                <group>
+                                    <field name="action_type" required="1"/>
+                                </group>
+                                <group name="link"
+                                       attrs="{'invisible':[('action_type','!=','link')]}">
+                                    <field name="link_id"
+                                           domain="[('node_from','=',node_id)]"
+                                           attrs="{'required':[('action_type','=','link')]}"/>
+                                </group>
+                                <group name="code"
+                                       attrs="{'invisible':[('action_type','!=','code')]}">
+                                    <field name="code" widget="ace" options="{'mode': 'python'}"
+                                           attrs="{'required':[('action_type','=','code')]}"/>
+                                </group>
+                                <group name="action"
+                                       attrs="{'invisible':[('action_type','!=','action')]}">
+                                    <field name="server_action_id"
+                                           domain="[('is_workflow','=',True)]"
+                                           context="{'default_is_workflow':True}"
+                                           attrs="{'required':[('action_type','=','action')]}"/>
+                                </group>
+                                <group name="win_action"
+                                       attrs="{'invisible':[('action_type','!=','win_act')]}">
+                                    <field name="win_act_id"
+                                           attrs="{'required':[('action_type','=','win_act')]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_tree_odoo_workflow_node_button" model="ir.ui.view">
+            <field name="name">odoo.workflow.node.button.tree</field>
+            <field name="model">odoo.workflow.node.button</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="action_type"/>
+                    <field name="is_highlight"/>
+                    <field name="node_id"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

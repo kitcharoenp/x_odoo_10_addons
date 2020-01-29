@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="get_org_chart.assets_backend" name="web_assets_backend"
+        inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet"
+                href="/get_org_chart/static/libs/getorgchart/css/getorgchart.css" />
+            <script type="text/javascript"
+                src="/get_org_chart/static/libs/getorgchart/js/getorgchart.js"></script>
+            <script type="text/javascript"
+                src="/get_org_chart/static/src/js/employee_org_chart.js"></script>
+            <script type="text/javascript" src="/get_org_chart/static/src/js/form_view.js"></script>
+        </xpath>
+    </template>
+</odoo>

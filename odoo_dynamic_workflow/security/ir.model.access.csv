@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+access_odoo_workflow_user,odoo_workflow_user,model_odoo_workflow,base.group_user,1,0,0,0
+access_odoo_workflow_model_user,odoo_workflow_model_user,model_odoo_workflow_model,base.group_user,1,1,1,1
+access_odoo_workflow_node_user,odoo_workflow_node_user,model_odoo_workflow_node,base.group_user,1,0,0,0
+access_odoo_workflow_node_field_user,odoo_workflow_node_field_user,model_odoo_workflow_node_field,base.group_user,1,0,0,0
+access_odoo_workflow_node_button_user,odoo_workflow_node_button_user,model_odoo_workflow_node_button,base.group_user,1,0,0,0
+access_odoo_workflow_link_user,odoo_workflow_link_user,model_odoo_workflow_link,base.group_user,1,0,0,0
+,,,,,,,
+access_odoo_workflow_manager,odoo_workflow_manager,model_odoo_workflow,group_manager,1,1,1,1
+access_odoo_workflow_model_manager,odoo_workflow_model_manager,model_odoo_workflow_model,group_manager,1,1,1,1
+access_odoo_workflow_node_manager,odoo_workflow_node_manager,model_odoo_workflow_node,group_manager,1,1,1,1
+access_odoo_workflow_node_field_manager,odoo_workflow_node_field_manager,model_odoo_workflow_node_field,group_manager,1,1,1,1
+access_odoo_workflow_node_button_manager,odoo_workflow_node_button_manager,model_odoo_workflow_node_button,group_manager,1,1,1,1
+access_odoo_workflow_link_manager,odoo_workflow_link_manager,model_odoo_workflow_link,group_manager,1,1,1,1

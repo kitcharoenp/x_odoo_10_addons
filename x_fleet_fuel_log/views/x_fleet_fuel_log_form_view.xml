@@ -37,7 +37,7 @@
 
                     <label string="Current Value"/>
                     <div class="o_row">
-                        <field name="odometer" required="0"/>
+                        <field name="odometer" required="1"/>
                         <field name="odometer_unit"/>
                     </div>
 
@@ -46,7 +46,7 @@
                         <field name="x_distance"/><span>Kilometers</span>
                     </div>
 
-                    <field name="x_project_id" required="1"/>
+                <!--    <field name="x_project_id" required="0"/> -->
                 </group>
 
             </xpath>

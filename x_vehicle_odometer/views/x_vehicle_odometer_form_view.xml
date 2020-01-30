@@ -14,7 +14,7 @@
                             <field name="vehicle_id"
                                 options="{'no_open': False, 'no_create': True}"/>
                             <field name="date" />
-                            <field name="x_project_id"
+                            <field name="x_project_id" required="1"
                                 options="{'no_open': False, 'no_create': True}"/>
                             <field name="x_description"/>
                         </group>

@@ -12,6 +12,7 @@
                 <tree string="Odometer Logs">
                     <field name="date" />
                     <field name="vehicle_id"/>
+                    <field name="x_project_id"/>
                     <field name="x_description"/>
                     <field name="value" />
                     <field name="y_odometer" />

@@ -7,6 +7,38 @@
         <field name="model">withholding.tax.document</field>
         <field name="arch" type="xml">
             <form string="Withholding Tax Document">
+              <header>
+                <!-- Submit Button -->
+                <button name="submit_withholding_tax"
+                  states="draft"
+                  string="Submit"
+                  type="object"
+                  class="oe_highlight o_withholding_tax_submit"
+                />
+
+                <!-- Approve Button -->
+                <button name="approve_withholding_tax"
+                  states="submit"
+                  string="Approve"
+                  type="object"
+                  groups="x_account_withholding_tax_document.group_x_withholding_tax_document_manager"
+                  class="oe_highlight o_withholding_tax_approve"
+                />
+
+                <!-- Refused Button -->
+                <button name="cancel_withholding_tax"
+                  states="submit"
+                  string="Refused"
+                  type="object"
+                  groups="x_account_withholding_tax_document.group_x_withholding_tax_document_manager"
+                  class="oe_highlight o_withholding_tax_submit"
+                />
+
+                <!-- status bar -->
+                <field name="state" widget="statusbar"
+                  statusbar_visible="draft,submit,approve,cancel"/>
+                  
+              </header>
                <sheet string="Withholding tax document">
                     <label for="name"/>
                     <h1>

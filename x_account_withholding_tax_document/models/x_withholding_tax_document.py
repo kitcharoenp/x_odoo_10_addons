@@ -92,6 +92,19 @@ class WithholdingTaxDocument(models.Model):
         default=fields.Date.context_today)
     description = fields.Text('Description')
     tracking_number = fields.Char(string="Tracking No.")
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('submit', 'Submitted'),
+        ('approve', 'Approved'),
+        ('cancel', 'Refused')],
+        string='Status',
+        index=True,
+        readonly=True,
+        track_visibility='onchange',
+        copy=False,
+        default='draft',
+        required=True,
+        help='Withholding Tax State')
 
     @api.depends('quantity', 'unit_amount', 'tax_ids', 'currency_id')
     def _compute_amount(self):
@@ -170,3 +183,15 @@ class WithholdingTaxDocument(models.Model):
         if len(float_val_split) > 1 and int(float_val_split[1][0:2]) > 0:
             result += self._thai_num2text(float_val_split[1][0:2]) + "สตางค์"
         return result
+
+    @api.multi
+    def submit_withholding_tax(self):
+        self.write({'state': 'submit'})
+
+    @api.multi
+    def approve_withholding_tax(self):
+        self.write({'state': 'approve'})
+
+    @api.multi
+    def cancel_withholding_tax(self):
+        self.write({'state': 'cancel'})

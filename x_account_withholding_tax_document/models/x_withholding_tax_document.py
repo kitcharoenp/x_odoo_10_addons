@@ -199,3 +199,10 @@ class WithholdingTaxDocument(models.Model):
         if not self.user_has_groups('x_account_withholding_tax_document.group_x_withholding_tax_document_manager'):
             raise UserError(_("Only WHT Manager can cancel WHT"))
         self.write({'state': 'cancel'})
+
+    @api.multi
+    def write(self, vals):
+        if not self.user_has_groups('x_account_withholding_tax_document.group_x_withholding_tax_document_manager'):
+            if vals.get('state') != 'draft':
+                raise UserError(_("Only WHT Manager can edit WHT"))
+        return super(WithholdingTaxDocument, self).write(vals)

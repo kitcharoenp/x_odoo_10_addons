@@ -34,10 +34,19 @@
                   class="oe_highlight o_withholding_tax_submit"
                 />
 
+                <!-- Reset Button -->
+                <button name="reset_withholding_tax"
+                  states="cancel"
+                  string="Reset to Draft"
+                  type="object"
+                  groups="x_account_withholding_tax_document.group_x_withholding_tax_document_manager"
+                  class="oe_highlight o_withholding_tax_approve"
+                />
+
                 <!-- status bar -->
                 <field name="state" widget="statusbar"
                   statusbar_visible="draft,submit,approve,cancel"/>
-                  
+
               </header>
                <sheet string="Withholding tax document">
                     <label for="name"/>

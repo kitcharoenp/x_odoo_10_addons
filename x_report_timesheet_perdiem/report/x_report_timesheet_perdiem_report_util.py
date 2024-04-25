@@ -139,7 +139,7 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                 date_from += timedelta(1)
             # count line match condtion
             count += 1
-        self.sum = round(count*200, 0)
+        self.sum = round(count*350, 0)
         return res
 
     def _get_data_for_report(self, data):

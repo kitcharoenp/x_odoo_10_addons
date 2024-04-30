@@ -38,6 +38,7 @@
                         <field name="user_id" invisible="0"/>
                         <field name="is_overtime"/>
                         <field name="x_is_per_diem"/>
+                        <field name="x_overnight"/>
                     </tree>
                 </xpath>
 
@@ -98,6 +99,7 @@
                                     widget="many2many_tags"
                                     options="{'no_open': True, 'no_create': True}"/>
                                 <field name="x_is_per_diem"/>
+                                <field name="x_overnight"/>
                             </group>
                         </group>
                         <group col="2">
@@ -213,6 +215,7 @@
                                             ('x_is_per_diem', '=', True),]}"
                                         options="{'no_open': True, 'no_create': True}"/>
                                     <field name="x_is_per_diem"/>
+                                    <field name="x_overnight"/>
                             </group>
                         </group>
                         <group col="2">

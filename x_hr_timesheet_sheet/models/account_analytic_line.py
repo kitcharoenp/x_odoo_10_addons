@@ -62,6 +62,8 @@ class AccountAnalyticLine(models.Model):
     x_state_id = fields.Many2one(
         "res.country.state",
         string='State')
+    x_overnight = fields.Boolean(
+        string='Overnight')
 
     @api.onchange('x_start_date')
     def _compute_date_from_x_start_date(self):

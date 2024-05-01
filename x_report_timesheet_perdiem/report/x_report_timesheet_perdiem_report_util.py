@@ -100,6 +100,7 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                 'color': '',
                 'description': [],
                 'province': [],
+                'pay': [],
                 'vehicle': []},)
             if current.strftime('%a') == 'Sat' or \
                     current.strftime('%a') == 'Sun':
@@ -126,6 +127,10 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
             # Set perdiem pay
             _pay = 350
 
+            # if 'x_overnight' perdiem pay 400 else 350
+            if line.x_overnight:
+                _pay = 400
+
             for tag in line.tag_ids:
                 str_tag += tag.name
 
@@ -138,13 +143,12 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                     res[(date_from-start_date).days][
                         'province'] = str_tag + ' / ' + line.x_state_id.name
                     res[(date_from-start_date).days][
+                        'pay'] = _pay
+                    res[(date_from-start_date).days][
                         'vehicle'] = line.x_vehicle_id.license_plate
+                    
                 date_from += timedelta(1)
 
-            # if 'x_overnight' perdiem pay 400 else 350
-            if line.x_overnight:
-                _pay = 400
-            
             # Calculate sum of perdiem
             _sum += _pay
 

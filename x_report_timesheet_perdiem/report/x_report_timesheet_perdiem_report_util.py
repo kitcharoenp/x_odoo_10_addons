@@ -88,7 +88,7 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
     def _get_timesheet_summary(
             self, start_date, end_date, approved, user_id, user_barcode):
         res = []
-        count = 0
+        _sum = 0
         start_date = fields.Date.from_string(start_date)
         end_date = fields.Date.from_string(end_date)
         delta = end_date - start_date
@@ -123,6 +123,9 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
             date_to = fields.Datetime.context_timestamp(
                             line, x_end_date).date()
             str_tag = ''
+            # Set perdiem pay
+            _pay = 350
+
             for tag in line.tag_ids:
                 str_tag += tag.name
 
@@ -137,9 +140,15 @@ class xTimesheetPerdiemReportUtil(models.AbstractModel):
                     res[(date_from-start_date).days][
                         'vehicle'] = line.x_vehicle_id.license_plate
                 date_from += timedelta(1)
-            # count line match condtion
-            count += 1
-        self.sum = round(count*350, 0)
+
+            # if 'x_overnight' perdiem pay 400 else 350
+            if line.x_overnight:
+                _pay = 400
+            
+            # Calculate sum of perdiem
+            _sum += _pay
+
+        self.sum = round(_sum, 0)
         return res
 
     def _get_data_for_report(self, data):

@@ -220,7 +220,7 @@
                                     <td class="col-xs-6"><t t-esc="details['description']"/></td>
                                     <td class="col-xs-2"><t t-esc="details['province']"/></td>
                                     <td class="col-xs-1"><t t-esc="details['vehicle']"/></td>
-                                    <td class="col-xs-1"><t t-esc="details['pay']"/></td>
+                                    <td class="col-xs-1 text-right"><t t-esc="details['pay']"/></td>
                                     <!-- <td class="col-xs-1 text-right">350</td> -->
                                 </tr>
                             </t>

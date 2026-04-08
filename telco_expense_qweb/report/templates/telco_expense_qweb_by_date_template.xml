@@ -6,7 +6,7 @@
             <attribute name="t-call">telco_expense_qweb.telco_expense_qweb_by_date_header</attribute>
         </xpath>
         <xpath expr="//t[@t-call='report.external_layout_footer']" position="attributes">
-            <attribute name="t-call">telco_expense_qweb.telco_expense_qweb_by_date_footer</attribute>
+            <attribute name="t-call">telco_expense_qweb.telco_expense_qweb_by_date_footer_v2</attribute>
         </xpath>
     </template>
 
@@ -34,6 +34,108 @@
 
           </div> <!--./row -->
         </xpath>
+    </template>
+
+    <template id="telco_expense_qweb_by_date_footer_v2">
+        <div class="footer">
+            <!-- Signature -->
+            <div class="text-center"
+                style=" color: black; font-weight: bold; font-size:11px;">
+                <!-- include CSS  -->
+                <style>
+                        body {
+                            font-family:freeserif;
+                        }
+                </style>
+                <div class="row zero_min_height">
+                  <div class="col-xs-4 pull-right text-right" style="font-size:8px;">
+                        printed @ <span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/>
+                  </div>
+                        <div class="col-xs-12">
+                            <div style="border-bottom: 1px solid black;"></div>
+                        </div><!-- /.col-xs-12 -->
+                        <br/>
+                </div><!-- /.row zero_min_height -->
+
+                    <!-- Signature -->
+                <div class="row">
+                  <div class="col-xs-3 text-center" >
+                    <!-- accountant receipt -->
+                      <ul style="list-style-type: none; font-size:9px;">
+                          <li><br/>&#9634; ช่วงเช้า 08:00-12:00 น.</li>
+                          <li>&#9634; ช่วงบ่าย 13:00-17:00 น.</li>
+                          <li><br/></li>
+                          <li>________________</li>
+                          <li>______/_____/_____</li>
+                          <li>(เซ็นต์รับเอกสารฝ่ายบัญชี)</li>
+                      </ul>
+                  </div>
+                  <!-- prepare employee -->
+                    <div class="col-xs-2 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+                            <li><br/>Checks By</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li><span t-esc="datetime.datetime.now().strftime('%d / %m / %Y')"/></li>
+                            <li><span t-field="user.employee_ids[0].name"/></li>
+                            <!-- <li><span t-field="user.employee_ids[0].job_id.name"/></li> -->
+                        </ul>
+                    </div>
+
+                    <!-- requestor -->
+                    <div class="col-xs-2 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+
+                            <li><br/>Confirmed By</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li><span t-field="user.employee_ids[0].parent_id.name"/></li>
+                            <!-- <li><span t-field="user.employee_ids[0].parent_id.job_id.name"/></li> -->
+                        </ul>
+                    </div>
+
+                    <!-- project manager -->
+                    <div class="col-xs-3 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+                            <li><br/>Verified By</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li><span t-field="user.employee_ids[0].parent_id.parent_id.name"/></li>
+                            <!-- <li><span t-field="user.employee_ids[0].parent_id.parent_id.job_id.name"/></li> -->
+                        </ul>
+                    </div>
+
+                    <!-- company managing director -->
+                    <div class="col-xs-2 text-center" >
+                        <ul style="list-style-type: none; font-size:9px;">
+                            <li><br/>Approved By</li>
+                            <li><br/><br/></li>
+                            <li>________________</li>
+                            <li>______/_____/_____</li>
+                            <li><span t-field="res_company.x_managing_director_id.name"/></li>
+                            <!-- <li><span t-field="res_company.x_managing_director_id.job_id.name"/></li> -->
+                        </ul>
+                    </div>
+                </div><!-- /.row -->
+
+                <!-- /. Company Address -->
+                <div class="text-center" style=" color: orange; font-weight: bold; font-size:9px;">
+                    <ul style="list-style-type: none;" >
+                        <li>
+                            INTERLINK TELECOM PUBLIC COMPANY LIMITED
+                            <br/>48/66 Soi Rung-Reung Ratchadaphisek Road, Samsennok
+                            <br/>Huay Khwang, Bangkok 10310
+                            <br/>TEL : 02-666-2222 FAX : 02-666-2299
+                            <br/>TAX ID : 0-1075-58000-21-1
+
+                        </li>
+                    </ul>
+                </div> <!-- /.text-center -->
+
+            </div>
+        </div>
     </template>
 
     <template id="telco_expense_qweb_by_date_footer" inherit_id="report.external_layout_footer" primary="True">

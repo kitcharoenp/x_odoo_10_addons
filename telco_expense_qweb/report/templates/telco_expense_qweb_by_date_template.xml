@@ -118,6 +118,21 @@
                         </ul>
                     </div>
                 </div><!-- /.row -->
+
+                <!-- /. Company Address -->
+                <div class="text-center" style=" color: orange; font-weight: bold; font-size:9px;">
+                    <ul style="list-style-type: none;" >
+                        <li>
+                            INTERLINK TELECOM PUBLIC COMPANY LIMITED
+                            <br/>48/66 Soi Rung-Reung Ratchadaphisek Road, Samsennok
+                            <br/>Huay Khwang, Bangkok 10310
+                            <br/>TEL : 02-666-2222 FAX : 02-666-2299
+                            <br/>TAX ID : 0-1075-58000-21-1
+
+                        </li>
+                    </ul>
+                </div> <!-- /.text-center -->
+
             </div>
         </xpath>
     </template>

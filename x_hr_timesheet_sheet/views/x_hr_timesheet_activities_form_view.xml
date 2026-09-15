@@ -73,6 +73,7 @@
                             <group string="Other Details">
                                 <field name="x_notes"
                                     required="1"
+                                    maxlength="250"
                                     placeholder="Write here all other information relative to this activity"/>
                                 <field name="x_vehicle_id"
                                     string="License Plate"
@@ -187,6 +188,7 @@
                             <group string="Other Details">
                                 <field name="x_notes"
                                     required="1"
+                                    maxlength="250"
                                     placeholder="Write here all other information relative to this activity" />
 
                                     <field name="x_vehicle_id"

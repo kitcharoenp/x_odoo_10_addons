@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from dateutil.relativedelta import relativedelta
+
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.translate import _
+
+CUTOFF_DAY = 26
 
 
 class HrTimesheetSheet(models.Model):
@@ -112,6 +116,37 @@ class HrTimesheetSheet(models.Model):
         readonly=False, states={
             'draft': [('readonly', False)],
             'new': [('readonly', False)]})
+
+    def _get_cutoff_cycle(self, day):
+        """ Return (cycle_from, cycle_to) for the cutoff cycle that
+        contains 'day': from the 26th of a month to the 25th of the
+        next month. """
+        if day.day >= CUTOFF_DAY:
+            cycle_from = day.replace(day=CUTOFF_DAY)
+        else:
+            cycle_from = (day - relativedelta(months=1)).replace(
+                day=CUTOFF_DAY)
+        cycle_to = cycle_from + relativedelta(months=1, days=-1)
+        return cycle_from, cycle_to
+
+    @api.constrains('date_from', 'date_to')
+    def _check_date_from_date_to_cutoff(self):
+        for sheet in self:
+            if not sheet.date_from or not sheet.date_to:
+                continue
+            date_from = fields.Date.from_string(sheet.date_from)
+            date_to = fields.Date.from_string(sheet.date_to)
+            if date_from > date_to:
+                raise ValidationError(_(
+                    '"Date From" cannot be later than "Date To".'))
+            cycle_from, cycle_to = sheet._get_cutoff_cycle(date_from)
+            cycle_from_of_date_to = sheet._get_cutoff_cycle(date_to)[0]
+            if cycle_from != cycle_from_of_date_to:
+                raise ValidationError(_(
+                    'The timesheet period must stay within a single \
+                    cutoff cycle (from the 26th of a month to the 25th \
+                    of the next month). The current cycle allowed is \
+                    from %s to %s.') % (cycle_from, cycle_to))
 
     @api.multi
     def action_timesheet_confirm(self):

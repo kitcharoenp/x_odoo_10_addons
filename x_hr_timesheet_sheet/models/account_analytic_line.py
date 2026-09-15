@@ -112,6 +112,27 @@ class AccountAnalyticLine(models.Model):
                         overlaps on same day!'))
                 """
 
+    @api.constrains('x_notes')
+    def _check_x_notes_length(self):
+        for ts_line in self:
+            if ts_line.x_notes and len(ts_line.x_notes) > 250:
+                raise ValidationError(_(
+                    '"Note" cannot be longer than 250 characters.'))
+
+    @api.constrains('date', 'sheet_id')
+    def _check_no_duplicate_date(self):
+        for ts_line in self:
+            if ts_line.sheet_id and ts_line.date:
+                domain = [
+                    ('sheet_id', '=', ts_line.sheet_id.id),
+                    ('date', '=', ts_line.date),
+                    ('id', '!=', ts_line.id),
+                ]
+                if self.search_count(domain):
+                    raise ValidationError(_(
+                        'You can not have 2 timesheet lines with the same \
+                        date in the same timesheet.'))
+
     @api.onchange('unit_amount')
     def _onchange_unit_amount(self):
         for ts_line in self:

@@ -101,6 +101,8 @@ class TelcoExpenseQwebByDateReportUtil(models.AbstractModel):
                         'total_amount': exp.total_amount,
                         'code': exp.product_id.default_code,
                         'job_task': exp.product_id.description_purchase,
+                        'product_name': exp.product_id.name,
+                        'require_po': exp.x_require_po,
                     })
         return res
 

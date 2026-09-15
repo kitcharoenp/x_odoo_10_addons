@@ -12,6 +12,7 @@
     * Expense QWeb Report by Date
     """,
     'depends': ['hr_expense', 'project', 'telco_expense', ],
+    'external_dependencies': {'python': ['xlsxwriter']},
     'data': [
         # Actions
         'views/telco_expense_qweb_by_date_form_view.xml',

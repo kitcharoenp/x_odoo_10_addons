@@ -2,12 +2,15 @@
 # @author Kitcharoen Poolperm <kitcharoenp@gmail.com>
 # @copyright Copyright (C) 2017
 # @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
+import base64
 import time
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from odoo.addons.telco_expense_qweb.report.telco_expense_qweb_by_date_xlsx_util \
+    import build_xlsx
 
 
 class TelcoExpenseReportByDate(models.TransientModel):
@@ -84,3 +87,30 @@ class TelcoExpenseReportByDate(models.TransientModel):
             projects,
             'telco_expense_qweb.telco_expense_qweb_by_date_template',
             data=datas)
+
+    @api.multi
+    def export_excel(self):
+        self.ensure_one()
+        [data] = self.read()
+        if not data.get('project_ids'):
+            raise UserError(_(
+                'You have to select at least one Project. \
+                And try again.'))
+        report_util = self.env[
+            'report.telco_expense_qweb.telco_expense_qweb_by_date_template']
+        data_by_project = report_util._get_data_for_report(data)
+        xlsx_data = build_xlsx(data_by_project)
+        attachment = self.env['ir.attachment'].create({
+            'name': 'Expense_by_date_%s.xlsx' % fields.Date.today(),
+            'datas': base64.b64encode(xlsx_data),
+            'datas_fname': 'Expense_by_date.xlsx',
+            'res_model': self._name,
+            'res_id': self.id,
+            'mimetype': ('application/vnd.openxmlformats-officedocument'
+                         '.spreadsheetml.sheet'),
+        })
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }

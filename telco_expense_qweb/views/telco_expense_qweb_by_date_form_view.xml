@@ -33,6 +33,7 @@
                 </group>
                 <footer>
                     <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button name="export_excel" string="Export Excel" type="object" class="btn-secondary"/>
                     <button string="Cancel" special="cancel" class="btn-default"/>
                 </footer>
             </form>

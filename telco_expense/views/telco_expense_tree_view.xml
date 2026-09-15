@@ -12,6 +12,7 @@
             position="after">
             <field name="accounting_date"/>
             <field name="x_project_id"/>
+            <field name="x_require_po"/>
         </xpath>
 
       </field>

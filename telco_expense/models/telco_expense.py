@@ -33,6 +33,10 @@ class TelcoExpense(models.Model):
         'Project',
         domain=[('active', '=', True)])
 
+    x_require_po = fields.Boolean(
+        string='Require PO',
+        default=False)
+
     """
     # verbose available_amount of budget
     @api.multi

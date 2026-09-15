@@ -15,6 +15,7 @@
             <field name="accounting_date"/>
             <field name="x_partner_id"
               options="{'no_create': True, 'no_open': True}"/>
+            <field name="x_require_po"/>
         </xpath>
 
         <field name="account_id" position="attributes">

@@ -2,6 +2,7 @@
 # @author Kitcharoen Poolperm <kitcharoenp@gmail.com>
 # @copyright Copyright (C) 2017
 # @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
+from __future__ import unicode_literals
 import io
 
 import xlsxwriter

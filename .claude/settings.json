@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "ask": [
+      "Bash(git push*)"
+    ],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push --mirror*)",
+      "Bash(git push --delete*)",
+      "Bash(git reset --hard*)",
+      "Bash(git commit --amend*)",
+      "Bash(git rebase*)",
+      "Bash(git branch -D*)",
+      "Bash(git clean -f*)",
+      "Bash(git filter-branch*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./credentials/**)",
+      "Read(./*.pem)",
+      "Read(./*.key)",
+      "Read(./odoo.conf)",
+      "Read(./**/odoo.conf)",
+      "Read(./*.odoorc)",
+      "Read(./**/.odoorc)",
+      "Write(./docs/playbook/ACTIVE_PLAN)",
+      "Edit(./docs/playbook/ACTIVE_PLAN)",
+      "Write(./.claude/skills/**)",
+      "Edit(./.claude/skills/**)",
+      "Write(./.claude/settings.json)",
+      "Edit(./.claude/settings.json)",
+      "Write(./.qoder/settings.json)",
+      "Edit(./.qoder/settings.json)",
+      "Write(./docs/playbook/BASE_PLAYBOOK.md)",
+      "Edit(./docs/playbook/BASE_PLAYBOOK.md)",
+      "Write(./BASE_PLAYBOOK.md)",
+      "Edit(./BASE_PLAYBOOK.md)",
+      "Write(./docs/playbook/AGENTS.md)",
+      "Edit(./docs/playbook/AGENTS.md)",
+      "Write(./AGENTS.md)",
+      "Edit(./AGENTS.md)",
+      "Write(./docs/playbook/scripts/audit_playbook.sh)",
+      "Edit(./docs/playbook/scripts/audit_playbook.sh)",
+      "Write(./docs/playbook/MANIFEST.sha256)",
+      "Edit(./docs/playbook/MANIFEST.sha256)",
+      "Write(./.doc-state-paths)",
+      "Edit(./.doc-state-paths)",
+      "Write(./scripts/plan_scope.sh)",
+      "Edit(./scripts/plan_scope.sh)",
+      "Write(./hooks/**)",
+      "Edit(./hooks/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/hooks/claude-code/plan_scope_guard.sh\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/hooks/claude-code/bash_scope_guard.sh\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/hooks/claude-code/evidence_guard.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

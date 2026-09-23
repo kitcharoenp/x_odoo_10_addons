@@ -1,0 +1,106 @@
+#!/bin/sh
+# .githooks/pre-commit — บังคับ scope ของแผนที่ขอบ git
+#
+# ทำไมต้องมีชั้นนี้ ทั้งที่มี PreToolUse hook อยู่แล้ว:
+#   PreToolUse hook บังคับได้เฉพาะ **เครื่องมือที่มี hook engine** — ยืนยันแล้วว่า
+#   Qoder IDE 1.24.2 ไม่มีเลย (bundle ไม่อ้าง .qoder/settings.json · ไม่มี PreToolUse ·
+#   ไม่มี permissions.allow/deny) ⇒ เซสชัน Qoder เขียนไฟล์นอกแผนได้โดยไม่ถูกบล็อก
+#   ชั้นนี้รันที่ git ไม่ใช่ใน agent จึงครอบ **ทุกเครื่องมือ** รวม IDE ที่ไม่มี hook
+#   และรวมคนที่พิมพ์เองด้วย
+#
+# ข้อจำกัดที่ต้องประกาศ ห้ามเคลมว่าปิดช่อง:
+#   1. **bypass ได้ด้วย `git commit --no-verify`** — เป็น guardrail ไม่ใช่ security boundary
+#   2. ต้องให้คนตั้ง `git config core.hooksPath .githooks` เอง 1 ครั้งต่อ clone
+#      (git ไม่ยอมให้ repo ตั้งค่านี้ให้ตัวเอง โดยเจตนาด้านความปลอดภัย)
+#   3. บังคับตอน commit ไม่ใช่ตอนเขียน ⇒ ไฟล์นอกแผนยังถูกสร้างได้ แค่ commit ไม่ผ่าน
+#
+# ---------------------------------------------------------------------------
+# ทำไมใช้ `--check-path` ทีละไฟล์ ไม่ใช่ `--verify-diff`:
+#   `--verify-diff` ตอบคำถาม "รอบนี้ทำงานเกินแผนไหม" ⇒ จงใจรวมไฟล์ **untracked**
+#   (L-3 ของ plan_scope.sh) · แต่ pre-commit ตอบคำถามต่างกันคือ "อะไรกำลังจะเข้า
+#   ประวัติ git" ⇒ ต้องดูแค่ไฟล์ที่ staged · ไฟล์ untracked ไม่ได้เข้า commit
+#   ถ้าเอา --verify-diff มาใช้ตรง ๆ hook จะ fail เพราะไฟล์ scratch ที่ไม่เกี่ยว
+#   แล้วคนจะเรียนรู้ที่จะพิมพ์ --no-verify ทุกครั้ง ซึ่งทำให้ด่านนี้ไร้ค่า
+#
+#   และต้อง **ยกเว้นทั้ง 3 path ของกฎข้อ 7** (`docs/playbook/ACTIVE_PLAN`,
+#   `.claude/settings.json`, `.claude/skills/**`) เพราะกฎข้อ 7 บังคับให้ไฟล์เหล่านี้อยู่ใน
+#   deny_write เสมอ (กัน agent แก้กฎของตัวเอง) ⇒ ถ้าไม่ยกเว้น เจ้าของจะ commit
+#   ไฟล์ที่ตัวเองต้องแก้ตาม ADOPTING.md ไม่ได้เลย (เจอจริง 2026-08-20 ตอนทำตาม §6 ·
+#   ROADMAP แถว P8 บันทึกไว้ว่ามีคนติดแค่ 1 ใน 3 path)
+#
+#   การยกเว้นนี้เปิดเฉพาะ "การ commit ของคน" ไม่ใช่ "สิทธิ์ในการเขียนของ agent":
+#   ทั้ง 3 path ยังถูกกันตอนเขียนด้วย 3 ด่าน (plan_scope_guard · bash_scope_guard ·
+#   permissions.deny) และ `deny_write` ในแผนก็ยังบังคับกับ agent ครบทั้ง 3 ช่องเหมือนเดิม
+#
+#   รายการยกเว้นต้อง **ตรงกับ REQUIRED_DENY ใน scripts/plan_scope.sh เสมอ** —
+#   มี assertion กัน drift ใน tests/smoke_auto_accept.sh (job test:hooks ของ CI)
+# ---------------------------------------------------------------------------
+#
+# ไม่มี ACTIVE_PLAN = งาน ATOMIC ตาม base §2 ⇒ ไม่บล็อก (สมมาตรกับ hook ฝั่งเครื่องมือ)
+#
+# exit 0 = ให้ commit ผ่าน · exit 1 = ปฏิเสธ commit
+
+set -u
+
+ROOT=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+ACTIVE="$ROOT/docs/playbook/ACTIVE_PLAN"
+PLAN_SCOPE="$ROOT/scripts/plan_scope.sh"
+
+[ -f "$ACTIVE" ] || exit 0
+[ -f "$PLAN_SCOPE" ] || {
+	printf 'pre-commit: มี ACTIVE_PLAN แต่หา scripts/plan_scope.sh ไม่เจอ ⇒ ตรวจไม่ได้\n' >&2
+	exit 1
+}
+
+PLAN_REL=$(sed -n '1p' "$ACTIVE" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+[ -n "$PLAN_REL" ] || {
+	printf 'pre-commit: docs/playbook/ACTIVE_PLAN ว่าง ⇒ fail closed\n' >&2
+	exit 1
+}
+
+case "$PLAN_REL" in
+/*) PLAN="$PLAN_REL" ;;
+*) PLAN="$ROOT/$PLAN_REL" ;;
+esac
+[ -f "$PLAN" ] || {
+	printf 'pre-commit: ACTIVE_PLAN ชี้ไปที่ "%s" ซึ่งไม่มีไฟล์อยู่ ⇒ fail closed\n' "$PLAN_REL" >&2
+	exit 1
+}
+
+# แผนที่ยังไม่อนุมัติ = ยังไม่ควรมี commit ของงานนั้น — เกณฑ์เดียวกับ hook ฝั่งเครื่องมือ
+if ! sh "$PLAN_SCOPE" --go-ahead "$PLAN" >/dev/null 2>&1; then
+	printf 'pre-commit: แผน %s ยังไม่มี go_ahead จริง (ยังเป็น placeholder) ⇒ ยังไม่อนุมัติให้ commit\n' "$PLAN_REL" >&2
+	exit 1
+fi
+
+BAD=$(
+	cd "$ROOT" || exit 0
+	git diff --cached --name-only -z | tr '\0' '\n' | while IFS= read -r f; do
+		[ -n "$f" ] || continue
+		# ยกเว้นเฉพาะ 3 path ของกฎข้อ 7 — literal ต้องตรงกับ REQUIRED_DENY ใน plan_scope.sh
+		# (กฎข้อ 7 บังคับให้ path เหล่านี้อยู่ใน deny_write เสมอ ⇒ ถ้าไม่ยกเว้น เจ้าของ commit ไม่ได้)
+		case "$f" in
+		docs/playbook/ACTIVE_PLAN | .claude/settings.json | .claude/skills/**) continue ;;
+		esac
+		PLAN_SCOPE_CWD="$ROOT" sh "$PLAN_SCOPE" --check-path "$PLAN" "$f" >/dev/null 2>&1 ||
+			printf '  %s\n' "$f"
+	done
+)
+
+[ -z "$BAD" ] && exit 0
+
+{
+	printf 'pre-commit: ปฏิเสธ commit — ไฟล์ต่อไปนี้อยู่นอกขอบเขตของแผนที่บังคับอยู่\n\n'
+	printf '%s\n' "$BAD"
+	cat <<EOF
+
+แผนที่บังคับอยู่: $PLAN_REL
+
+ทางออก (เลือกทางที่ตรงกับความจริง ห้ามเลี่ยงด้วย --no-verify):
+  1. ถ้าไฟล์นั้นควรอยู่ในแผน → เสนอ PLAN AMENDMENT ให้เจ้าของ repo อนุมัติ
+     แล้วแก้ allow_write ในบล็อก plan-scope
+  2. ถ้าไฟล์นั้นไม่ควรถูก commit → git restore --staged <file>
+  3. ถ้าเป็นงานคนละรอบ → แยก commit แล้วสลับ ACTIVE_PLAN ให้ตรงรอบ
+EOF
+} >&2
+exit 1

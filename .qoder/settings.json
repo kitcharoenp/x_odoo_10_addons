@@ -1,0 +1,84 @@
+{
+  "permissions": {
+    "ask": [
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push --mirror:*)",
+      "Bash(git push --delete:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git commit --amend:*)",
+      "Bash(git rebase:*)",
+      "Bash(git branch -D:*)",
+      "Bash(git clean -f:*)",
+      "Bash(git filter-branch:*)",
+      "Read(/.env)",
+      "Read(/.env.*)",
+      "Read(/secrets/**)",
+      "Read(/credentials/**)",
+      "Read(/*.pem)",
+      "Read(/*.key)",
+      "Read(/odoo.conf)",
+      "Read(/**/odoo.conf)",
+      "Read(/*.odoorc)",
+      "Read(/**/.odoorc)",
+      "Edit(/docs/playbook/ACTIVE_PLAN)",
+      "Edit(/.claude/skills/**)",
+      "Edit(/.claude/settings.json)",
+      "Edit(/.qoder/settings.json)",
+      "Edit(/docs/playbook/BASE_PLAYBOOK.md)",
+      "Edit(/BASE_PLAYBOOK.md)",
+      "Edit(/docs/playbook/AGENTS.md)",
+      "Edit(/AGENTS.md)",
+      "Edit(/docs/playbook/scripts/audit_playbook.sh)",
+      "Edit(/docs/playbook/MANIFEST.sha256)",
+      "Edit(/.doc-state-paths)",
+      "Edit(/scripts/plan_scope.sh)",
+      "Edit(/hooks/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit|SearchReplace|search_replace|create_file|apply_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/hooks/qoder/plan_scope_guard.sh\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|run_in_terminal",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/hooks/qoder/bash_scope_guard.sh\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/hooks/qoder/evidence_guard.sh\""
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PROJECT_DIR}/hooks/qoder/evidence_guard.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

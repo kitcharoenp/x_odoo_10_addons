@@ -1,0 +1,16 @@
+# .doc-state-paths — รายการ glob ที่ doc_state.sh จะตรวจ
+# (ไฟล์นี้เป็น seed จากแม่แบบ upstream — ก๊อปเป็น `.doc-state-paths` ที่ราก repo ของคุณ
+#  ดูแผน: BASE_PLAYBOOK.md §9.9 + PLAYBOOK.md §0 "Adoption Declaration")
+#
+# Format: หนึ่ง glob ต่อบรรทัด · '#' = comment · บรรทัดว่างถูกข้าม · '!' = negation (เหมือน .gitignore)
+#
+# subclass ที่ประกาศ `doc_state_adoption: adopted-gate` ใน §0 ต้องให้ glob ครอบ
+# เอกสาร state ของตัวเองให้ครบทุกประเภท (ไม่ใช่แค่บางโฟลเดอร์) — นี่คือกลไกกัน
+# KG-34-class gap: "ประกาศ gate แล้วแต่ครอบเอกสารไม่ครบจนมีสถานะมองไม่เห็น"
+#
+# ตัวอย่าง — แก้ให้ตรงกับโครงเอกสารของโปรเจกต์คุณ:
+# docs/audits/**/*.md
+# docs/**/*.md
+# notebooks/**/*.md
+# review/proposal-*/**/*.md
+# ROADMAP.md
